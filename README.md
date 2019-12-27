@@ -17,12 +17,11 @@ Change the DATA_PATH_HOST variable inside the laradock .env
 Remove the **Cassandra** and **Gearman** Definitions in the laradock 
 they seemed to be faulty configured and we don't use them.
 
-Start the laradock containers
+Start the laradock containers (run inside the laradock folder)
 > docker-compose up -d nginx mariadb workspace
+
+To stop the containers run
+> docker-compose down
 
 Enter the container
 > docker-compose exec --user=laradock workspace bash
-
-#### Use yarn
-
-To prevent warnings or errors in the deployment pipeline, please use yarn as frontend dependency manager.
