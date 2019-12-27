@@ -1,0 +1,98 @@
+
+// Body
+$body-bg: #ffffff;
+
+// Colors
+$orange: #F96500;
+$darkorange: #bc4700;
+$steel: #6897b1;
+$gray1: #EEEEEE;
+$gray2: #DDDDDD;
+$medgray1: #BBBBBB;
+$medgray2: #888888;
+$darkgrey: #575756;
+$darkgrey2: #454545;
+$black: #000000;
+$white: #ffffff;
+$masterblue: #092a5e;
+
+// Borders
+$laravel-border-color: darken($body-bg, 10%);
+$list-group-border: $laravel-border-color;
+$navbar-default-border: $laravel-border-color;
+$panel-default-border: $laravel-border-color;
+$panel-inner-border: $laravel-border-color;
+$border-default: 1px solid #ddd;
+
+// @Media
+$break-small:           768px;
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  border-radius: $radius;
+}
+
+// Shadows
+$shadow-deep-contrast: 0px 4px 3px rgba(0,0,0,0.4), 0px 8px 13px rgba(0,0,0,0.1), 0px 18px 23px rgba(0,0,0,0.1);
+
+@mixin box-shadow($top, $left, $blur, $size, $color, $inset: false) {
+  @if $inset {
+    -webkit-box-shadow:inset $top $left $blur $size $color;
+    -moz-box-shadow:inset $top $left $blur $size $color;
+    box-shadow:inset $top $left $blur $size $color;
+  } @else {
+    -webkit-box-shadow: $top $left $blur $size $color;
+    -moz-box-shadow: $top $left $blur $size $color;
+    box-shadow: $top $left $blur $size $color;
+  }
+}
+
+// Brands
+$brand-primary: #3097D1;
+$brand-info: #8eb4cb;
+$brand-success: #2ab27b;
+$brand-warning: #cbb956;
+$brand-danger: #bf5329;
+
+// Typography
+$fa-font-path: "~font-awesome/fonts/";
+$icon-font-path: "~bootstrap/assets/fonts/bootstrap/";
+$font-family-sans-serif: 'Comfortaa', cursive;
+//$font-size-base: 14px;
+$line-height-base: 1.6;
+$text-color: #000000;
+$main-color: #3097d1;
+// Navbar
+$navbar-default-bg: #fff;
+
+// Buttons
+$btn-default-color: $text-color;
+
+// Inputs
+$input-border: lighten($text-color, 40%);
+$input-border-focus: lighten($brand-primary, 25%);
+$input-color-placeholder: lighten($text-color, 30%);
+
+@mixin placeholder-color($color) {
+  &::-webkit-input-placeholder { /* WebKit browsers */
+    color: $color;
+    opacity: 0.5;
+  }
+  &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: $color;
+    opacity: 0.5;
+  }
+  &::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: $color;
+    opacity: 0.5;
+  }
+  &:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: $color;
+    opacity: 0.5;
+  }
+}
+
+// Panels
+$panel-default-heading-bg: #fff;

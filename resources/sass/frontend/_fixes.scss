@@ -1,0 +1,62 @@
+.form-control{
+  background-color: #f8f8f8;
+  border: none;
+  border-bottom: 1px solid #666;
+  border-radius: 0;
+  box-shadow: none;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  -webkit-appearance: none;
+  &:focus {
+    border-color: $orange;
+    outline: 0;
+    box-shadow: none;
+  }
+}
+
+.dataTables_wrapper{
+  .dataTables_paginate{
+    .paginate_button{
+      &:hover{
+        background: transparent !important;
+      }
+    }
+  }
+}
+
+.main-nav{
+  .navbar-right{
+    .nav-user{
+      span{
+        @media screen and (max-width: $break-small) {
+          padding-left: 0px;
+        }
+      }
+    }
+  }
+}
+
+.navbar-nav{
+  .open{
+    .dropdown-menu{
+      @media screen and (max-width: $break-small) {
+        position: absolute;
+        float: left;
+        background-color: #fff;
+        box-shadow: 0 6px 12px rgba(0,0,0,.175);
+      }
+    }
+  }
+}
+.navbar-header{
+  float: left;
+}
+.navbar-collapse{
+  width: auto;
+  display: block;
+  flex: none;
+  &.in{
+    @media screen and (max-width: $break-small) {
+      overflow: visible;
+    }
+  }
+}
