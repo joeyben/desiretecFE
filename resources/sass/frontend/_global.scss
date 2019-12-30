@@ -1,3 +1,29 @@
+// main Panel
+.panel-default{
+  >.panel-heading {
+    color: #333;
+    background-color: #fff;
+    border-color: #e6e5e5;
+  }
+}
+
+.panel-heading {
+  padding: 10px 15px;
+  border-bottom: 1px solid transparent;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.panel {
+  margin-bottom: 22px;
+  background-color: #fff;
+  border: 1px solid #e6e5e5;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+  box-shadow: 0 1px 1px rgba(0,0,0,.05);
+  margin-top: 50px;
+}
+
 // Buttons
 
 .primary-btn {

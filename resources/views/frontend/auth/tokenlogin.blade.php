@@ -6,7 +6,7 @@
 
 @section('before-scripts')
     <script type="application/javascript">
-        var brandColor = {!! json_encode(getCurrentWhiteLabelColor()) !!};
+        var brandColor = "#092a5e";
     </script>
 @endsection
 
@@ -34,7 +34,7 @@
 
 @section('content')
 <div class="container">
-    <div class="row">
+    <div class="row justify-content-md-center">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">Login</div>

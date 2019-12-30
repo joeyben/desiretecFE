@@ -146,6 +146,13 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'frontend' => [
+            'register-user' => [
+                'email'    => 'E-Mail-Adresse',
+                'password' => 'Passwort'
+            ]
+        ]
+    ],
 
 ];
