@@ -14,7 +14,7 @@ require('../bootstrap');
 
 Vue.use(require('vue-moment'));
 Vue.use(require('vue-js-modal'));
-Vue.component('v-select', require('../../../../node_modules/vue-select/src/components/Select.vue'))
+Vue.component('v-select', require('../../../node_modules/vue-select/src/components/Select.vue'))
 Vue.component('pagination', require('../components/frontend/PaginationComponent.vue'));
 Vue.component('comment', require('../components/frontend/Comment.vue'));
 Vue.component('message', require('../components/frontend/Message.vue'));
