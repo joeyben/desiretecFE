@@ -26,6 +26,22 @@ Route::get('/test', function(){
     return 'test';
 });
 
+
+Route::group(['namespace' => 'Agents', 'as' => 'agents.'], function () {
+    Route::get('agents', 'AgentsController@index')->name('index');
+    Route::post('agents/get', 'AgentsTableController')->name('get');
+    Route::get('agent/profile', 'AgentsController@profile')->name('profile');
+    Route::get('agents/create', 'AgentsController@create')->name('create');
+    Route::post('agents/store', 'AgentsController@store')->name('store');
+    Route::post('agents/update/{id}', 'AgentsController@updateAgent')->name('update');
+    Route::post('agents/edit', 'AgentsController@edit')->name('edit');
+    Route::get('agents/edit', 'AgentsController@editAgent')->name('edit');
+    Route::post('agents/destroy', 'AgentsController@destroy')->name('destroy');
+    Route::get('agents/delete/{id}', 'AgentsController@delete')->name('delete');
+    Route::get('agents/status/{id}', 'AgentsController@status')->name('status');
+});
+
+
     /*
      * These frontend controllers require the user to be logged in
      * All route names are prefixed with 'frontend.'
@@ -94,19 +110,19 @@ Route::get('/test', function(){
 
         });
 
-        Route::group(['namespace' => 'Agents', 'as' => 'agents.'], function () {
-            Route::get('agents', 'AgentsController@index')->name('index');
-            Route::post('agents/get', 'AgentsTableController')->name('get');
-            Route::get('agent/profile', 'AgentsController@profile')->name('profile');
-            Route::get('agents/create', 'AgentsController@create')->name('create');
-            Route::post('agents/store', 'AgentsController@store')->name('store');
-            Route::post('agents/update/{id}', 'AgentsController@updateAgent')->name('update');
-            Route::post('agents/edit', 'AgentsController@edit')->name('edit');
-            Route::get('agents/edit/{id}', 'AgentsController@editAgent')->name('edit');
-            Route::post('agents/destroy', 'AgentsController@destroy')->name('destroy');
-            Route::get('agents/delete/{id}', 'AgentsController@delete')->name('delete');
-            Route::get('agents/status/{id}', 'AgentsController@status')->name('status');
-        });
+        // Route::group(['namespace' => 'Agents', 'as' => 'agents.'], function () {
+        //     Route::get('agents', 'AgentsController@index')->name('index');
+        //     Route::post('agents/get', 'AgentsTableController')->name('get');
+        //     Route::get('agent/profile', 'AgentsController@profile')->name('profile');
+        //     Route::get('agents/create', 'AgentsController@create')->name('create');
+        //     Route::post('agents/store', 'AgentsController@store')->name('store');
+        //     Route::post('agents/update/{id}', 'AgentsController@updateAgent')->name('update');
+        //     Route::post('agents/edit', 'AgentsController@edit')->name('edit');
+        //     Route::get('agents/edit/{id}', 'AgentsController@editAgent')->name('edit');
+        //     Route::post('agents/destroy', 'AgentsController@destroy')->name('destroy');
+        //     Route::get('agents/delete/{id}', 'AgentsController@delete')->name('delete');
+        //     Route::get('agents/status/{id}', 'AgentsController@status')->name('status');
+        // });
 
         Route::group(['namespace' => 'Comments', 'as' => 'comments.'], function () {
 
