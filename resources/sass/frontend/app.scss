@@ -1,12 +1,20 @@
-// Fonts
-@import url(https://fonts.googleapis.com/css?family=Comfortaa:300,400,700);
 
 // Variables
 @import "variables";
 
-// Bootstrap
-@import "~bootstrap/scss/bootstrap";
-@import "~bootstrap-select/sass/bootstrap-select";
+// Fonts
+@import url(https://fonts.googleapis.com/css?family=Comfortaa:300,400,700);
+
+// Plugins
+@import "../plugin/toastr/toastr.scss";
+@import "../plugin/sweetalert/sweetalert.scss";
+@import "../plugin/datatables/datatables.scss";
+@import "../plugin/bootstrap/bootstrap.css";
+@import "../plugin/bootstrap/bootstrap_limitless.css";
+
+// // Bootstrap
+// @import "~bootstrap/scss/bootstrap";
+// @import "~bootstrap-select/sass/bootstrap-select";
 
 // Font Awesome
 @import "~@fortawesome/fontawesome-pro/scss/fontawesome";
@@ -16,7 +24,6 @@
 
 // Helpers
 @import "../helpers";
-
 
 // Global
 @import "global";
@@ -42,10 +49,6 @@
 @import "wish/list-responsive";
 
 @import "wish/details";
-
-// Plugins
-@import "../plugin/toastr/toastr.scss";
-@import "../plugin/sweetalert/sweetalert.scss";
 
 // Fix issues with Bootsrap
 @import "fixes";

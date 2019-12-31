@@ -21,7 +21,22 @@ return [
         ],
         'passwords' => [
             'forgot_password' => 'Passwort vergessen?'
-        ]
+        ],
+
+        'agents' => [
+            'create'     => 'Neuen Agenten erstellen',
+            'management' => 'Agenten',
+            'table'      => [
+                'avatar'           => 'Avatar',
+                'name'             => 'Name',
+                'display_name'     => 'Anzeigename',
+                'status'           => 'Status',
+                'created_at'       => 'Erstellt am',
+                'createdby'        => 'Erstellt von',
+                'id'               => 'ID',
+                'actions'          => 'Agent bearbeiten',
+            ],
+        ],
     ]
 
 ];
