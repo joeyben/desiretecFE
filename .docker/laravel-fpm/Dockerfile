@@ -28,6 +28,6 @@ RUN mv /var/www/html/.docker/laravel-fpm/opcache.ini /usr/local/etc/php/conf.d/o
 USER root
 
 RUN composer dump-autoload -a --no-dev && \
-    rm -r /var/www/html/.docker && \
-    rm /var/www/html/docker-compose.* && \
-    rm -r /var/www/html/.git
+    rm -rf /var/www/html/.docker && \
+    rm -f /var/www/html/docker-compose.* && \
+    rm -rf /var/www/html/.git
