@@ -21,6 +21,9 @@ return [
         ],
         'passwords' => [
             'forgot_password' => 'Passwort vergessen?'
+        ],
+        'tokenlogin' => [
+            'email' => 'Ihre E-Mail-Adresse'
         ]
     ]
 

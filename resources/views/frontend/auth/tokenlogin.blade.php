@@ -42,28 +42,37 @@
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/login/token') }}">
                         {{ csrf_field() }}
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">{{ trans('label.tokenlogin.email') }}</label>
+                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }} mb-0">
+                            <div class="row p-4 pb-0">
+                                <div class="col-md-4">
+                                    <label for="email" class="control-label">{{ trans('labels.frontend.tokenlogin.email') }}</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
 
-                            <div class="col-md-8">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
+                                    @if ($errors->has('email'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('email') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <div class="col-md-8 col-md-offset-4">
-                                <button type="submit" class="btn primary-btn mb-0">
-                                    {{ trans('button.tokenlogin.send') }}
-                                </button>
-                                <a href="{{route('frontend.auth.login')}}" class="btn secondary-btn">
-                                    {{ trans('account.login.seller') }}
-                                </a>
+                            <div class="row p-4">
+                                <div class="col-md-4">
+                                    &nbsp;
+                                </div>
+
+                                <div class="col-md-8">
+                                    <button type="submit" class="btn primary-btn mb-0">
+                                        {{ trans('button.tokenlogin.send') }}
+                                    </button>
+                                    <a href="{{route('frontend.auth.login')}}" class="btn secondary-btn">
+                                        {{ trans('account.login.seller') }}
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </form>
