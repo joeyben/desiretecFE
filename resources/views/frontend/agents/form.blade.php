@@ -58,8 +58,6 @@
 
 <script>
     $(document).ready(function(){
-        var brandColor = {!! json_encode(getCurrentWhiteLabelColor()) !!};
-
         $('.primary-btn').css({
             'background': brandColor,
             'border': '1px solid ' + brandColor,

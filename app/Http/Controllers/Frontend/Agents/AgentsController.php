@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Frontend\Agents;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Frontend\Agents\ManageAgentsRequest;
-use App\Http\Requests\Frontend\Agents\UpdateAgentsRequest;
 use App\Models\Agents\Agent;
-use App\Repositories\Frontend\Agents\AgentsRepository;
-use Illuminate\Http\Request;
-use Illuminate\Session\Store;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\Controller;
+// use App\Repositories\Frontend\Agents\AgentsRepository;
+// use Illuminate\Http\Request;
+// use App\Http\Requests\Frontend\Agents\ManageAgentsRequest;
+// use App\Http\Requests\Frontend\Agents\UpdateAgentsRequest;
+// use Illuminate\Session\Store;
+// use Illuminate\Support\Facades\DB;
+// use Illuminate\Support\Facades\Storage;
 
 /**
  * Class AgentsController.
@@ -27,29 +27,29 @@ class AgentsController extends Controller
         'Deleted'      => 'Deleted',
     ];
 
-    /**
-     * @var AgentsRepository
-     */
-    protected $agent;
+    // /**
+    //  * @var AgentsRepository
+    //  */
+    // protected $agent;
 
-    protected $upload_path;
+    // protected $upload_path;
 
-    protected $storage;
-    /**
-     * @var \Illuminate\Session\Store
-     */
-    private $session;
+    // protected $storage;
+    // /**
+    //  * @var \Illuminate\Session\Store
+    //  */
+    // private $session;
 
     /**
      * @param \App\Repositories\Frontend\Agents\AgentsRepository $agent
      * @param \Illuminate\Session\Store                          $session
      */
-    public function __construct(AgentsRepository $agent, Store $session)
+    public function __construct()
     {
-        $this->agent = $agent;
-        $this->upload_path = 'img' . \DIRECTORY_SEPARATOR . 'agent' . \DIRECTORY_SEPARATOR;
-        $this->storage = Storage::disk('s3');
-        $this->session = $session;
+        // $this->agent = $agent;
+        // $this->upload_path = 'img' . \DIRECTORY_SEPARATOR . 'agent' . \DIRECTORY_SEPARATOR;
+        // $this->storage = Storage::disk('s3');
+        // $this->session = $session;
     }
 
     /**
@@ -57,7 +57,7 @@ class AgentsController extends Controller
      *
      * @return mixed
      */
-    public function index(ManageAgentsRequest $request)
+    public function index()
     {
         return view('frontend.agents.index')->with([
             'status'     => $this->status,
@@ -82,7 +82,7 @@ class AgentsController extends Controller
      *
      * @return mixed
      */
-    public function create(ManageAgentsRequest $request)
+    public function create()
     {
         return view('frontend.agents.create')->with([
             'status'         => $this->status,
@@ -95,7 +95,7 @@ class AgentsController extends Controller
      *
      * @return mixed
      */
-    public function store(Request $request)
+    public function store()
     {
         $this->agent->create($request->except('_token'));
 
@@ -110,23 +110,23 @@ class AgentsController extends Controller
      *
      * @return mixed
      */
-    public function edit(Agent $agent, ManageAgentsRequest $request)
+    public function edit()
     {
         return view('frontend.agents.edit')->with([
-            'agent'               => $agent,
+            // 'agent'               => $agent,
             'status'              => $this->status,
             'body_class'          => $this::BODY_CLASS,
         ]);
     }
 
-    public function editAgent($id)
+    public function editAgent()
     {
-        $agent = DB::table('agents')->where('id', $id)->first();
+        // $agent = DB::table('agents')->where('id', $id)->first();
 
         return view('frontend.agents.edit')->with([
-            'agent'               => $agent,
+            // 'agent'               => $agent,
             'status'              => $this->status,
-            'body_class'          => $this::BODY_CLASS,
+            'body_class'          => 'agent',
         ]);
     }
 
@@ -136,20 +136,20 @@ class AgentsController extends Controller
      *
      * @return mixed
      */
-    public function update(Agent $agent, UpdateAgentsRequest $request)
+    public function update()
     {
-        $input = $request->all();
+        // $input = $request->all();
 
-        $this->agent->update($agent, $request->except(['_token', '_method']));
+        // $this->agent->update($agent, $request->except(['_token', '_method']));
 
         return redirect()
             ->route('admin.agents.index')
             ->with('flash_success', trans('alerts.frontend.agents.updated'));
     }
 
-    public function updateAgent($id, Request $request)
+    public function updateAgent()
     {
-        $this->agent->doUpdate($id, $request);
+        // $this->agent->doUpdate($id, $request);
 
         return redirect()
             ->route('frontend.agents.index')
@@ -162,27 +162,27 @@ class AgentsController extends Controller
      *
      * @return mixed
      */
-    public function destroy(Agent $agent, ManageAgentsRequest $request)
+    public function destroy()
     {
-        $this->agent->delete($agent);
+        // $this->agent->delete($agent);
 
         return redirect()
             ->route('admin.agents.index')
             ->with('flash_success', trans('alerts.frontend.agents.deleted'));
     }
 
-    public function status($id)
+    public function status()
     {
-        $this->agent->updateStatus($id);
-        $this->session->put('agent_id', $id);
+        // $this->agent->updateStatus($id);
+        // $this->session->put('agent_id', $id);
 
         return redirect()->back();
     }
 
-    public function delete($id)
+    public function delete()
     {
         /**** Delete Agent and Assign offers/messages to another agent ****/
-        $this->agent->deleteAgent($id);
+        // $this->agent->deleteAgent($id);
 
         return redirect()
             ->route('frontend.agents.index')

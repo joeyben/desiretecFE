@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    {{ Form::open(['route' => ['frontend.agents.update',$agent->id], 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'POST', 'id' => 'create-permission', 'files' => true]) }}
+    {{ Form::open(['route' => ['frontend.agents.update',1], 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'POST', 'id' => 'create-permission', 'files' => true]) }}
 
         <div class="modal-header">
             <h5 class="modal-title">{{ trans('labels.agents.edit_headline') }}</h5>
@@ -23,8 +23,8 @@
                 {{ Form::submit(trans('labels.agents.save'), ['class' => 'btn btn-primary btn-md']) }}
             </div>
         </div>
-    {{ Form::close() }}   
-    
+    {{ Form::close() }}
+
 @endsection
 
 @section("after-scripts")
@@ -46,7 +46,7 @@
         });
 
         $(document).ready(function(){
-            var brandColor = {!! json_encode(getCurrentWhiteLabelColor()) !!};
+            var brandColor = '#000';
 
             $('.primary-btn, .btn-primary').css({
                 'background': brandColor,

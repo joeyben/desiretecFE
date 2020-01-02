@@ -21,14 +21,9 @@
         <!-- Check if the language is set to RTL, so apply the RTL layouts -->
         <!-- Otherwise apply the normal LTR layouts -->
 
-
         {{ Html::style(mix('css/frontend.css')) }}
 
         {{-- {!! Html::style('js/select2/select2.min.css') !!} --}}
-
-
-
-        <link media="all" type="text/css" rel="stylesheet" href="{{ asset('fontawsome/css/all.css') }}">
 
     @yield('after-styles')
         <style type="text/css">
@@ -68,15 +63,12 @@
         @yield('before-scripts')
         {!! Html::script(mix('js/frontend.js')) !!}
         @yield('after-scripts')
-        {{ Html::script('js/jquerysession.js') }}
-        {{ Html::script('js/frontend/frontend.js') }}
-       {{--  {!! Html::script('js/select2/select2.min.js') !!} --}}
         <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.js"></script>
 
         <script type="text/javascript">
             if("{{Route::currentRouteName()}}" !== "frontend.user.account")
             {
-                $.session.clear();
+                // $.session.clear();
             }
         </script>
     </body>

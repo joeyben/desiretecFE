@@ -4,6 +4,12 @@
     {{ trans('general.url.agent') }}
 @endsection
 
+@section('before-scripts')
+    <script type="text/javascript">
+        var brandColor = '#000';
+    </script>
+@endsection
+
 @section('content')
 <div class="modal fade" id="modalForm" tabindex="-1" role="dialog" data-backdrop="static">
     <div class="modal-dialog" role="document">
@@ -72,65 +78,66 @@
 
     {{ Html::script(mix('js/dataTable.js')) }}
 
-<script>
-    $(function() {
-        var dataTable = $('#agents-table').dataTable({
-            processing: true,
-            serverSide: true,
-            bLengthChange:false,
-            bInfo:false,
-            ajax: {
-                url: '{{ route("frontend.agents.get") }}',
-                type: 'post'
-            },
-            columns: [
-                {data: 'avatar', name: '{{config('module.agents.table')}}.avatar'},
-                {data: 'id', name: '{{config('module.agents.table')}}.name'},
-                {data: 'name', name: '{{config('module.agents.table')}}.display_name'},
-                {data: 'created_at', name: '{{config('module.agents.table')}}.created_at'},
-                {data: 'status', name: '{{config('module.agents.table')}}.status'},
-                {data: 'actions', name: '{{config('module.agents.table')}}.actions'},
-            ],
-
-            order: [[4, "asc"]],
-            searchDelay: 500,
-            dom: 'lBfrtip',
-            buttons: {
-                buttons: [
-
-                ]
-            },
-            language: {
-                "search": "Suche",
-                "paginate": {
-                    "first":      "Erster",
-                    "last":       "Letzter",
-                    "next":       "{{ trans('labels.nav.next') }}",
-                    "previous":   "{{ trans('labels.nav.prev') }}"
+    <script>
+        $(function() {
+            var dataTable = $('#agents-table').dataTable({
+                processing: true,
+                serverSide: true,
+                bLengthChange:false,
+                bInfo:false,
+                ajax: {
+                    url: '{{ route("frontend.agents.get") }}',
+                    type: 'post',
+                    dataSrc: ''
                 },
-            }
+                columns: [
+                    {data: 'avatar', name: '{{config('module.agents.table')}}.avatar'},
+                    {data: 'id', name: '{{config('module.agents.table')}}.name'},
+                    {data: 'name', name: '{{config('module.agents.table')}}.display_name'},
+                    {data: 'created_at', name: '{{config('module.agents.table')}}.created_at'},
+                    {data: 'status', name: '{{config('module.agents.table')}}.status'},
+                    {data: 'actions', name: '{{config('module.agents.table')}}.actions'},
+                ],
+
+                order: [[4, "asc"]],
+                searchDelay: 500,
+                dom: 'lBfrtip',
+                buttons: {
+                    buttons: [
+
+                    ]
+                },
+                language: {
+                    "search": "Suche",
+                    "paginate": {
+                        "first":      "Erster",
+                        "last":       "Letzter",
+                        "next":       "{{ trans('labels.nav.next') }}",
+                        "previous":   "{{ trans('labels.nav.prev') }}"
+                    },
+                }
+            });
+
+            //Backend.DataTableSearch.init(dataTable);
+
+            $(document).on('change','.up', function(){
+                var names = [];
+                var length = $(this).get(0).files.length;
+                for (var i = 0; i < $(this).get(0).files.length; ++i) {
+                    names.push($(this).get(0).files[i].name);
+                }
+                // $("input[name=file]").val(names);
+                if(length>2){
+                    var fileName = names.join(', ');
+                    $(this).closest('.form-group').find('.form-control').attr("value",length+" files selected");
+                }
+                else{
+                    $(this).closest('.form-group').find('.form-control').attr("value",names);
+                }
+            });
         });
 
-        //Backend.DataTableSearch.init(dataTable);
-
-        $(document).on('change','.up', function(){
-            var names = [];
-            var length = $(this).get(0).files.length;
-            for (var i = 0; i < $(this).get(0).files.length; ++i) {
-                names.push($(this).get(0).files[i].name);
-            }
-            // $("input[name=file]").val(names);
-            if(length>2){
-                var fileName = names.join(', ');
-                $(this).closest('.form-group').find('.form-control').attr("value",length+" files selected");
-            }
-            else{
-                $(this).closest('.form-group').find('.form-control').attr("value",names);
-            }
-        });
-    });
-
-</script>
+    </script>
 
 @yield('after-scripts-include')
 
