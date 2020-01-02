@@ -19,9 +19,10 @@ mix.setPublicPath('public')
     ], 'public/css/frontend-custom.css')
     .js([
         'resources/js/frontend/app.js',
-        'resources/js/plugin/sweetalert/sweetalert.min.js',
         'node_modules/bootstrap-select/js/bootstrap-select.js',
-        'resources/js/plugins.js'
+        'resources/js/sweetalert.min.js',
+        'resources/js/plugins.js',
+        'resources/js/jquerysession.js'
     ], 'public/js/frontend.js')
     //Copying all directories of tinymce to public folder
     .copy('resources/fonts', 'public/fonts')
