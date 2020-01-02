@@ -22,9 +22,9 @@ COPY .docker/laravel-fpm/supervisord.conf /etc/supervisord.conf
 COPY .docker/laravel-fpm/supervisord.d /etc/supervisord.d
 RUN chmod +x /usr/local/bin/docker-php-entrypoint && chmod +x /usr/local/bin/artisan-cmds
 
-RUN mv /var/www/html/.docker/laravel/laravel.ini /usr/local/etc/php/conf.d
-RUN mv /var/www/html/.docker/laravel/php.ini /usr/local/etc/php/php.ini
-RUN mv /var/www/html/.docker/laravel/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
+RUN mv /var/www/html/.docker/laravel-fpm/laravel.ini /usr/local/etc/php/conf.d
+RUN mv /var/www/html/.docker/laravel-fpm/php.ini /usr/local/etc/php/php.ini
+RUN mv /var/www/html/.docker/laravel-fpm/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 USER root
 
 RUN composer dump-autoload -a --no-dev && \
