@@ -3,22 +3,23 @@
 namespace App\Http\Controllers\Frontend\Wishes;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Frontend\Wishes\ChangeWishesStatusRequest;
-use App\Http\Requests\Frontend\Wishes\ManageWishesRequest;
-use App\Http\Requests\Frontend\Wishes\StoreWishesRequest;
-use App\Http\Requests\Frontend\Wishes\UpdateWishesRequest;
-use App\Http\Requests\Frontend\Wishes\UpdateNoteRequest;
-use App\Models\Access\User\User;
-use App\Models\Access\User\UserToken;
-use App\Models\Agents\Agent;
-use App\Models\Wishes\Wish;
-use App\Repositories\Frontend\Wishes\WishesRepository;
-use Illuminate\Auth\AuthManager;
-use Illuminate\Session\Store;
-use Illuminate\Support\Facades\Auth;
-use Modules\Categories\Repositories\Contracts\CategoriesRepository;
-use Modules\Rules\Repositories\Eloquent\EloquentRulesRepository;
-use App\Repositories\Backend\Access\User\UserRepository;
+use Illuminate\Http\Request;
+//use App\Http\Requests\Frontend\Wishes\ChangeWishesStatusRequest;
+//use App\Http\Requests\Frontend\Wishes\ManageWishesRequest;
+//use App\Http\Requests\Frontend\Wishes\StoreWishesRequest;
+//use App\Http\Requests\Frontend\Wishes\UpdateWishesRequest;
+//use App\Http\Requests\Frontend\Wishes\UpdateNoteRequest;
+//use App\Models\Access\User\User;
+//use App\Models\Access\User\UserToken;
+//use App\Models\Agents\Agent;
+//use App\Models\Wishes\Wish;
+//use App\Repositories\Frontend\Wishes\WishesRepository;
+//use Illuminate\Auth\AuthManager;
+//use Illuminate\Session\Store;
+//use Illuminate\Support\Facades\Auth;
+//use Modules\Categories\Repositories\Contracts\CategoriesRepository;
+//use Modules\Rules\Repositories\Eloquent\EloquentRulesRepository;
+//use App\Repositories\Backend\Access\User\UserRepository;
 
 /**
  * Class WishesController.
@@ -92,14 +93,8 @@ class WishesController extends Controller
      * @param \App\Repositories\Backend\Access\User\UserRepository            $users
      * @param \Illuminate\Session\Store                                       $session
      */
-    public function __construct(WishesRepository $wish, CategoriesRepository $categories, EloquentRulesRepository $rules, AuthManager $auth, UserRepository $users, Store $session)
+    public function __construct()
     {
-        $this->wish = $wish;
-        $this->categories = $categories;
-        $this->rules = $rules;
-        $this->auth = $auth;
-        $this->users = $users;
-        $this->session = $session;
     }
 
     /**
@@ -204,13 +199,13 @@ class WishesController extends Controller
      *
      * @return mixed
      */
-    public function wishList(ManageWishesRequest $request)
+    public function wishList()
     {
         return view('frontend.wishes.index')->with([
             'status'     => $this->status,
             'category'   => $this->category,
             'catering'   => $this->catering,
-            'count'      => $this->wish->getForDataTable()->get()->where('whitelabel_id', getCurrentWhiteLabelId())->count(),
+            'count'      => 59,
             'body_class' => $this::BODY_CLASS_LIST,
         ]);
     }
@@ -220,82 +215,291 @@ class WishesController extends Controller
      *
      * @return mixed
      */
-    public function getList(ManageWishesRequest $request)
+    public function getList()
     {
-        $status_arr = [
-            'new'               => '1',
-            'offer_created'     => '2',
-            'completed'         => '3',
-        ];
+//        $status_arr = [
+//            'new'               => '1',
+//            'offer_created'     => '2',
+//            'completed'         => '3',
+//        ];
+//
+//        $status = $request->get('status') ? $status_arr[$request->get('status')] : '1';
+//        $id = ($request->get('id') && !is_null($request->get('id'))) ? $request->get('id') : '';
+//        $currentWhiteLabelID = getCurrentWhiteLabelField('id');
+//        $rules = $this->rules->getRuleForWhitelabel((int) ($currentWhiteLabelID));
+//
+//        if($this->auth->guard('web')->user()->hasRole('User')) {
+//            $wish = $this->wish->getForDataTable()
+//                ->when($id, function ($wish, $id) {
+//                    return $wish->where(config('module.wishes.table') . '.id', 'like', '%' . $id . '%')->where('whitelabel_id', (int) (getCurrentWhiteLabelId()));
+//                })
+//                ->paginate(10);
+//        } else {
+//            $wish = $this->wish->getForDataTable()
+//                ->when($status, function ($wish, $status) {
+//                    return $wish->where(config('module.wishes.table') . '.status', $status)
+//                        ->where('whitelabel_id', (int) (getCurrentWhiteLabelId()));
+//                })->when($id, function ($wish, $id) {
+//                    return $wish->where(config('module.wishes.table') . '.id', 'like', '%' . $id . '%');
+//                })
+//                ->paginate(10);
+//        }
+//
+//        foreach ($wish as $singleWish) {
+//            $singleWish['status'] = array_search($singleWish['status'], $status_arr) ? array_search($singleWish['status'], $status_arr) : 'new';
+//
+//            if($this->auth->guard('web')->user()->hasRole('Seller')) { //<<<--- ID of BILD REISEN AND the respective WLs for User's Email
+//                if($currentWhiteLabelID === 198) {
+//                    $singleWish['senderEmail'] = ($this->users->find($singleWish['created_by'])->email && !is_null($this->users->find($singleWish['created_by'])->email)) ? $this->users->find($singleWish['created_by'])->email : "No Email";
+//                }
+//                if($singleWish->messages() && $singleWish->messages()->count() > 0) {
+//                    $singleWish['messageSentFlag'] = true;
+//                }
+//            }
+//
+//            $manuelFlag = false;
+//
+//            if (\is_array($rules['destination']) && null !== $rules['destination']) {
+//                if (\is_array($singleWish['destination'])) {
+//                    foreach ($singleWish['destination'] as $destination) {
+//                        if (\in_array($destination, $rules['destination'], true)) {
+//                            $manuelFlag = true;
+//                        }
+//                    }
+//                } else {
+//                    if (\in_array($singleWish['destination'], $rules['destination'], true)) {
+//                        $manuelFlag = true;
+//                    }
+//                }
+//            }
+//
+//            if ($singleWish['budget'] > $rules['budget']) {
+//                $manuelFlag = true;
+//            }
+//
+//            $singleWish['manuelFlag'] = $manuelFlag;
+//            $singleWish['wlRule'] = $rules['type'];
+//        }
 
-        $status = $request->get('status') ? $status_arr[$request->get('status')] : '1';
-        $id = ($request->get('id') && !is_null($request->get('id'))) ? $request->get('id') : '';
-        $currentWhiteLabelID = getCurrentWhiteLabelField('id');
-        $rules = $this->rules->getRuleForWhitelabel((int) ($currentWhiteLabelID));
-
-        if($this->auth->guard('web')->user()->hasRole('User')) {
-            $wish = $this->wish->getForDataTable()
-                ->when($id, function ($wish, $id) {
-                    return $wish->where(config('module.wishes.table') . '.id', 'like', '%' . $id . '%')->where('whitelabel_id', (int) (getCurrentWhiteLabelId()));
-                })
-                ->paginate(10);
-        } else {
-            $wish = $this->wish->getForDataTable()
-                ->when($status, function ($wish, $status) {
-                    return $wish->where(config('module.wishes.table') . '.status', $status)
-                        ->where('whitelabel_id', (int) (getCurrentWhiteLabelId()));
-                })->when($id, function ($wish, $id) {
-                    return $wish->where(config('module.wishes.table') . '.id', 'like', '%' . $id . '%');
-                })
-                ->paginate(10);
-        }
-
-        foreach ($wish as $singleWish) {
-            $singleWish['status'] = array_search($singleWish['status'], $status_arr) ? array_search($singleWish['status'], $status_arr) : 'new';
-
-            if($this->auth->guard('web')->user()->hasRole('Seller')) { //<<<--- ID of BILD REISEN AND the respective WLs for User's Email
-                if($currentWhiteLabelID === 198) {
-                    $singleWish['senderEmail'] = ($this->users->find($singleWish['created_by'])->email && !is_null($this->users->find($singleWish['created_by'])->email)) ? $this->users->find($singleWish['created_by'])->email : "No Email";
-                }
-                if($singleWish->messages() && $singleWish->messages()->count() > 0) {
-                    $singleWish['messageSentFlag'] = true;
-                }
-            }
-
-            $manuelFlag = false;
-
-            if (\is_array($rules['destination']) && null !== $rules['destination']) {
-                if (\is_array($singleWish['destination'])) {
-                    foreach ($singleWish['destination'] as $destination) {
-                        if (\in_array($destination, $rules['destination'], true)) {
-                            $manuelFlag = true;
-                        }
-                    }
-                } else {
-                    if (\in_array($singleWish['destination'], $rules['destination'], true)) {
-                        $manuelFlag = true;
-                    }
-                }
-            }
-
-            if ($singleWish['budget'] > $rules['budget']) {
-                $manuelFlag = true;
-            }
-
-            $singleWish['manuelFlag'] = $manuelFlag;
-            $singleWish['wlRule'] = $rules['type'];
-        }
+//        $response = [
+//            'pagination' => [
+//                'total'        => $wish->total(),
+//                'per_page'     => $wish->perPage(),
+//                'current_page' => $wish->currentPage(),
+//                'last_page'    => $wish->lastPage(),
+//                'from'         => $wish->firstItem(),
+//                'to'           => $wish->lastItem()
+//            ],
+//            'data' => $wish
+//        ];
 
         $response = [
-            'pagination' => [
-                'total'        => $wish->total(),
-                'per_page'     => $wish->perPage(),
-                'current_page' => $wish->currentPage(),
-                'last_page'    => $wish->lastPage(),
-                'from'         => $wish->firstItem(),
-                'to'           => $wish->lastItem()
+            "pagination" => [
+                "total" => 7,
+                "per_page" => 10,
+                "current_page" => 1,
+                "last_page" => 1,
+                "from" => 1,
+                "to" => 7,
             ],
-            'data' => $wish
+            "data" => [
+                "current_page" => 1,
+                "data" => [
+                    0 => [
+                        "id" => 1140,
+                        "title" => "-",
+                        "airport" => "sad",
+                        "destination" => "asd",
+                        "duration" => "beliebig",
+                        "adults" => 1,
+                        "kids" => 4,
+                        "budget" => 4000,
+                        "earliest_start" => "2019-12-21",
+                        "latest_return" => "2019-12-28",
+                        "status" => "new",
+                        "featured_image" => "bg.jpg",
+                        "created_by" => 2271,
+                        "created_at" => "2019-12-18 12:47:38",
+                        "group_id" => 1,
+                        "note" => null,
+                        "first_name" => "Reisewunschportal",
+                        "last_name" => "Kunde",
+                        "whitelabel_id" => 156,
+                        "whitelabel_name" => "TUI",
+                        "offers" => 0,
+                        "categories" => null,
+                        "manuelFlag" => true,
+                        "wlRule" => null,
+                    ],
+                    1 => [
+                        "id" => 1139,
+                        "title" => "-",
+                        "airport" => "ds",
+                        "destination" => "as",
+                        "duration" => "beliebig",
+                        "adults" => 1,
+                        "kids" => 4,
+                        "budget" => 4000,
+                        "earliest_start" => "2019-12-21",
+                        "latest_return" => "2019-12-28",
+                        "status" => "new",
+                        "featured_image" => "bg.jpg",
+                        "created_by" => 2270,
+                        "created_at" => "2019-12-18 12:41:45",
+                        "group_id" => 1,
+                        "note" => null,
+                        "first_name" => "Reisewunschportal",
+                        "last_name" => "Kunde",
+                        "whitelabel_id" => 156,
+                        "whitelabel_name" => "TUI",
+                        "offers" => 0,
+                        "categories" => null,
+                        "manuelFlag" => true,
+                        "wlRule" => null,
+                    ],
+                    2 => [
+                        "id" => 1138,
+                        "title" => "-",
+                        "airport" => "dsa",
+                        "destination" => "sa",
+                        "duration" => "beliebig",
+                        "adults" => 1,
+                        "kids" => 4,
+                        "budget" => null,
+                        "earliest_start" => "2019-12-21",
+                        "latest_return" => "2019-12-28",
+                        "status" => "new",
+                        "featured_image" => "bg.jpg",
+                        "created_by" => 2269,
+                        "created_at" => "2019-12-18 12:39:58",
+                        "group_id" => 1,
+                        "note" => null,
+                        "first_name" => "Reisewunschportal",
+                        "last_name" => "Kunde",
+                        "whitelabel_id" => 156,
+                        "whitelabel_name" => "TUI",
+                        "offers" => 0,
+                        "categories" => null,
+                        "manuelFlag" => false,
+                        "wlRule" => null,
+                    ],
+                    3 => [
+                        "id" => 1137,
+                        "title" => "-",
+                        "airport" => "sad",
+                        "destination" => "asd",
+                        "duration" => "beliebig",
+                        "adults" => 1,
+                        "kids" => 4,
+                        "budget" => 4000,
+                        "earliest_start" => "2019-12-21",
+                        "latest_return" => "2019-12-28",
+                        "status" => "new",
+                        "featured_image" => "bg.jpg",
+                        "created_by" => 2268,
+                        "created_at" => "2019-12-18 12:35:59",
+                        "group_id" => 1,
+                        "note" => null,
+                        "first_name" => "Reisewunschportal",
+                        "last_name" => "Kunde",
+                        "whitelabel_id" => 156,
+                        "whitelabel_name" => "TUI",
+                        "offers" => 0,
+                        "categories" => null,
+                        "manuelFlag" => true,
+                        "wlRule" => null,
+                    ],
+                    4 => [
+                        "id" => 1136,
+                        "title" => "-",
+                        "airport" => "asd",
+                        "destination" => "sad",
+                        "duration" => "beliebig",
+                        "adults" => 1,
+                        "kids" => 3,
+                        "budget" => 4000,
+                        "earliest_start" => "2019-12-21",
+                        "latest_return" => "2019-12-28",
+                        "status" => "new",
+                        "featured_image" => "bg.jpg",
+                        "created_by" => 2267,
+                        "created_at" => "2019-12-18 11:01:04",
+                        "group_id" => 1,
+                        "note" => null,
+                        "first_name" => "Reisewunschportal",
+                        "last_name" => "Kunde",
+                        "whitelabel_id" => 156,
+                        "whitelabel_name" => "TUI",
+                        "offers" => 0,
+                        "categories" => null,
+                        "manuelFlag" => true,
+                        "wlRule" => null,
+                    ],
+                    5 => [
+                        "id" => 1135,
+                        "title" => "-",
+                        "airport" => "berlin",
+                        "destination" => "hamburg",
+                        "duration" => "beliebig",
+                        "adults" => 1,
+                        "kids" => 4,
+                        "budget" => 4000,
+                        "earliest_start" => "2019-12-20",
+                        "latest_return" => "2019-12-27",
+                        "status" => "new",
+                        "featured_image" => "bg.jpg",
+                        "created_by" => 2262,
+                        "created_at" => "2019-12-17 15:02:20",
+                        "group_id" => 1,
+                        "note" => null,
+                        "first_name" => "Reisewunschportal",
+                        "last_name" => "Kunde",
+                        "whitelabel_id" => 156,
+                        "whitelabel_name" => "TUI",
+                        "offers" => 0,
+                        "categories" => null,
+                        "manuelFlag" => true,
+                        "wlRule" => null,
+                    ],
+                    6 => [
+                        "id" => 153,
+                        "title" => "Mali",
+                        "airport" => "Berlin",
+                        "destination" => "Mali",
+                        "duration" => "14 Nächte",
+                        "adults" => 5,
+                        "kids" => 3,
+                        "budget" => 8100,
+                        "earliest_start" => "2019-03-29",
+                        "latest_return" => "2019-04-06",
+                        "status" => "new",
+                        "featured_image" => "1522558148csm_ER_Namibia_b97bcd06f0.jpg",
+                        "created_by" => 130,
+                        "created_at" => "2019-03-26 12:52:47",
+                        "group_id" => 1,
+                        "note" => null,
+                        "first_name" => "Muster",
+                        "last_name" => "Name",
+                        "whitelabel_id" => 156,
+                        "whitelabel_name" => "TUI",
+                        "offers" => 0,
+                        "categories" => null,
+                        "messageSentFlag" => true,
+                        "manuelFlag" => true,
+                        "wlRule" => null,
+                    ],
+                ],
+                "first_page_url" => "http://tui.com:8000/wishes/getlist?page=1",
+                "from" => 1,
+                "last_page" => 1,
+                "last_page_url" => "http://tui.com:8000/wishes/getlist?page=1",
+                "next_page_url" => null,
+                "path" => "http://tui.com:8000/wishes/getlist",
+                "per_page" => 10,
+                "prev_page_url" => null,
+                "to" => 7,
+                "total" => 7,
+            ],
         ];
 
         return response()->json($response);
