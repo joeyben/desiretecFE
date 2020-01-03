@@ -62,6 +62,26 @@ return [
                 'createdat' => 'Erstellt in',
                 'createdby' => 'Erstellt von',
                 'all'       => 'Alle',
+            ]
+        ],
+        'user' => [
+            'passwords' => [
+                'change' => 'Passwort ändern',
+            ],
+
+            'profile' => [
+                'avatar'             => 'Avatar',
+                'created_at'         => 'Erstellt am',
+                'edit_information'   => 'Informationen bearbeiten',
+                'email'              => 'E-Mail-Adresse',
+                'last_updated'       => 'Zuletzt geändert',
+                'first_name'         => 'Vorname',
+                'last_name'          => 'Nachname',
+                'address'            => 'Adresse',
+                'country'            => 'Land',
+                'city'               => 'Stadt',
+                'zipcode'            => 'PLZ',
+                'update_information' => 'Profil ändern',
             ],
         ],
     ]

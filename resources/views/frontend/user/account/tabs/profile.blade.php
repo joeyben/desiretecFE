@@ -1,5 +1,9 @@
-<table class="table table-striped table-hover">
-    
+<?php
+    $hardcoded_user = array("first_name" => "Hardcoded", "last_name" => "Hardcoded", "email" => "hardcoded@mail.com", "created_at" => "2019-02-26 13:51:58", "updared_at" => "2019-12-06 09:17:25" );
+    $logged_in_user = json_decode(json_encode($hardcoded_user));
+?>
+
+<table class="table table-striped">
     <tr>
         <th>{{ trans('labels.frontend.user.profile.first_name') }}</th>
         <td>{{ !empty($logged_in_user->first_name) ? $logged_in_user->first_name : '' }}</td>
@@ -31,10 +35,10 @@
 
     <tr>
         <th>{{ trans('labels.frontend.user.profile.created_at') }}</th>
-        <td>{{ $logged_in_user->created_at }} </td>
+        <td>{{ !empty($logged_in_user->created_at) ? $logged_in_user->created_at : '' }}</td>
     </tr>
     <tr>
         <th>{{ trans('labels.frontend.user.profile.last_updated') }}</th>
-        <td>{{ $logged_in_user->updated_at }}</td>
+        <td>{{ !empty($logged_in_user->updated_at) ? $logged_in_user->updated_at : '' }}</td>
     </tr>
 </table>

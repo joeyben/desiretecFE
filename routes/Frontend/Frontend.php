@@ -27,6 +27,9 @@ Route::get('/test', function(){
 });
 
 
+/*
+* Agents
+*/
 Route::group(['namespace' => 'Agents', 'as' => 'agents.'], function () {
     Route::get('agents', 'AgentsController@index')->name('index');
     Route::post('agents/get', 'AgentsTableController')->name('get');
@@ -41,33 +44,55 @@ Route::group(['namespace' => 'Agents', 'as' => 'agents.'], function () {
     Route::get('agents/status/{id}', 'AgentsController@status')->name('status');
 });
 
+Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
+    /*
+     * User Dashboard Specific
+     */
+    Route::get('dashboard', 'DashboardController@index')->name('dashboard');
+
+    /*
+     * User Account Specific
+     */
+    Route::get('account', 'AccountController@index')->name('account');
+
+    /*
+     * User Profile Specific
+     */
+    Route::post('profile/update', 'ProfileController@update')->name('profile.update');
+
+    /*
+     * User Profile Picture
+     */
+    Route::patch('profile-picture/update', 'ProfileController@updateProfilePicture')->name('profile-picture.update');
+});
+
 
     /*
      * These frontend controllers require the user to be logged in
      * All route names are prefixed with 'frontend.'
      */
     Route::group(['middleware' => 'auth'], function () {
-        Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
-            /*
-             * User Dashboard Specific
-             */
-            Route::get('dashboard', 'DashboardController@index')->name('dashboard');
+        // Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
+        //     /*
+        //      * User Dashboard Specific
+        //      */
+        //     Route::get('dashboard', 'DashboardController@index')->name('dashboard');
 
-            /*
-             * User Account Specific
-             */
-            Route::get('account', 'AccountController@index')->name('account');
+        //     /*
+        //      * User Account Specific
+        //      */
+        //     Route::get('account', 'AccountController@index')->name('account');
 
-            /*
-             * User Profile Specific
-             */
-            Route::post('profile/update', 'ProfileController@update')->name('profile.update');
+        //     /*
+        //      * User Profile Specific
+        //      */
+        //     Route::post('profile/update', 'ProfileController@update')->name('profile.update');
 
-            /*
-             * User Profile Picture
-             */
-            Route::patch('profile-picture/update', 'ProfileController@updateProfilePicture')->name('profile-picture.update');
-        });
+        //     /*
+        //      * User Profile Picture
+        //      */
+        //     Route::patch('profile-picture/update', 'ProfileController@updateProfilePicture')->name('profile-picture.update');
+        // });
         Route::group(['namespace' => 'Wishes', 'as' => 'wishes.'], function () {
             Route::get('wishlist', 'WishesController@wishList')->name('list');
 

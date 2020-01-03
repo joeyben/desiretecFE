@@ -14,7 +14,17 @@ return [
     */
 
     'frontend' => [
-        'login' => 'Einloggen'
+        'login' => 'Einloggen',
+        'user'            => [
+            'account'         => 'Mein Konto',
+            'administration'  => 'Administration',
+            'change_password' => 'Passwort ändern',
+            'my_information'  => 'Meine Informationen',
+            'profile'         => 'Profil',
+            'agents'          => 'Agenten',
+            'name'            => 'Ich',
+            'update_profile'  => 'Profil ändern'
+        ],
     ]
 
 ];
