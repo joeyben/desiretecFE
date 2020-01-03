@@ -151,6 +151,15 @@ return [
             'register-user' => [
                 'email'    => 'E-Mail-Adresse',
                 'password' => 'Passwort'
+            ],
+            'offers' => [
+                'title'                 => 'Angebotstitel',
+                'title_placeholder'     => 'Kurz Beschreibung des Angebotes',
+                'text'                  => 'Nachricht',
+                'text_placeholder'      => 'Ihre Nachricht an den Kunden',
+                'link'                  => 'Link',
+                'link_placeholder'      => 'http://goo.gl/rxozgv',
+                'file'                  => 'Datei',
             ]
         ]
     ],

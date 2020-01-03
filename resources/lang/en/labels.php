@@ -38,7 +38,32 @@ return [
                 'id'               => 'ID',
                 'actions'          => 'Agent bearbeiten',
             ],
-        ]
+        ],
+        'wishes' => [
+            'wishes'        => 'Reisewünsche',
+            'goto'          => 'Reisewunsch ansehen',
+            'created_at'    => 'erstellt am',
+            'edit'          => 'Reisewunsch bearbeiten',
+            'add-comment'   => 'Kommentar hinzufügen',
+            'week'          => ':value Woche|:value Wochen',
+            'night'         => ':value Nacht|:value Nächte',
+            'table'         => [
+                'adults' => ':count Erwachsener|:count Erwachsene',
+                'kids'   => '{0}Kein Kinder|Kind|Kinder',
+            ]
+        ],
+        'offers' => [
+            'create'          => 'Neues Angebot erstellen',
+            'management'      => 'Angebote',
+            'offers_for_wish' => 'Angebote für',
+            'table'           => [
+                'title'     => 'Angebot',
+                'status'    => 'Status',
+                'createdat' => 'Erstellt in',
+                'createdby' => 'Erstellt von',
+                'all'       => 'Alle',
+            ],
+        ],
     ]
 
 ];

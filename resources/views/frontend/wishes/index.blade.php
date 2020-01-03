@@ -47,9 +47,9 @@
                     <span v-cloak v-if="data.length === 1">@{{ data.length }} {{ trans_choice('labels.frontend.wishes.wishes', 1 ) }}</span>
                     <span v-cloak v-else>@{{ data.length }} {{ trans_choice('labels.frontend.wishes.wishes', 99 ) }}</span>
                 </div>
-                @if($logged_in_user->hasRole('Seller'))
+{{--                @if($logged_in_user->hasRole('Seller'))--}}
                     <div class="filter-action">
-                        <select class="selectpicker" id="filter-status" v-model="status" @change="fetchWishes()">
+                        <select class="custom-select" style="width: 25%;" id="filter-status" v-model="status" @change="fetchWishes()">
                             {{--<option value="">{{ trans('menus.list.status.all') }}</option>--}}
                             @foreach ($status as $st)
                                 <option value="{{ $st }}">
@@ -59,7 +59,7 @@
                         </select>
                         <input type="search" class="id-filter" placeholder="{{ trans('strings.wishlist.search') }}" v-model="id" @input="fetchWishes()">
                     </div>
-                @endif
+{{--                @endif--}}
             </div>
             <hr>
             <div class="skeleton" v-if="loading"></div>
@@ -86,7 +86,7 @@
                             <span class="wish-id">
                                 @{{ wish.id }}
                             </span>
-                            @if($logged_in_user->hasRole('Seller'))
+{{--                            @if($logged_in_user->hasRole('Seller'))--}}
                                 <span v-if="wish.wlRule == 'mix'" class="wish-classification btn-secondary">
                                     <span v-if="wish.manuelFlag == true"><i class="fal fa-user"></i></span>
                                     <span v-if="wish.manuelFlag == false"><i class="fal fa-robot"></i></span>
@@ -97,20 +97,20 @@
                                 <span id="{{ trans('strings.wishlist.offer_ex') }}" v-if="wish.offers > 0" class="offer-count btn-secondary">
                                     @{{ wish.offers }}
                                 </span>
-                            @endif
+{{--                            @endif--}}
                         </div>
                         <div class="budget">@{{ formatPrice(wish.budget) }}{{ trans('general.currency') }}</div>
-                        @if($logged_in_user->allow('edit-wish') && !$logged_in_user->hasRole('Seller'))
+{{--                        @if($logged_in_user->allow('edit-wish') && !$logged_in_user->hasRole('Seller'))--}}
                         <!--    <a type="button" class="btn btn-primary btn-main" :href="'/wish/edit/'+wish.id">{{ trans('labels.frontend.wishes.edit') }}</a>-->
-                        @endif
+{{--                        @endif--}}
                         <a type="button" class="primary-btn" :href="'/wish/'+wish.id">{{ trans('labels.frontend.wishes.goto') }}</a>
-                        @if($logged_in_user->allow('create-offer') and false)
+{{--                        @if($logged_in_user->allow('create-offer') and false)--}}
                             <a :href="'/offers/create/'+wish.id" class="btn btn-flat btn-primary">{{ trans('buttons.wishes.frontend.create_offer')}}</a>
-                        @endif
+{{--                        @endif--}}
                     <!--<a :href="'/offer/create/'+wish.id" class="btn btn-flat btn-primary">{{ trans('buttons.wishes.frontend.create_autooffer')}}</a>-->
-                        @if($logged_in_user->hasRole('Seller'))
+{{--                        @if($logged_in_user->hasRole('Seller'))--}}
                             <div class="status-change-action">
-                                <select class="selectpicker" id="change-status" v-bind:value="wish.status" v-model="status" @change="changeStatus(wish.id)">
+                                <select class="custom-select" id="change-status" v-bind:value="wish.status" v-model="status" @change="changeStatus(wish.id)">
                                     @foreach ($status as $st)
                                         <option value="{{ $st }}">
                                             {{ trans('menus.list.status.'.strtolower($st)) }}
@@ -118,7 +118,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                        @endif
+{{--                        @endif--}}
                     </div>
                 </div>
             </div>
@@ -132,37 +132,40 @@
 @section('after-scripts')
     {{-- For DataTables --}}
     {{ Html::script(mix('js/dataTable.js')) }}
-
+    <script
+        src="https://code.jquery.com/jquery-3.4.0.min.js"
+        integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
+        crossorigin="anonymous"></script>
     <script>
         $(function() {
-            var dataTable = $('#wishes-table').dataTable({
-                processing: true,
-                serverSide: true,
-                ajax: {
-                    url: '{{ route("frontend.wishes.get") }}',
-                    type: 'post'
-                },
-                columns: [
-                    {data: 'title', name: '{{config('module.wishes.table')}}.title'},
-                    {data: 'airport', name: '{{config('module.wishes.table')}}.airport'},
-                    {data: 'destination', name: '{{config('module.wishes.table')}}.destination'},
-                    {data: 'earliest_start', name: '{{config('module.wishes.table')}}.earliest_start'},
-                    {data: 'latest_return', name: '{{config('module.wishes.table')}}.latest_return'},
-                    {data: 'created_by', name: '{{config('module.wishes.table')}}.created_by'},
-                    {data: 'created_at', name: '{{config('module.wishes.table')}}.created_at', searchable: false},
-                    {data: 'whitelabel_name', name: '{{config('module.wishes.table')}}.whitelabel_name', searchable: false},
-                    {data: 'offer_count', name: 'count' , searchable: false, sortable: false},
-                    {data: 'status', name: '{{config('module.wishes.table')}}.status', searchable: false},
-                ],
-                order: [[3, "asc"]],
-                searchDelay: 500,
-                dom: 'lBfrtip',
-                buttons: {
-                    buttons: [
+            {{--var dataTable = $('#wishes-table').dataTable({--}}
+            {{--    processing: true,--}}
+            {{--    serverSide: true,--}}
+            {{--    ajax: {--}}
+            {{--        url: '{{ route("frontend.wishes.get") }}',--}}
+            {{--        type: 'post'--}}
+            {{--    },--}}
+            {{--    columns: [--}}
+            {{--        {data: 'title', name: '{{config('module.wishes.table')}}.title'},--}}
+            {{--        {data: 'airport', name: '{{config('module.wishes.table')}}.airport'},--}}
+            {{--        {data: 'destination', name: '{{config('module.wishes.table')}}.destination'},--}}
+            {{--        {data: 'earliest_start', name: '{{config('module.wishes.table')}}.earliest_start'},--}}
+            {{--        {data: 'latest_return', name: '{{config('module.wishes.table')}}.latest_return'},--}}
+            {{--        {data: 'created_by', name: '{{config('module.wishes.table')}}.created_by'},--}}
+            {{--        {data: 'created_at', name: '{{config('module.wishes.table')}}.created_at', searchable: false},--}}
+            {{--        {data: 'whitelabel_name', name: '{{config('module.wishes.table')}}.whitelabel_name', searchable: false},--}}
+            {{--        {data: 'offer_count', name: 'count' , searchable: false, sortable: false},--}}
+            {{--        {data: 'status', name: '{{config('module.wishes.table')}}.status', searchable: false},--}}
+            {{--    ],--}}
+            {{--    order: [[3, "asc"]],--}}
+            {{--    searchDelay: 500,--}}
+            {{--    dom: 'lBfrtip',--}}
+            {{--    buttons: {--}}
+            {{--        buttons: [--}}
 
-                    ]
-                }
-            });
+            {{--        ]--}}
+            {{--    }--}}
+            {{--});--}}
 
            //Backend.DataTableSearch.init(dataTable);
         });

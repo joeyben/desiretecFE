@@ -22,4 +22,12 @@ return [
         ]
 
     ],
+    'list' => [
+        'status' => [
+            'all'               => 'Alle Reisewünsche',
+            'new'               => 'Neu',
+            'offer_created'     => 'Angebot Erstellt',
+            'completed'         => 'Erledigt',
+        ]
+    ],
 ];

@@ -1,5 +1,5 @@
 <div class="box-body">
-    <div class="form-group">
+    <div class="form-group row">
         {{ Form::label('title', trans('validation.attributes.frontend.offers.title'), ['class' => 'col-lg-2 control-label required']) }}
 
         <div class="col-lg-10">
@@ -7,7 +7,7 @@
         </div><!--col-lg-10-->
     </div><!--form control-->
 
-    <div class="form-group">
+    <div class="form-group row">
         {{ Form::label('description', trans('validation.attributes.frontend.offers.text'), ['class' => 'col-lg-2 control-label required']) }}
 
         <div class="col-lg-10 mce-box">
@@ -15,7 +15,7 @@
         </div><!--col-lg-3-->
     </div><!--form control-->
 
-    <div class="form-group">
+    <div class="form-group row">
         {{ Form::label('link', trans('validation.attributes.frontend.offers.link'), ['class' => 'col-lg-2 control-label required']) }}
 
         <div class="col-lg-10">
@@ -23,7 +23,7 @@
         </div><!--col-lg-10-->
     </div><!--form control-->
 
-    <div class="form-group">
+    <div class="form-group row">
         {{ Form::label('file', trans('validation.attributes.frontend.offers.file'), ['class' => 'col-lg-2 control-label required']) }}
         @if(!empty($offer->featured_image))
             <div class="col-lg-1">
@@ -81,6 +81,14 @@
             });
             $('.fileUpload').css({
                 'padding': '7px 20px',
+            });
+
+            $('.form-group').css({
+                'align-items': 'center',
+            });
+
+            $('.control-label').css({
+                'margin-bottom': 0,
             });
         });
 

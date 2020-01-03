@@ -33,9 +33,8 @@ class OffersController extends Controller
     /**
      * @param \App\Repositories\Frontend\Offers\OffersRepository $offer
      */
-    public function __construct(OffersRepository $offer)
+    public function __construct()
     {
-        $this->offer = $offer;
     }
 
     /**
@@ -43,7 +42,7 @@ class OffersController extends Controller
      *
      * @return mixed
      */
-    public function index(ManageOffersRequest $request)
+    public function index()
     {
         return view('frontend.offers.index')->with([
             'status'     => $this->status,
@@ -57,7 +56,7 @@ class OffersController extends Controller
      *
      * @return mixed
      */
-    public function create($id, ManageOffersRequest $request)
+    public function create($id)
     {
         return view('frontend.offers.create')->with([
             'status'         => $this->status,
