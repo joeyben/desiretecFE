@@ -6,68 +6,67 @@
 
 @section('before-scripts')
     <script type="application/javascript">
-        var brandColor = {!! json_encode(getCurrentWhiteLabelColor()) !!};
+        var brandColor = '#000';
     </script>
 @endsection
 
 @section('content')
     <div class="row">
         @include('includes.alert')
-        <div class="col-xs-12">
+        <div class="col-md-12 col-sm-12 col-xs-12 d-flex justify-content-center">
 
-            <div class="panel panel-default">
-                <div class="panel-heading">{{ trans('navs.frontend.user.account') }}</div>
+            <div class="card col-md-6">
 
-                <div class="panel-body">
+                <div class="card-header">{{ trans('navs.frontend.user.account') }}</div>
+
+                <div class="card-body">
 
                     <div role="tabpanel">
 
-                        <!-- Nav tabs -->
                         <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active" id="li-profile">
-                                <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab" class="tabs">{{ trans('navs.frontend.user.profile') }}</a>
+                            <li role="presentation" class="nav-item" id="li-profile">
+                                <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab" class="nav-link active">{{ trans('navs.frontend.user.profile') }}</a>
                             </li>
 
-                            <li role="presentation" id="li-edit">
-                                <a href="#edit" aria-controls="edit" role="tab" data-toggle="tab" class="tabs">{{ trans('labels.frontend.user.profile.update_information') }}</a>
+                            <li role="presentation" class="nav-item" id="li-edit">
+                                <a href="#edit" aria-controls="edit" role="tab" data-toggle="tab" class="nav-link">{{ trans('navs.frontend.user.update_profile') }}</a>
                             </li>
 
-                            @if ($logged_in_user->canChangePassword() && !$logged_in_user->hasRole('User'))
-                                <li role="presentation" id="li-password">
-                                    <a href="#password" aria-controls="password" role="tab" data-toggle="tab" class="tabs">{{ trans('navs.frontend.user.change_password') }}</a>
+                            {{-- @if ($logged_in_user->canChangePassword() && !$logged_in_user->hasRole('User')) --}}
+                                <li role="presentation" class="nav-item" id="li-password">
+                                    <a href="#password" aria-controls="password" role="tab" data-toggle="tab" class="nav-link">{{ trans('navs.frontend.user.change_password') }}</a>
                                 </li>
-                            @endif
+                            {{-- @endif --}}
                         </ul>
 
                         <div class="tab-content">
 
                             <div role="tabpanel" class="tab-pane mt-30 active" id="profile">
                                 @include('frontend.user.account.tabs.profile')
-                            </div><!--tab panel profile-->
+                            </div>
 
                             <div role="tabpanel" class="tab-pane mt-30" id="edit">
                                 @include('frontend.user.account.tabs.edit')
-                            </div><!--tab panel profile-->
+                            </div>
 
-                            @if ($logged_in_user->canChangePassword() && !$logged_in_user->hasRole('User'))
+                            {{-- @if ($logged_in_user->canChangePassword() && !$logged_in_user->hasRole('User')) --}}
                                 <div role="tabpanel" class="tab-pane mt-30" id="password">
                                     @include('frontend.user.account.tabs.change-password')
-                                </div><!--tab panel change password-->
-                            @endif
+                                </div>
+                            {{-- @endif --}}
 
                             @include('frontend.user.account.upload-photo-modal')
 
-                        </div><!--tab content-->
+                        </div>
+                    </div>
 
-                    </div><!--tab panel-->
+                </div>
 
-                </div><!--panel body-->
+            </div>
 
-            </div><!-- panel -->
+        </div>
 
-        </div><!-- col-xs-12 -->
-
-    </div><!-- row -->
+    </div>
 @endsection
 
 @section('after-scripts')
@@ -81,7 +80,7 @@
         });
 
         // To Use Select2
-        Backend.Select2.init();
+        // Backend.Select2.init();
 
         if($.session.get("tab") == "edit")
         {
@@ -102,58 +101,6 @@
             $("#profile").removeClass("active");
             $("#password").addClass("active");
             $("#edit").removeClass("active");
-        }
-
-        //Getting States of default country
-        //ajaxCall("{{-- route('frontend.get.states') --}}");
-
-
-
-        //Getting Cities of select State
-        /*$("#state").on("change", function() {
-            var stateId = $(this).val();
-            var url = "{{-- route('frontend.get.cities') --}}";
-            ajaxCall(url, stateId);
-        });*/
-
-        function ajaxCall(url, data = null)
-        {
-            $.ajax({
-                url: url,
-                type: "POST",
-                data: {stateId: data},
-                success: function(result) {
-                    if(result != null)
-                    {
-                        if(result.status == "city")
-                        {
-                            var userCity = "{{ $logged_in_user->city_id }}";
-                            var options;
-                            $.each(result.data, function(key, value) {
-                                if(key == userCity)
-                                    options += "<option value='" + key + "' selected>" + value + "</option>";
-                                else
-                                    options += "<option value='" + key + "'>" + value + "</option>";
-                            });
-                            $("#city").html('');
-                            $("#city").append(options);
-                        }
-                        else
-                        {
-                            var userState = "{{ $logged_in_user->state_id }}";
-                            var options;
-                            $.each(result.data, function(key, value) {
-                                if(key == userState)
-                                    options += "<option value='" + key + "' selected>" + value + "</option>";
-                                else
-                                    options += "<option value='" + key + "'>" + value + "</option>";
-                            });
-                            $("#state").append(options);
-                            $("#state").trigger('change');
-                        }
-                    }
-                }
-            });
         }
 
         $(".tabs").click(function() {
