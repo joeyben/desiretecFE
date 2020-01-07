@@ -12,7 +12,7 @@ COPY package.json webpack.mix.js yarn.lock /
 
 WORKDIR /
 
-RUN yarn install && yarn run production
+RUN yarn install && yarn production
 
 FROM nginx:latest
 
