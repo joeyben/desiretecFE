@@ -1,4 +1,4 @@
-FROM node:latest as frontend
+FROM node:lts-stretch as frontend
 
 RUN mkdir -p /public
 RUN npm config set "@fortawesome:registry" https://npm.fontawesome.com/ && \
