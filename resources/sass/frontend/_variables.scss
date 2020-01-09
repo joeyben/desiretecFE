@@ -1,4 +1,3 @@
-
 // Body
 $body-bg: #ffffff;
 
@@ -14,7 +13,6 @@ $darkgrey: #575756;
 $darkgrey2: #454545;
 $black: #000000;
 $white: #ffffff;
-$masterblue: #092a5e;
 
 // Borders
 $laravel-border-color: darken($body-bg, 10%);
@@ -25,7 +23,12 @@ $panel-inner-border: $laravel-border-color;
 $border-default: 1px solid #ddd;
 
 // @Media
-$break-small:           768px;
+$break-phone: 480px;
+$break-phone-landscape: 640px;
+$break-iPad: 768px;
+$break-iPad-landscape: 1024px;
+$break-hd: 1366px;
+$break-fullHd: 1920px;
 
 @mixin border-radius($radius) {
   -webkit-border-radius: $radius;
@@ -63,7 +66,7 @@ $font-family-sans-serif: 'Comfortaa', cursive;
 //$font-size-base: 14px;
 $line-height-base: 1.6;
 $text-color: #000000;
-$main-color: #3097d1;
+
 // Navbar
 $navbar-default-bg: #fff;
 
@@ -96,3 +99,12 @@ $input-color-placeholder: lighten($text-color, 30%);
 
 // Panels
 $panel-default-heading-bg: #fff;
+
+// Zindex
+$zindex-navbar:            1000 !default;
+$zindex-dropdown:          1000 !default;
+$zindex-popover:           1010 !default;
+$zindex-tooltip:           1030 !default;
+$zindex-navbar-fixed:      1030 !default;
+$zindex-modal-background:  1040 !default;
+$zindex-modal:             1050 !default;

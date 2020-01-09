@@ -26,6 +26,7 @@ Route::get('/test', function(){
     return 'test';
 });
 
+Route::get('show', 'FrontendController@show');
 
 /*
 * Agents

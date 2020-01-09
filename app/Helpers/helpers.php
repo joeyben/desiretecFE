@@ -592,11 +592,21 @@ if (!function_exists('footers_by_whitelabel')) {
      */
     function footers_by_whitelabel()
     {
-        //$url = str_replace('http://', '', url('/'));
-        //$id = \App\Models\Whitelabels\Whitelabel::Where('domain', $url)->value('id');
-        $id = getCurrentWhiteLabelField('id');
+        // $id = getCurrentWhiteLabelField('id');
+        $id = 1;
+
         if (null !== $id) {
-            $footers = \Modules\Footers\Entities\Footer::where('whitelabel_id', $id)->orderBy('position', 'ASC')->get();
+            // $footers = \Modules\Footers\Entities\Footer::where('whitelabel_id', $id)->orderBy('position', 'ASC')->get();
+            $footers = [
+                0 => [
+                    'url' => 'hardcoded.com',
+                    'name' => 'hardcoded',
+                ],
+                1 => [
+                    'url' => 'hardcoded.com',
+                    'name' => 'hardcoded',
+                ]
+            ];
 
             return $footers;
         }

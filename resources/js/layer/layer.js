@@ -7,7 +7,7 @@ var exitIntent = window.exitIntent || {};
         baseUrl: 'http://testkurenundwellness.com',
         popupPath: '/show',
         popupStore:'/store',
-        cssPath: '/css/layer-whitelabel.css'
+        cssPath: '/css/layer.css'
     };
 
     dt.popupTemplate = function (variant) {
