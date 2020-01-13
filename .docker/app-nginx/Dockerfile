@@ -1,16 +1,21 @@
 FROM node:lts-stretch as frontend
 
-RUN mkdir -p /public
-RUN npm config set "@fortawesome:registry" https://npm.fontawesome.com/ && \
-      npm config set "//npm.fontawesome.com/:_authToken" 872992B4-8894-4152-95B3-FAA83ECC14D4
-COPY public/css /public/css
-COPY public/js /public/js
-COPY resources/sass /resources/sass
-COPY resources/js /resources/js
+RUN mkdir -p /app/public
 
-COPY package.json webpack.mix.js yarn.lock /
+COPY public/css /app/public/css
+COPY public/js /app/public/js
+COPY resources/sass /app/resources/sass
+COPY resources/js /app/resources/js
 
-WORKDIR /
+COPY package.json webpack.mix.js yarn.lock /app/
+
+WORKDIR /app/
+
+RUN yarn config set "@fortawesome:registry" https://npm.fontawesome.com/ && \
+      yarn config set "//npm.fontawesome.com/:_authToken" 872992B4-8894-4152-95B3-FAA83ECC14D4
+ARG APP_URL
+ENV MIX_APP_URL=$APP_URL
+
 
 RUN yarn install && yarn production
 
