@@ -8,13 +8,13 @@ body.wishlist{
     display: grid;
     grid-template-columns: 35% 65%;
     padding: 20px 0 0;
-    @media screen and (max-width: $break-small) {
+    @media screen and (max-width: $break-iPad) {
       display: block;
     }
     .count{
       display: flex;
       align-items: center;
-      @media screen and (max-width: $break-small) {
+      @media screen and (max-width: $break-iPad) {
         justify-content: center;
         margin-bottom: 15px;
       }
@@ -26,7 +26,7 @@ body.wishlist{
     }
     .filter-action{
       padding: 0 30px;
-      @media screen and (max-width: $break-small) {
+      @media screen and (max-width: $break-iPad) {
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
@@ -52,7 +52,7 @@ body.wishlist{
         &::-ms-input-placeholder { /* Microsoft Edge */
           color: #839192;
         }
-        @media screen and (max-width: $break-small) {
+        @media screen and (max-width: $break-iPad) {
           width: 190px;
         }
       }
@@ -69,7 +69,7 @@ body.wishlist{
         margin-bottom: 30px;
         padding-bottom: 30px;
         border-bottom: $border-default;
-        @media screen and (max-width: $break-small) {
+        @media screen and (max-width: $break-iPad) {
           display: block;
           grid-template-columns: none;
         }
@@ -83,7 +83,7 @@ body.wishlist{
             background-position: center;
             background-size: cover;
             @include border-radius(2px);
-            @media screen and (max-width: $break-small) {
+            @media screen and (max-width: $break-iPad) {
               height: 200px;
             }
           }
@@ -111,7 +111,7 @@ body.wishlist{
         .action {
           padding: 0 15px;
           min-width: 220px;
-          @media screen and (max-width: $break-small) {
+          @media screen and (max-width: $break-iPad) {
             padding: 0 30px;
           }
           .wish-top-infos{
@@ -180,7 +180,7 @@ body.wishlist{
             width: 100%;
             margin-top: 15px;
             .dropdown{
-              @media screen and (max-width: $break-small) {
+              @media screen and (max-width: $break-iPad) {
                 width: 200px;
                 display: block;
                 margin: 0 auto;

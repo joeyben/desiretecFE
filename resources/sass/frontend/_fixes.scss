@@ -27,7 +27,7 @@
   .navbar-right{
     .nav-user{
       span{
-        @media screen and (max-width: $break-small) {
+        @media screen and (max-width: $break-iPad) {
           padding-left: 0px;
         }
       }
@@ -38,7 +38,7 @@
 .navbar-nav{
   .open{
     .dropdown-menu{
-      @media screen and (max-width: $break-small) {
+      @media screen and (max-width: $break-iPad) {
         position: absolute;
         float: left;
         background-color: #fff;
@@ -55,8 +55,21 @@
   display: block;
   flex: none;
   &.in{
-    @media screen and (max-width: $break-small) {
+    @media screen and (max-width: $break-iPad) {
       overflow: visible;
     }
   }
+}
+
+// Customize bootstrap-taginput library
+.dt-modal {
+	.bootstrap-tagsinput {
+		padding: 0;
+		width: 100%;
+		border: none;
+		box-shadow: none;
+		input {
+			min-width: 100%;
+		}
+	}
 }
