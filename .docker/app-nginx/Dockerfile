@@ -10,9 +10,8 @@ COPY resources/js /app/resources/js
 COPY package.json webpack.mix.js yarn.lock /app/
 
 WORKDIR /app/
-
-RUN yarn config set "@fortawesome:registry" https://npm.fontawesome.com/ && \
-      yarn config set "//npm.fontawesome.com/:_authToken" 872992B4-8894-4152-95B3-FAA83ECC14D4
+RUN npm config set "@fortawesome:registry" https://npm.fontawesome.com/ && \
+      npm config set "//npm.fontawesome.com/:_authToken" 872992B4-8894-4152-95B3-FAA83ECC14D4
 ARG APP_URL
 ENV MIX_APP_URL=$APP_URL
 
