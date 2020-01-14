@@ -59,7 +59,7 @@ $ cp env-example .env
 #### This step is important to avoid data loss!
 
 Change the `DATA_PATH_HOST` variable inside the laradock `.env` file and dont let it point towards your home directory.
-If you are working with multiple laradock setups locally it would over.
+If you are working with multiple laradock setups locally it would overwrite the data in your home directory.
 
 ```dotenv
 # this will 
