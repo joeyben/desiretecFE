@@ -35,7 +35,7 @@ build-frontend:
     CONTAINER_IMAGE_NGINX_LATEST: ${CI_REGISTRY}/${CI_PROJECT_PATH}/${CI_COMMIT_REF_NAME}/nginx:latest
 
 
-deploy-stage:
+deploy-development:
   stage: deploy
   image: pstauffer/curl
   only:
@@ -47,7 +47,7 @@ deploy-stage:
     - RESP=$(curl -X POST ${STAGE_SERVICE_WEBHOOK_NGINX})
     - if echo $RESP | grep -q ‘err’; then exit 1; fi
 
-deploy-prod:
+deploy-master:
   stage: deploy
   image: pstauffer/curl
   only:
