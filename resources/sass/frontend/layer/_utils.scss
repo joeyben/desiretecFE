@@ -1,0 +1,37 @@
+@mixin clearfix() {
+    &:before,
+    &:after {
+        content: " ";
+        display: table;
+    }
+
+    &:after {
+        clear: both;
+    }
+}
+
+@mixin make-columns($grid-columns, $grid-gutter, $prefix: '') {
+    .#{$prefix}row {
+        @include clearfix();
+        margin-left: -($grid-gutter / 2);
+        margin-right: -($grid-gutter / 2);
+    }
+
+    @for $i from 1 through $grid-columns {
+        .#{$prefix}col-#{$i} {
+            width: (($i / $grid-columns) * 100%);
+        }
+    }
+
+    $list: ".#{$prefix}col-1";
+
+    @for $i from (1 + 1) through $grid-columns {
+        $list: "#{$list}, .#{$prefix}col-#{$i}";
+    }
+
+    #{$list} {
+        float: left;
+        padding-left: ($grid-gutter / 2);
+        padding-right: ($grid-gutter / 2);
+    }
+}
