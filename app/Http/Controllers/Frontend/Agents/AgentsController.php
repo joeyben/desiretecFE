@@ -4,13 +4,7 @@ namespace App\Http\Controllers\Frontend\Agents;
 
 use App\Models\Agents\Agent;
 use App\Http\Controllers\Controller;
-// use App\Repositories\Frontend\Agents\AgentsRepository;
-// use Illuminate\Http\Request;
-// use App\Http\Requests\Frontend\Agents\ManageAgentsRequest;
-// use App\Http\Requests\Frontend\Agents\UpdateAgentsRequest;
-// use Illuminate\Session\Store;
-// use Illuminate\Support\Facades\DB;
-// use Illuminate\Support\Facades\Storage;
+use GuzzleHttp\Client;
 
 /**
  * Class AgentsController.
@@ -18,50 +12,34 @@ use App\Http\Controllers\Controller;
 class AgentsController extends Controller
 {
     const BODY_CLASS = 'agent';
-    /**
-     * Agent Status.
-     */
+
     protected $status = [
         'Active'       => 'Active',
         'Inactive'     => 'Inactive',
         'Deleted'      => 'Deleted',
     ];
 
-    // /**
-    //  * @var AgentsRepository
-    //  */
-    // protected $agent;
-
-    // protected $upload_path;
-
-    // protected $storage;
-    // /**
-    //  * @var \Illuminate\Session\Store
-    //  */
-    // private $session;
-
-    /**
-     * @param \App\Repositories\Frontend\Agents\AgentsRepository $agent
-     * @param \Illuminate\Session\Store                          $session
-     */
     public function __construct()
     {
-        // $this->agent = $agent;
-        // $this->upload_path = 'img' . \DIRECTORY_SEPARATOR . 'agent' . \DIRECTORY_SEPARATOR;
-        // $this->storage = Storage::disk('s3');
-        // $this->session = $session;
     }
 
-    /**
-     * @param \App\Http\Requests\Frontend\Agents\ManageAgentsRequest $request
-     *
-     * @return mixed
-     */
     public function index()
     {
+        $client = new Client();
+        $response = $client->get('http://localhost:8000/api/v1/agents',
+            [
+                'headers' => [
+                    'Authorization' => 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3YxL2F1dGgvbG9naW4iLCJpYXQiOjE1NzkwMTc2MDYsImV4cCI6MTU3OTEwNDAwNiwibmJmIjoxNTc5MDE3NjA2LCJqdGkiOiJpWmJFNXdQR2lVQlB0OFFHIiwic3ViIjoxLCJwcnYiOiI5NGRiZDk2MWFhZWYwZTNjZTY2YWQ3ZDUwZTY0NzcxNzYwOWRkYTI0IiwiaWQiOjF9.USxiUfBgA_oAhm5rngyx2bXflp9qTq1pnkAdXkkFsWM'
+                ]
+            ]
+        );
+        $response_json = json_decode($response->getBody());
+        $agents = $response_json->data;
+
         return view('frontend.agents.index')->with([
             'status'     => $this->status,
             'body_class' => $this::BODY_CLASS,
+            'agents'     => $agents
         ]);
     }
 
