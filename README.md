@@ -3,7 +3,7 @@
 ## Setup 
 
 #### Clone the Project
-```shell script
+```sh
 $ git clone git@git.desiretec.com:desiretec/whitelabel-module.git
 ```
 #### Setup docker aliases (optional)
@@ -47,12 +47,12 @@ alias dcomposer='docker run --rm --interactive --tty \
 
 ### Laradock setup
 Switch to the laradock folder
-```shell script
+```sh
 $ cd laradock
 ```
 
 Copy over the `env-example` to `.env`.
-```shell script
+```sh
 $ cp env-example .env  
 ```
 
@@ -76,19 +76,19 @@ DATA_PATH_HOST=.laradock/data
 
 #### General Usage
 Start the laradock containers needed for this project (run inside the laradock folder)
-```shell script
+```sh
 $ docker-compose up -d nginx mariadb workspace
 # You can also run if u have setup the aliases
 $ dcup nginx mariadb workspace
 ```
 To stop the containers run
-```shell script
+```sh
 $ docker-compose down 
 # If u have the aliases installed
 $ dcdn
 ```
 To open a shell inside a container
-```shell script
+```sh
 $ docker-compose exec workspace bash
 # usage: docker-compose exec SERVICE COMMAND_TO_EXECUTE 
 # You will find the name of the SERVICE inside the docker-compose.yml of laradock!
