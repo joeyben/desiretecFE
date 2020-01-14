@@ -10,8 +10,7 @@ $ git clone git@git.desiretec.com:desiretec/whitelabel-module.git
 Create some aliases for easier day-to-day usage. 
 You can add those aliases to your `.bashrc` file in order load them automatically on start of your bash shell (if u use zsh this file is called `.zshrc` and so on).
 
-```shell script
-
+```sh
 # General docker aliases
 
 # starts containers in daemon mode (background) 
