@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    {{ Form::open(['route' => 'frontend.offers.store', 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'post', 'id' => 'create-permission', 'files' => true]) }}
+    {{ Form::open(['route' => 'frontend.offers.store', 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'post', 'id' => 'create-offer', 'files' => true]) }}
 
         <div class="box box-info">
             <div class="box-header with-border">
