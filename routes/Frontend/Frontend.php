@@ -26,13 +26,14 @@ Route::get('/test', function(){
     return 'test';
 });
 
+Route::get('show', 'FrontendController@show');
 
 /*
 * Agents
 */
 Route::group(['namespace' => 'Agents', 'as' => 'agents.'], function () {
     Route::get('agents', 'AgentsController@index')->name('index');
-    Route::post('agents/get', 'AgentsTableController')->name('get');
+    // Route::post('agents/get', 'AgentsTableController')->name('get');
     Route::get('agent/profile', 'AgentsController@profile')->name('profile');
     Route::get('agents/create', 'AgentsController@create')->name('create');
     Route::post('agents/store', 'AgentsController@store')->name('store');
