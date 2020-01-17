@@ -1,5 +1,4 @@
-@if ($logged_in_user->hasRole('Seller'))
-    <div class="col-md-6 s2-first">
+ <div class="col-md-6 s2-first">
         <h4>Reisewunsch Angaben</h4>
         <p>Dies sind die Angaben zum Reisewunsch.</p>
         <p><b>Kundennachricht:</b><br>
@@ -7,15 +6,6 @@
         </p>
     </div>
     <note :wishid="{{ $wish->id }}" :wishnote="{{ json_encode($wish->note) }}"  :lang="{{ json_encode(trans('strings.wishdetails.memo')) }}"></note>
-@else
-    <div class="col-md-12 s2-first">
-        <!--h4>Dein Reisewunsch</h4-->
-        <!--p>Dies sind Deine Angaben zu Deinem Reisewunsch.</p-->
-        <p><b>Ihre Nachricht:</b><br>
-            {{ $wish->description }}
-        </p>
-    </div>
-@endif
 
 
 <div class="col-md-12 s2-second">
@@ -70,26 +60,7 @@
     </div>
     <div class="col-md-3">
         <i class="fal fa-utensils"></i>
-        <input class="data-content" value="{{ $categories->getCategoryByParentValue('catering', $wish->catering) }}">
+        <input class="data-content" value="">
     </div>
     <!--<button class="secondary-btn">Daten andern</button>-->
 </div>
-@if ($logged_in_user->hasRole('Seller') and $extra)
-<div class="col-md-12 s2-second">
-    <b>Weitere vom Kunden ausgewählte Parameter: </b>
-
-    <?php $count = 0; ?>
-    @foreach($extra as $key => $params)
-
-        @if ($params && $count > 0)
-           ,
-        @endif
-
-        @if ($params)
-            {{ $params }}
-            <?php $count++; ?>
-        @endif
-
-    @endforeach
-</div>
-@endif

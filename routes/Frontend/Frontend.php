@@ -45,6 +45,35 @@ Route::group(['namespace' => 'Agents', 'as' => 'agents.'], function () {
     Route::get('agents/status/{id}', 'AgentsController@status')->name('status');
 });
 
+Route::group(['namespace' => 'Wishes', 'as' => 'wishes.'], function () {
+    Route::get('wishlist', 'WishesController@wishList')->name('list');
+
+    Route::get('wishes', 'WishesController@index')->name('index');
+    Route::get('wish/new', 'WishesController@newWish');
+    Route::get('wish/newuser', 'WishesController@newUserWish');
+    Route::get('wish/offertextlink', 'WishesController@offerLink');
+    Route::get('wish/offerviatext', 'WishesController@offerText');
+    Route::get('wish/attach', 'WishesController@attach');
+    Route::get('wish/{wish}', 'WishesController@show')->name('wish');
+
+    Route::post('wishes/get', 'WishesTableController')->name('get');
+    Route::get('wishes/getlist', 'WishesController@getList')->name('getlist');
+    Route::post('wishes/changeWishStatus', 'WishesController@changeWishStatus')->name('changeWishStatus');
+    Route::post('wishes/updateNote', 'WishesController@updateNote')->name('updateNote');
+
+    Route::get('wishes/create', 'WishesController@create')->name('create');
+
+    Route::get('wish/{wish}/{token}', 'WishesController@validateTokenWish')->name('details');
+    Route::get('wish/{wish}', 'WishesController@show')->name('show');
+    Route::get('getwish/{wish}', 'WishesController@getWish')->name('getWish');
+    Route::post('wish/store', 'WishesController@store')->name('store');
+    Route::get('wish/edit/{wish}', 'WishesController@edit')->name('edit');
+    Route::get('wish/destroy', 'WishesController@destroy')->name('destroy');
+    Route::patch('wish/update/{wish}', 'WishesController@update')->name('update');
+
+});
+
+
 Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
     /*
      * User Dashboard Specific
@@ -94,33 +123,6 @@ Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
         //      */
         //     Route::patch('profile-picture/update', 'ProfileController@updateProfilePicture')->name('profile-picture.update');
         // });
-        Route::group(['namespace' => 'Wishes', 'as' => 'wishes.'], function () {
-            Route::get('wishlist', 'WishesController@wishList')->name('list');
-
-            Route::get('wishes', 'WishesController@index')->name('index');
-            Route::get('wish/new', 'WishesController@newWish');
-            Route::get('wish/newuser', 'WishesController@newUserWish');
-            Route::get('wish/offertextlink', 'WishesController@offerLink');
-            Route::get('wish/offerviatext', 'WishesController@offerText');
-            Route::get('wish/attach', 'WishesController@attach');
-            Route::get('wish/{wish}', 'WishesController@show')->name('wish');
-
-            Route::post('wishes/get', 'WishesTableController')->name('get');
-            Route::get('wishes/getlist', 'WishesController@getList')->name('getlist');
-            Route::post('wishes/changeWishStatus', 'WishesController@changeWishStatus')->name('changeWishStatus');
-            Route::post('wishes/updateNote', 'WishesController@updateNote')->name('updateNote');
-
-            Route::get('wishes/create', 'WishesController@create')->name('create');
-
-            Route::get('wish/{wish}/{token}', 'WishesController@validateTokenWish')->name('details');
-            Route::get('wish/{wish}', 'WishesController@show')->name('show');
-            Route::get('getwish/{wish}', 'WishesController@getWish')->name('getWish');
-            Route::post('wish/store', 'WishesController@store')->name('store');
-            Route::get('wish/edit/{wish}', 'WishesController@edit')->name('edit');
-            Route::get('wish/destroy', 'WishesController@destroy')->name('destroy');
-            Route::patch('wish/update/{wish}', 'WishesController@update')->name('update');
-
-        });
 
         Route::group(['namespace' => 'Offers', 'as' => 'offers.'], function () {
             Route::get('offers', 'OffersController@index')->name('index');

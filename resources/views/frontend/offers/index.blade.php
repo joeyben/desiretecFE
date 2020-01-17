@@ -59,8 +59,10 @@
                 bLengthChange:false,
                 bInfo:false,
                 ajax: {
-                    url: '{{ route("frontend.offers.get") }}',
-                    type: 'post'
+                    //url: '{{ route("frontend.offers.get") }}',
+                    url: 'http://127.0.0.1:8000/api/v1/offers/6',
+                    type: 'get',
+                    crossDomain: true,
                 },
                 columns: [
                     {data: 'title', name: '{{config('module.offers.table')}}.title'},
