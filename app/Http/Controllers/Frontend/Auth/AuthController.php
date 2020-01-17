@@ -16,7 +16,7 @@ class AuthController extends Controller
     public function login (LoginRequest $request)
     {
         try {
-            ApiAuth::byCredentials('admin@admin.com', '1234');
+            $user = ApiAuth::byCredentials($request->get('email'), $request->get('password'));
 
             return redirect()->route('frontend.index')->with(['success' => 'Login erfolgreich.']);
         } catch (\Exception $e) {
