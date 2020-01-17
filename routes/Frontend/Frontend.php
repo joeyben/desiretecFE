@@ -45,6 +45,10 @@ Route::group(['namespace' => 'Agents', 'as' => 'agents.'], function () {
     Route::get('agents/status/{id}', 'AgentsController@status')->name('status');
 });
 
+Route::group(['namespace' => 'Auth', 'as' => 'auth.'], function () {
+    Route::post('api/login', 'AuthController@login')->name('api.login');
+});
+
 Route::group(['namespace' => 'Wishes', 'as' => 'wishes.'], function () {
     Route::get('wishlist', 'WishesController@wishList')->name('list');
 

@@ -31,10 +31,10 @@
 
                 @if ($logged_in_user && $logged_in_user->hasRole('Seller'))
                     <li>{{ link_to_route('frontend.wishes.list', trans('navs.frontend.wisheslist')) }}</li>
-                    @if($logged_avatar)
+                    @if(false)
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            {{ $logged_agent}} 
+                            {{ $logged_agent}}
                             <img class="agent-menu-img" src="{{ Storage::disk('s3')->url('img/agent/' . $logged_avatar) }}">
                             <span class="caret"></span>
                         </a>
@@ -75,10 +75,6 @@
                         </a>
 
                         <ul class="dropdown-menu" role="menu">
-                            @permission('view-backend')
-                                <li>{{ link_to_route('admin.dashboard', trans('navs.frontend.user.administration')) }}</li>
-                            @endauth
-
                             @if ($logged_in_user && $logged_in_user->hasRole('Seller'))
                                 <li>{{ link_to_route('frontend.agents.index', trans('navs.frontend.agents')) }}</li>
                                 <li>{{ link_to_route('frontend.offers.index', trans('navs.frontend.offers')) }}</li>

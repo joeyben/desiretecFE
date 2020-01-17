@@ -43,7 +43,7 @@
 
                 <div class="panel-body">
 
-                    {{ Form::open(['route' => 'frontend.auth.login', 'class' => 'form-horizontal']) }}
+                    {{ Form::open(['route' => 'frontend.auth.api.login', 'class' => 'form-horizontal']) }}
 
                     <div class="form-group">
                         {{ Form::label('email', trans('validation.attributes.frontend.register-user.email'), ['class' => 'col-sm-4 col-form-label']) }}
