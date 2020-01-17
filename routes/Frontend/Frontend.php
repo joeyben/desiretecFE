@@ -72,7 +72,7 @@ Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
      * These frontend controllers require the user to be logged in
      * All route names are prefixed with 'frontend.'
      */
-    Route::group(['middleware' => 'auth'], function () {
+   // Route::group(['middleware' => 'auth'], function () {
         // Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
         //     /*
         //      * User Dashboard Specific
@@ -172,7 +172,7 @@ Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
 
         });
 
-    });
+   // });
 
     /*
     * Show pages

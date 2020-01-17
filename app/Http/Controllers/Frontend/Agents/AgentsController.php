@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Frontend\Agents;
 
 use App\Models\Agents\Agent;
 use App\Http\Controllers\Controller;
-use GuzzleHttp\Client;
 
 /**
  * Class AgentsController.
@@ -25,11 +24,11 @@ class AgentsController extends Controller
 
     public function index()
     {
-        $client = new Client();
-        $response = $client->get('http://localhost:8000/api/v1/agents',
+        $client = new \GuzzleHttp\Client();
+        $response = $client->get('https://mvp.desiretec.com/api/v1/agents',
             [
                 'headers' => [
-                    'Authorization' => 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3YxL2F1dGgvbG9naW4iLCJpYXQiOjE1NzkwMTc2MDYsImV4cCI6MTU3OTEwNDAwNiwibmJmIjoxNTc5MDE3NjA2LCJqdGkiOiJpWmJFNXdQR2lVQlB0OFFHIiwic3ViIjoxLCJwcnYiOiI5NGRiZDk2MWFhZWYwZTNjZTY2YWQ3ZDUwZTY0NzcxNzYwOWRkYTI0IiwiaWQiOjF9.USxiUfBgA_oAhm5rngyx2bXflp9qTq1pnkAdXkkFsWM'
+                    'Authorization' => 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL212cC5kZXNpcmV0ZWMuY29tL2FwaS92MS9hdXRoL2xvZ2luIiwiaWF0IjoxNTc5MjQ4NjI3LCJleHAiOjE1ODE5MjcwMjcsIm5iZiI6MTU3OTI0ODYyNywianRpIjoiR2lLa2VRTUJwS3dDcUUwNSIsInN1YiI6MjQ3NywicHJ2IjoiOTRkYmQ5NjFhYWVmMGUzY2U2NmFkN2Q1MGU2NDc3MTc2MDlkZGEyNCIsImlkIjoyNDc3fQ.Yv3OHye9B6gW1TgOjJspjB_jsNp4kFif2Z6_HfRI9Ps'
                 ]
             ]
         );
