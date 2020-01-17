@@ -155,10 +155,10 @@ class WishesController extends Controller
         ]);
     }
 
-    public function getWish()
+    public function getWish(Request $request)
     {
         $client = new Client();
-        $response = $client->get('http://localhost:8000/api/v1/wish/969',
+        $response = $client->get('http://localhost:8000/api/v1/wish/'.$request->route('wish'),
             [
                 'headers' => [
                     'Authorization' => 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3YxL2F1dGgvbG9naW4iLCJpYXQiOjE1NzkxNzUzNjMsImV4cCI6MTU4MDM4NDk2MywibmJmIjoxNTc5MTc1MzYzLCJqdGkiOiJqNXhRUFZDYm5jSjZ1TkE5Iiwic3ViIjoxLCJwcnYiOiI5NGRiZDk2MWFhZWYwZTNjZTY2YWQ3ZDUwZTY0NzcxNzYwOWRkYTI0IiwiaWQiOjF9.yULv7BBWg1OXxXRGaOGgHaDtu4sIYyMNXjQSLLB0duA'
