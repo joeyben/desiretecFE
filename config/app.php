@@ -179,6 +179,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\AccessServiceProvider::class,
         App\Providers\ComposerServiceProvider::class,
+        App\Providers\ApiServiceProvider::class,
 
     ],
 
