@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend\Wishes;
 
 use App\Http\Controllers\Controller;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 //use App\Http\Requests\Frontend\Wishes\ChangeWishesStatusRequest;
 //use App\Http\Requests\Frontend\Wishes\ManageWishesRequest;
@@ -154,9 +155,24 @@ class WishesController extends Controller
         ]);
     }
 
-    public function getWish(Wish $wish, ManageWishesRequest $request)
+    public function getWish(Request $request)
     {
-        return response()->json($wish->id);
+        $client = new Client();
+        $response = $client->get('http://localhost:8000/api/v1/wish/'.$request->route('wish'),
+            [
+                'headers' => [
+                    'Authorization' => 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3YxL2F1dGgvbG9naW4iLCJpYXQiOjE1NzkxNzUzNjMsImV4cCI6MTU4MDM4NDk2MywibmJmIjoxNTc5MTc1MzYzLCJqdGkiOiJqNXhRUFZDYm5jSjZ1TkE5Iiwic3ViIjoxLCJwcnYiOiI5NGRiZDk2MWFhZWYwZTNjZTY2YWQ3ZDUwZTY0NzcxNzYwOWRkYTI0IiwiaWQiOjF9.yULv7BBWg1OXxXRGaOGgHaDtu4sIYyMNXjQSLLB0duA'
+                ]
+            ]
+        );
+        $response_json = json_decode($response->getBody());
+        $wish = $response_json->data;
+
+        return view('frontend.wishes.wish')->with([
+            'status'     => $this->status,
+            'body_class' => $this::BODY_CLASS,
+            'wish'     => $wish
+        ]);
     }
 
     public function newWish(ManageWishesRequest $request)
