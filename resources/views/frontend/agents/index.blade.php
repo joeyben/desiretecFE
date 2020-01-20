@@ -51,7 +51,6 @@
                         <th>{{ trans('labels.frontend.agents.table.id') }}</th>
                         <th>{{ trans('labels.frontend.agents.table.name') }}</th>
                         <th>{{ trans('labels.frontend.agents.table.created_at') }}</th>
-                        <th>{{ trans('labels.frontend.agents.table.status') }}</th>
                         <th>{{ trans('labels.frontend.agents.table.actions') }}</th>
                     </tr>
                 </thead>
@@ -62,7 +61,6 @@
                             <td>{{ $agent->id }}</td>
                             <td>{{ $agent->display_name }}</td>
                             <td>{{ $agent->created_at }}</td>
-                            <td>{{ $agent->status }}</td>
                             <td>{!! $agent->actions !!}</td>
                         </tr>
                     @endforeach
