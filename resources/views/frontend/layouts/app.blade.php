@@ -47,7 +47,7 @@
             @include('frontend.includes.nav')
 
             <div class="container main-container">
-                @include('includes.partials.messages')
+                @include('includes.alert')
                 <div class="container">
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2">

@@ -30,6 +30,13 @@ Route::group(['namespace' => 'Agents', 'as' => 'agents.'], function () {
     Route::get('agents/delete/{id}', 'AgentsController@delete')->name('delete');
 });
 
+Route::group(['namespace' => 'Auth', 'as' => 'auth.'], function () {
+    Route::post('api/login', 'AuthController@login')->name('api.login');
+    Route::get('api/logout', 'AuthController@logout')->name('api.logout');
+    Route::post('api/link', 'AuthController@link')->name('api.link');
+    Route::get('api/token/{token}', 'AuthController@token')->name('api.token');
+});
+
 Route::group(['namespace' => 'Wishes', 'as' => 'wishes.'], function () {
     Route::get('wishlist', 'WishesController@wishList')->name('list');
 

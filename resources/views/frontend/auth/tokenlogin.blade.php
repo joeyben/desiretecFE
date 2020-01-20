@@ -39,7 +39,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Login</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/login/token') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('frontend.auth.api.link') }}">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }} mb-0">
