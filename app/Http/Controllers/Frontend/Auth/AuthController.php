@@ -48,7 +48,7 @@ class AuthController extends Controller
 
             ApiAuth::byToken($token, $request->get('email'));
 
-            return redirect('/')->with(['success' => 'Logout erfolgreich.']);
+            return redirect('/')->with(['success' => 'Login erfolgreich.']);
         } catch (\Exception $e) {
             Log::error($e);
             return redirect()->back()->withErrors(['message' => 'UngÜltige Zugangsdaten! Bitte erneut versuchen']);

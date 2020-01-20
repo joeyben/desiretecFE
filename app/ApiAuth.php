@@ -24,22 +24,7 @@ class ApiAuth
             ]
         ]);
 
-        $token = json_decode($response->getBody(), true)['access_token'];
-        $client = new Client();
-
-        $response = $client->post(env('API_URL') . '/api/v1/auth/me',
-            [
-                'headers' => [
-                    'Authorization' => 'Bearer ' . $token
-                ]
-            ]
-        );
-
-        $result['user'] = json_decode($response->getBody(), true)['user'];
-
-        $result['user']['token'] = $token;
-
-        return static::auth(new ApiUser($result['user']));
+        return self::byJwtToken(json_decode($response->getBody(), true)['access_token']);
     }
 
     public static function loginLink(string $email, string $host)
