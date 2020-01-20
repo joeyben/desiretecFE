@@ -1,10 +1,19 @@
 <script type="application/javascript">
+    // (Milena) TODO: Move into local storage
     var brandColor = {!! json_encode($color) !!};
 </script>
 
 <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
 <link rel="stylesheet" href="https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
+<style>
+    .kwp-logo {
+        background: transparent url({{ $logo }}) no-repeat left top;
+    }
+</style>
 
+<!-- Question: What does class name prefix "kwp-" stands for ? -->
+<!-- (Milena) TODO: Add header here, modify DOM where needed through layer.js -->
+<!-- (Milena) TODO: Move "kwp-middle" inside Form::open -->
 <div class="kwp-middle">
     Unsere besten Reiseberater helfen Dir gerne, Deine persönliche Traumreise zu finden. Probiere es einfach aus!
 </div>
@@ -106,6 +115,9 @@
                             <div class="kwp-col-ages">
                                 <div class="kwp-form-group">
                                     <label class="main-label">Alter (Hinreise)</label>
+
+                                    <!-- TODO: Include ages logic that's on mvp -->
+
                                     <div class="kwp-col-3">
                                         <i class="master-icon--aircraft-down"></i>
                                     </div>
@@ -118,7 +130,10 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Question: Why is dt.childrenAges() called here and not where others functions are -->
                         <script>dt.childrenAges();</script>
+
                         <div class="kwp-col-12 button">
                             <a href="#">OK</a>
                         </div>
@@ -126,6 +141,7 @@
                 </div>
             </div>
         </div>
+
         <div class="kwp-row">
             <div class="kwp-col-3 rangeslider-wrapper">
                 <div class="kwp-form-group ">
@@ -149,6 +165,8 @@
                         <span class="kwp-star" data-val="4"></span>
                         <span class="kwp-star" data-val="5"></span>
                     </div>
+
+                    <!-- Question: Why is dt.hotelStars() called here and not where others functions are -->
                     <script>dt.hotelStars();</script>
                 </div>
             </div>
@@ -158,7 +176,7 @@
                 <div class="kwp-custom-select">
                     {{ Form::select('catering', $catering_arr, key_exists('catering', $request) ? $request['catering'] : null,['class' => 'custom-select']) }}
                 </div>
-                <i class="far fa-chevron-down"></i>
+                <i class="master-icon--chevron-down"></i>
             </div>
 
         </div>
@@ -432,9 +450,4 @@
         </div>
     </div>
 </div>
-<style>
-    .kwp-logo {
-        background: transparent url({{ $logo }}) no-repeat left top;
-    }
-</style>
 {{ Form::close() }}

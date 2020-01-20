@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Api\ApiService;
 use App\Models\Agents\Agent;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Class AgentsController
@@ -14,13 +15,17 @@ class AgentsController extends Controller
 {
     const BODY_CLASS = 'agent';
 
-    protected $agent;
     protected $apiService;
+    protected $agent;
+    protected $upload_path;
+    protected $storage;
 
     public function __construct(ApiService $apiService, Agent $agent)
     {
         $this->apiService = $apiService;
         $this->agent = $agent;
+        $this->upload_path = 'img' . \DIRECTORY_SEPARATOR . 'agent' . \DIRECTORY_SEPARATOR ?? '';
+        $this->storage = Storage::disk('s3');
     }
 
     public function index()
@@ -32,8 +37,9 @@ class AgentsController extends Controller
         $agents = json_decode($response->getBody())->data;
 
         return view('frontend.agents.index')->with([
-            'body_class' => $this::BODY_CLASS,
-            'agents'     => $agents,
+            'body_class'    => $this::BODY_CLASS,
+            'upload_path'   => $this->upload_path,
+            'agents'        => $agents,
         ]);
     }
 
@@ -52,7 +58,9 @@ class AgentsController extends Controller
 
     public function store(Request $request, Agent $agent)
     {
-        $response = $this->apiService->create('/agents/create', $agent);
+        $agentArr = $request->all();
+
+        $response = $this->apiService->create('/agents/create', $agentArr);
 
         $this->apiService->validate($response->getStatusCode());
 
@@ -61,28 +69,36 @@ class AgentsController extends Controller
             ->with('flash_success', trans('alerts.frontend.agents.created'));
     }
 
-    public function edit()
+    public function edit(int $id)
     {
+        $response = $this->apiService->read('/agents' . '/' . $id);
+
+        $this->apiService->validate($response->getStatusCode());
+
+        $agent = json_decode($response->getBody())->data;
+
         return view('frontend.agents.edit')->with([
             'body_class'  => $this::BODY_CLASS,
-            'agent'       => $this->agent,
+            'agent'       => $agent,
         ]);
     }
 
-    public function update(Request $request, Agent $agent)
+    public function update(int $id, Request $request)
     {
-        $response = $this->apiService->update('/agents/update/' . $agent->id, $agent);
+        $data = $request->all();
+
+        $response = $this->apiService->update('/agents/update/' . $id, $data);
 
         $this->apiService->validate($response->getStatusCode());
 
         return redirect()
-            ->route('admin.agents.index')
+            ->route('frontend.agents.index')
             ->with('flash_success', trans('alerts.frontend.agents.updated'));
     }
 
     public function delete($id)
     {
-        $this->apiService->delete('/agents/delete/' . $id);
+        $response = $this->apiService->delete('/agents/delete/' . $id);
 
         $this->apiService->validate($response->getStatusCode());
 

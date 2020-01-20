@@ -2,8 +2,9 @@
 
 namespace App\Services\Api;
 
-use App\Services\Contracts\ApiServiceInterface;
+use GuzzleHttp;
 use GuzzleHttp\Client;
+use App\Services\Contracts\ApiServiceInterface;
 
 class ApiService implements ApiServiceInterface
 {
@@ -11,7 +12,7 @@ class ApiService implements ApiServiceInterface
     const HOST_DEV = "https://mvp.desiretec.com";
     const HOST_PROD = "";
     const API_PATH = "/api/v1";
-    const TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3YxL2F1dGgvbG9naW4iLCJpYXQiOjE1NzkyNTYyODUsImV4cCI6MTU4MDQ2NTg4NSwibmJmIjoxNTc5MjU2Mjg1LCJqdGkiOiJXRjlsTXpUN2hNcXlWOTB3Iiwic3ViIjoxLCJwcnYiOiI5NGRiZDk2MWFhZWYwZTNjZTY2YWQ3ZDUwZTY0NzcxNzYwOWRkYTI0IiwiaWQiOjF9.oSxXU_TWYRrPgH4EwUwmrkNxCIybS9xOR9d4Ig0FKPY";
+    const TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3YxL2F1dGgvbG9naW4iLCJpYXQiOjE1Nzk0NTMwMDgsImV4cCI6MTU4MDY2MjYwOCwibmJmIjoxNTc5NDUzMDA4LCJqdGkiOiIycTBKMkczRzhiSUZnOU1KIiwic3ViIjoxLCJwcnYiOiI5NGRiZDk2MWFhZWYwZTNjZTY2YWQ3ZDUwZTY0NzcxNzYwOWRkYTI0IiwiaWQiOjF9.HPwWzEEGtGAeEVxR67TpqhoMqlsUChzPsMbD9Cm9H_I";
 
     protected $apiUrl;
     protected $client;
@@ -20,75 +21,33 @@ class ApiService implements ApiServiceInterface
     {
         $this->apiUrl = $this::HOST_LOCAL . $this::API_PATH;
         $this->client = new Client(["headers" => [
-            "Authorization" => "Bearer " . $this::TOKEN
+            "Authorization" => "Bearer " . $this::TOKEN,
+            "Content-type" => "application/json"
         ]]);
     }
 
-    public function hitApi(string $method, string $endpoint, array $data = null)
-    {
-        switch ($method) {
-            case 'get':
-                $response = $this->client->get($this->apiUrl . $endpoint);
-                return $response;
-            case 'delete':
-                $response = $this->client->delete($this->apiUrl . $endpoint);
-                return $response;
-            case 'post':
-                $response = $this->client->post(
-                    $this->apiUrl . $endpoint,
-                    array(
-                        'data' => $data
-                    )
-                );
-                return $response;
-            case 'put':
-                $response = $this->client->put(
-                    $this->apiUrl . $endpoint,
-                    array(
-                        'data' => $data
-                    )
-                );
-                return $response;
-            default:
-                return null;
-        }
-    }
-
     public function getAll(string $endpoint) {
-        $response = $this->client->get($this->apiUrl . $endpoint);
-        return $response;
+        return $this->client->get($this->apiUrl . $endpoint);
     }
 
     public function create(string $endpoint, array $data) {
-        $response = $this->client->post(
-            $this->apiUrl . $endpoint,
-            array(
-                'data' => $data
-            )
-        );
-
-        return $response;
+        return $this->client->post($this->apiUrl . $endpoint, [
+            GuzzleHttp\RequestOptions::JSON => $data
+        ]);
     }
 
     public function read(string $endpoint) {
-        $response = $this->client->get($this->apiUrl . $endpoint);
-        return $response;
+        return $this->client->get($this->apiUrl . $endpoint);
     }
 
     public function update(string $endpoint, array $data) {
-        $response = $this->client->put(
-            $this->apiUrl . $endpoint,
-            array(
-                'data' => $data
-            )
-        );
-
-        return $response;
+        return $this->client->put($this->apiUrl . $endpoint, [
+            GuzzleHttp\RequestOptions::JSON => $data
+        ]);
     }
 
     public function delete(string $endpoint) {
-        $response = $this->client->delete($this->apiUrl . $endpoint);
-        return $response;
+        return $this->client->delete($this->apiUrl . $endpoint);
     }
 
     public function validate(int $statusCode) {
