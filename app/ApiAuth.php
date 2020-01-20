@@ -24,22 +24,21 @@ class ApiAuth
             ]
         ]);
 
-        $token = json_decode($response->getBody(), true)['access_token'];
+        return self::byJwtToken(json_decode($response->getBody(), true)['access_token']);
+    }
+
+    public static function loginLink(string $email, string $host)
+    {
         $client = new Client();
 
-        $response = $client->post(env('API_URL') . '/api/v1/auth/me',
-            [
-                'headers' => [
-                    'Authorization' => 'Bearer ' . $token
-                ]
+        $response = $client->post(env('API_URL') . '/api/v1/auth/login/email', [
+            'form_params' => [
+                'email' => $email,
+                'host' => $host
             ]
-        );
+        ]);
 
-        $result['user'] = json_decode($response->getBody(), true)['user'];
-
-        $result['user']['token'] = $token;
-
-        return static::auth(new ApiUser($result['user']));
+        return json_decode($response->getBody(), true);
     }
 
     public static function retrieveUser(string $token): ApiUser
@@ -107,5 +106,45 @@ class ApiAuth
         );
 
         return json_decode($response->getBody(), true)['role'];
+    }
+
+    public static function logout()
+    {
+        Auth::logout();
+        session()->forget('token');
+    }
+
+    public static function byToken(string $token, string $email)
+    {
+        $client = new Client();
+
+        $response = $client->post(env('API_URL') . '/api/v1/auth/login/token/' . $token,
+            [
+                'form_params' => [
+                    'email' => $email
+                ]
+            ]
+        );
+
+        return self::byJwtToken(json_decode($response->getBody(), true)['access_token']);
+    }
+
+    public static function byJwtToken(string $token)
+    {
+        $client = new Client();
+
+        $response = $client->post(env('API_URL') . '/api/v1/auth/me',
+            [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $token
+                ]
+            ]
+        );
+
+        $result['user'] = json_decode($response->getBody(), true)['user'];
+
+        $result['user']['token'] = $token;
+
+        return static::auth(new ApiUser($result['user']));
     }
 }
