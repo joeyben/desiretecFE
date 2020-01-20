@@ -29,52 +29,27 @@
 </div>
 
 <div class="form-group">
-        @if(!empty($agent->featured_image))
-            <div class="col-lg-1">
-                <img src="{{ Storage::disk('s3')->url('img/agent/' . $agent->featured_image) }}" height="80" width="80">
+    @if(!empty($agent->featured_image))
+        <div class="col-lg-1">
+            <img src="{{ Storage::disk('s3')->url('img/agent/' . $agent->featured_image) }}" height="80" width="80">
+        </div>
+        <div class="col-lg-5">
+            <div class="custom-file-input">
+                <input type="file" name="featured_image" id="file-1" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" />
+                <label for="file-1"><i class="fa fa-upload"></i><span>Choose a file</span></label>
             </div>
-            <div class="col-lg-5">
-                <div class="custom-file-input">
-                    <input type="file" name="featured_image" id="file-1" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" />
-                    <label for="file-1"><i class="fa fa-upload"></i><span>Choose a file</span></label>
+        </div>
+    @else
+        <div class="col-lg-12">
+            <div class="input-group">
+                <input type="text" class="form-control readonly" readonly>
+                <div class="input-group-btn">
+                    <span class="fileUpload btn primary-btn">
+                        <span class="upl" id="upload">{{ trans('agent.image.upload') }}</span>
+                        <input type="file" name="avatar" class="upload up" id="up" onchange="" />
+                    </span>
                 </div>
             </div>
-        @else
-            <div class="col-lg-12">
-                <div class="input-group">
-                    <input type="text" class="form-control readonly" readonly>
-                    <div class="input-group-btn">
-                      <span class="fileUpload btn primary-btn">
-                          <span class="upl" id="upload">{{ trans('agent.image.upload') }}</span>
-                          <input type="file" name="avatar" class="upload up" id="up" onchange="" />
-                      </span><!-- btn-orange -->
-                    </div><!-- btn -->
-                </div><!-- group -->
-            </div>
-        @endif
+        </div>
+    @endif
 </div>
-
-@section('after-scripts-include')
-
-<script>
-    $(document).ready(function(){
-        $('.primary-btn').css({
-            'background': brandColor,
-            'border': '1px solid ' + brandColor,
-            'color': '#fff',
-        });
-        $('.secondary-btn').css({
-            'background': '#fff',
-            'border': '1px solid ' + brandColor,
-            'color': brandColor,
-        });
-        $("input").focus(function(){
-            $(this).css({'border-color': brandColor});
-        });
-        $("input").blur(function(){
-            $(this).css({'border-color': 'inherit'});
-        });
-    });
-</script>
-
-@endsection

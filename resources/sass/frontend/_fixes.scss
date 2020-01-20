@@ -1,3 +1,4 @@
+// form-control
 .form-control{
   background-color: #f8f8f8;
   border: none;
@@ -13,16 +14,7 @@
   }
 }
 
-.dataTables_wrapper{
-  .dataTables_paginate{
-    .paginate_button{
-      &:hover{
-        background: transparent !important;
-      }
-    }
-  }
-}
-
+// nav
 .main-nav{
   .navbar-right{
     .nav-user{
@@ -34,7 +26,6 @@
     }
   }
 }
-
 .navbar-nav{
   .open{
     .dropdown-menu{
@@ -61,23 +52,41 @@
   }
 }
 
-// Customize bootstrap-taginput library
+// bootstrap-taginput
 .dt-modal {
-	.bootstrap-tagsinput {
-		padding: 0;
-		width: 100%;
-		border: none;
-		box-shadow: none;
-		input {
-			min-width: 100%;
-		}
-	}
-}
-.main-container{
-    max-width: 100% !important;
-}
-@media (min-width: 992px) {
-    .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12 {
-        float: left;
+  .bootstrap-tagsinput {
+    padding: 0;
+    width: 100%;
+    border: none;
+    box-shadow: none;
+    input {
+      min-width: 100%;
     }
+  }
 }
+
+
+// box (bootstrap)
+.box{
+  &-title{
+    margin-bottom: 10px;
+  }
+  &-body{
+    a{
+      color: $steel;
+      &:hover{
+        color: $text-color;
+      }
+    }
+  }
+}
+
+
+// .main-container{
+//     max-width: 100% !important;
+// }
+// @media (min-width: 992px) {
+//     .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12 {
+//         float: left;
+//     }
+// }
