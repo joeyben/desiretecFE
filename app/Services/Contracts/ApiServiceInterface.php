@@ -4,13 +4,11 @@ namespace App\Services\Contracts;
 
 Interface ApiServiceInterface
 {
-    public function getAll(string $endpoint);
+    public function get(string $endpoint);
 
-    public function create(string $endpoint, array $data);
+    public function post(string $endpoint, array $data);
 
-    public function read(string $endpoint);
-
-    public function update(string $endpoint, array $data);
+    public function put(string $endpoint, array $data);
 
     public function delete(string $endpoint);
 }

@@ -8,49 +8,104 @@ use App\Services\Contracts\ApiServiceInterface;
 
 class ApiService implements ApiServiceInterface
 {
-    const HOST_LOCAL = "http://localhost:8000";
-    const HOST_DEV = "https://mvp.desiretec.com";
-    const HOST_PROD = "";
     const API_PATH = "/api/v1";
-    const TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3YxL2F1dGgvbG9naW4iLCJpYXQiOjE1Nzk0NTMwMDgsImV4cCI6MTU4MDY2MjYwOCwibmJmIjoxNTc5NDUzMDA4LCJqdGkiOiIycTBKMkczRzhiSUZnOU1KIiwic3ViIjoxLCJwcnYiOiI5NGRiZDk2MWFhZWYwZTNjZTY2YWQ3ZDUwZTY0NzcxNzYwOWRkYTI0IiwiaWQiOjF9.HPwWzEEGtGAeEVxR67TpqhoMqlsUChzPsMbD9Cm9H_I";
 
     protected $apiUrl;
+
+    protected $headers = [];
+
     protected $client;
+
+    private $response;
 
     public function __construct()
     {
-        $this->apiUrl = $this::HOST_LOCAL . $this::API_PATH;
-        $this->client = new Client(["headers" => [
-            "Authorization" => "Bearer " . $this::TOKEN,
-            "Content-type" => "application/json"
-        ]]);
+        $this->apiUrl = env('API_URL', 'https://mvp.desiretec.com') . $this::API_PATH;
+        $this->client = new Client();
+        $this->setHeader('Content-type', 'application/json');
+        $this->setAuthorization(resolve('token'));
     }
 
-    public function getAll(string $endpoint) {
-        return $this->client->get($this->apiUrl . $endpoint);
+    public function setHeader(string $key, string $value): self
+    {
+        $this->headers[$key] = $value;
+
+        return $this;
     }
 
-    public function create(string $endpoint, array $data) {
-        return $this->client->post($this->apiUrl . $endpoint, [
-            GuzzleHttp\RequestOptions::JSON => $data
-        ]);
+
+    public function setAuthorization(?string $token): self
+    {
+        if ($token) {
+            $this->setHeader('Authorization', 'Bearer ' . $token);
+        }
+
+        return $this;
     }
 
-    public function read(string $endpoint) {
-        return $this->client->get($this->apiUrl . $endpoint);
+
+    public function get(string $endpoint, array $data = [])
+    {
+        $this->response = $this->client->get($this->apiUrl . $endpoint . '?' . http_build_query($data),
+            [
+                'headers' => $this->headers
+            ]
+        );
+
+        return $this;
     }
 
-    public function update(string $endpoint, array $data) {
-        return $this->client->put($this->apiUrl . $endpoint, [
-            GuzzleHttp\RequestOptions::JSON => $data
-        ]);
+    public function post(string $endpoint, array $data)
+    {
+        $this->response = $this->client->post($this->apiUrl . $endpoint,
+            [
+                'headers' => $this->headers,
+                GuzzleHttp\RequestOptions::JSON => $data
+            ]
+        );
+
+        return $this;
     }
 
-    public function delete(string $endpoint) {
-        return $this->client->delete($this->apiUrl . $endpoint);
+    public function put(string $endpoint, array $data)
+    {
+        $this->response = $this->client->put($this->apiUrl . $endpoint,
+            [
+                'headers' => $this->headers,
+                GuzzleHttp\RequestOptions::JSON => $data
+            ]
+        );
+
+        return $this;
     }
 
-    public function validate(int $statusCode) {
+    public function delete(string $endpoint)
+    {
+        $this->response = $this->client->delete($this->apiUrl . $endpoint,
+            [
+                'headers' => $this->headers
+            ]
+        );
+
+        return $this;
+    }
+
+    public function validate(int $statusCode)
+    {
         // TODO:
+    }
+
+    public function response(string $format = null)
+    {
+        switch ($format) {
+            case 'array':
+                return json_decode($this->response, true);
+
+            case 'object':
+                return json_decode($this->response);
+
+            default:
+                return $this->response;
+        }
     }
 }
