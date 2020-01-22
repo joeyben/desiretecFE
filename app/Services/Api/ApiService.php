@@ -99,13 +99,13 @@ class ApiService implements ApiServiceInterface
     {
         switch ($format) {
             case 'array':
-                return json_decode($this->response, true);
+                return json_decode($this->response->getBody(), true);
 
             case 'object':
-                return json_decode($this->response);
+                return json_decode($this->response->getBody(), true);
 
             default:
-                return $this->response;
+                return json_decode($this->response->getBody(), true);
         }
     }
 }
