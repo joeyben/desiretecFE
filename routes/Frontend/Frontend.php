@@ -20,16 +20,6 @@
 
 Route::get('show', 'FrontendController@show');
 
-Route::group(['namespace' => 'Agents', 'as' => 'agents.'], function () {
-    Route::get('agents', 'AgentsController@index')->name('index');
-    Route::get('agent/profile', 'AgentsController@profile')->name('profile');
-    Route::get('agents/create', 'AgentsController@create')->name('create');
-    Route::post('agents/store', 'AgentsController@store')->name('store');
-    Route::get('agents/edit/{id}', 'AgentsController@edit')->name('edit');
-    Route::post('agents/update/{id}', 'AgentsController@update')->name('update');
-    Route::get('agents/delete/{id}', 'AgentsController@delete')->name('delete');
-});
-
 Route::group(['namespace' => 'Auth', 'as' => 'auth.'], function () {
     Route::post('api/login', 'AuthController@login')->name('api.login');
     Route::get('api/logout', 'AuthController@logout')->name('api.logout');
@@ -150,6 +140,16 @@ Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
             Route::get('message/delete/{message}', 'MessagesController@deleteMessage');
             Route::post('message/edit', 'MessagesController@editMessage');
 
+        });
+
+        Route::group(['namespace' => 'Agents', 'as' => 'agents.'], function () {
+            Route::get('agents', 'AgentsController@index')->name('index');
+            Route::get('agent/profile', 'AgentsController@profile')->name('profile');
+            Route::get('agents/create', 'AgentsController@create')->name('create');
+            Route::post('agents/store', 'AgentsController@store')->name('store');
+            Route::get('agents/edit/{id}', 'AgentsController@edit')->name('edit');
+            Route::post('agents/update/{id}', 'AgentsController@update')->name('update');
+            Route::get('agents/delete/{id}', 'AgentsController@delete')->name('delete');
         });
 
     });
