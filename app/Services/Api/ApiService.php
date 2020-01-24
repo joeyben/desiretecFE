@@ -46,6 +46,8 @@ class ApiService implements ApiServiceInterface
 
     public function get(string $endpoint, array $data = [])
     {
+        $this->setAuthorization(resolve('token'));
+
         $this->response = $this->client->get($this->apiUrl . $endpoint . '?' . http_build_query($data),
             [
                 'headers' => $this->headers
@@ -57,6 +59,8 @@ class ApiService implements ApiServiceInterface
 
     public function post(string $endpoint, array $data)
     {
+        $this->setAuthorization(resolve('token'));
+
         $this->response = $this->client->post($this->apiUrl . $endpoint,
             [
                 'headers' => $this->headers,
@@ -69,6 +73,8 @@ class ApiService implements ApiServiceInterface
 
     public function put(string $endpoint, array $data)
     {
+        $this->setAuthorization(resolve('token'));
+
         $this->response = $this->client->put($this->apiUrl . $endpoint,
             [
                 'headers' => $this->headers,
@@ -81,6 +87,8 @@ class ApiService implements ApiServiceInterface
 
     public function delete(string $endpoint)
     {
+        $this->setAuthorization(resolve('token'));
+
         $this->response = $this->client->delete($this->apiUrl . $endpoint,
             [
                 'headers' => $this->headers
@@ -90,22 +98,15 @@ class ApiService implements ApiServiceInterface
         return $this;
     }
 
-    public function validate(int $statusCode)
-    {
-        // TODO:
-    }
-
-    public function response(string $format = null)
+    public function formatResponse(string $format = null)
     {
         switch ($format) {
             case 'array':
                 return json_decode($this->response->getBody(), true);
-
             case 'object':
-                return json_decode($this->response->getBody(), true);
-
+                return json_decode($this->response->getBody());
             default:
-                return json_decode($this->response->getBody(), true);
+                return $this->response->getBody();
         }
     }
 }

@@ -58,10 +58,10 @@
                     @foreach($agents as $agent)
                         <tr>
                             <td>
-                                {!! $agent->avatar !!}
+                                <img src="{{ $avatar_path . $agent->avatar }}"/>
                             </td>
                             <td>{{ $agent->id }}</td>
-                            <td>{{ $agent->display_name }}</td>
+                            <td>{{ $agent->name }}</td>
                             <td>{{ $agent->created_at }}</td>
                             <td>
                                 {{ link_to_route('frontend.agents.edit', trans('labels.agents.edit'), [$agent->id]) }}
