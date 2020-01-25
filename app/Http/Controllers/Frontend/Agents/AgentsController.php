@@ -50,11 +50,6 @@ class AgentsController extends Controller implements AgentsControllerInterface
         }
     }
 
-    public function profile()
-    {
-        return view('frontend.agents.profile');
-    }
-
     public function create()
     {
         return view('frontend.agents.create')->with([
