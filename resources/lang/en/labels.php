@@ -13,6 +13,13 @@ return [
     |
     */
 
+    'general' => [
+        'buttons' => [
+            'save'   => 'Speichern',
+            'update' => 'Aktualisieren',
+        ]
+    ],
+
     'frontend' => [
         'auth' => [
             'login_box_title' => 'Login',
