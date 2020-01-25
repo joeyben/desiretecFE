@@ -21,7 +21,7 @@ class AuthController extends Controller
         try {
             $user = ApiAuth::byCredentials($request->get('email'), $request->get('password'));
 
-            return redirect()->route('frontend.index')->with(['success' => 'Login erfolgreich.']);
+            return redirect()->route('frontend.index');
         } catch (\Exception $e) {
             Log::error($e);
             return redirect()->back()->withErrors(['message' => 'UngÜltige Zugangsdaten! Bitte erneut versuchen']);
@@ -48,7 +48,7 @@ class AuthController extends Controller
 
             ApiAuth::byToken($token, $request->get('email'));
 
-            return redirect('/')->with(['success' => 'Login erfolgreich.']);
+            return redirect('/');
         } catch (\Exception $e) {
             Log::error($e);
             return redirect()->back()->withErrors(['message' => 'UngÜltige Zugangsdaten! Bitte erneut versuchen']);
@@ -60,7 +60,7 @@ class AuthController extends Controller
         try {
             ApiAuth::logout();
 
-            return redirect()->route('frontend.index')->with(['success' => 'Logout erfolgreich.']);
+            return redirect()->route('frontend.index');
         } catch (\Exception $e) {
             Log::error($e);
             return redirect()->back()->withErrors(['message' => $e->getMessage()]);
