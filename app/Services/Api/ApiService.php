@@ -57,7 +57,7 @@ class ApiService implements ApiServiceInterface
         return $this;
     }
 
-    public function post(string $endpoint, array $data)
+    public function post(string $endpoint, array $data = [])
     {
         $this->setAuthorization(resolve('token'));
 
