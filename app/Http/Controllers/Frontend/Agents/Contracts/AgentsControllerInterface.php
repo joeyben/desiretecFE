@@ -10,8 +10,6 @@ Interface AgentsControllerInterface
 {
     public function index();
 
-    public function profile();
-
     public function create();
 
     public function store(CreateAgentsRequest $request, Agent $agent);
@@ -24,5 +22,5 @@ Interface AgentsControllerInterface
 
     public function uploadImage($input);
 
-    function deleteOldImage(string $fileName);
+    public function deleteOldImage(string $fileName);
 }
