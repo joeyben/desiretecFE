@@ -1,4 +1,4 @@
-<table class="table table-striped">
+<table class="table">
     <tr>
         <th>{{ trans('labels.frontend.user.profile.first_name') }}</th>
         <td>{{ !empty($logged_in_user->first_name) ? $logged_in_user->first_name : '' }}</td>
