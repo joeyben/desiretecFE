@@ -65,6 +65,20 @@ Route::group(['namespace' => 'Wishes', 'as' => 'wishes.'], function () {
 
 });
 
+Route::group(['namespace' => 'Offers', 'as' => 'offers.'], function () {
+    Route::get('offers', 'OffersController@index')->name('index');
+    Route::post('offers/get', 'OffersTableController')->name('get');
+    Route::get('offers/create/{id}', 'OffersController@create')->name('create');
+    Route::post('offers/store', 'OffersController@store')->name('store');
+    Route::post('offers/edit', 'OffersController@edit')->name('edit');
+    Route::post('offers/destroy', 'OffersController@destroy')->name('destroy');
+
+    Route::get('wish/offers/{wish}', 'OffersController@getWishOffers')->name('showoffers');
+
+    Route::post('wish/getoffers', 'OffersTableController@showOffersForWish')->name('wishoffers');
+
+});
+
 
 Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
     /*
@@ -116,19 +130,7 @@ Route::group(['namespace' => 'User', 'as' => 'user.'], function () {
         //     Route::patch('profile-picture/update', 'ProfileController@updateProfilePicture')->name('profile-picture.update');
         // });
 
-        Route::group(['namespace' => 'Offers', 'as' => 'offers.'], function () {
-            Route::get('offers', 'OffersController@index')->name('index');
-            Route::post('offers/get', 'OffersTableController')->name('get');
-            Route::get('offers/create/{id}', 'OffersController@create')->name('create');
-            Route::post('offers/store', 'OffersController@store')->name('store');
-            Route::post('offers/edit', 'OffersController@edit')->name('edit');
-            Route::post('offers/destroy', 'OffersController@destroy')->name('destroy');
-
-            Route::get('wish/offers/{wish}', 'OffersController@getWishOffers')->name('showoffers');
-
-            Route::post('wish/getoffers', 'OffersTableController@showOffersForWish')->name('wishoffers');
-
-        });
+        
 
         Route::group(['namespace' => 'Comments', 'as' => 'comments.'], function () {
 

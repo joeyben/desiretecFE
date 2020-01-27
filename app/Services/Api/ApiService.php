@@ -46,6 +46,7 @@ class ApiService implements ApiServiceInterface
 
     public function get(string $endpoint, array $data = [])
     {
+        $this->setAuthorization(resolve('token'));
         $this->response = $this->client->get($this->apiUrl . $endpoint . '?' . http_build_query($data),
             [
                 'headers' => $this->headers
@@ -57,6 +58,7 @@ class ApiService implements ApiServiceInterface
 
     public function post(string $endpoint, array $data)
     {
+        $this->setAuthorization(resolve('token'));
         $this->response = $this->client->post($this->apiUrl . $endpoint,
             [
                 'headers' => $this->headers,
@@ -99,13 +101,13 @@ class ApiService implements ApiServiceInterface
     {
         switch ($format) {
             case 'array':
-                return json_decode($this->response, true);
+                return json_decode($this->response->getBody(), true);
 
             case 'object':
-                return json_decode($this->response);
+                return json_decode($this->response->getBody());
 
             default:
-                return $this->response;
+                return $this->response->getBody();
         }
     }
 }
