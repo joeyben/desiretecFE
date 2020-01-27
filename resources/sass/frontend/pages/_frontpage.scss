@@ -128,11 +128,12 @@ input:-internal-autofill-selected{
   color: #bbb !important;
 }
 
-// Auth views
-.panel-body{
-  .form-group{
-    a{
-      color: transparent;
-    }
+// Login views
+.card-login{
+  a{
+    color: transparent;
+  }
+  .btn{
+    min-width: 48%;
   }
 }
