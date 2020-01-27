@@ -8,13 +8,15 @@
 .navbar-right{
   a,a:hover,a:focus{
     cursor: pointer;
-    color:#fff;
   }
   span{
-    color:#000;
+    color:$black;
   }
   i{
-    color:#000;
+    color:$black;
+    &:hover, &:active{
+      color: $steel;
+    }
   }
 }
 
@@ -48,12 +50,33 @@
 // Header Fixes
 .navbar-right{
   li{
+    position: relative;
     span{
       display: inline-block;
       padding: 0;
-      color: #000000;
+      color: $black;
       &.caret{
-        color: #000;
+        color: $black;
+      }
+    }
+  }
+  .dropdown{
+    &-menu{
+      position: absolute;
+    }
+    &-toggle{
+      &:after{
+        content: none;
+      }
+    }
+    i{
+      padding-left: 5px;
+    }
+    a{
+      color: $black;
+      font-size: 14px;
+      &:hover, &:active{
+        color: $steel;
       }
     }
   }
@@ -104,7 +127,7 @@
   }
   .navbar-default {
     .navbar-text{
-      color: #000;
+      color: $black;
     }
     .navbar-nav{
       >li{
@@ -113,10 +136,10 @@
           position: absolute;
           right    : 0;
           z-index: 100;
-          top  : 12px;
-          width  : 1px;
+          top  : 25%;
+          width  : .5px;
           height   : 50%;  /* or 100px */
-          background: #000;
+          background: $black;
         }
         &:last-child{
           &:after{
@@ -126,7 +149,7 @@
           }
         }
         >a{
-          color: #000;
+          color: $black;
         }
       }
     }
