@@ -26,11 +26,23 @@
                             <th>{{ trans('labels.frontend.offers.table.createdby') }}</th>
                             <th>{{ trans('labels.frontend.offers.table.createdat') }}</th>
                             <th>{{ trans('labels.frontend.offers.table.status') }}</th>
-
                         </tr>
                     </thead>
+                    <tbody>
+                        @foreach($offers as $offer)
+                            <tr>
+                                <td>{!! $offer['title'] !!}</td>
+                                <td>{{ $offer['created_by'] }}</td>
+                                <td>{{ $offer['created_at'] }}</td>
+                                <td>{{ $offer['status'] }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
                 </table>
             </div><!--table-responsive-->
+            <div class="row">
+                {{ $offers->links() }}
+            </div>
         </div><!-- /.box-body -->
     </div><!--box-->
 
@@ -45,52 +57,4 @@
             {{-- {!! history()->renderType('Blog') !!} --}}
         </div><!-- /.box-body -->
     </div><!--box box-info-->
-@endsection
-
-@section('after-scripts')
-    {{-- For DataTables --}}
-    {{ Html::script(mix('js/dataTable.js')) }}
-
-    <script>
-        $(function() {
-            var dataTable = $('#offers-table').dataTable({
-                processing: true,
-                serverSide: true,
-                bLengthChange:false,
-                bInfo:false,
-                ajax: {
-                    //url: '{{ route("frontend.offers.get") }}',
-                    url: 'http://127.0.0.1:8000/api/v1/offers/6',
-                    type: 'get',
-                    crossDomain: true,
-                },
-                columns: [
-                    {data: 'title', name: '{{config('module.offers.table')}}.title'},
-                    {data: 'created_by', name: '{{config('module.offers.table')}}.created_by'},
-                    {data: 'created_at', name: '{{config('module.offers.table')}}.created_at'},
-                    {data: 'status', name: '{{config('module.offers.table')}}.status'},
-
-                ],
-                order: [[3, "asc"]],
-                searchDelay: 500,
-                dom: 'lBfrtip',
-                buttons: {
-                    buttons: [
-
-                    ]
-                },
-                language: {
-                    "search": "Suche",
-                    "paginate": {
-                        "first":      "Erster",
-                        "last":       "Letzter",
-                        "next":       "Nächster",
-                        "previous":   "Vorherige"
-                    },
-                }
-            });
-
-           //Backend.DataTableSearch.init(dataTable);
-        });
-    </script>
 @endsection

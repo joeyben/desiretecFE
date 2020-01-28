@@ -36,7 +36,7 @@ const app = new Vue({
         loading: true,
         messages: '',
         user_name: '',
-        id: '',
+        filter: '',
     },
 
     mounted() {
@@ -51,7 +51,7 @@ const app = new Vue({
 
     methods: {
         fetchWishes() {
-            axios.get('/wishes/getlist?page=' + this.pagination.current_page+'&status=' + this.status + '&id=' + this.id)
+            axios.get('/wishes/getlist?page=' + this.pagination.current_page+'&status=' + this.status + '&filter=' + this.filter)
                 .then(response => {
                     this.data = response.data.data.data;
                     this.pagination = response.data.pagination;

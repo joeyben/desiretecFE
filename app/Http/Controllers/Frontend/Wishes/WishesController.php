@@ -6,9 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Services\Api\ApiService;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
-
 //use App\Http\Requests\Frontend\Wishes\ChangeWishesStatusRequest;
 //use App\Http\Requests\Frontend\Wishes\ManageWishesRequest;
 //use App\Http\Requests\Frontend\Wishes\StoreWishesRequest;
@@ -17,8 +14,8 @@ use Illuminate\Support\Facades\Log;
 //use App\Models\Access\User\User;
 //use App\Models\Access\User\UserToken;
 //use App\Models\Agents\Agent;
-//use App\Models\Wishes\Wish;
-//use App\Repositories\Frontend\Wishes\WishesRepository;
+use App\Models\Wishes\Wish;
+use App\Repositories\Frontend\Wishes\WishesRepository;
 //use Illuminate\Auth\AuthManager;
 //use Illuminate\Session\Store;
 //use Illuminate\Support\Facades\Auth;
@@ -90,12 +87,23 @@ class WishesController extends Controller
      */
     protected $users;
 
+    /**
+     * @var ApiService
+     */
     protected $apiService;
 
-
-    public function __construct(ApiService $apiService)
+    /**
+     * @param \App\Repositories\Frontend\Wishes\WishesRepository              $wish
+     * @param \Modules\Categories\Repositories\Contracts\CategoriesRepository $categories
+     * @param \Modules\Rules\Repositories\Eloquent\EloquentRulesRepository    $rules
+     * @param \Illuminate\Auth\AuthManager                                    $auth
+     * @param \App\Repositories\Backend\Access\User\UserRepository            $users
+     * @param \Illuminate\Session\Store                                       $session
+     */
+    public function __construct(ApiService $apiService, Wish $wish)
     {
         $this->apiService = $apiService;
+        $this->wish = $wish;
     }
 
     /**
@@ -158,10 +166,10 @@ class WishesController extends Controller
     public function getWish(Request $request)
     {
         $client = new Client();
-        $response = $client->get('https://mvp.desiretec.com/api/v1/wish/'.$request->route('wish'),
+        $response = $client->get('http://localhost:8000/api/v1/wish/'.$request->route('wish'),
             [
                 'headers' => [
-                    'Authorization' => 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL212cC5kZXNpcmV0ZWMuY29tL2FwaS92MS9hdXRoL2xvZ2luIiwiaWF0IjoxNTc5MjQ4NjI3LCJleHAiOjE1ODE5MjcwMjcsIm5iZiI6MTU3OTI0ODYyNywianRpIjoiR2lLa2VRTUJwS3dDcUUwNSIsInN1YiI6MjQ3NywicHJ2IjoiOTRkYmQ5NjFhYWVmMGUzY2U2NmFkN2Q1MGU2NDc3MTc2MDlkZGEyNCIsImlkIjoyNDc3fQ.Yv3OHye9B6gW1TgOjJspjB_jsNp4kFif2Z6_HfRI9Ps'
+                    'Authorization' => 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3YxL2F1dGgvbG9naW4iLCJpYXQiOjE1NzkxNzUzNjMsImV4cCI6MTU4MDM4NDk2MywibmJmIjoxNTc5MTc1MzYzLCJqdGkiOiJqNXhRUFZDYm5jSjZ1TkE5Iiwic3ViIjoxLCJwcnYiOiI5NGRiZDk2MWFhZWYwZTNjZTY2YWQ3ZDUwZTY0NzcxNzYwOWRkYTI0IiwiaWQiOjF9.yULv7BBWg1OXxXRGaOGgHaDtu4sIYyMNXjQSLLB0duA'
                 ]
             ]
         );
@@ -231,236 +239,21 @@ class WishesController extends Controller
      *
      * @return mixed
      */
-    public function getList()
+    public function getList(Request $request)
     {
-
-
-        $response = [
-            "pagination" => [
-                "total" => 7,
-                "per_page" => 10,
-                "current_page" => 1,
-                "last_page" => 1,
-                "from" => 1,
-                "to" => 7,
-            ],
-            "data" => [
-                "current_page" => 1,
-                "data" => [
-                    0 => [
-                        "id" => 1140,
-                        "title" => "-",
-                        "airport" => "sad",
-                        "destination" => "asd",
-                        "duration" => "beliebig",
-                        "adults" => 1,
-                        "kids" => 4,
-                        "budget" => 4000,
-                        "earliest_start" => "2019-12-21",
-                        "latest_return" => "2019-12-28",
-                        "status" => "new",
-                        "featured_image" => "bg.jpg",
-                        "created_by" => 2271,
-                        "created_at" => "2019-12-18 12:47:38",
-                        "group_id" => 1,
-                        "note" => null,
-                        "first_name" => "Reisewunschportal",
-                        "last_name" => "Kunde",
-                        "whitelabel_id" => 156,
-                        "whitelabel_name" => "TUI",
-                        "offers" => 0,
-                        "categories" => null,
-                        "manuelFlag" => true,
-                        "wlRule" => null,
-                    ],
-                    1 => [
-                        "id" => 1139,
-                        "title" => "-",
-                        "airport" => "ds",
-                        "destination" => "as",
-                        "duration" => "beliebig",
-                        "adults" => 1,
-                        "kids" => 4,
-                        "budget" => 4000,
-                        "earliest_start" => "2019-12-21",
-                        "latest_return" => "2019-12-28",
-                        "status" => "new",
-                        "featured_image" => "bg.jpg",
-                        "created_by" => 2270,
-                        "created_at" => "2019-12-18 12:41:45",
-                        "group_id" => 1,
-                        "note" => null,
-                        "first_name" => "Reisewunschportal",
-                        "last_name" => "Kunde",
-                        "whitelabel_id" => 156,
-                        "whitelabel_name" => "TUI",
-                        "offers" => 0,
-                        "categories" => null,
-                        "manuelFlag" => true,
-                        "wlRule" => null,
-                    ],
-                    2 => [
-                        "id" => 1138,
-                        "title" => "-",
-                        "airport" => "dsa",
-                        "destination" => "sa",
-                        "duration" => "beliebig",
-                        "adults" => 1,
-                        "kids" => 4,
-                        "budget" => null,
-                        "earliest_start" => "2019-12-21",
-                        "latest_return" => "2019-12-28",
-                        "status" => "new",
-                        "featured_image" => "bg.jpg",
-                        "created_by" => 2269,
-                        "created_at" => "2019-12-18 12:39:58",
-                        "group_id" => 1,
-                        "note" => null,
-                        "first_name" => "Reisewunschportal",
-                        "last_name" => "Kunde",
-                        "whitelabel_id" => 156,
-                        "whitelabel_name" => "TUI",
-                        "offers" => 0,
-                        "categories" => null,
-                        "manuelFlag" => false,
-                        "wlRule" => null,
-                    ],
-                    3 => [
-                        "id" => 1137,
-                        "title" => "-",
-                        "airport" => "sad",
-                        "destination" => "asd",
-                        "duration" => "beliebig",
-                        "adults" => 1,
-                        "kids" => 4,
-                        "budget" => 4000,
-                        "earliest_start" => "2019-12-21",
-                        "latest_return" => "2019-12-28",
-                        "status" => "new",
-                        "featured_image" => "bg.jpg",
-                        "created_by" => 2268,
-                        "created_at" => "2019-12-18 12:35:59",
-                        "group_id" => 1,
-                        "note" => null,
-                        "first_name" => "Reisewunschportal",
-                        "last_name" => "Kunde",
-                        "whitelabel_id" => 156,
-                        "whitelabel_name" => "TUI",
-                        "offers" => 0,
-                        "categories" => null,
-                        "manuelFlag" => true,
-                        "wlRule" => null,
-                    ],
-                    4 => [
-                        "id" => 1136,
-                        "title" => "-",
-                        "airport" => "asd",
-                        "destination" => "sad",
-                        "duration" => "beliebig",
-                        "adults" => 1,
-                        "kids" => 3,
-                        "budget" => 4000,
-                        "earliest_start" => "2019-12-21",
-                        "latest_return" => "2019-12-28",
-                        "status" => "new",
-                        "featured_image" => "bg.jpg",
-                        "created_by" => 2267,
-                        "created_at" => "2019-12-18 11:01:04",
-                        "group_id" => 1,
-                        "note" => null,
-                        "first_name" => "Reisewunschportal",
-                        "last_name" => "Kunde",
-                        "whitelabel_id" => 156,
-                        "whitelabel_name" => "TUI",
-                        "offers" => 0,
-                        "categories" => null,
-                        "manuelFlag" => true,
-                        "wlRule" => null,
-                    ],
-                    5 => [
-                        "id" => 1135,
-                        "title" => "-",
-                        "airport" => "berlin",
-                        "destination" => "hamburg",
-                        "duration" => "beliebig",
-                        "adults" => 1,
-                        "kids" => 4,
-                        "budget" => 4000,
-                        "earliest_start" => "2019-12-20",
-                        "latest_return" => "2019-12-27",
-                        "status" => "new",
-                        "featured_image" => "bg.jpg",
-                        "created_by" => 2262,
-                        "created_at" => "2019-12-17 15:02:20",
-                        "group_id" => 1,
-                        "note" => null,
-                        "first_name" => "Reisewunschportal",
-                        "last_name" => "Kunde",
-                        "whitelabel_id" => 156,
-                        "whitelabel_name" => "TUI",
-                        "offers" => 0,
-                        "categories" => null,
-                        "manuelFlag" => true,
-                        "wlRule" => null,
-                    ],
-                    6 => [
-                        "id" => 153,
-                        "title" => "Mali",
-                        "airport" => "Berlin",
-                        "destination" => "Mali",
-                        "duration" => "14 Nächte",
-                        "adults" => 5,
-                        "kids" => 3,
-                        "budget" => 8100,
-                        "earliest_start" => "2019-03-29",
-                        "latest_return" => "2019-04-06",
-                        "status" => "new",
-                        "featured_image" => "1522558148csm_ER_Namibia_b97bcd06f0.jpg",
-                        "created_by" => 130,
-                        "created_at" => "2019-03-26 12:52:47",
-                        "group_id" => 1,
-                        "note" => null,
-                        "first_name" => "Muster",
-                        "last_name" => "Name",
-                        "whitelabel_id" => 156,
-                        "whitelabel_name" => "TUI",
-                        "offers" => 0,
-                        "categories" => null,
-                        "messageSentFlag" => true,
-                        "manuelFlag" => true,
-                        "wlRule" => null,
-                    ],
-                ],
-                "first_page_url" => "http://tui.com:8000/wishes/getlist?page=1",
-                "from" => 1,
-                "last_page" => 1,
-                "last_page_url" => "http://tui.com:8000/wishes/getlist?page=1",
-                "next_page_url" => null,
-                "path" => "http://tui.com:8000/wishes/getlist",
-                "per_page" => 10,
-                "prev_page_url" => null,
-                "to" => 7,
-                "total" => 7,
-            ],
-        ];
-
         try {
-            $response = $this->apiService->get('/agents', []);
+            $params['page'] = $request->get('page') ? $request->get('page') : '1';
+            $params['status'] = $request->get('status') ? $request->get('status') : 'new';
+            $params['filter'] = $request->get('filter') ? $request->get('filter') : '';
 
-            $agents = $response->formatResponse('object')->data;
+            $response = $this->apiService->get('/wishlist', $params);
 
-            return view('frontend.agents.index')->with([
-                'body_class'    => $this::BODY_CLASS,
-                'avatar_path'   => $this->storage->url('img/agent/'),
-                'agents'        => $agents,
-            ]);
-            return response()->json($response);
-        } catch (\Exception $e) {
-            Log::error($e);
-            return redirect()->back()->withErrors(['message' => $e->getMessage()]);
+            $wishes = $response->formatResponse('object');
+
+            return response()->json($wishes);
+        } catch (Exception $e) {
+            return json_response_error($e);
         }
-
-
     }
 
     /**
@@ -600,20 +393,12 @@ class WishesController extends Controller
      *
      * @return JSON response
      */
-    public function changeWishStatus(ChangeWishesStatusRequest $request)
+    public function changeWishStatus(Request $request)
     {
         try {
-            $status_arr = [
-                'new'               => '1',
-                'offer_created'     => '2',
-                'completed'         => '3',
-            ];
+            $response = $this->apiService->post('/wishes/changeWishStatus', $request->all());
 
-            $status = $request->get('status') ? $status_arr[$request->get('status')] : '1';
-
-            $wish = $this->wish->updateStatus($request->get('id'), $status);
-
-            return json_response([]);
+            return response()->json($response->formatResponse('object'));
         } catch (Exception $e) {
             return json_response_error($e);
         }
