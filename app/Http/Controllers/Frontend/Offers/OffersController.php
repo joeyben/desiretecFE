@@ -9,6 +9,9 @@ use App\Http\Requests\Frontend\Offers\UpdateOffersRequest;
 use App\Models\Offers\Offer;
 use App\Models\Wishes\Wish;
 use App\Repositories\Frontend\Offers\OffersRepository;
+use App\Services\Api\ApiService;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * Class OffersController.
@@ -31,10 +34,17 @@ class OffersController extends Controller
     protected $offer;
 
     /**
+     * @var ApiService
+     */
+    protected $apiService;
+
+    /**
      * @param \App\Repositories\Frontend\Offers\OffersRepository $offer
      */
-    public function __construct()
+    public function __construct(ApiService $apiService, Offer $offer)
     {
+        $this->apiService = $apiService;
+        $this->offer = $offer;
     }
 
     /**
@@ -44,10 +54,29 @@ class OffersController extends Controller
      */
     public function index()
     {
-        return view('frontend.offers.index')->with([
-            'status'     => $this->status,
-            'body_class' => $this::BODY_CLASS,
-        ]);
+        try {
+            $response = $this->apiService->get('/offers');
+
+            $offers = collect($response->formatResponse('array')['data']);
+
+            $page = request()->has('page') ? request('page') : 1;
+            $perPage = request()->has('per_page') ? request('per_page') : 10;
+            $offset = ($page * $perPage) - $perPage;
+            $results =  new LengthAwarePaginator(
+                $offers->slice($offset, $perPage),
+                $offers->count(),
+                $perPage,
+                $page,
+                ['path' => request()->url(), 'query' => request()->query()]
+            );
+
+            return view('frontend.offers.index')->with([
+                'body_class'    => $this::BODY_CLASS,
+                'offers'        => $results,
+            ]);
+        } catch (Exception $e) {
+            return json_response_error($e);
+        }
     }
 
     /**
@@ -70,13 +99,17 @@ class OffersController extends Controller
      *
      * @return mixed
      */
-    public function store(StoreOffersRequest $request)
+    public function store(Request $request)
     {
-        $this->offer->create($request);
+        try {
+            $response = $this->apiService->post('/offers/store', $request->all());
 
-        return redirect()
-            ->route('frontend.offers.index')
-            ->with('flash_success', trans('alerts.frontend.offers.created'));
+            return redirect()
+                ->route('frontend.offers.index')
+                ->with('flash_success', trans('alerts.frontend.offers.created'));
+        } catch (Exception $e) {
+            return json_response_error($e);
+        }
     }
 
     /**
