@@ -1,8 +1,3 @@
-<?php
-    $hardcoded_user = array("first_name" => "Hardcoded", "last_name" => "Hardcoded", "email" => "hardcoded@mail.com", "created_at" => "2019-02-26 13:51:58", "updared_at" => "2019-12-06 09:17:25" );
-    $logged_in_user = json_decode(json_encode($hardcoded_user));
-?>
-
 <table class="table table-striped">
     <tr>
         <th>{{ trans('labels.frontend.user.profile.first_name') }}</th>

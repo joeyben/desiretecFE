@@ -52,6 +52,7 @@
   }
 }
 
+
 // bootstrap-taginput
 .dt-modal {
   .bootstrap-tagsinput {
@@ -78,6 +79,32 @@
         color: $text-color;
       }
     }
+  }
+}
+
+
+// card (bootstrap)
+.card{
+  &-header{
+    font-weight: bold;
+    .text{
+      padding: 0 .625rem;
+    }
+  }
+  .nav-tabs {
+    .nav-link{
+      &.active {
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+
+// table (bootstrap)
+.table{
+  th{
+    font-weight: bold;
   }
 }
 

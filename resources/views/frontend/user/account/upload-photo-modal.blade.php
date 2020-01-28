@@ -9,7 +9,7 @@
         <h4 class="modal-title">Select from Avtars or upload your photo</h4>
       </div>
       <div class="modal-body">
-        {!! Form::open(array('route' => 'frontend.user.profile-picture.update', 'files' => true)) !!}
+        {!! Form::open(array('route' => 'frontend.user.profile-picture', 'files' => true)) !!}
         <div class="form-group">
           <label for="profile_pic">
             <img src="{{url('/').'/img/frontend/profile-picture/pic-1.png'}}" height=80 width=80>
@@ -36,7 +36,7 @@
           {!! Form::submit('Submit', ['class' => 'btn btn-primary']) !!}
           {!! Form::reset('Reset', ['class' => 'btn btn-primary']) !!}
         </div>
-          
+
         {!! Form::close() !!}
       </div>
       <div class="modal-footer">

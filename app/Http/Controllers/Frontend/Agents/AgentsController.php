@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers\Frontend\Agents;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Frontend\Agents\Contracts\AgentsControllerInterface;
+use App\Http\Requests\Agents\UpdateAgentsRequest;
+use App\Http\Requests\Agents\CreateAgentsRequest;
+use App\Models\Agents\Agent;
 use App\Http\Controllers\Controller;
 use App\Services\Api\ApiService;
-use App\Models\Agents\Agent;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class AgentsController
  */
-class AgentsController extends Controller
+class AgentsController extends Controller implements AgentsControllerInterface
 {
     const BODY_CLASS = 'agent';
 
@@ -30,22 +33,21 @@ class AgentsController extends Controller
 
     public function index()
     {
-        $response = $this->apiService->getAll('/agents');
+        try {
+            $response = $this->apiService->get('/agents');
 
-        $this->apiService->validate($response->getStatusCode());
+            $agents = $response->formatResponse('object')->data;
 
-        $agents = json_decode($response->getBody())->data;
+            return view('frontend.agents.index')->with([
+                'body_class'    => $this::BODY_CLASS,
+                'avatar_path'   => $this->storage->url('img/agent/'),
+                'agents'        => $agents,
+            ]);
 
-        return view('frontend.agents.index')->with([
-            'body_class'    => $this::BODY_CLASS,
-            'upload_path'   => $this->upload_path,
-            'agents'        => $agents,
-        ]);
-    }
-
-    public function profile()
-    {
-        return view('frontend.agents.profile');
+        } catch (\Exception $e) {
+            Log::error($e);
+            return redirect()->back()->withErrors(['message' => $e->getMessage()]);
+        }
     }
 
     public function create()
@@ -56,80 +58,109 @@ class AgentsController extends Controller
         ]);
     }
 
-    public function store(Request $request, Agent $agent)
+    public function store(CreateAgentsRequest $request, Agent $agent)
     {
-        $agentArr = $request->all();
+        try {
+            $data = $request->all();
 
-        $response = $this->apiService->create('/agents/create', $agentArr);
+            $data['avatar'] = $this->uploadImage(['avatar' => $request->avatar]);
 
-        $this->apiService->validate($response->getStatusCode());
+            $response = $this->apiService->post('/agents/create', $data);
 
-        return redirect()
-            ->route('frontend.agents.index')
-            ->with('flash_success', trans('alerts.frontend.agents.created'));
+            return redirect()
+                ->route('frontend.agents.index')
+                ->with('flash_success', trans('alerts.frontend.agents.created'));
+
+        } catch (\Exception $e) {
+            Log::error($e);
+            return redirect()->back()->withErrors(['message' => $e->getMessage()]);
+        }
     }
 
     public function edit(int $id)
     {
-        $response = $this->apiService->read('/agents' . '/' . $id);
+        try {
+            $response = $this->apiService->get('/agents' . '/' . $id);
 
-        $this->apiService->validate($response->getStatusCode());
+            $agent = $response->formatResponse('object')->data;
 
-        $agent = json_decode($response->getBody())->data;
+            return view('frontend.agents.edit')->with([
+                'body_class'  => $this::BODY_CLASS,
+                'agent'       => $agent,
+            ]);
 
-        return view('frontend.agents.edit')->with([
-            'body_class'  => $this::BODY_CLASS,
-            'agent'       => $agent,
-        ]);
+        } catch (\Exception $e) {
+            Log::error($e);
+            return redirect()->back()->withErrors(['message' => $e->getMessage()]);
+        }
     }
 
-    public function update(int $id, Request $request)
+    public function update(int $id, UpdateAgentsRequest $request)
     {
-        $data = $request->all();
+        try {
+            $data = $request->all();
 
-        $response = $this->apiService->update('/agents/update/' . $id, $data);
+            if (\array_key_exists('avatar', $data)) {
+                $data['avatar'] = $this->uploadImage(['avatar' => $request->avatar]);
+            }
 
-        $this->apiService->validate($response->getStatusCode());
+            $response = $this->apiService->put('/agents/update/' . $id, $data);
 
-        return redirect()
-            ->route('frontend.agents.index')
-            ->with('flash_success', trans('alerts.frontend.agents.updated'));
+            return redirect()
+                ->route('frontend.agents.index')
+                ->with('flash_success', trans('alerts.frontend.agents.updated'));
+
+        } catch (\Exception $e) {
+            Log::error($e);
+            return redirect()->back()->withErrors(['message' => $e->getMessage()]);
+        }
     }
 
     public function delete($id)
     {
-        $response = $this->apiService->delete('/agents/delete/' . $id);
+        try {
+           $response = $this->apiService->delete('/agents/delete/' . $id);
 
-        $this->apiService->validate($response->getStatusCode());
+            return redirect()
+                ->route('frontend.agents.index')
+                ->with('flash_success', trans('alerts.frontend.agents.deleted'));
 
-        return redirect()
-            ->route('frontend.agents.index')
-            ->with('flash_success', trans('alerts.frontend.agents.deleted'));
+        } catch (\Exception $e) {
+            Log::error($e);
+            return redirect()->back()->withErrors(['message' => $e->getMessage()]);
+        }
     }
 
     public function uploadImage($input)
     {
-        if (!\is_array($input)) {
-            $input = [];
+        try {
+            if (!\is_array($input)) {
+                $input = [];
+            }
+
+            if (isset($input['avatar']) && !empty($input['avatar'])) {
+                $avatar = $input['avatar'];
+                $fileName = time() . $avatar->getClientOriginalName();
+
+                $this->storage->put($this->upload_path . $fileName, file_get_contents($avatar->getRealPath()), 'public');
+
+                return $fileName;
+            }
+
+            $fileName = 'avatar_default';
+
+            $this->storage->put($this->upload_path . $fileName, file_get_contents('https://desiretec.s3.eu-central-1.amazonaws.com/img/agent/1570145950wAvatarCallCenter2.png'), 'public');
+
+            return $fileName;
+
+        } catch (\Exception $e) {
+            Log::error($e);
+            return redirect()->back()->withErrors(['message' => $e->getMessage()]);
         }
+    }
 
-        if (isset($input['avatar']) && !empty($input['avatar'])) {
-            $avatar = $input['avatar'];
-
-            $fileName = time() . $avatar->getClientOriginalName();
-
-            $this->storage->put($this->upload_path . $fileName, file_get_contents($avatar->getRealPath()), 'public');
-
-            $input = array_merge($input, ['avatar' => $fileName]);
-
-            return $input;
-        }
-        $fileName = 'avatar_default';
-
-        $this->storage->put($this->upload_path . $fileName, file_get_contents('https://desiretec.s3.eu-central-1.amazonaws.com/img/agent/1570145950wAvatarCallCenter2.png'), 'public');
-
-        $input = array_merge($input, ['avatar' => $fileName]);
-
-        return $input;
+    function deleteOldImage(string $fileName)
+    {
+        // TODO:
     }
 }
