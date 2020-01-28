@@ -95,7 +95,7 @@ class ApiAuth
 
     public static function hasRole(string $role): bool
     {
-        if (Auth::check()) {
+        if (!Auth::check()) {
             return false;
         }
 
