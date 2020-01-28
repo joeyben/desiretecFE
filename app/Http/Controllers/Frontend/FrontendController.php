@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Repositories\Frontend\Pages\PagesRepository;
 use Illuminate\Http\Request;
+use Modules\Translations\Entities\Translation;
+use Spatie\TranslationLoader\LanguageLine;
 
 /**
  * Class FrontendController.
