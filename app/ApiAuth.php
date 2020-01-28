@@ -5,6 +5,7 @@ namespace App;
 
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Class ApiAuth
@@ -43,21 +44,23 @@ class ApiAuth
 
     public static function retrieveUser(string $token): ApiUser
     {
-        $client = new Client();
+        return Cache::rememberForever(static::getCacheKey($token), function () use ($token) {
+            $client = new Client();
 
-        $response = $client->post(env('API_URL') . '/api/v1/auth/me',
-            [
-                'headers' => [
-                    'Authorization' => 'Bearer ' . $token
+            $response = $client->post(env('API_URL') . '/api/v1/auth/me',
+                [
+                    'headers' => [
+                        'Authorization' => 'Bearer ' . $token
+                    ]
                 ]
-            ]
-        );
+            );
 
-        $result['user'] = json_decode($response->getBody(), true)['user'];
+            $result['user'] = json_decode($response->getBody(), true)['user'];
 
-        $result['user']['token'] = $token;
+            $result['user']['token'] = $token;
 
-        return new ApiUser($result['user']);
+            return new ApiUser($result['user']);
+        });
     }
 
     protected static function auth(ApiUser $user): ApiUser
@@ -92,25 +95,17 @@ class ApiAuth
 
     public static function hasRole(string $role): bool
     {
-        $client = new Client();
+        if (Auth::check()) {
+            return false;
+        }
 
-        $response = $client->post(env('API_URL') . '/api/v1/auth/check/role',
-            [
-                'headers' => [
-                    'Authorization' => 'Bearer ' . resolve('token')
-                ],
-                'form_params' => [
-                    'role' => $role
-                ]
-            ]
-        );
-
-        return json_decode($response->getBody(), true)['role'];
+        return Auth::user()->role === $role;
     }
 
     public static function logout()
     {
         Auth::logout();
+        Cache::forget(static::getCacheKey(session()->get('token')));
         session()->forget('token');
     }
 
@@ -146,5 +141,10 @@ class ApiAuth
         $result['user']['token'] = $token;
 
         return static::auth(new ApiUser($result['user']));
+    }
+
+    public static function getCacheKey(string $token): string
+    {
+        return "desiretec.user-loader.{$token}";
     }
 }
