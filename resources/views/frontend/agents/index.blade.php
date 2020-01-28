@@ -5,8 +5,8 @@
 @endsection
 
 @section('before-scripts')
-    <script type="text/javascript">
-        var brandColor = '#000';
+    <script type="application/javascript">
+        var brandColor = {!! json_encode(getCurrentWhiteLabelColor()) !!};
     </script>
 @endsection
 
@@ -51,19 +51,23 @@
                         <th>{{ trans('labels.frontend.agents.table.id') }}</th>
                         <th>{{ trans('labels.frontend.agents.table.name') }}</th>
                         <th>{{ trans('labels.frontend.agents.table.created_at') }}</th>
-                        <th>{{ trans('labels.frontend.agents.table.status') }}</th>
                         <th>{{ trans('labels.frontend.agents.table.actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($agents as $agent)
                         <tr>
-                            <td>{!! $agent->avatar !!}</td>
+                            <td>
+                                <img src="{{ $avatar_path . $agent->avatar }}"/>
+                            </td>
                             <td>{{ $agent->id }}</td>
-                            <td>{{ $agent->display_name }}</td>
+                            <td>{{ $agent->name }}</td>
                             <td>{{ $agent->created_at }}</td>
-                            <td>{{ $agent->status }}</td>
-                            <td>{!! $agent->actions !!}</td>
+                            <td>
+                                {{ link_to_route('frontend.agents.edit', trans('labels.agents.edit'), [$agent->id]) }}
+                                <span> / </span>
+                                {{ link_to_route('frontend.agents.delete', trans('labels.agents.delete'), [$agent->id]) }}
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>

@@ -4,6 +4,13 @@
     {{ trans('general.url.agent_create') }}
 @endsection
 
+@section('before-scripts')
+    <script type="application/javascript">
+        var
+         = {!! json_encode(getCurrentWhiteLabelColor()) !!};
+    </script>
+@endsection
+
 @section('content')
     {{ Form::open(['route' => 'frontend.agents.store', 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'post', 'id' => 'create-permission', 'files' => true]) }}
 
@@ -21,19 +28,21 @@
             {{ link_to_route('frontend.agents.index', 'Cancel', [], ['class' => 'btn btn-danger btn-md']) }}
             {{ Form::submit('Create', ['class' => 'btn btn-primary btn-md']) }}
         </div>
-    {{ Form::close() }}   
-    
+    {{ Form::close() }}
 @endsection
 
 @section("after-scripts")
-    <script type="text/javascript">
+<script>
+            console.log('inside');
+
+</script>
+<script type="text/javascript">
         $(document).on('change','.up', function(){
             var names = [];
             var length = $(this).get(0).files.length;
             for (var i = 0; i < $(this).get(0).files.length; ++i) {
                 names.push($(this).get(0).files[i].name);
             }
-            // $("input[name=file]").val(names);
             if(length>2){
                 var fileName = names.join(', ');
                 $(this).closest('.form-group').find('.form-control').attr("value",length+" files selected");
@@ -42,6 +51,5 @@
                 $(this).closest('.form-group').find('.form-control').attr("value",names);
             }
         });
-
     </script>
 @endsection

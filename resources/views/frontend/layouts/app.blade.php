@@ -24,7 +24,7 @@
         {{ Html::style(mix('css/frontend.css')) }}
 
         {{-- {!! Html::style('js/select2/select2.min.css') !!} --}}
-
+        <link media="all" type="text/css" rel="stylesheet" href="{{ asset('fontawsome/css/all.css') }}">
     @yield('after-styles')
         <style type="text/css">
 
@@ -47,7 +47,7 @@
             @include('frontend.includes.nav')
 
             <div class="container main-container">
-                @include('includes.partials.messages')
+                @include('includes.alert')
                 <div class="container">
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2">

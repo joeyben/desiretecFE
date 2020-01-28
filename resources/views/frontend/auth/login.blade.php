@@ -6,33 +6,11 @@
 
 @section('before-scripts')
     <script type="application/javascript">
-        var brandColor = "#092a5e";
-    </script>
-@endsection
-
-@section('after-scripts')
-    <script type="application/javascript">
-        $(document).ready(function(){
-            $('.btn-primary').css({
-                'background': brandColor,
-                'border': '1px solid ' + brandColor,
-                'color': '#fff',
-                'padding': '10px 20px',
-                'min-width': 'auto'
-            });
-            $("input").focus(function(){
-                $(this).css({'border-color': brandColor});
-            });
-            $("input").blur(function(){
-                $(this).css({'border-color': 'inherit'});
-            });
-            $('.form-group a').css({'color': brandColor});
-        });
+        var brandColor = {!! json_encode(getCurrentWhiteLabelColor()) !!};
     </script>
 @endsection
 
 @section('content')
-
 
     <div class="row form-group justify-content-md-center">
         @include('includes.alert')
@@ -43,7 +21,7 @@
 
                 <div class="panel-body">
 
-                    {{ Form::open(['route' => 'frontend.auth.login', 'class' => 'form-horizontal']) }}
+                    {{ Form::open(['route' => 'frontend.auth.api.login', 'class' => 'form-horizontal']) }}
 
                     <div class="form-group">
                         {{ Form::label('email', trans('validation.attributes.frontend.register-user.email'), ['class' => 'col-sm-4 col-form-label']) }}
@@ -90,4 +68,25 @@
 
     </div><!-- row -->
 
+@endsection
+
+@section('after-scripts')
+    <script type="application/javascript">
+        $(document).ready(function(){
+            $('.btn-primary').css({
+                'background': brandColor,
+                'border': '1px solid ' + brandColor,
+                'color': '#fff',
+                'padding': '10px 20px',
+                'min-width': 'auto'
+            });
+            $("input").focus(function(){
+                $(this).css({'border-color': brandColor});
+            });
+            $("input").blur(function(){
+                $(this).css({'border-color': 'inherit'});
+            });
+            $('.form-group a').css({'color': brandColor});
+        });
+    </script>
 @endsection

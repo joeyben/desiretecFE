@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\ApiUser;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +15,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind('user', static function (): ? ApiUser {
+            return Auth::user();
+        });
+
+        $this->app->bind('token', static function (): ?string {
+            return session('token');
+        });
     }
 
     /**

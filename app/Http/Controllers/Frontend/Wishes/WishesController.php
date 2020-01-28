@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Frontend\Wishes;
 
 use App\Http\Controllers\Controller;
+use App\Services\Api\ApiService;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+
 //use App\Http\Requests\Frontend\Wishes\ChangeWishesStatusRequest;
 //use App\Http\Requests\Frontend\Wishes\ManageWishesRequest;
 //use App\Http\Requests\Frontend\Wishes\StoreWishesRequest;
@@ -86,16 +90,12 @@ class WishesController extends Controller
      */
     protected $users;
 
-    /**
-     * @param \App\Repositories\Frontend\Wishes\WishesRepository              $wish
-     * @param \Modules\Categories\Repositories\Contracts\CategoriesRepository $categories
-     * @param \Modules\Rules\Repositories\Eloquent\EloquentRulesRepository    $rules
-     * @param \Illuminate\Auth\AuthManager                                    $auth
-     * @param \App\Repositories\Backend\Access\User\UserRepository            $users
-     * @param \Illuminate\Session\Store                                       $session
-     */
-    public function __construct()
+    protected $apiService;
+
+
+    public function __construct(ApiService $apiService)
     {
+        $this->apiService = $apiService;
     }
 
     /**
@@ -158,10 +158,10 @@ class WishesController extends Controller
     public function getWish(Request $request)
     {
         $client = new Client();
-        $response = $client->get('http://localhost:8000/api/v1/wish/'.$request->route('wish'),
+        $response = $client->get('https://mvp.desiretec.com/api/v1/wish/'.$request->route('wish'),
             [
                 'headers' => [
-                    'Authorization' => 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3YxL2F1dGgvbG9naW4iLCJpYXQiOjE1NzkxNzUzNjMsImV4cCI6MTU4MDM4NDk2MywibmJmIjoxNTc5MTc1MzYzLCJqdGkiOiJqNXhRUFZDYm5jSjZ1TkE5Iiwic3ViIjoxLCJwcnYiOiI5NGRiZDk2MWFhZWYwZTNjZTY2YWQ3ZDUwZTY0NzcxNzYwOWRkYTI0IiwiaWQiOjF9.yULv7BBWg1OXxXRGaOGgHaDtu4sIYyMNXjQSLLB0duA'
+                    'Authorization' => 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL212cC5kZXNpcmV0ZWMuY29tL2FwaS92MS9hdXRoL2xvZ2luIiwiaWF0IjoxNTc5MjQ4NjI3LCJleHAiOjE1ODE5MjcwMjcsIm5iZiI6MTU3OTI0ODYyNywianRpIjoiR2lLa2VRTUJwS3dDcUUwNSIsInN1YiI6MjQ3NywicHJ2IjoiOTRkYmQ5NjFhYWVmMGUzY2U2NmFkN2Q1MGU2NDc3MTc2MDlkZGEyNCIsImlkIjoyNDc3fQ.Yv3OHye9B6gW1TgOjJspjB_jsNp4kFif2Z6_HfRI9Ps'
                 ]
             ]
         );
@@ -233,81 +233,7 @@ class WishesController extends Controller
      */
     public function getList()
     {
-//        $status_arr = [
-//            'new'               => '1',
-//            'offer_created'     => '2',
-//            'completed'         => '3',
-//        ];
-//
-//        $status = $request->get('status') ? $status_arr[$request->get('status')] : '1';
-//        $id = ($request->get('id') && !is_null($request->get('id'))) ? $request->get('id') : '';
-//        $currentWhiteLabelID = getCurrentWhiteLabelField('id');
-//        $rules = $this->rules->getRuleForWhitelabel((int) ($currentWhiteLabelID));
-//
-//        if($this->auth->guard('web')->user()->hasRole('User')) {
-//            $wish = $this->wish->getForDataTable()
-//                ->when($id, function ($wish, $id) {
-//                    return $wish->where(config('module.wishes.table') . '.id', 'like', '%' . $id . '%')->where('whitelabel_id', (int) (getCurrentWhiteLabelId()));
-//                })
-//                ->paginate(10);
-//        } else {
-//            $wish = $this->wish->getForDataTable()
-//                ->when($status, function ($wish, $status) {
-//                    return $wish->where(config('module.wishes.table') . '.status', $status)
-//                        ->where('whitelabel_id', (int) (getCurrentWhiteLabelId()));
-//                })->when($id, function ($wish, $id) {
-//                    return $wish->where(config('module.wishes.table') . '.id', 'like', '%' . $id . '%');
-//                })
-//                ->paginate(10);
-//        }
-//
-//        foreach ($wish as $singleWish) {
-//            $singleWish['status'] = array_search($singleWish['status'], $status_arr) ? array_search($singleWish['status'], $status_arr) : 'new';
-//
-//            if($this->auth->guard('web')->user()->hasRole('Seller')) { //<<<--- ID of BILD REISEN AND the respective WLs for User's Email
-//                if($currentWhiteLabelID === 198) {
-//                    $singleWish['senderEmail'] = ($this->users->find($singleWish['created_by'])->email && !is_null($this->users->find($singleWish['created_by'])->email)) ? $this->users->find($singleWish['created_by'])->email : "No Email";
-//                }
-//                if($singleWish->messages() && $singleWish->messages()->count() > 0) {
-//                    $singleWish['messageSentFlag'] = true;
-//                }
-//            }
-//
-//            $manuelFlag = false;
-//
-//            if (\is_array($rules['destination']) && null !== $rules['destination']) {
-//                if (\is_array($singleWish['destination'])) {
-//                    foreach ($singleWish['destination'] as $destination) {
-//                        if (\in_array($destination, $rules['destination'], true)) {
-//                            $manuelFlag = true;
-//                        }
-//                    }
-//                } else {
-//                    if (\in_array($singleWish['destination'], $rules['destination'], true)) {
-//                        $manuelFlag = true;
-//                    }
-//                }
-//            }
-//
-//            if ($singleWish['budget'] > $rules['budget']) {
-//                $manuelFlag = true;
-//            }
-//
-//            $singleWish['manuelFlag'] = $manuelFlag;
-//            $singleWish['wlRule'] = $rules['type'];
-//        }
 
-//        $response = [
-//            'pagination' => [
-//                'total'        => $wish->total(),
-//                'per_page'     => $wish->perPage(),
-//                'current_page' => $wish->currentPage(),
-//                'last_page'    => $wish->lastPage(),
-//                'from'         => $wish->firstItem(),
-//                'to'           => $wish->lastItem()
-//            ],
-//            'data' => $wish
-//        ];
 
         $response = [
             "pagination" => [
@@ -518,7 +444,23 @@ class WishesController extends Controller
             ],
         ];
 
-        return response()->json($response);
+        try {
+            $response = $this->apiService->get('/agents', []);
+
+            $agents = $response->formatResponse('object')->data;
+
+            return view('frontend.agents.index')->with([
+                'body_class'    => $this::BODY_CLASS,
+                'avatar_path'   => $this->storage->url('img/agent/'),
+                'agents'        => $agents,
+            ]);
+            return response()->json($response);
+        } catch (\Exception $e) {
+            Log::error($e);
+            return redirect()->back()->withErrors(['message' => $e->getMessage()]);
+        }
+
+
     }
 
     /**

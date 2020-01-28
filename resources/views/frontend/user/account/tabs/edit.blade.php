@@ -1,4 +1,4 @@
-{{ Form::model($logged_in_user, ['route' => 'frontend.user.profile.update', 'class' => 'form-horizontal', 'method' => 'POST']) }}
+{{ Form::model($logged_in_user, ['route' => ['frontend.user.update',$logged_in_user->id], 'class' => 'form-horizontal', 'method' => 'PUT']) }}
 
     <div class="form-group">
         <div class="col-md-12">
@@ -12,17 +12,11 @@
         </div>
     </div>
 
-    {{-- @if ($logged_in_user->canChangeEmail()) --}}
-        <div class="form-group">
-            <div class="col-md-12">
-                <div class="alert alert-info" role="alert">
-                    <i class="fa fa-info-circle"></i> {{  trans('strings.frontend.user.change_email_notice') }}
-                </div> 
-
-                {{ Form::input('email', 'email', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.frontend.register-user.email')]) }}
-            </div>
+    <div class="form-group">
+        <div class="col-md-12">
+            {{ Form::input('email', 'email', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.frontend.register-user.email')]) }}
         </div>
-    {{-- @endif --}}
+    </div>
 
     <div class="form-group">
         <div class="col-md-12">
@@ -30,26 +24,21 @@
         </div>
     </div>
 
-    {{-- zipcode --}}
     <div class="form-group">
         <div class="col-md-12">
             {{ Form::input('text', 'zip_code', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.frontend.register-user.zipcode')]) }}
         </div>
     </div>
 
-    {{-- city --}}
     <div class="form-group">
-        {{ Form::label('city', trans('validation.attributes.frontend.register-user.city'), ['class' => 'col-md-4 control-label']) }}
         <div class="col-md-12">
-            {{ Form::input('text', 'city', null, ['class' => 'form-control select2', 'placeholder' => trans('validation.attributes.frontend.register-user.city'), 'id' => 'city', 'style' => 'width : 539px !important;']) }}
+            {{ Form::input('text', 'city', null, ['class' => 'form-control select2', 'placeholder' => trans('validation.attributes.frontend.register-user.city'), 'id' => 'city']) }}
         </div>
     </div>
 
-    {{-- state --}}
     <div class="form-group">
-        {{ Form::label('country', trans('validation.attributes.frontend.register-user.country'), ['class' => 'col-md-4 control-label']) }}
         <div class="col-md-12">
-            {{ Form::input('text', 'country' , null, ['class' => 'form-control select2', 'placeholder' => trans('validation.attributes.frontend.register-user.country'), 'id' => 'country', 'style' => 'width : 539px !important;']) }}
+            {{ Form::input('text', 'country' , null, ['class' => 'form-control select2', 'placeholder' => trans('validation.attributes.frontend.register-user.country'), 'id' => 'country']) }}
         </div>
     </div>
 

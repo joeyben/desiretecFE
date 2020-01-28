@@ -40,8 +40,13 @@ const app = new Vue({
     },
 
     mounted() {
+        // TODO: Move fetchWishes() into component called only in wishes/index.blade.php
         this.fetchWishes();
-        this.applyColors();
+
+        // Code inside $nextTick will run only after the entire view has been rendered
+        this.$nextTick(function () {
+            this.applyColors();
+        });
     },
 
     methods: {
@@ -86,6 +91,8 @@ const app = new Vue({
         },
 
         applyColors() {
+            // (Milena) TODO: Use this for all views, except for the layer
+
             $('.primary-btn, .btn-primary').css({
                 'background': brandColor,
                 'border': '1px solid ' + brandColor,
@@ -95,6 +102,12 @@ const app = new Vue({
                 'background': '#fff',
                 'border': '1px solid ' + brandColor,
                 'color': brandColor,
+            });
+            $("input").focus(function(){
+                $(this).css({'border-color': brandColor});
+            });
+            $("input").blur(function(){
+                $(this).css({'border-color': 'inherit'});
             });
             $('.wish-note i').css({
                 'color': brandColor,

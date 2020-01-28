@@ -4,7 +4,7 @@ var exitIntent = window.exitIntent || {};
 (function ($) {
 
     dt.defaultConfig = {
-        baseUrl: 'http://testkurenundwellness.com',
+        baseUrl: 'http://localhost',
         popupPath: '/show',
         popupStore:'/store',
         cssPath: '/css/layer.css'
@@ -418,7 +418,7 @@ var exitIntent = window.exitIntent || {};
             return r[1];
         },
         name: 'TUI IBE',
-        matchesUrl: 'www.testkurenundwellness.com/(hotel|pauschalreisen|last-minute)(/[a-z-]+)*/suchen|airtours.de',
+        matchesUrl: '',
         filterFormSelector: '#ibeContainer',
         dictionaries: {
             'catering': {

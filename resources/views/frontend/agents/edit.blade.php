@@ -4,9 +4,14 @@
     {{ trans('general.url.agent_create') }}
 @endsection
 
-@section('content')
-    {{ Form::open(['route' => ['frontend.agents.update',1], 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'POST', 'id' => 'create-permission', 'files' => true]) }}
+@section('before-scripts')
+    <script type="application/javascript">
+        var brandColor = {!! json_encode(getCurrentWhiteLabelColor()) !!};
+    </script>
+@endsection
 
+@section('content')
+    {{ Form::open(['route' => ['frontend.agents.update',$agent->id], 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'POST', 'id' => 'create-permission', 'files' => true]) }}
         <div class="modal-header">
             <h5 class="modal-title">{{ trans('labels.agents.edit_headline') }}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -24,7 +29,6 @@
             </div>
         </div>
     {{ Form::close() }}
-
 @endsection
 
 @section("after-scripts")
@@ -35,7 +39,6 @@
             for (var i = 0; i < $(this).get(0).files.length; ++i) {
                 names.push($(this).get(0).files[i].name);
             }
-            // $("input[name=file]").val(names);
             if(length>2){
                 var fileName = names.join(', ');
                 $(this).closest('.form-group').find('.form-control').attr("value",length+" files selected");
@@ -44,27 +47,5 @@
                 $(this).closest('.form-group').find('.form-control').attr("value",names);
             }
         });
-
-        $(document).ready(function(){
-            var brandColor = '#000';
-
-            $('.primary-btn, .btn-primary').css({
-                'background': brandColor,
-                'border': '1px solid ' + brandColor,
-                'color': '#fff',
-            });
-            $('.secondary-btn, .btn-secondary').css({
-                'background': '#fff',
-                'border': '1px solid ' + brandColor,
-                'color': brandColor,
-            });
-            $("input").focus(function(){
-                $(this).css({'border-color': brandColor});
-            });
-            $("input").blur(function(){
-                $(this).css({'border-color': 'inherit'});
-            });
-        });
-
     </script>
 @endsection
