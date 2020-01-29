@@ -4,12 +4,13 @@
      {{ trans('wish.details.tab_title') }}
 @endsection
 
-@section('after-scripts')
-    <script type="text/javascript">
-        var brandColor = '#000';
+@section('before-scripts')
+    <script type="application/javascript">
+        var brandColor = {!! json_encode(getCurrentWhiteLabelColor()) !!};
     </script>
-    <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
 @endsection
+
+<link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
 
 @section('content')
 
