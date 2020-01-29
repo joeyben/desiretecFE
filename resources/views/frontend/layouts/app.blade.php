@@ -26,6 +26,9 @@
         {{-- {!! Html::style('js/select2/select2.min.css') !!} --}}
 
     @yield('after-styles')
+
+        <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
+
         <style type="text/css">
 
         </style>
