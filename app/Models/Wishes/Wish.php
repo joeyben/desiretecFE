@@ -3,20 +3,9 @@
 namespace App\Models\Wishes;
 
 use App\Models\BaseModel;
-use App\Models\ModelTrait;
-use App\Models\Wishes\Traits\Attribute\WishAttribute;
-use App\Models\Wishes\Traits\Relationship\WishRelationship;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Wish extends BaseModel
 {
-    use ModelTrait,
-        SoftDeletes,
-        WishAttribute,
-        WishRelationship {
-        // BlogAttribute::getEditButtonAttribute insteadof ModelTrait;
-    }
-
     protected $fillable = [
         'title',
         'airport',
@@ -46,19 +35,6 @@ class Wish extends BaseModel
         'created_at',
         'updated_at',
     ];
-
-    /**
-     * The database table used by the model.
-     *
-     * @var string
-     */
-    protected $table;
-
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-        $this->table = config('module.wishes.table');
-    }
 
     /**
      * Returns the extra_parameters as a clean array.
