@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers\Frontend\Wishes;
 
-use App\Http\Controllers\Controller;
-use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 //use App\Http\Requests\Frontend\Wishes\ChangeWishesStatusRequest;
-//use App\Http\Requests\Frontend\Wishes\ManageWishesRequest;
+use App\Http\Requests\Wishes\ManageWishesRequest;
 //use App\Http\Requests\Frontend\Wishes\StoreWishesRequest;
 //use App\Http\Requests\Frontend\Wishes\UpdateWishesRequest;
 //use App\Http\Requests\Frontend\Wishes\UpdateNoteRequest;
 //use App\Models\Access\User\User;
 //use App\Models\Access\User\UserToken;
 //use App\Models\Agents\Agent;
-//use App\Models\Wishes\Wish;
+use App\Models\Wishes\Wish;
+use App\Http\Controllers\Controller;
+use App\Services\Api\ApiService;
+use Illuminate\Support\Facades\Log;
 //use App\Repositories\Frontend\Wishes\WishesRepository;
 //use Illuminate\Auth\AuthManager;
 //use Illuminate\Session\Store;
@@ -30,18 +31,13 @@ class WishesController extends Controller
     const BODY_CLASS = 'wish';
     const BODY_CLASS_LIST = 'wishlist';
     const OFFER_URL = 'img/offer/';
-    /**
-     * Wish Status.
-     */
+
     protected $status = [
         'new'               => 'new',
         'offer_created'     => 'offer_created',
         'completed'         => 'completed',
     ];
 
-    /**
-     * Wish Category.
-     */
     protected $category = [
         '1'  => 1,
         '2'  => 2,
@@ -50,9 +46,6 @@ class WishesController extends Controller
         '5'  => 5,
     ];
 
-    /**
-     * Wish Catering.
-     */
     protected $catering = [
         'any'           => 'any',
         'Breakfast'     => 'Breakfast',
@@ -61,41 +54,15 @@ class WishesController extends Controller
         'All Inclusive' => 'All Inclusive',
     ];
 
-    /**
-     * @var WishesRepository
-     */
+    protected $apiService;
     protected $wish;
     protected $categories;
 
-    /**
-     * @var \Illuminate\Auth\AuthManager
-     */
-    private $auth;
 
-    /**
-     * @var \Modules\Rules\Repositories\Eloquent\EloquentRulesRepository
-     */
-    private $rules;
-    /**
-     * @var \Illuminate\Session\Store
-     */
-    private $session;
-
-    /**
-     * @var UserRepository
-     */
-    protected $users;
-
-    /**
-     * @param \App\Repositories\Frontend\Wishes\WishesRepository              $wish
-     * @param \Modules\Categories\Repositories\Contracts\CategoriesRepository $categories
-     * @param \Modules\Rules\Repositories\Eloquent\EloquentRulesRepository    $rules
-     * @param \Illuminate\Auth\AuthManager                                    $auth
-     * @param \App\Repositories\Backend\Access\User\UserRepository            $users
-     * @param \Illuminate\Session\Store                                       $session
-     */
-    public function __construct()
+    public function __construct(ApiService $apiService, Wish $wish)
     {
+        $this->apiService = $apiService;
+        $this->wish = $wish;
     }
 
     /**
@@ -115,64 +82,23 @@ class WishesController extends Controller
         ]);
     }
 
-    /**
-     * @param \App\Http\Requests\Frontend\Wishes\ManageWishesRequest $request
-     * @param \App\Models\Wishes\Wish                                $wish
-     *
-     * @return mixed
-     */
-    public function show(Wish $wish, ManageWishesRequest $request)
+
+    public function show(int $id, ManageWishesRequest $request)
     {
-        $agent = null;
-        $wishTye = $this->manageRules($wish);
+        try {
+            $response = $this->apiService->get('/wish' . '/' . $id);
 
-        if ($wishTye > 0) {
-            return redirect()->route('autooffer.create', [$wish->id]);
+            $wish = $response->formatResponse('object')->data;
+
+            return view('frontend.wishes.wish')->with([
+                'body_class' => $this::BODY_CLASS,
+                'wish'     => $wish
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error($e);
+            return redirect()->back()->withErrors(['message' => $e->getMessage()]);
         }
-
-        $offers = $wish->offers;
-        $avatar = [];
-        $agentName = [];
-
-        foreach ($offers as $offer) {
-            array_push($avatar, Agent::where('id', $offer->agent_id)->value('avatar'));
-            array_push($agentName, Agent::where('id', $offer->agent_id)->value('name'));
-        }
-
-        if ($this->session->has('agent_id')) {
-            $agent = Agent::find((int) $this->session->get('agent_id'));
-        }
-
-        return view('frontend.wishes.wish')->with([
-            'wish'               => $wish,
-            'avatar'             => $avatar,
-            'agent'              => $agent,
-            'agent_name'         => $agentName,
-            'body_class'         => $this::BODY_CLASS,
-            'offer_url'          => $this::OFFER_URL,
-            'categories'         => $this->categories,
-            'extra'              => json_decode($wish->extra_params, true),
-        ]);
-    }
-
-    public function getWish(Request $request)
-    {
-        $client = new Client();
-        $response = $client->get('http://localhost:8000/api/v1/wish/'.$request->route('wish'),
-            [
-                'headers' => [
-                    'Authorization' => 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3YxL2F1dGgvbG9naW4iLCJpYXQiOjE1NzkxNzUzNjMsImV4cCI6MTU4MDM4NDk2MywibmJmIjoxNTc5MTc1MzYzLCJqdGkiOiJqNXhRUFZDYm5jSjZ1TkE5Iiwic3ViIjoxLCJwcnYiOiI5NGRiZDk2MWFhZWYwZTNjZTY2YWQ3ZDUwZTY0NzcxNzYwOWRkYTI0IiwiaWQiOjF9.yULv7BBWg1OXxXRGaOGgHaDtu4sIYyMNXjQSLLB0duA'
-                ]
-            ]
-        );
-        $response_json = json_decode($response->getBody());
-        $wish = $response_json->data;
-
-        return view('frontend.wishes.wish')->with([
-            'status'     => $this->status,
-            'body_class' => $this::BODY_CLASS,
-            'wish'     => $wish
-        ]);
     }
 
     public function newWish(ManageWishesRequest $request)
