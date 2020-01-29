@@ -24,7 +24,7 @@
         {{ Html::style(mix('css/frontend.css')) }}
 
         {{-- {!! Html::style('js/select2/select2.min.css') !!} --}}
-
+        <link media="all" type="text/css" rel="stylesheet" href="{{ asset('fontawsome/css/all.css') }}">
     @yield('after-styles')
 
         <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">

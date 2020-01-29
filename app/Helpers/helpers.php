@@ -460,9 +460,9 @@ if (!function_exists('getCurrentWhiteLabelField')) {
         $url = explode(':', $url)[0]; // cut the port
         //$url = str_replace('http://', '', url('/'));
         //$url = str_replace('https://', '', $url);
-
-        return \App\Models\Whitelabels\Whitelabel::Where('domain', '=', 'https://' . $url)
-            ->orWhere('domain', '=', 'http://' . $url)->value($field);
+        return true;
+        //return \App\Models\Whitelabels\Whitelabel::Where('domain', '=', 'https://' . $url)
+            //->orWhere('domain', '=', 'http://' . $url)->value($field);
     }
 }
 

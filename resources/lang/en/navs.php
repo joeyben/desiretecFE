@@ -15,6 +15,7 @@ return [
 
     'frontend' => [
         'login' => 'Einloggen',
+        'wisheslist' => 'Reisewünsche',
         'user'            => [
             'account'         => 'Mein Konto',
             'administration'  => 'Administration',

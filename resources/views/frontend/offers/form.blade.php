@@ -107,21 +107,5 @@
                 $(this).closest('.form-group').find('.form-control').attr("value",names);
             }
         });
-
-        $("#create-offer").on("submit", function (event) {
-            event.preventDefault();
-            $.ajax({
-                type: "post",
-                url: "http://127.0.0.1:8000/api/v1/offers/store",
-                data: $('#create-offer').serialize(),
-                success: function (data) {
-                    location.href = "http://127.0.0.1:8001/offers"
-                    //window.location.href = "http://127.0.0.1:8001/offers?e="+data.message,
-                },
-                error: function (data) {
-                    alert(data.message);
-                }
-            });
-        });
     </script>
 @endsection
