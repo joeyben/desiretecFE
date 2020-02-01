@@ -22,7 +22,7 @@
                     <span class="pre-formatted" v-html="message.message">{{ message.message }}</span>
                 </p>
                 <b style="font-weight:100; display: none;" class="message-holder">{{ message.message }}</b>
-            </div>  
+            </div>
         </div>
         <message-form v-on:messaged="updateMessages" :username="this.user" :userid="userid" :wishid="wishid" :groupid="groupid"></message-form>
     </div>
@@ -36,20 +36,19 @@
   moment.locale('de');
 Vue.prototype.moment = moment
 
-  export default {
+export default {
     data () {
-      return {
-        messages: [],
-        user: '',
-        avatar: []
-      }
+        return {
+            messages: [],
+            user: '',
+            avatar: []
+        }
     },
 
     props: ['userid', 'wishid', 'groupid'],
 
     mounted() {
         this.fetchMessages();
-
     },
 
     methods: {
@@ -59,7 +58,10 @@ Vue.prototype.moment = moment
                 this.messages = response.data.data;
                 this.user = response.data.user;
                 this.avatar = response.data.avatar;
+            }).catch(function (error) {
+                console.log(error);
             });
+;
         },
 
         editMessage(messageid, message) {
@@ -80,19 +82,16 @@ Vue.prototype.moment = moment
             $('.confirm-popup').show();
             $('body').css('overflow', 'hidden');
         },
-         
+
         updateMessages () {
-            
             this.fetchMessages();
         },
 
         timestamp(date) {
             return moment(date).fromNow();
-
         }
-
     }
-  };
+};
 </script>
 
 <style scoped>
