@@ -4,6 +4,8 @@
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
  */
+//Route::domain('{account}.wish-service.com')->group(function () {
+
 
 
 Route::get('/', 'FrontendController@index')->name('index');
@@ -85,4 +87,3 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('wishes/note/update', 'WishesController@updateNote')->name('updateNote');
     });
 });
-
