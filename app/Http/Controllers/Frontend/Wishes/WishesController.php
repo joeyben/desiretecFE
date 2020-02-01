@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Wishes\ManageWishesRequest;
 //use App\Http\Requests\Frontend\Wishes\StoreWishesRequest;
 //use App\Http\Requests\Frontend\Wishes\UpdateWishesRequest;
-//use App\Http\Requests\Frontend\Wishes\UpdateNoteRequest;
+use App\Http\Requests\Wishes\UpdateNoteRequest;
 //use App\Models\Access\User\User;
 //use App\Models\Access\User\UserToken;
 //use App\Models\Agents\Agent;
@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Log;
 //use App\Repositories\Frontend\Wishes\WishesRepository;
 //use Illuminate\Auth\AuthManager;
 //use Illuminate\Session\Store;
-//use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth;
 //use Modules\Categories\Repositories\Contracts\CategoriesRepository;
 //use Modules\Rules\Repositories\Eloquent\EloquentRulesRepository;
 //use App\Repositories\Backend\Access\User\UserRepository;
@@ -86,13 +86,13 @@ class WishesController extends Controller
     public function show(int $id, ManageWishesRequest $request)
     {
         try {
-            $response = $this->apiService->get('/wish' . '/' . $id);
+            $response = $this->apiService->get('/wishes' . '/' . $id);
 
             $wish = $response->formatResponse('object')->data;
 
             return view('frontend.wishes.wish')->with([
                 'body_class' => $this::BODY_CLASS,
-                'wish'     => $wish
+                'wish'       => $wish
             ]);
 
         } catch (\Exception $e) {
@@ -330,9 +330,9 @@ class WishesController extends Controller
     public function updateNote(UpdateNoteRequest $request)
     {
         try {
-            $note = $this->wish->updateNote($request->get('id'), $request->get('note') ?? '');
+            $response = $this->apiService->post('/wishes/note/update', $request->all());
 
-            return json_response([]);
+            return response()->json($response->formatResponse('object'));
         } catch (Exception $e) {
             return json_response_error($e);
         }
