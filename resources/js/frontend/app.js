@@ -14,15 +14,17 @@ require('../bootstrap');
 
 Vue.use(require('vue-moment'));
 Vue.use(require('vue-js-modal'));
-Vue.component('v-select', require('../../../node_modules/vue-select/src/components/Select.vue'))
-Vue.component('pagination', require('../components/frontend/PaginationComponent.vue'));
-Vue.component('comment', require('../components/frontend/Comment.vue'));
-Vue.component('message', require('../components/frontend/Message.vue'));
-Vue.component('chat-messages', require('../components/frontend/ChatMessages.vue'));
-Vue.component('message-form', require('../components/frontend/MessageForm.vue'));
-Vue.component('confirmation-modal', require('../components/frontend/ConfirmationModal.vue'));
-Vue.component('wish-edit-modal', require('../components/frontend/WishEditModal.vue'));
-Vue.component('note', require('../components/frontend/Note.vue'));
+Vue.component('v-select', require('../../../node_modules/vue-select/src/components/Select.vue').default)
+Vue.component('pagination', require('../components/frontend/PaginationComponent.vue').default);
+Vue.component('comment', require('../components/frontend/Comment.vue').default);
+Vue.component('message', require('../components/frontend/Message.vue').default);
+Vue.component('chat-messages', require('../components/frontend/ChatMessages.vue').default);
+Vue.component('message-form', require('../components/frontend/MessageForm.vue').default);
+Vue.component('confirmation-modal', require('../components/frontend/ConfirmationModal.vue').default);
+Vue.component('wish-edit-modal', require('../components/frontend/WishEditModal.vue').default);
+Vue.component('note', require('../components/frontend/Note.vue').default);
+
+Vue.config.devtools = process.env.NODE_ENV === 'development';
 
 const app = new Vue({
     el: '#app',
