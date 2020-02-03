@@ -4,34 +4,20 @@
 <!DOCTYPE html>
 <html lang="{{ config('app.locale') }}">
     <head>
+        <title>@yield('title', app_name())</title>
+
+        @yield('meta')
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>@yield('title', app_name())</title>
-        <link rel="icon" type="image/png" href="{{ asset('favicon-96x96.png') }}">
-        <!-- Meta -->
         <meta name="description" content="@yield('meta_description', 'desiretec')">
         <meta name="author" content="@yield('meta_author', 'Joe Ben Slimane')">
-        @yield('meta')
 
-        <!-- Styles -->
         @yield('before-styles')
-
-        <!-- Check if the language is set to RTL, so apply the RTL layouts -->
-        <!-- Otherwise apply the normal LTR layouts -->
-
         {{ Html::style(mix('css/frontend.css')) }}
-
-        {{-- {!! Html::style('js/select2/select2.min.css') !!} --}}
         <link media="all" type="text/css" rel="stylesheet" href="{{ asset('fontawsome/css/all.css') }}">
-    @yield('after-styles')
 
-        <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
-
-        <style type="text/css">
-
-        </style>
         <!-- Scripts -->
         <script>
             window.Laravel = <?php echo json_encode([
@@ -62,12 +48,13 @@
             </div><!-- container -->
         </div><!--#app-->
         @yield('footer')
+
         <!-- Scripts -->
         @yield('before-scripts')
-        {!! Html::script(mix('js/frontend.js')) !!}
+        <script src="{{ mix('js/frontend.js') }}"></script>
+
         @yield('after-scripts')
         <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.js"></script>
-
         <script type="text/javascript">
             if("{{Route::currentRouteName()}}" !== "frontend.user.account")
             {

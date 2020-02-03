@@ -13,7 +13,7 @@
 export default {
 
     props: [ 'id'],
-    
+
     methods: {
         cancelEvent() {
             $('.confirm-popup').css('display','none');
@@ -22,17 +22,18 @@ export default {
 
         deleteMessage() {
             var id = $('.hidden-popup-val').val();
-            axios.get('/message/delete/'+id).then(resp => {
+
+            axios.get('/messages/'+id).then(resp => {
                 $('.confirm-popup').css('display','none');
                 $('body').css('overflow', 'scroll');
-                
+
                 $('#antworten').val('');
                 $('#antworten').slideUp()
                 $('.button-show').css('display','inline-block')
                 $('.button-hide').css('display','none')
                 this.$emit('confirm');
             });
-            
+
         },
     }
 }

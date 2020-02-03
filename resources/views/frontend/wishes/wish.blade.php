@@ -111,7 +111,7 @@
                 <h4>
                     Neue Nachrichten <span class="glyphicon glyphicon-bell"></span>
                 </h4>
-                <chat-messages :wishid="{{ $wish->id }}"></chat-messages>
+                <chat-messages :wishid="{{ $wish->id }}" :userid="{{ $logged_in_user->id }}" :groupid="{{ $wish->group_id }}"></chat-messages>
             </div>
     </section>
 
@@ -298,7 +298,7 @@
                         </div>
 
                         <div class="col-md-4 modal-body-right">
-                            <img src="/img/frontend/profile-picture/travel-agency.jpg" alt="">
+                            <img src="/img/travel-agency.jpg" alt="travel agency">
                             <h4></h4>
                             <p>{<br>
 

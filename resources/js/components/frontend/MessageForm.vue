@@ -5,17 +5,22 @@
         <div class="cu-cl-buttons">
             <button class="primary-btn antworten-btn button-show btn-chat" id="send-button" @click="sendMessage">Nachricht schreiben</button>
             <button class="primary-btn antworten-btn  button-hide btn-chat" @click="updateMessage">Speichern</button>
+            <input type="hidden" name="_token" :value="csrfToken">
         </div>
     </div>
 </template>
 
 <script>
     export default {
-        
+
         data() {
             return {
                 newMessage: ''
             }
+        },
+
+        computed: {
+            csrfToken() { window.Laravel.csrfToken; }
         },
 
         props: ['messages', 'userid', 'wishid', 'groupid', 'username', 'fetch'],
@@ -28,7 +33,7 @@
                     group_id: this.groupid,
                     message: this.newMessage
                 }
-                
+
                 if($('#send-button').hasClass('sendAntworten')){
                     axios.post('/messages', data).then(response => {
                         $('#antworten').val('');
@@ -36,13 +41,13 @@
                         this.$emit('messaged');
                     });
                 }
-                
+
                 this.newMessage = ''
             },
 
             cancel() {
                 $('#btn-input').val('');
-                
+
                 $('.button-show span').show();
                 $('.loader').hide();
             },
@@ -50,12 +55,10 @@
             updateMessage() {
                 var message = this.newMessage;
                 var messageid = $('#edit-val').val();
-                
-                axios.post('/message/edit', {
-                    id: messageid,
-                    message: message,
-                }).then(resp => {
 
+                axios.post('/messages/' + messageid, {
+                    message: message,
+                }).then(function (response) {
                     $('#antworten').val('');
                     $('#antworten').slideUp();
                     jQuery('#'+messageid+" .message-holder").text(message);
@@ -63,12 +66,12 @@
                     $('.button-show').css('display','inline-block')
                     $('.button-hide').css('display','none');
                     this.$emit('messaged');
-
-                });    
-                
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
             }
         }
-        
     }
 </script>
 
@@ -88,7 +91,7 @@
     .button-hide {
         display: none;
     }
-    
+
     .button-hide:last-child {
         margin-left: 10px;
     }
