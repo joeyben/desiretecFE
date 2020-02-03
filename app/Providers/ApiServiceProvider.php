@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use GuzzleHttp\Client;
 use Illuminate\Support\ServiceProvider;
 use App\Services\Api\ApiService;
 
@@ -26,6 +27,9 @@ class ApiServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $client = new Client();
+
+        $response = $client->get(env('API_URL') . '/api/v1/whitelabel/tui');
+        dd($response);
     }
 }
