@@ -4,7 +4,7 @@
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
  */
-//Route::domain('{account}.wish-service.com')->group(function () {
+Route::domain('{account}.wish-service.com')->group(function () {
 
 
 
@@ -97,4 +97,4 @@ Route::group(['middleware' => 'auth'], function () {
 
 });
 
-//});
+});
