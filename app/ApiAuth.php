@@ -55,7 +55,7 @@ class ApiAuth
                 ]
             );
 
-            $result['user'] = json_decode($response->getBody(), true)['user'];
+            $result['user'] = json_decode($response->getBody(), true);
 
             $result['user']['token'] = $token;
 
@@ -136,7 +136,7 @@ class ApiAuth
             ]
         );
 
-        $result['user'] = json_decode($response->getBody(), true)['user'];
+        $result['user'] = json_decode($response->getBody(), true);
 
         $result['user']['token'] = $token;
 
