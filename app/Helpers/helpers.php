@@ -834,7 +834,8 @@ if (!function_exists('getWhitelabelInfo')) {
     function getWhitelabelInfo()
     {
         $cachedWhitelabel = Cache::get( 'whitelabel' );
-        dd(json_decode($cachedWhitelabel)[0]->src);
+        dd(json_decode(json_encode($cachedWhitelabel), true));
+
         return json_decode($cachedWhitelabel)[0]->src;
     }
 }
