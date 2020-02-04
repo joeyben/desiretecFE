@@ -1,7 +1,7 @@
 <!--Navbar -->
 <nav class="mb-1 navbar navbar-expand-lg navbar-light info-color fixed-top">
     <a class="navbar-brand logo" href="{{ route('frontend.index', ['subdomain']) }}">
-        <img class="" src="{{ getWhitelabelInfo()->logo }}">
+        <img class="" src="{{ getWhitelabelInfo()['logo'] }}">
     </a>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
