@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 
 @section('title')
-    {!! getWhitelabelInfo()['display_name'] !!}
+    {!! getWhitelabelInfo()['attachments']['display_name'] !!}
 @endsection
 
 @section('after-styles')
