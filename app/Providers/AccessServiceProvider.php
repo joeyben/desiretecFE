@@ -41,7 +41,7 @@ class AccessServiceProvider extends ServiceProvider
     private function registerAccess()
     {
         $this->app->bind('access', function ($app) {
-            return new Access($app); 
+            return new Access($app);
         });
     }
 

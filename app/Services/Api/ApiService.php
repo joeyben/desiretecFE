@@ -24,6 +24,7 @@ class ApiService implements ApiServiceInterface
         $this->client = new Client();
         $this->setHeader('Content-type', 'application/json');
         $this->setAuthorization(resolve('token'));
+        $this->getWlInfo('tui');
     }
 
     public function setHeader(string $key, string $value): self
@@ -31,6 +32,12 @@ class ApiService implements ApiServiceInterface
         $this->headers[$key] = $value;
 
         return $this;
+    }
+
+    public function getWlInfo(string $name)
+    {
+        $result = $this->get('/whitelabel' . '/' . $name);
+        return $result->formatResponse('object')->data;
     }
 
 

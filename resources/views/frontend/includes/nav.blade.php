@@ -1,7 +1,7 @@
 <!--Navbar -->
 <nav class="mb-1 navbar navbar-expand-lg navbar-light info-color">
     <a class="navbar-brand logo" href="{{ route('frontend.index', ['subdomain']) }}">
-        <img class="" src="{{route('frontend.index', ['subdomain'])}}/img/logo.png">
+        <img class="" src="{{ $logo }}">
     </a>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">

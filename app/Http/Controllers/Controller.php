@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\Api\ApiService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -11,6 +12,12 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    public $whitelabel;
+
+    public function __construct(ApiService $api)
+    {
+        $this->whitelabel = $api->getWlInfo('reiseexperten');
+    }
 
     protected function responseJson(array $result = []): JsonResponse
     {

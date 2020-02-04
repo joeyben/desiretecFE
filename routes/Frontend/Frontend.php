@@ -4,7 +4,7 @@
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
  */
-Route::domain('{subdomain}.wish-service.com')->group(function () {
+//Route::domain('{subdomain}.wish-service.com')->group(function () {
 
 
 
@@ -87,4 +87,4 @@ Route::domain('{subdomain}.wish-service.com')->group(function () {
             Route::post('wishes/note/update', 'WishesController@updateNote')->name('updateNote');
         });
     });
-});
+//});
