@@ -833,7 +833,7 @@ if (!function_exists('live_preview_url')) {
 if (!function_exists('getWhitelabelInfo')) {
     function getWhitelabelInfo()
     {
-        $cachedWhitelabel = Cache::get( 'whitelabel' );
+        $cachedWhitelabel = json_decode(Cache::get( 'whitelabel' ), 1);
         return $cachedWhitelabel;
     }
 }
