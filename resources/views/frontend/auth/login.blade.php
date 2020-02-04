@@ -25,7 +25,7 @@
 
                 <div class="card-body">
 
-                    {{ Form::open(['route' => 'frontend.auth.api.login', 'class' => 'form-horizontal']) }}
+                    {{ Form::open(['route' => ['frontend.auth.api.login', $subdomain], 'class' => 'form-horizontal']) }}
 
                     <div class="form-group p-2 mb-0">
                         {{ Form::label('email', trans('validation.attributes.frontend.register-user.email'), ['class' => 'col-sm-4 col-form-label']) }}

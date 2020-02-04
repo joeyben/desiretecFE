@@ -1,5 +1,5 @@
 <!--Navbar -->
-<nav class="mb-1 navbar navbar-expand-lg navbar-light info-color">
+<nav class="mb-1 navbar navbar-expand-lg navbar-light info-color fixed-top">
     <a class="navbar-brand logo" href="{{ route('frontend.index', ['subdomain']) }}">
         <img class="" src="{{ $logo }}">
     </a>

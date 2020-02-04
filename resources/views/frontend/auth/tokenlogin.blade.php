@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('frontend.auth.api.link') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('frontend.auth.api.link', ['subdomain']) }}">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }} mb-0">
