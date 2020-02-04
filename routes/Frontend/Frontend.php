@@ -10,7 +10,7 @@ use App\Services\Api\ApiService;
 Route::domain('{subdomain}.wish-service.com')->group(function ($subdomain) {
 
     $cachedWhitelabel = Cache::get( 'whitelabel' );
-    if($cachedWhitelabel && strtolower($cachedWhitelabel->name) !=  $subdomain){
+    if(!$cachedWhitelabel || strtolower($cachedWhitelabel->name) !=  $subdomain){
         $api = resolve(ApiService::class);
         $whitelabel = $api->getWlInfo('tui');
         Cache::forever( 'whitelabel', $whitelabel);
