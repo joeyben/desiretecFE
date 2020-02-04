@@ -86,4 +86,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('wishes/{id}', 'WishesController@show')->name('wish');
         Route::post('wishes/note/update', 'WishesController@updateNote')->name('updateNote');
     });
+
+    Route::group(['namespace' => 'Autooffers', 'as' => 'autooffer.'], function () {
+        Route::get('offer/list/{wishId}', 'AutooffersController@list')->name('list');
+    });
 });
