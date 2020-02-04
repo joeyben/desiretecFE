@@ -12,7 +12,7 @@ class Translation implements TranslationLoader
 {
     public function loadTranslations(string $locale, string $group): array
     {
-        /*$whitelabelId = env('CURRENT_WL_ID', null);
+        $whitelabelId = env('CURRENT_WL_ID', null);
 
         return Cache::rememberForever(static::getCacheKey($group, $locale, $whitelabelId), function () use ($group, $locale, $whitelabelId) {
             $api = resolve(ApiService::class);
@@ -23,8 +23,7 @@ class Translation implements TranslationLoader
             ]);
 
             return $response->formatResponse('array');
-        });*/
-        return [];
+        });
     }
 
     public static function getCacheKey(string $group, string $locale, int $whitelabelId = null): string

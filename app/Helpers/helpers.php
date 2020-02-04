@@ -830,9 +830,10 @@ if (!function_exists('live_preview_url')) {
 /**
  * Returns the Domain for the current WL
  */
-if (!function_exists('get_current_whitelabel_url')) {
-    function get_current_whitelabel_url()
+if (!function_exists('getWhitelabelInfo')) {
+    function getWhitelabelInfo()
     {
-        return getCurrentWhiteLabelField('domain');
+        $cachedWhitelabel = Cache::get( 'whitelabel' );
+        return $cachedWhitelabel;
     }
 }

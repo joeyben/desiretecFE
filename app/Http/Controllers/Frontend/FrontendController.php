@@ -113,23 +113,17 @@ class FrontendController extends Controller
         28 => "28 Nächte",
     ];
 
-    protected $apiService;
-
-    public function __construct(ApiService $api)
-    {
-        $this->apiService = $api;
-    }
 
     /**
      * @return \Illuminate\View\View
      */
-    public function index($subdomain)
+    public function index()
     {
-        $whitelabel = $this->apiService->getWlInfo($subdomain);
+
         $body_class = $this::BODY_CLASS;
-        $bg_image = $whitelabel->attachments->background;
-        $display_name = $whitelabel->display_name;
-        $logo = $whitelabel->attachments->logo;
+        $bg_image = "";
+        $display_name = "";
+        $logo = "";
         return view('frontend.whitelabel.index', compact( 'body_class','bg_image', 'display_name','logo'));
     }
 

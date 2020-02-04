@@ -4,8 +4,17 @@
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
  */
-Route::domain('{subdomain}.wish-service.com')->group(function () {
 
+use App\Services\Api\ApiService;
+
+Route::domain('{subdomain}.wish-service.com')->group(function ($subdomain) {
+
+    $cachedWhitelabel = Cache::get( 'whitelabel' );
+    if(strtolower($cachedWhitelabel->name) !=  $subdomain){
+        $api = resolve(ApiService::class);
+        $whitelabel = $api->getWlInfo('tui');
+        Cache::forever( 'whitelabel', $whitelabel);
+    }
 
 
     Route::get('/', 'FrontendController@index')->name('index');
@@ -19,7 +28,7 @@ Route::domain('{subdomain}.wish-service.com')->group(function () {
     Route::get('/tnb', 'FrontendController@showTnb')->name('tnb');
 
 
-    Route::group(['namespace' => 'Auth', 'as' => 'auth.'], function () {
+    Route::group(['namespace' => 'Auth', 'as' => 'auth.'], function ($subdomain) {
         Route::post('api/login', 'AuthController@login')->name('api.login');
         Route::get('api/logout', 'AuthController@logout')->name('api.logout');
         Route::post('api/link', 'AuthController@link')->name('api.link');
