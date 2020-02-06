@@ -13,7 +13,7 @@ Route::domain('{subdomain}.wish-service.com')->group(function () {
     $subdomain_str = str_replace('https://','', $subdomain_str);
 
     $cachedWhitelabel = Cache::get( 'whitelabel' );
-    if((!$cachedWhitelabel || strtolower($cachedWhitelabel->name) !=  $subdomain_str) && ($subdomain_str != "http://local")){
+    if(($subdomain_str !== "http://local") && (!$cachedWhitelabel || strtolower($cachedWhitelabel->name) !=  $subdomain_str)){
         $api = resolve(ApiService::class);
         $whitelabel = $api->getWlInfo($subdomain_str);
         Cache::forever( 'whitelabel', $whitelabel);
