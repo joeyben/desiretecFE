@@ -11,8 +11,9 @@ use Illuminate\Support\Facades\URL;
 Route::domain('{subdomain}.wish-service.com')->group(function () {
     $subdomain_str = str_replace('.wish-service.com','', URL::current());
     $subdomain_str = str_replace('https://','', $subdomain_str);
+
     $cachedWhitelabel = Cache::get( 'whitelabel' );
-    if(!$cachedWhitelabel || strtolower($cachedWhitelabel->name) !=  $subdomain_str){
+    if((!$cachedWhitelabel || strtolower($cachedWhitelabel->name) !=  $subdomain_str) && ($subdomain_str != "http://local")){
         $api = resolve(ApiService::class);
         $whitelabel = $api->getWlInfo($subdomain_str);
         Cache::forever( 'whitelabel', $whitelabel);
