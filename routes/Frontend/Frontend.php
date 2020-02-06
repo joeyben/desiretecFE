@@ -6,10 +6,11 @@
  */
 
 use App\Services\Api\ApiService;
+use Illuminate\Support\Facades\URL;
 
 Route::domain('{subdomain}.wish-service.com')->group(function () {
-
-    $subdomain_str = str_replace('.wish-service.com','', request()->getHost());
+    $subdomain_str = str_replace('.wish-service.com','', URL::current());
+    $subdomain_str = str_replace('https://','', $subdomain_str);
     $cachedWhitelabel = Cache::get( 'whitelabel' );
     if(!$cachedWhitelabel || strtolower($cachedWhitelabel->name) !=  $subdomain_str){
         $api = resolve(ApiService::class);
