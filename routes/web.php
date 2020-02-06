@@ -17,7 +17,10 @@ Route::get('lang/{lang}', 'LanguageController@swap');
  */
 Route::domain('{subdomain}.wish-service.com')->group( function () {
     Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function ($subdomain) {
-        includeRouteFiles(__DIR__.'/Frontend/');
+        Route::group(['middleware' => 'wl'], function ($subdomain) {
+
+            includeRouteFiles(__DIR__ . '/Frontend/');
+        });
     });
 });
 /*----------------------------------------------------------------------- */
