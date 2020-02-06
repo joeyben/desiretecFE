@@ -1,6 +1,6 @@
 <!--Navbar -->
 <nav class="mb-1 navbar navbar-expand-lg navbar-light info-color fixed-top">
-    <a class="navbar-brand logo" href="{{ route('frontend.index', ['subdomain']) }}">
+    <a class="navbar-brand logo" href="{{ route('frontend.index', [$subdomain]) }}">
         <img class="" src="{{ getWhitelabelInfo()['attachments']['logo'] }}">
     </a>
 
@@ -30,11 +30,11 @@
             @endif
 
             @if ($logged_in_user && $logged_in_user->hasRole('User'))
-            <!-- <li>{{ link_to_route('frontend.wishes.create', trans('navs.frontend.create_wish')) }}</li> -->
+            <!-- <li>{{ link_to_route('frontend.wishes.create', trans('navs.frontend.create_wish'), ['subdomain']) }}</li> -->
             @endif
 
             @if (! $logged_in_user)
-                <li>{{ link_to_route('frontend.auth.sendtoken', trans('navs.frontend.login')) }}</li>
+                <li><a href="{{ route('frontend.auth.sendtoken', [$subdomain]) }}">{{ trans('navs.frontend.login') }}</a></li>
 
                 @if (config('access.users.registration') && false)
                     <li>{{ link_to_route('frontend.auth.register', trans('navs.frontend.register')) }}</li>

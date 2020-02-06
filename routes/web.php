@@ -15,8 +15,9 @@ Route::get('lang/{lang}', 'LanguageController@swap');
  * Frontend Routes
  * Namespaces indicate folder structure
  */
-Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
-    includeRouteFiles(__DIR__.'/Frontend/');
+Route::domain('{subdomain}.wish-service.com')->group( function () {
+    Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function ($subdomain) {
+        includeRouteFiles(__DIR__.'/Frontend/');
+    });
 });
-
-/* ----------------------------------------------------------------------- */
+/*----------------------------------------------------------------------- */

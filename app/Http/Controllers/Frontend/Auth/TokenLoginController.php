@@ -12,9 +12,9 @@ class TokenLoginController extends Controller
 {
     protected $redirectOnRequested = '/login/token';
 
-    public function show()
+    public function show($subdomain)
     {
-        return view('frontend.auth.tokenlogin');
+        return view('frontend.auth.tokenlogin',compact( 'subdomain'));
     }
 
     public function sendToken(Request $request, TokenAuthentication $auth)

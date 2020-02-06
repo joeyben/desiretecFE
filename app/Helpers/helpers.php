@@ -7,6 +7,7 @@ use App\Services\Flag\Src\Flag;
 use Carbon\Carbon as Carbon;
 use Illuminate\Support\Facades\Log;
 use Modules\Languages\Entities\Language;
+use Illuminate\Support\Facades\URL;
 
 /**
  * Henerate UUID.
@@ -838,3 +839,5 @@ if (!function_exists('getWhitelabelInfo')) {
         return json_decode(json_encode($cachedWhitelabel), true);
     }
 }
+
+
