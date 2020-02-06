@@ -7,12 +7,13 @@
 
 use App\Services\Api\ApiService;
 
-Route::domain('{subdomain}.wish-service.com')->group(function ($subdomain) {
+Route::domain('{subdomain}.wish-service.com')->group(function () {
 
+    $subdomain_str = str_replace('.wish-service.com','', request()->getHost());
     $cachedWhitelabel = Cache::get( 'whitelabel' );
-    if(!$cachedWhitelabel || strtolower($cachedWhitelabel->name) !=  $subdomain){
+    if(!$cachedWhitelabel || strtolower($cachedWhitelabel->name) !=  $subdomain_str){
         $api = resolve(ApiService::class);
-        $whitelabel = $api->getWlInfo($subdomain);
+        $whitelabel = $api->getWlInfo($subdomain_str);
         Cache::forever( 'whitelabel', $whitelabel);
     }
 
