@@ -18,8 +18,8 @@ class WhitelabelMiddleware
      */
     public function handle($request, Closure $next)
     {
-        $subdomain_str = str_replace('.wish-service.com','', URL::current());
-        $subdomain_str = str_replace('https://','', $subdomain_str);
+        $url_arr = explode('.', URL::current());
+        $subdomain_str = str_replace('https://','', $url_arr[0]);
         $cachedWhitelabel = Cache::get( 'whitelabel' );
 
         if((!$cachedWhitelabel || strtolower($cachedWhitelabel->name) !=  $subdomain_str)){
