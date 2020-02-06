@@ -12,7 +12,7 @@ Route::domain('{subdomain}.wish-service.com')->group(function ($subdomain) {
     $cachedWhitelabel = Cache::get( 'whitelabel' );
     if(!$cachedWhitelabel || strtolower($cachedWhitelabel->name) !=  $subdomain){
         $api = resolve(ApiService::class);
-        $whitelabel = $api->getWlInfo('tui');
+        $whitelabel = $api->getWlInfo($subdomain);
         Cache::forever( 'whitelabel', $whitelabel);
     }
 
