@@ -8,22 +8,15 @@
 use App\Services\Api\ApiService;
 use Illuminate\Support\Facades\URL;
 
-Route::domain('{subdomain}.wish-service.com')->group(function () {
+Route::domain('{subdomain}.wish-service.com')->group( function () {
 
-    if(URL::current() !== "http://local"){
-        $subdomain_str = str_replace('.wish-service.com','', URL::current());
-        $subdomain_str = str_replace('https://','', $subdomain_str);
-        $cachedWhitelabel = Cache::get( 'whitelabel' );
-        if((!$cachedWhitelabel || strtolower($cachedWhitelabel->name) !=  $subdomain_str)){
-            $api = resolve(ApiService::class);
-            $whitelabel = $api->getWlInfo($subdomain_str);
-            Cache::forever( 'whitelabel', $whitelabel);
-        }
-    }
+
+    Route::group(['middleware' => 'wl'], function ($subdomain) {
 
 
 
-    Route::get('/', 'FrontendController@index')->name('index');
+        Route::get('/', 'FrontendController@index')->name('index');
+    });
     Route::get('show', 'FrontendController@show');
     Route::get('/getTTRegions', 'RegionsController@getTTRegions');
     Route::get('/get-all-destinations', 'FrontendController@getAllDestinations');
