@@ -18,7 +18,7 @@ class ApiAuth
     {
         $client = new Client();
 
-        $response = $client->post(env('API_URL') . '/api/v1/auth/login', [
+        $response = $client->post(env('API_URL', 'https://mvp.desiretec.com') . '/api/v1/auth/login', [
             'form_params' => [
                 'email' => $email,
                 'password' => $password
@@ -32,7 +32,7 @@ class ApiAuth
     {
         $client = new Client();
 
-        $response = $client->post(env('API_URL') . '/api/v1/auth/login/email', [
+        $response = $client->post(env('API_URL', 'https://mvp.desiretec.com') . '/api/v1/auth/login/email', [
             'form_params' => [
                 'email' => $email,
                 'host' => $host
@@ -47,7 +47,7 @@ class ApiAuth
         return Cache::rememberForever(static::getCacheKey($token), function () use ($token) {
             $client = new Client();
 
-            $response = $client->post(env('API_URL') . '/api/v1/auth/me',
+            $response = $client->post(env('API_URL', 'https://mvp.desiretec.com') . '/api/v1/auth/me',
                 [
                     'headers' => [
                         'Authorization' => 'Bearer ' . $token
@@ -113,7 +113,7 @@ class ApiAuth
     {
         $client = new Client();
 
-        $response = $client->post(env('API_URL') . '/api/v1/auth/login/token/' . $token,
+        $response = $client->post(env('API_URL', 'https://mvp.desiretec.com') . '/api/v1/auth/login/token/' . $token,
             [
                 'form_params' => [
                     'email' => $email
@@ -128,7 +128,7 @@ class ApiAuth
     {
         $client = new Client();
 
-        $response = $client->post(env('API_URL') . '/api/v1/auth/me',
+        $response = $client->post(env('API_URL', 'https://mvp.desiretec.com') . '/api/v1/auth/me',
             [
                 'headers' => [
                     'Authorization' => 'Bearer ' . $token
