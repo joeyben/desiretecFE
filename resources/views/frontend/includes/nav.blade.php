@@ -7,7 +7,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
             @if ($logged_in_user && $logged_in_user->hasRole('Seller'))
-                <li class="nav-item">{{ link_to_route('frontend.wishes.list', trans('navs.frontend.wisheslist')) }}</li>
+                <li class="nav-item"><a href="{{ route('frontend.wishes.list', [$subdomain]) }}">{{ trans('navs.frontend.wisheslist') }}</a></li>
                 @if(false)
                     <li class="nav-item dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -57,11 +57,9 @@
                         @endif
 
                         @if ($logged_in_user && ($logged_in_user->hasRole('User') || $logged_in_user->hasRole('Executive')))
-                            {{ link_to_route('frontend.wishes.list', trans('navs.frontend.wishes'),'',['class'=>'dropdown-item']) }}
+                                <a class="dropdown-item" href="{{ route('frontend.wishes.list', [$subdomain]) }}">{{ trans('navs.frontend.wisheslist') }}</a>
                         @endif
-
-                        {{ link_to_route('frontend.user.account', trans('navs.frontend.user.account'),'',['class'=>'dropdown-item']) }}
-
+                            <a class="dropdown-item" href="{{ route('frontend.user.account', [$subdomain]) }}">{{ trans('navs.frontend.user.account') }}</a>
                     </div>
                 </li>
             @endif
