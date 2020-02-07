@@ -89,5 +89,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['namespace' => 'Autooffers', 'as' => 'autooffer.'], function () {
         Route::get('offer/list/{wishId}', 'AutooffersController@list')->name('list');
+        Route::get('offer/ttlist/{wishId}', 'AutooffersController@listTt')->name('listTt');
     });
 });
