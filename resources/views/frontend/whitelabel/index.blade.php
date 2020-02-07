@@ -1,10 +1,10 @@
 @extends('frontend.whitelabel.master')
 
 @section('content')
-    <div class="slider" style="background-image: url({{ $bg_image }})">
+    <div class="slider" style="background-image: url({{ getWhitelabelInfo()['attachments']['background']  }})">
         <div class="welcome">
         {{ trans('whitelabel.frontend.welcome') }}
-        <strong>{{ trans('whitelabel.frontend.name', ['whitelabel' => $display_name]) }} {{ trans('whitelabel.frontend.wish_portal') }}</strong>
+        <strong>{{ trans('whitelabel.frontend.name', ['whitelabel' => getWhitelabelInfo()['display_name']]) }} {{ trans('whitelabel.frontend.wish_portal') }}</strong>
         </div>
 
         <div class="layer-action">

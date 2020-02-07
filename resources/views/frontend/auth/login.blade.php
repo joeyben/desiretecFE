@@ -25,7 +25,7 @@
 
                 <div class="card-body">
 
-                    {{ Form::open(['route' => 'frontend.auth.api.login', 'class' => 'form-horizontal']) }}
+                    {{ Form::open(['route' => ['frontend.auth.api.login', $subdomain], 'class' => 'form-horizontal']) }}
 
                     <div class="form-group p-2 mb-0">
                         {{ Form::label('email', trans('validation.attributes.frontend.register-user.email'), ['class' => 'col-sm-4 col-form-label']) }}
@@ -54,8 +54,7 @@
                     <div class="form-group p-2 mb-2">
                         <div class="col-md-12 col-md-offset-4">
                             {{ Form::submit(trans('labels.frontend.auth.login_button'), ['class' => 'btn btn-primary', 'style' => 'margin-right:15px']) }}
-
-                            {{ link_to_route('frontend.auth.password.reset', trans('labels.frontend.passwords.forgot_password')) }}
+                            <a href="{{ route('frontend.auth.password.reset', [$subdomain]) }}">{{ trans('labels.frontend.passwords.forgot_password') }}</a>
                         </div><!--col-md-6-->
                     </div><!--form-group-->
 

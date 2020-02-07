@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 
 @section('title')
-    {!! $display_name !!}
+    {!! getWhitelabelInfo()['display_name'] !!}
 @endsection
 
 @section('after-styles')
@@ -10,7 +10,7 @@
 @endsection
 
 @section('logo')
-    <a href="{{ route('frontend.index') }}" class="logo">
+    <a href="{{ route('frontend.index', ['subdomain']) }}" class="logo">
         <img class="navbar-brand" src="{{ $logo }}">
     </a>
 @endsection

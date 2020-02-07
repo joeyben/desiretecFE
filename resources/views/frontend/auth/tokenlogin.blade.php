@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('frontend.auth.api.link') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('frontend.auth.api.link', [$subdomain]) }}">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }} mb-0">
@@ -51,7 +51,7 @@
                                     <button type="submit" class="btn primary-btn">
                                         {{ trans('button.tokenlogin.send') }}
                                     </button>
-                                    <a href="{{route('frontend.auth.login')}}" class="btn secondary-btn">
+                                    <a href="{{route('frontend.auth.login', [$subdomain])}}" class="btn secondary-btn">
                                         {{ trans('account.login.seller') }}
                                     </a>
                                 </div>

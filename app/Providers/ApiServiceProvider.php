@@ -26,6 +26,6 @@ class ApiServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+
     }
 }

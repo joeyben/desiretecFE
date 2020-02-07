@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\Frontend\Pages\PagesRepository;
+use App\Services\Api\ApiService;
 use Illuminate\Http\Request;
 use Modules\Translations\Entities\Translation;
 use Spatie\TranslationLoader\LanguageLine;
@@ -112,20 +113,17 @@ class FrontendController extends Controller
         28 => "28 Nächte",
     ];
 
-    public function __construct()
-    {
-    }
 
     /**
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index($subdomain)
     {
         $body_class = $this::BODY_CLASS;
-        $bg_image = $this::BG_IMAGE;
-        $display_name = $this::DISPLAY_NAME;
-        $logo = $this::LOGO;
-        return view('frontend.whitelabel.index', compact( 'body_class','bg_image', 'display_name','logo'));
+        $bg_image = "";
+        $display_name = "";
+        $logo = "";
+        return view('frontend.whitelabel.index', compact( 'body_class','bg_image', 'display_name','logo','subdomain'));
     }
 
     /**

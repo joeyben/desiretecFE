@@ -56,9 +56,9 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function showLoginForm()
+    public function showLoginForm($subdomain)
     {
-        return view('frontend.auth.login')
+        return view('frontend.auth.login', compact('subdomain'))
             ->withSocialiteLinks((new Socialite())->getSocialLinks());
     }
 

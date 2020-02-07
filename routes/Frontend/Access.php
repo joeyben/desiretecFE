@@ -4,12 +4,15 @@
  * Frontend Access Controllers
  * All route names are prefixed with 'frontend.auth'.
  */
-Route::group(['namespace' => 'Auth', 'as' => 'auth.'], function () {
+Route::domain('{subdomain}.wish-service.com')->group( function () {
+
+
+Route::group(['namespace' => 'Auth', 'as' => 'auth.'], function ($subdomain) {
 
     /*
      * These routes require the user to be logged in
      */
-    Route::group(['middleware' => 'auth'], function () {
+    Route::group(['middleware' => 'auth'], function ($subdomain) {
         Route::get('logout', 'LoginController@logout')->name('logout');
 
         //For when admin is logged in as user from backend
@@ -22,7 +25,7 @@ Route::group(['namespace' => 'Auth', 'as' => 'auth.'], function () {
     /*
      * These routes require no user to be logged in
      */
-    Route::group(['middleware' => 'guest'], function () {
+    Route::group(['middleware' => 'guest'], function ($subdomain) {
         // Authentication Routes
         Route::get('login', 'LoginController@showLoginForm')->name('login');
         Route::post('login', 'LoginController@login')->name('login');
@@ -52,4 +55,6 @@ Route::group(['namespace' => 'Auth', 'as' => 'auth.'], function () {
         Route::get('password/reset/{token}', 'ResetPasswordController@showResetForm')->name('password.reset.form');
         Route::post('password/reset', 'ResetPasswordController@reset')->name('password.reset');
     });
+});
+
 });

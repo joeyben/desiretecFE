@@ -24,7 +24,7 @@ class AuthController extends Controller
             return redirect()->route('frontend.index');
         } catch (\Exception $e) {
             Log::error($e);
-            return redirect()->back()->withErrors(['message' => 'UngÜltige Zugangsdaten! Bitte erneut versuchen']);
+            return redirect()->back()->withErrors(['message' => $e->getMessage()]);
         }
     }
 
@@ -38,7 +38,7 @@ class AuthController extends Controller
             return redirect()->back()->with(['success' => $response['message']]);
         } catch (\Exception $e) {
             Log::error($e);
-            return redirect()->back()->withErrors(['message' => 'UngÜltige Zugangsdaten! Bitte erneut versuchen']);
+            return redirect()->back()->withErrors(['message' => $e->getMessage()]);
         }
     }
 
@@ -51,7 +51,7 @@ class AuthController extends Controller
             return redirect('/');
         } catch (\Exception $e) {
             Log::error($e);
-            return redirect()->back()->withErrors(['message' => 'UngÜltige Zugangsdaten! Bitte erneut versuchen']);
+            return redirect()->back()->withErrors(['message' => $e->getMessage()]);
         }
     }
 

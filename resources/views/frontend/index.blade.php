@@ -1,11 +1,11 @@
 @extends('frontend.layouts.app')
 
 @section('logo')
-    <a href="{{ route('frontend.index') }}" class="logo">
+    <a href="{{ route('frontend.index', ['subdomain']) }}" class="logo">
         @if(isWhiteLabel())
             <img class="navbar-brand" src="{{ getWhiteLabelLogoUrl() }}">
         @else
-            <img class="navbar-brand" src="{{route('frontend.index')}}/img/logo_big.png">
+            <img class="navbar-brand" src="{{route('frontend.index', ['subdomain'])}}/img/logo_big.png">
         @endif
     </a>
 @endsection
