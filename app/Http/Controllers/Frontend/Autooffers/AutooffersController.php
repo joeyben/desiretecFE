@@ -8,7 +8,29 @@ use Illuminate\Support\Facades\Log;
 
 class AutooffersController extends Controller
 {
-    const BODY_CLASS = 'autooffer';
+    const BODY_CLASS_PREFIX = 'autooffer';
+
+    protected $status = [
+        'Active'       => 'Active',
+        'Inactive'     => 'Inactive',
+        'Deleted'      => 'Deleted',
+    ];
+
+    protected $category = [
+        '1'  => 1,
+        '2'  => 2,
+        '3'  => 3,
+        '4'  => 4,
+        '5'  => 5,
+    ];
+
+    protected $catering = [
+        'any'           => 'any',
+        'Breakfast'     => 'Breakfast',
+        'Pension'       => 'Pension',
+        'Full Pension'  => 'Full Pension',
+        'All Inclusive' => 'All Inclusive',
+    ];
 
     protected $apiService;
 
@@ -24,13 +46,13 @@ class AutooffersController extends Controller
             $offersResponse = $this->apiService->get('/offer/list/' . $wishId);
 
             $offers = $offersResponse->formatResponse('object')->data;
-
+// dd($offers->data);
             $wishResponse = $this->apiService->get('/wishes' . '/' . $wishId);
 
             $wish = $wishResponse->formatResponse('object')->data;
 
-            return view('frontend.agents.index')->with([
-                'body_class'    => $this::BODY_CLASS . '_list',
+            return view('frontend.autooffer.list')->with([
+                'body_class'    => $this::BODY_CLASS_PREFIX . '_list',
                 'wish'          => $wish,
                 'offers'        => $offers,
             ]);
