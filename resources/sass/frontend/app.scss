@@ -48,10 +48,9 @@
 @import "pages/wish";
 @import "pages/agents";
 
-@import "wish/list";
-@import "wish/list-responsive";
-
-@import "wish/details";
+@import "autooffers/list";
+@import "autooffers/list-responsive";
+@import "autooffers/details";
 
 // Fix issues with Bootsrap
 @import "fixes";
