@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 
 @section('title')
-    {{ ucfirst(getCurrentWhiteLabelName()) }} {{ trans('autooffer.list.tab_title') }}
+    <!-- {{ ucfirst(getCurrentWhiteLabelName()) }} {{ trans('autooffer.list.tab_title') }} -->
 @endsection
 
 @section("after-styles")
