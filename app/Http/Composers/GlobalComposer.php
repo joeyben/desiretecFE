@@ -19,6 +19,6 @@ class GlobalComposer
     {
         $id = Auth::id();
 
-        $view->with(['logged_in_user' => access()->user()]);
+        $view->with(['logged_in_user' => \Illuminate\Support\Facades\Auth::guard('web')->user()]);
     }
 }
