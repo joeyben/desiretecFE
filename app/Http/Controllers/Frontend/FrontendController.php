@@ -117,13 +117,13 @@ class FrontendController extends Controller
     /**
      * @return \Illuminate\View\View
      */
-    public function index($subdomain)
+    public function index()
     {
         $body_class = $this::BODY_CLASS;
         $bg_image = "";
         $display_name = "";
         $logo = "";
-        return view('frontend.whitelabel.index', compact( 'body_class','bg_image', 'display_name','logo','subdomain'));
+        return view('frontend.whitelabel.index', compact( 'body_class','bg_image', 'display_name','logo'));
     }
 
     /**
