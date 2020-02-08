@@ -64,7 +64,7 @@
                 </li>
             @endif
             @if ($logged_in_user)
-                <li class='logout'><a href="{{route('frontend.auth.api.logout')}}"><i class="fal fa-sign-out"></i></a></li>
+                <li class='logout'><a href="{{route('frontend.auth.api.logout', [$subdomain])}}"><i class="fal fa-sign-out"></i></a></li>
             @endif
 
 
