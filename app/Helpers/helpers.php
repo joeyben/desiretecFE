@@ -415,17 +415,7 @@ if (!function_exists('getCurrentWhiteLabelColor')) {
      */
     function getCurrentWhiteLabelColor()
     {
-        // if (!isWhiteLabel()) {
-        //     $defaultColor = '#f96500';
-
-        //     return $defaultColor;
-        // }
-
-        // $color = getCurrentWhiteLabelField('color');
-
-        // return $color;
-
-        return '#f96500';
+        return getWhitelabelInfo()['color'];
     }
 }
 

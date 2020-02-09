@@ -22,7 +22,7 @@
                         <h3 style="color:#000">Hallo Max Mustermann,</h3>
 
                         <p class="header-p">Der Reisewunsch wurde am 20.12.2019 an Sie übermittelt. Erstellen Sie jetzt ein Angebot.</p>
-                        <a href="{{route('frontend.offers.create', $wish->id)}}" class="primary-btn">{{ trans('buttons.wishes.frontend.create_offer')}}</a>
+                        <a href="{{route('frontend.offers.create', ['id' => $wish->id, 'subdomain' => $subdomain])}}" class="primary-btn">{{ trans('buttons.wishes.frontend.create_offer')}}</a>
                 </div>
             </div>
         </div>
@@ -111,7 +111,7 @@
                 <h4>
                     Neue Nachrichten <span class="glyphicon glyphicon-bell"></span>
                 </h4>
-                <chat-messages :wishid="{{ $wish->id }}" :userid="{{ $logged_in_user->id }}" :groupid="{{ $wish->group_id }}"></chat-messages>
+                <chat-messages :wishid="{{ $wish->id }}" :userid="{{ $logged_in_user['id'] }}" :groupid="{{ $wish->group_id }}"></chat-messages>
             </div>
     </section>
 
@@ -191,7 +191,7 @@
                         <span aria-hidden="true">&times;</span>
                     </a>
                 </div>
-                {{ Form::open(['route' => 'frontend.contact.store', 'class' => 'form-horizontal contact_form', 'role' => 'form', 'method' => 'POST', 'id' => 'contact-seller']) }}
+                {{ Form::open(['route' => ['frontend.contact.store', $subdomain], 'class' => 'form-horizontal contact_form', 'role' => 'form', 'method' => 'POST', 'id' => 'contact-seller']) }}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">{{ trans('wish.contact.title') }}</h4>
@@ -254,7 +254,7 @@
                         <span aria-hidden="true">&times;</span>
                     </a>
                 </div>
-                {{ Form::open(['route' => 'frontend.contact.storecallback', 'class' => 'form-horizontal contact_form', 'role' => 'form', 'method' => 'POST', 'id' => 'callback-seller']) }}
+                {{ Form::open(['route' => ['frontend.contact.storecallback', $subdomain], 'class' => 'form-horizontal contact_form', 'role' => 'form', 'method' => 'POST', 'id' => 'callback-seller']) }}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">@lang('modals.callback.title')</h4>
