@@ -14,9 +14,9 @@ Interface AgentsControllerInterface
 
     public function store(CreateAgentsRequest $request, Agent $agent);
 
-    public function edit(int $id);
+    public function edit(string $subdomain, int $id);
 
-    public function update(int $id, UpdateAgentsRequest $request);
+    public function update(string $subdomain, int $id, UpdateAgentsRequest $request);
 
     public function delete($id);
 

@@ -11,7 +11,7 @@
 @endsection
 
 @section('content')
-    {{ Form::open(['route' => ['frontend.agents.update',[$subdomain, $agent->id]], 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'POST', 'id' => 'create-permission', 'files' => true]) }}
+    {{ Form::open(['route' => ['frontend.agents.update',$subdomain, $agent->id], 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'POST', 'id' => 'create-permission', 'files' => true]) }}
         <div class="modal-header">
             <h5 class="modal-title">{{ trans('labels.agents.edit_headline') }}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">

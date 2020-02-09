@@ -25,7 +25,7 @@
             @include("frontend.agents.form")
         </div>
         <div class="modal-footer">
-            {{ link_to_route('frontend.agents.index', 'Cancel', [], ['class' => 'btn btn-danger btn-md']) }}
+            {{ link_to_route('frontend.agents.index', 'Cancel', [$subdomain], ['class' => 'btn btn-danger btn-md']) }}
             {{ Form::submit('Create', ['class' => 'btn btn-primary btn-md']) }}
         </div>
     {{ Form::close() }}

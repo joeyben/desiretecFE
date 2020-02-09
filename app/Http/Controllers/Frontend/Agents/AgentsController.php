@@ -77,7 +77,7 @@ class AgentsController extends Controller implements AgentsControllerInterface
         }
     }
 
-    public function edit(int $id)
+    public function edit(string $subdomain, int $id)
     {
         try {
             $response = $this->apiService->get('/agents' . '/' . $id);
@@ -95,7 +95,7 @@ class AgentsController extends Controller implements AgentsControllerInterface
         }
     }
 
-    public function update(int $id, UpdateAgentsRequest $request)
+    public function update(string $subdomain, int $id, UpdateAgentsRequest $request)
     {
         try {
             $data = $request->all();
