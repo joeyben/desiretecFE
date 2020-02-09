@@ -18,8 +18,7 @@ mix.setPublicPath('public')
         'resources/js/frontend/app.js',
         'resources/js/sweetalert.min.js',
         'resources/js/plugins.js',
-        'resources/js/jquerysession.js',
-        'node_modules/bootstrap-select/js/bootstrap-select.js'
+        'resources/js/jquerysession.js'
     ], 'public/js/frontend.js')
     //Datatable js
     .scripts([

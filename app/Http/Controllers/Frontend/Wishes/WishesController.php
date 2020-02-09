@@ -83,7 +83,7 @@ class WishesController extends Controller
     }
 
 
-    public function show($subdomain, $id, ManageWishesRequest $request)
+    public function show($id, ManageWishesRequest $request)
     {
         try {
             $response = $this->apiService->get('/wishes' . '/' . $id);

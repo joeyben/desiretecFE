@@ -19,7 +19,7 @@
                         <ul class="dropdown-menu" role="menu">
                             @foreach($agents as $agent)
                                 <li class="nav-item">
-                                    <a href="{{route('frontend.agents.status', $agent->id)}}" >
+                                    <a href="{{route('frontend.agents.status', ['id' =>$agent->id, 'subdomain' => $subdomain])}}" >
                                         <img class="agent-dropdown-img" src="{{ Storage::disk('s3')->url('img/agent/' . $agent->avatar) }}">
                                         <span>{{ $agent->name }}</span>
                                     </a>
@@ -53,8 +53,8 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
                         @if ($logged_in_user && $logged_in_user['role'] === "Seller")
-                            {{ link_to_route('frontend.agents.index', trans('navs.frontend.agents'),'',['class'=>'dropdown-item']) }}
-                            {{ link_to_route('frontend.offers.index', trans('navs.frontend.offers'),'',['class'=>'dropdown-item']) }}
+                            <a class="dropdown-item" href="{{ route('frontend.agents.index', [$subdomain]) }}">{{ trans('navs.frontend.agents') }}</a>
+                            <a class="dropdown-item" href="{{ route('frontend.offers.index', [$subdomain]) }}">{{ trans('navs.frontend.offers') }}</a>
                         @endif
 
                         @if ($logged_in_user && ($logged_in_user['role'] === "Seller" || $logged_in_user['role'] === "Executive"))
