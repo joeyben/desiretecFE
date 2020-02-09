@@ -6,7 +6,7 @@ var exitIntent = window.exitIntent || {};
     dt.defaultConfig = {
         baseUrl: 'http://localhost',
         popupPath: '/show',
-        popupStore:'/store',
+        popupStore:'/wish/store',
         cssPath: '/css/layer.css'
     };
 

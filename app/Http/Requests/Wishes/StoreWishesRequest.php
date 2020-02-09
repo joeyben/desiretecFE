@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests\Wishes;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\ValidationException;
 
 class StoreWishesRequest extends FormRequest
 {
@@ -16,6 +19,40 @@ class StoreWishesRequest extends FormRequest
         return true;
     }
 
+    /**
+     * Handle a failed validation attempt.
+     *
+     * @param \Illuminate\Contracts\Validation\Validator $validator
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     *
+     * @return JsonResponse
+     */
+    protected function failedValidation(Validator $validator)
+    {
+        $errors = (new ValidationException($validator))->errors();
+
+        return response()->json(['errors' => $errors], JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
+    }
+    /**
+     * Determine if the form has failed validation.
+     *
+     * @return bool
+     */
+    public function failed()
+    {
+        return $this->getValidatorInstance()->fails();
+    }
+
+    /**
+     * Determine if the form has failed validation.
+     *
+     * @return object
+     */
+    public function errors()
+    {
+        return $this->getValidatorInstance()->errors();
+    }
     /**
      * Get the validation rules that apply to the request.
      *

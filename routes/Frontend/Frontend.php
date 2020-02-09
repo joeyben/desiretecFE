@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\URL;
 Route::get('/', 'FrontendController@index')->name('index');
 
 Route::get('show', 'FrontendController@show');
+Route::get('wish/store', 'FrontendController@store')->name('storeWish');
+
 Route::get('/getTTRegions', 'RegionsController@getTTRegions');
 Route::get('/get-all-destinations', 'FrontendController@getAllDestinations');
 Route::get('/get-all-airports', 'FrontendController@getAllAirports');
@@ -86,7 +88,6 @@ Route::group(['middleware' => 'auth'], function ($subdomain) {
     Route::group(['namespace' => 'Wishes', 'as' => 'wishes.'], function () {
         Route::get('wishlist', 'WishesController@wishList')->name('list');
         Route::get('wishes/getlist', 'WishesController@getList')->name('getlist');
-
         Route::get('wishes/{id}', 'WishesController@show')->name('wish');
         Route::post('wishes/note/update', 'WishesController@updateNote')->name('updateNote');
     });
