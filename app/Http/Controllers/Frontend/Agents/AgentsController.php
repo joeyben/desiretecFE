@@ -58,7 +58,7 @@ class AgentsController extends Controller implements AgentsControllerInterface
         ]);
     }
 
-    public function store(CreateAgentsRequest $request, Agent $agent)
+    public function store(string $subdomain, CreateAgentsRequest $request, Agent $agent)
     {
         try {
             $data = $request->all();
@@ -68,7 +68,7 @@ class AgentsController extends Controller implements AgentsControllerInterface
             $response = $this->apiService->post('/agents/create', $data);
 
             return redirect()
-                ->route('frontend.agents.index')
+                ->route('frontend.agents.index', [$subdomain])
                 ->with('flash_success', trans('alerts.frontend.agents.created'));
 
         } catch (\Exception $e) {
@@ -107,7 +107,7 @@ class AgentsController extends Controller implements AgentsControllerInterface
             $response = $this->apiService->put('/agents/update/' . $id, $data);
 
             return redirect()
-                ->route('frontend.agents.index')
+                ->route('frontend.agents.index', [$subdomain])
                 ->with('flash_success', trans('alerts.frontend.agents.updated'));
 
         } catch (\Exception $e) {
@@ -122,7 +122,7 @@ class AgentsController extends Controller implements AgentsControllerInterface
            $response = $this->apiService->delete('/agents/delete/' . $id);
 
             return redirect()
-                ->route('frontend.agents.index')
+                ->route('frontend.agents.index', [$subdomain])
                 ->with('flash_success', trans('alerts.frontend.agents.deleted'));
 
         } catch (\Exception $e) {

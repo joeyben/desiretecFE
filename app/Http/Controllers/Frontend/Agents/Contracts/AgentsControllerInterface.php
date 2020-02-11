@@ -12,7 +12,7 @@ Interface AgentsControllerInterface
 
     public function create(string $subdomain);
 
-    public function store(CreateAgentsRequest $request, Agent $agent);
+    public function store(string $subdomain, CreateAgentsRequest $request, Agent $agent);
 
     public function edit(string $subdomain, int $id);
 
