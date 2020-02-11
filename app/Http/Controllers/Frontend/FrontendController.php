@@ -182,6 +182,7 @@ class FrontendController extends Controller
         }
         $data = $request->all();
         $data['whitelabel_id'] = getWhitelabelInfo()['id'];
+        $data['title'] = "&nbsp;";
         $response = $this->apiService->post('/wishes/store', $data);
 
         $html = view('frontend.whitelabel.created')->render();
