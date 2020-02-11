@@ -8,17 +8,17 @@ use App\Http\Requests\Agents\CreateAgentsRequest;
 
 Interface AgentsControllerInterface
 {
-    public function index();
+    public function index(string $subdomain);
 
-    public function create();
+    public function create(string $subdomain);
 
-    public function store(CreateAgentsRequest $request, Agent $agent);
+    public function store(string $subdomain, CreateAgentsRequest $request, Agent $agent);
 
     public function edit(string $subdomain, int $id);
 
     public function update(string $subdomain, int $id, UpdateAgentsRequest $request);
 
-    public function delete($id);
+    public function delete(string $subdomain, $id);
 
     public function uploadImage($input);
 

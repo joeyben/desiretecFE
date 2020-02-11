@@ -75,7 +75,7 @@ Route::group(['middleware' => 'auth'], function ($subdomain) {
         Route::post('wish/getoffers', 'OffersTableController@showOffersForWish')->name('wishoffers');
     });
 
-    Route::group(['namespace' => 'Agents', 'as' => 'agents.'], function () {
+    Route::group(['namespace' => 'Agents', 'as' => 'agents.'], function ($subdomain) {
         Route::get('agents', 'AgentsController@index')->name('index');
         Route::get('agent/profile', 'AgentsController@profile')->name('profile');
         Route::get('agents/create', 'AgentsController@create')->name('create');

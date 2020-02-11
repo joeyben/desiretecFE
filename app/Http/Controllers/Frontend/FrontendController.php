@@ -180,8 +180,10 @@ class FrontendController extends Controller
 
             return response()->json(['success' => true, 'html'=>$html]);
         }
-
-        $response = $this->apiService->post('/wishes/store', $request->all());
+        $data = $request->all();
+        $data['whitelabel_id'] = getWhitelabelInfo()['id'];
+        $data['title'] = "&nbsp;";
+        $response = $this->apiService->post('/wishes/store', $data);
 
         $html = view('frontend.whitelabel.created')->render();
 

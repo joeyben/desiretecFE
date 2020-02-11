@@ -65,9 +65,10 @@
                             <td>{{ $agent->created_at }}</td>
                             <td>
 
-                                {{ link_to_route('frontend.agents.edit', trans('labels.agents.edit'), [$subdomain, $agent->id]) }}
+                                <a class="" href="{{ route('frontend.agents.edit', [$subdomain, $agent->id]) }}">{{ trans('labels.agents.edit') }}</a>
                                 <span> / </span>
-                                {{ link_to_route('frontend.agents.delete', trans('labels.agents.delete'), [$subdomain, $agent->id]) }}
+                                <a class="" href="{{ route('frontend.agents.delete', [$subdomain, $agent->id]) }}">{{ trans('labels.agents.delete') }}</a>
+
                             </td>
                         </tr>
                     @endforeach

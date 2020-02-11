@@ -61,7 +61,6 @@ class StoreWishesRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'           => 'required|max:200',
             'airport'         => 'required|max:200',
             'destination'     => 'required|max:200',
             'earliest_start'  => 'required|max:200',
@@ -77,8 +76,7 @@ class StoreWishesRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Please insert Wish Title',
-            'name.max'      => 'Wish Title may not be greater than 200 characters.',
+            'airport.required' => 'Please insert Wish airport',
         ];
     }
 }

@@ -24,17 +24,15 @@
             @include("frontend.agents.form")
         </div>
         <div class="modal-footer">
-            {{ link_to_route('frontend.agents.index', 'Cancel', [$subdomain], ['class' => 'btn btn-danger btn-md']) }}
+            <a class="btn btn-danger btn-md" href="{{ route('frontend.agents.index', [$subdomain]) }}">Cancel</a>
+
             {{ Form::submit('Create', ['class' => 'btn btn-primary btn-md']) }}
         </div>
     {{ Form::close() }}
 @endsection
 
 @section("after-scripts")
-<script>
-            console.log('inside');
 
-</script>
 <script type="text/javascript">
         $(document).on('change','.up', function(){
             var names = [];
