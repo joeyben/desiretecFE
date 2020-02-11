@@ -33,10 +33,7 @@
 @endsection
 
 @section("after-scripts")
-<script>
-            console.log('inside');
 
-</script>
 <script type="text/javascript">
         $(document).on('change','.up', function(){
             var names = [];
