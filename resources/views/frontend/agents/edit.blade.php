@@ -24,7 +24,8 @@
         </div>
         <div class="modal-footer">
             <div class="col-lg-12">
-                {{ link_to_route('frontend.agents.index', trans('labels.agents.cancel'), [$subdomain], ['class' => 'btn btn-secondary btn-md']) }}
+                <a class="btn btn-secondary btn-md" href="{{ route('frontend.agents.index', [$subdomain]) }}">{{ trans('labels.agents.cancel') }}</a>
+
                 {{ Form::submit(trans('labels.agents.save'), ['class' => 'btn btn-primary btn-md']) }}
             </div>
         </div>
