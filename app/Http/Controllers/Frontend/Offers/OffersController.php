@@ -85,7 +85,7 @@ class OffersController extends Controller
      *
      * @return mixed
      */
-    public function create($id)
+    public function create(string $subdomain, int $id)
     {
         return view('frontend.offers.create')->with([
             'status'         => $this->status,
@@ -108,7 +108,7 @@ class OffersController extends Controller
                 ->route('frontend.offers.index', $subdomain)
                 ->with('flash_success', trans('alerts.frontend.offers.created'));
         } catch (Exception $e) {
-            return json_response_error($e);
+            return redirect()->back()->withErrors(['message' => $e->getMessage()]);
         }
     }
 
