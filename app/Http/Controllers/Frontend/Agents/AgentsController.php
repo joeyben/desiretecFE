@@ -31,7 +31,7 @@ class AgentsController extends Controller implements AgentsControllerInterface
         $this->storage = Storage::disk('s3');
     }
 
-    public function index()
+    public function index(string $subdomain)
     {
         try {
             $response = $this->apiService->get('/agents');
@@ -50,7 +50,7 @@ class AgentsController extends Controller implements AgentsControllerInterface
         }
     }
 
-    public function create()
+    public function create(string $subdomain)
     {
         return view('frontend.agents.create')->with([
             'body_class'  => $this::BODY_CLASS,
@@ -116,7 +116,7 @@ class AgentsController extends Controller implements AgentsControllerInterface
         }
     }
 
-    public function delete($id)
+    public function delete(string $subdomain, $id)
     {
         try {
            $response = $this->apiService->delete('/agents/delete/' . $id);
