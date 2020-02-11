@@ -6,8 +6,7 @@
 
 @section('before-scripts')
     <script type="application/javascript">
-        var
-         = {!! json_encode(getCurrentWhiteLabelColor()) !!};
+        var brandColor = {!! json_encode(getCurrentWhiteLabelColor()) !!};
     </script>
 @endsection
 
