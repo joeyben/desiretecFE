@@ -1,6 +1,7 @@
 <?php
 
 use App\Helpers\uuid;
+use App\Http\Middleware\WhitelabelMiddleware;
 use App\Models\Notification\Notification;
 use App\Models\Settings\Setting;
 use App\Services\Flag\Src\Flag;
@@ -824,9 +825,7 @@ if (!function_exists('live_preview_url')) {
 if (!function_exists('getWhitelabelInfo')) {
     function getWhitelabelInfo()
     {
-        $cachedWhitelabel = Cache::get( 'whitelabel' );
-
-        return json_decode(json_encode($cachedWhitelabel), true);
+        return WhitelabelMiddleware::whitelabelFromCache();
     }
 }
 
