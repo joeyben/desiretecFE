@@ -14,7 +14,7 @@
 <div class="modal fade" id="modalForm" tabindex="-1" role="dialog" data-backdrop="static">
     <div class="modal-dialog" role="document">
         <div class="modal-content" id="modal_content">
-        {{ Form::open(['route' => 'frontend.agents.store', 'class' => 'form-horizontal', 'method' => 'post', 'files' => true]) }}
+        {{ Form::open(['route' => ['frontend.agents.store', $subdomain], 'class' => 'form-horizontal', 'method' => 'post', 'files' => true]) }}
             <div class="modal-header">
                 <h5 class="modal-title">{{isset($customer) ? trans('agent.modal.title.edit') : trans('agent.modal.title.new') }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -27,7 +27,7 @@
             </div>
             <div class="modal-footer">
                 <div class="col-lg-12">
-                    {{ link_to_route('frontend.agents.index', trans('seller.agent.create.cancel'), [], ['class' => 'btn secondary-btn']) }}
+                    <a class="btn secondary-btn" href="{{ route('frontend.agents.index', [$subdomain]) }}">{{ trans('seller.agent.create.cancel') }}</a>
                     {{ Form::button(trans('seller.agent.create.submit'), ['type' => 'submit','class' => 'btn primary-btn']) }}
                 </div>
             </div>
@@ -64,9 +64,11 @@
                             <td>{{ $agent->name }}</td>
                             <td>{{ $agent->created_at }}</td>
                             <td>
-                                {{ link_to_route('frontend.agents.edit', trans('labels.agents.edit'), [$agent->id]) }}
+
+                                <a class="" href="{{ route('frontend.agents.edit', [$subdomain, $agent->id]) }}">{{ trans('labels.agents.edit') }}</a>
                                 <span> / </span>
-                                {{ link_to_route('frontend.agents.delete', trans('labels.agents.delete'), [$agent->id]) }}
+                                <a class="" href="{{ route('frontend.agents.delete', [$subdomain, $agent->id]) }}">{{ trans('labels.agents.delete') }}</a>
+
                             </td>
                         </tr>
                     @endforeach

@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    {{ Form::open(['route' => 'frontend.offers.store', 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'post', 'id' => 'create-offer', 'files' => true]) }}
+    {{ Form::open(['route' => ['frontend.offers.store', $subdomain], 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'post', 'id' => 'create-offer', 'files' => true]) }}
 
         <div class="box box-info">
             <div class="box-header with-border">
@@ -18,7 +18,7 @@
                 <div class="form-group">
                     @include("frontend.offers.form")
                     <div class="edit-form-btn">
-                    {{ link_to_route('frontend.offers.index', trans('buttons.general.cancel'), [], ['class' => 'secondary-btn small-btn']) }}
+                    <a class="secondary-btn small-btn" href="{{ route('frontend.offers.index', [$subdomain]) }}">{{ trans('buttons.general.cancel') }}</a>
                     {{ Form::submit(trans('buttons.general.crud.create'), ['class' => 'primary-btn']) }}
                     <div class="clearfix"></div>
                 </div>

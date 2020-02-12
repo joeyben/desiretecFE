@@ -1,10 +1,13 @@
 window.Vue = require('vue');
 window._ = require('lodash');
-window.Popper = require('popper.js').default;
 
 global.$ = global.jQuery = require('jquery');
 
+window.Popper = require('popper.js').default;
+
 require('bootstrap');
+
+require('bootstrap-select');
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

@@ -5,7 +5,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 require('../bootstrap');
-
+require('bootstrap-select');
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -59,7 +59,7 @@ const app = new Vue({
                     this.pagination = response.data.pagination;
                     this.$nextTick(function () {
                         this.loading = false;
-                        $('.selectpicker').selectpicker('refresh');
+                        //$('.custom-select').selectpicker('refresh');
                         this.applyColors();
                     });
 

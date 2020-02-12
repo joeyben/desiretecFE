@@ -8,13 +8,14 @@ use App\Services\Api\ApiService;
 use Illuminate\Http\Request;
 use Modules\Translations\Entities\Translation;
 use Spatie\TranslationLoader\LanguageLine;
+use App\Http\Requests\Wishes\StoreWishesRequest;
 
 /**
  * Class FrontendController.
  */
 class FrontendController extends Controller
 {
-
+    protected $apiService;
     const BODY_CLASS = 'landing';
     const BG_IMAGE = 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/background/15734971371569923197homepage_bcg.jpg';
     const DISPLAY_NAME = 'Default Whitelabel';
@@ -113,17 +114,21 @@ class FrontendController extends Controller
         28 => "28 Nächte",
     ];
 
+    public function __construct(ApiService $apiService)
+    {
+        $this->apiService = $apiService;
+    }
 
     /**
      * @return \Illuminate\View\View
      */
-    public function index($subdomain)
+    public function index()
     {
         $body_class = $this::BODY_CLASS;
         $bg_image = "";
         $display_name = "";
         $logo = "";
-        return view('frontend.whitelabel.index', compact( 'body_class','bg_image', 'display_name','logo','subdomain'));
+        return view('frontend.whitelabel.index', compact( 'body_class','bg_image', 'display_name','logo'));
     }
 
     /**
@@ -151,6 +156,39 @@ class FrontendController extends Controller
         return response()->json(['success' => true, 'html'=>$html]);
     }
 
+    /**
+     * @param \App\Http\Requests\Wishes\StoreWishesRequest $request
+     *
+     * @return mixed
+     */
+    public function store(StoreWishesRequest $request)
+    {
+        if ($request->failed()) {
+            $html = view('frontend.whitelabel.layer')->with([
+                'errors'       => $request->errors(),
+                'request'      => $request->all(),
+                'color'        => $this::COLOR,
+                'adults_arr'   => $this::ADULTS_ARR,
+                'kids_arr'     => $this::KIDS_ARR,
+                'ages_arr'     => $this::AGES_ARR,
+                'catering_arr' => $this::CATERING_ARR,
+                'duration_arr' => $this::DURATION_ARR,
+                'bg_image'     => $this::BG_IMAGE,
+                'display_name' => $this::DISPLAY_NAME,
+                'logo'         => $this::LOGO,
+            ])->render();
+
+            return response()->json(['success' => true, 'html'=>$html]);
+        }
+        $data = $request->all();
+        $data['whitelabel_id'] = getWhitelabelInfo()['id'];
+        $data['title'] = "&nbsp;";
+        $response = $this->apiService->post('/wishes/store', $data);
+
+        $html = view('frontend.whitelabel.created')->render();
+
+        return response()->json(['success' => true, 'html'=>$html]);
+    }
     /**
      * show page by $page_slug.
      */

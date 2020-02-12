@@ -1897,7 +1897,10 @@ Vue.prototype.moment = moment__WEBPACK_IMPORTED_MODULE_2___default.a;
         _this.messages = response.data.data;
         _this.user = response.data.user;
         _this.avatar = response.data.avatar;
+      })["catch"](function (error) {
+        console.log(error);
       });
+      ;
     },
     editMessage: function editMessage(messageid, message) {
       $('#antworten').slideDown();
@@ -2095,7 +2098,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var id = $('.hidden-popup-val').val();
-      axios.get('/message/delete/' + id).then(function (resp) {
+      axios.get('/messages/' + id).then(function (resp) {
         $('.confirm-popup').css('display', 'none');
         $('body').css('overflow', 'scroll');
         $('#antworten').val('');
@@ -2176,11 +2179,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       newMessage: ''
     };
+  },
+  computed: {
+    csrfToken: function csrfToken() {
+      window.Laravel.csrfToken;
+    }
   },
   props: ['messages', 'userid', 'wishid', 'groupid', 'username', 'fetch'],
   methods: {
@@ -2211,21 +2220,19 @@ __webpack_require__.r(__webpack_exports__);
       $('.loader').hide();
     },
     updateMessage: function updateMessage() {
-      var _this2 = this;
-
       var message = this.newMessage;
       var messageid = $('#edit-val').val();
-      axios.post('/message/edit', {
-        id: messageid,
+      axios.post('/messages/' + messageid, {
         message: message
-      }).then(function (resp) {
+      }).then(function (response) {
         $('#antworten').val('');
         $('#antworten').slideUp();
         jQuery('#' + messageid + " .message-holder").text(message);
         $('.button-show').css('display', 'inline-block');
         $('.button-hide').css('display', 'none');
-
-        _this2.$emit('messaged');
+        this.$emit('messaged');
+      })["catch"](function (error) {
+        console.log(error);
       });
     }
   }
@@ -2259,10 +2266,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       editMode: false,
+      isFocused: false,
       note: '',
       placeholderText: ''
     };
@@ -2272,19 +2291,23 @@ __webpack_require__.r(__webpack_exports__);
     this.note = this.wishnote;
     this.placeholderText = this.lang;
 
-    if (this.note == '') {
+    if (!this.note) {
       this.editMode = true;
     }
   },
   methods: {
     saveNote: function saveNote() {
-      this.editMode = false;
-      axios.post('/wishes/updateNote', {
+      axios.post('/wishes/note/update', {
         id: this.wishid,
         note: this.note
       }).then(function (response) {})["catch"](function (error) {
         console.log(error);
       });
+      this.resetEditMode();
+    },
+    resetEditMode: function resetEditMode() {
+      this.editMode = false;
+      this.isFocused = false;
     }
   }
 });
@@ -2561,12 +2584,30 @@ Vue.prototype.moment = moment__WEBPACK_IMPORTED_MODULE_0___default.a;
 
 /***/ }),
 
-/***/ "./node_modules/bootstrap-select/js/bootstrap-select.js":
-/*!**************************************************************!*\
-  !*** ./node_modules/bootstrap-select/js/bootstrap-select.js ***!
-  \**************************************************************/
+/***/ "./node_modules/bootstrap-select/dist/js/bootstrap-select.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/bootstrap-select/dist/js/bootstrap-select.js ***!
+  \*******************************************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+ * Bootstrap-select v1.13.12 (https://developer.snapappointments.com/bootstrap-select)
+ *
+ * Copyright 2012-2019 SnapAppointments, LLC
+ * Licensed under MIT (https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE)
+ */
+
+(function (root, factory) {
+  if (root === undefined && window !== undefined) root = window;
+  if (true) {
+    // AMD. Register as an anonymous module unless amdModuleId is set
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")], __WEBPACK_AMD_DEFINE_RESULT__ = (function (a0) {
+      return (factory(a0));
+    }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+  } else {}
+}(this, function (jQuery) {
 
 (function ($) {
   'use strict';
@@ -5685,6 +5726,9 @@ Vue.prototype.moment = moment__WEBPACK_IMPORTED_MODULE_0___default.a;
   });
 })(jQuery);
 
+
+}));
+//# sourceMappingURL=bootstrap-select.js.map
 
 /***/ }),
 
@@ -10345,7 +10389,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.wish-note[data-v-83e7a398] {\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: end;\n            justify-content: flex-end;\n}\n.wish-note-wrapper[data-v-83e7a398] {\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-align: start;\n            align-items: flex-start;\n}\np[data-v-83e7a398] {\n    display: inline-block;\n    margin-right: 15px;\n    margin-bottom: 0;\n    max-width: 420px;\n}\ni[data-v-83e7a398] {\n    font-size: 20px;\n    width: 30px;\n    color: #000;\n}\ntextarea[data-v-83e7a398] {\n    padding: 3px 15px;\n    border-radius: 3px;\n    border: 1px solid #ccc;\n    margin-right: 10px;\n    font-size: 14px;\n    font-weight: 100;\n    width: 420px;\n}\ntextarea[data-v-83e7a398]::-webkit-input-placeholder {\n  color: #dedede !important;\n  opacity: 1; /* Firefox */\n  font-style: italic;\n}\ntextarea[data-v-83e7a398]::-moz-placeholder {\n  color: #dedede !important;\n  opacity: 1; /* Firefox */\n  font-style: italic;\n}\ntextarea[data-v-83e7a398]:-ms-input-placeholder {\n  color: #dedede !important;\n  opacity: 1; /* Firefox */\n  font-style: italic;\n}\ntextarea[data-v-83e7a398]::-ms-input-placeholder {\n  color: #dedede !important;\n  opacity: 1; /* Firefox */\n  font-style: italic;\n}\ntextarea[data-v-83e7a398]::placeholder {\n  color: #dedede !important;\n  opacity: 1; /* Firefox */\n  font-style: italic;\n}\n", ""]);
+exports.push([module.i, "\n.wish-note[data-v-83e7a398] {\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: end;\n            justify-content: flex-end;\n}\np[data-v-83e7a398] {\n    display: inline-block;\n    margin-right: 15px;\n    margin-bottom: 0;\n    max-width: 420px;\n}\ni[data-v-83e7a398] {\n    font-size: 20px;\n    width: 30px;\n    color: #000;\n}\ntextarea[data-v-83e7a398] {\n    padding: 3px 15px;\n    border-radius: 3px;\n    border: 1px solid #ccc;\n    margin-right: 10px;\n    font-size: 14px;\n    font-weight: 100;\n    width: 420px;\n}\ntextarea[data-v-83e7a398]::-webkit-input-placeholder {\n  color: #dedede !important;\n  opacity: 1; /* Firefox */\n  font-style: italic;\n}\ntextarea[data-v-83e7a398]::-moz-placeholder {\n  color: #dedede !important;\n  opacity: 1; /* Firefox */\n  font-style: italic;\n}\ntextarea[data-v-83e7a398]:-ms-input-placeholder {\n  color: #dedede !important;\n  opacity: 1; /* Firefox */\n  font-style: italic;\n}\ntextarea[data-v-83e7a398]::-ms-input-placeholder {\n  color: #dedede !important;\n  opacity: 1; /* Firefox */\n  font-style: italic;\n}\ntextarea[data-v-83e7a398]::placeholder {\n  color: #dedede !important;\n  opacity: 1; /* Firefox */\n  font-style: italic;\n}\n@media (max-width: 768px) {\np[data-v-83e7a398] {\n       max-width: 240px;\n}\ntextarea[data-v-83e7a398] {\n       width: 240px;\n}\n.wish-note[data-v-83e7a398] {\n       padding: 1em;\n}\n}\n", ""]);
 
 // exports
 
@@ -61602,7 +61646,12 @@ var render = function() {
           on: { click: _vm.updateMessage }
         },
         [_vm._v("Speichern")]
-      )
+      ),
+      _vm._v(" "),
+      _c("input", {
+        attrs: { type: "hidden", name: "_token" },
+        domProps: { value: _vm.csrfToken }
+      })
     ])
   ])
 }
@@ -61630,71 +61679,81 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "col-md-6 wish-note" }, [
     _vm.editMode
-      ? _c("div", { staticClass: "wish-note-wrapper edit-mode" }, [
-          _c("textarea", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.note,
-                expression: "note"
+      ? _c("textarea", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.note,
+              expression: "note"
+            }
+          ],
+          ref: "note",
+          attrs: {
+            name: "note",
+            maxlength: "200",
+            value: "",
+            placeholder: _vm.placeholderText
+          },
+          domProps: { value: _vm.note },
+          on: {
+            keyup: function($event) {
+              if (
+                !$event.type.indexOf("key") &&
+                _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+              ) {
+                return null
               }
-            ],
-            attrs: {
-              name: "note",
-              maxlength: "200",
-              value: "",
-              placeholder: _vm.placeholderText
+              return _vm.saveNote()
             },
-            domProps: { value: _vm.note },
+            focus: function($event) {
+              _vm.isFocused = true
+            },
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.note = $event.target.value
+            }
+          }
+        })
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.editMode
+      ? _c(
+          "a",
+          {
             on: {
-              keyup: function($event) {
-                if (
-                  !$event.type.indexOf("key") &&
-                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                ) {
-                  return null
-                }
-                return _vm.saveNote($event)
-              },
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.note = $event.target.value
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.saveNote()
               }
             }
-          }),
-          _vm._v(" "),
-          _c(
-            "a",
-            {
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  return _vm.saveNote($event)
-                }
+          },
+          [
+            _vm.isFocused
+              ? _c("i", { staticClass: "fal fa-save" })
+              : _c("i", { staticClass: "fal fa-edit" })
+          ]
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    !_vm.editMode ? _c("p", [_vm._v(_vm._s(this.note))]) : _vm._e(),
+    _vm._v(" "),
+    !_vm.editMode
+      ? _c(
+          "a",
+          {
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                _vm.editMode = true
               }
-            },
-            [_c("i", { staticClass: "fal fa-save" })]
-          )
-        ])
-      : _c("div", { staticClass: "wish-note-wrapper not-edit-mode" }, [
-          _c("p", [_vm._v(_vm._s(this.note))]),
-          _vm._v(" "),
-          _c(
-            "a",
-            {
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  _vm.editMode = !_vm.editMode
-                }
-              }
-            },
-            [_c("i", { staticClass: "fal fa-edit" })]
-          )
-        ])
+            }
+          },
+          [_c("i", { staticClass: "fal fa-edit" })]
+        )
+      : _vm._e()
   ])
 }
 var staticRenderFns = []
@@ -79674,10 +79733,12 @@ module.exports = function(module) {
 
 /* WEBPACK VAR INJECTION */(function(global) {window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-window.Popper = __webpack_require__(/*! popper.js */ "./node_modules/popper.js/dist/esm/popper.js")["default"];
 global.$ = global.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+window.Popper = __webpack_require__(/*! popper.js */ "./node_modules/popper.js/dist/esm/popper.js")["default"];
 
 __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.js");
+
+__webpack_require__(/*! bootstrap-select */ "./node_modules/bootstrap-select/dist/js/bootstrap-select.js");
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
@@ -80515,6 +80576,8 @@ __webpack_require__.r(__webpack_exports__);
  * building robust, powerful web applications using Vue and Laravel.
  */
 __webpack_require__(/*! ../bootstrap */ "./resources/js/bootstrap.js");
+
+__webpack_require__(/*! bootstrap-select */ "./node_modules/bootstrap-select/dist/js/bootstrap-select.js");
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -80524,15 +80587,16 @@ __webpack_require__(/*! ../bootstrap */ "./resources/js/bootstrap.js");
 
 Vue.use(__webpack_require__(/*! vue-moment */ "./node_modules/vue-moment/dist/vue-moment.js"));
 Vue.use(__webpack_require__(/*! vue-js-modal */ "./node_modules/vue-js-modal/dist/index.js"));
-Vue.component('v-select', __webpack_require__(/*! ../../../node_modules/vue-select/src/components/Select.vue */ "./node_modules/vue-select/src/components/Select.vue"));
-Vue.component('pagination', __webpack_require__(/*! ../components/frontend/PaginationComponent.vue */ "./resources/js/components/frontend/PaginationComponent.vue"));
-Vue.component('comment', __webpack_require__(/*! ../components/frontend/Comment.vue */ "./resources/js/components/frontend/Comment.vue"));
-Vue.component('message', __webpack_require__(/*! ../components/frontend/Message.vue */ "./resources/js/components/frontend/Message.vue"));
-Vue.component('chat-messages', __webpack_require__(/*! ../components/frontend/ChatMessages.vue */ "./resources/js/components/frontend/ChatMessages.vue"));
-Vue.component('message-form', __webpack_require__(/*! ../components/frontend/MessageForm.vue */ "./resources/js/components/frontend/MessageForm.vue"));
-Vue.component('confirmation-modal', __webpack_require__(/*! ../components/frontend/ConfirmationModal.vue */ "./resources/js/components/frontend/ConfirmationModal.vue"));
-Vue.component('wish-edit-modal', __webpack_require__(/*! ../components/frontend/WishEditModal.vue */ "./resources/js/components/frontend/WishEditModal.vue"));
-Vue.component('note', __webpack_require__(/*! ../components/frontend/Note.vue */ "./resources/js/components/frontend/Note.vue"));
+Vue.component('v-select', __webpack_require__(/*! ../../../node_modules/vue-select/src/components/Select.vue */ "./node_modules/vue-select/src/components/Select.vue")["default"]);
+Vue.component('pagination', __webpack_require__(/*! ../components/frontend/PaginationComponent.vue */ "./resources/js/components/frontend/PaginationComponent.vue")["default"]);
+Vue.component('comment', __webpack_require__(/*! ../components/frontend/Comment.vue */ "./resources/js/components/frontend/Comment.vue")["default"]);
+Vue.component('message', __webpack_require__(/*! ../components/frontend/Message.vue */ "./resources/js/components/frontend/Message.vue")["default"]);
+Vue.component('chat-messages', __webpack_require__(/*! ../components/frontend/ChatMessages.vue */ "./resources/js/components/frontend/ChatMessages.vue")["default"]);
+Vue.component('message-form', __webpack_require__(/*! ../components/frontend/MessageForm.vue */ "./resources/js/components/frontend/MessageForm.vue")["default"]);
+Vue.component('confirmation-modal', __webpack_require__(/*! ../components/frontend/ConfirmationModal.vue */ "./resources/js/components/frontend/ConfirmationModal.vue")["default"]);
+Vue.component('wish-edit-modal', __webpack_require__(/*! ../components/frontend/WishEditModal.vue */ "./resources/js/components/frontend/WishEditModal.vue")["default"]);
+Vue.component('note', __webpack_require__(/*! ../components/frontend/Note.vue */ "./resources/js/components/frontend/Note.vue")["default"]);
+Vue.config.devtools = "development" === 'development';
 var app = new Vue({
   el: '#app',
   data: {
@@ -80544,7 +80608,7 @@ var app = new Vue({
     loading: true,
     messages: '',
     user_name: '',
-    id: ''
+    filter: ''
   },
   mounted: function mounted() {
     // TODO: Move fetchWishes() into component called only in wishes/index.blade.php
@@ -80558,13 +80622,13 @@ var app = new Vue({
     fetchWishes: function fetchWishes() {
       var _this = this;
 
-      axios.get('/wishes/getlist?page=' + this.pagination.current_page + '&status=' + this.status + '&id=' + this.id).then(function (response) {
+      axios.get('/wishes/getlist?page=' + this.pagination.current_page + '&status=' + this.status + '&filter=' + this.filter).then(function (response) {
         _this.data = response.data.data.data;
         _this.pagination = response.data.pagination;
 
         _this.$nextTick(function () {
-          this.loading = false;
-          $('.selectpicker').selectpicker('refresh');
+          this.loading = false; //$('.custom-select').selectpicker('refresh');
+
           this.applyColors();
         });
       })["catch"](function (error) {
@@ -81849,21 +81913,20 @@ var require;var require;var __WEBPACK_AMD_DEFINE_RESULT__;function _typeof(obj) 
 /***/ }),
 
 /***/ 0:
-/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/frontend/app.js ./node_modules/bootstrap-select/js/bootstrap-select.js ./resources/js/sweetalert.min.js ./resources/js/plugins.js ./resources/js/jquerysession.js ./resources/sass/frontend/app.scss ./resources/sass/frontend/layer/_datepicker.scss ./resources/sass/frontend/layer/_layer.scss ./resources/sass/frontend/layer/_layer-responsive.scss ***!
-  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/frontend/app.js ./resources/js/sweetalert.min.js ./resources/js/plugins.js ./resources/js/jquerysession.js ./resources/sass/frontend/app.scss ./resources/sass/frontend/layer/_datepicker.scss ./resources/sass/frontend/layer/_layer.scss ./resources/sass/frontend/layer/_layer-responsive.scss ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/resources/js/frontend/app.js */"./resources/js/frontend/app.js");
-__webpack_require__(/*! /var/www/node_modules/bootstrap-select/js/bootstrap-select.js */"./node_modules/bootstrap-select/js/bootstrap-select.js");
-__webpack_require__(/*! /var/www/resources/js/sweetalert.min.js */"./resources/js/sweetalert.min.js");
-__webpack_require__(/*! /var/www/resources/js/plugins.js */"./resources/js/plugins.js");
-__webpack_require__(/*! /var/www/resources/js/jquerysession.js */"./resources/js/jquerysession.js");
-__webpack_require__(/*! /var/www/resources/sass/frontend/app.scss */"./resources/sass/frontend/app.scss");
-__webpack_require__(/*! /var/www/resources/sass/frontend/layer/_datepicker.scss */"./resources/sass/frontend/layer/_datepicker.scss");
-__webpack_require__(/*! /var/www/resources/sass/frontend/layer/_layer.scss */"./resources/sass/frontend/layer/_layer.scss");
-module.exports = __webpack_require__(/*! /var/www/resources/sass/frontend/layer/_layer-responsive.scss */"./resources/sass/frontend/layer/_layer-responsive.scss");
+__webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/WL/whitelabel-module/resources/js/frontend/app.js */"./resources/js/frontend/app.js");
+__webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/WL/whitelabel-module/resources/js/sweetalert.min.js */"./resources/js/sweetalert.min.js");
+__webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/WL/whitelabel-module/resources/js/plugins.js */"./resources/js/plugins.js");
+__webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/WL/whitelabel-module/resources/js/jquerysession.js */"./resources/js/jquerysession.js");
+__webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/WL/whitelabel-module/resources/sass/frontend/app.scss */"./resources/sass/frontend/app.scss");
+__webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/WL/whitelabel-module/resources/sass/frontend/layer/_datepicker.scss */"./resources/sass/frontend/layer/_datepicker.scss");
+__webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/WL/whitelabel-module/resources/sass/frontend/layer/_layer.scss */"./resources/sass/frontend/layer/_layer.scss");
+module.exports = __webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/WL/whitelabel-module/resources/sass/frontend/layer/_layer-responsive.scss */"./resources/sass/frontend/layer/_layer-responsive.scss");
 
 
 /***/ })

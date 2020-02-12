@@ -47,7 +47,7 @@
                     <span v-cloak v-if="data.length === 1">@{{ data.length }} {{ trans_choice('labels.frontend.wishes.wishes', 1 ) }}</span>
                     <span v-cloak v-else>@{{ data.length }} {{ trans_choice('labels.frontend.wishes.wishes', 99 ) }}</span>
                 </div>
-                @if($logged_in_user->hasRole('Seller'))
+                @if($logged_in_user['role'] === "Seller")
                     <div class="filter-action">
                         <select class="custom-select" style="width: 25%;" id="filter-status" v-model="status" @change="fetchWishes()">
                             {{--<option value="">{{ trans('menus.list.status.all') }}</option>--}}
@@ -86,7 +86,7 @@
                             <span class="wish-id">
                                 @{{ wish.id }}
                             </span>
-                            @if($logged_in_user->hasRole('Seller'))
+                            @if($logged_in_user['role'] === "Seller")
                                 <span v-if="wish.wlRule == 'mix'" class="wish-classification btn-secondary">
                                     <span v-if="wish.manuelFlag == true"><i class="fal fa-user"></i></span>
                                     <span v-if="wish.manuelFlag == false"><i class="fal fa-robot"></i></span>
@@ -100,7 +100,7 @@
                             @endif
                         </div>
                         <div class="budget">@{{ formatPrice(wish.budget) }}{{ trans('general.currency') }}</div>
-{{--                        @if($logged_in_user->allow('edit-wish') && !$logged_in_user->hasRole('Seller'))--}}
+{{--                        @if($logged_in_user->allow('edit-wish') && !$logged_in_user['role'] === "Seller")--}}
                         <!--    <a type="button" class="btn btn-primary btn-main" :href="'/wish/edit/'+wish.id">{{ trans('labels.frontend.wishes.edit') }}</a>-->
 {{--                        @endif--}}
                         <a type="button" class="primary-btn" :href="'/wishes/'+wish.id">{{ trans('labels.frontend.wishes.goto') }}</a>
@@ -108,7 +108,7 @@
                             <a :href="'/offers/create/'+wish.id" class="btn btn-flat btn-primary">{{ trans('buttons.wishes.frontend.create_offer')}}</a>
 {{--                        @endif--}}
                     <!--<a :href="'/offer/create/'+wish.id" class="btn btn-flat btn-primary">{{ trans('buttons.wishes.frontend.create_autooffer')}}</a>-->
-                        @if($logged_in_user->hasRole('Seller'))
+                        @if($logged_in_user['role'] === "Seller")
                             <div class="status-change-action">
                                 <select class="custom-select" id="change-status" v-bind:value="wish.status" v-model="status" @change="changeStatus(wish.id)">
                                     @foreach ($status as $st)

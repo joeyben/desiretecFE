@@ -6,13 +6,12 @@
 
 @section('before-scripts')
     <script type="application/javascript">
-        var
-         = {!! json_encode(getCurrentWhiteLabelColor()) !!};
+        var brandColor = {!! json_encode(getCurrentWhiteLabelColor()) !!};
     </script>
 @endsection
 
 @section('content')
-    {{ Form::open(['route' => 'frontend.agents.store', 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'post', 'id' => 'create-permission', 'files' => true]) }}
+    {{ Form::open(['route' => ['frontend.agents.store', $subdomain], 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'post', 'id' => 'create-permission', 'files' => true]) }}
 
         <div class="modal-header">
             <h5 class="modal-title">{{isset($customer)?'Edit':'New'}} Customer</h5>
@@ -25,17 +24,15 @@
             @include("frontend.agents.form")
         </div>
         <div class="modal-footer">
-            {{ link_to_route('frontend.agents.index', 'Cancel', [], ['class' => 'btn btn-danger btn-md']) }}
+            <a class="btn btn-danger btn-md" href="{{ route('frontend.agents.index', [$subdomain]) }}">Cancel</a>
+
             {{ Form::submit('Create', ['class' => 'btn btn-primary btn-md']) }}
         </div>
     {{ Form::close() }}
 @endsection
 
 @section("after-scripts")
-<script>
-            console.log('inside');
 
-</script>
 <script type="text/javascript">
         $(document).on('change','.up', function(){
             var names = [];

@@ -1,3 +1,4 @@
+
 <!--Navbar -->
 <nav class="mb-1 navbar navbar-expand-lg navbar-light info-color fixed-top">
     <a class="navbar-brand logo" href="{{ route('frontend.index', [$subdomain]) }}">
@@ -6,8 +7,8 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
-            @if ($logged_in_user && $logged_in_user->hasRole('Seller'))
-                <li class="nav-item">{{ link_to_route('frontend.wishes.list', trans('navs.frontend.wisheslist')) }}</li>
+            @if ($logged_in_user && $logged_in_user['role'] === "Seller")
+                <li class="nav-item"><a href="{{ route('frontend.wishes.list', [$subdomain]) }}">{{ trans('navs.frontend.wisheslist') }}</a></li>
                 @if(false)
                     <li class="nav-item dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -18,7 +19,7 @@
                         <ul class="dropdown-menu" role="menu">
                             @foreach($agents as $agent)
                                 <li class="nav-item">
-                                    <a href="{{route('frontend.agents.status', $agent->id)}}" >
+                                    <a href="{{route('frontend.agents.status', ['id' =>$agent->id, 'subdomain' => $subdomain])}}" >
                                         <img class="agent-dropdown-img" src="{{ Storage::disk('s3')->url('img/agent/' . $agent->avatar) }}">
                                         <span>{{ $agent->name }}</span>
                                     </a>
@@ -29,7 +30,7 @@
                 @endif
             @endif
 
-            @if ($logged_in_user && $logged_in_user->hasRole('User'))
+            @if ($logged_in_user && $logged_in_user['role'] === "User")
             <!-- <li>{{ link_to_route('frontend.wishes.create', trans('navs.frontend.create_wish'), ['subdomain']) }}</li> -->
             @endif
 
@@ -43,25 +44,23 @@
                 <li class="dropdown nav-item">
                     <a class="dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
-                        @if ($logged_in_user->name == "Muster Name")
+                        @if ($logged_in_user['name'] == "Muster Name")
                             {{ trans('navs.frontend.user.name') }}
                         @else
-                            {{ $logged_in_user->name }}
+                            {{ $logged_in_user['name'] }}
                         @endif
                             <span class="caret"></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
-                        @if ($logged_in_user && $logged_in_user->hasRole('Seller'))
-                            {{ link_to_route('frontend.agents.index', trans('navs.frontend.agents'),'',['class'=>'dropdown-item']) }}
-                            {{ link_to_route('frontend.offers.index', trans('navs.frontend.offers'),'',['class'=>'dropdown-item']) }}
+                        @if ($logged_in_user && $logged_in_user['role'] === "Seller")
+                            <a class="dropdown-item" href="{{ route('frontend.agents.index', [$subdomain]) }}">{{ trans('navs.frontend.agents') }}</a>
+                            <a class="dropdown-item" href="{{ route('frontend.offers.index', [$subdomain]) }}">{{ trans('navs.frontend.offers') }}</a>
                         @endif
 
-                        @if ($logged_in_user && ($logged_in_user->hasRole('User') || $logged_in_user->hasRole('Executive')))
-                            {{ link_to_route('frontend.wishes.list', trans('navs.frontend.wishes'),'',['class'=>'dropdown-item']) }}
+                        @if ($logged_in_user && ($logged_in_user['role'] === "Seller" || $logged_in_user['role'] === "Executive"))
+                                <a class="dropdown-item" href="{{ route('frontend.wishes.list', [$subdomain]) }}">{{ trans('navs.frontend.wisheslist') }}</a>
                         @endif
-
-                        {{ link_to_route('frontend.user.account', trans('navs.frontend.user.account'),'',['class'=>'dropdown-item']) }}
-
+                            <a class="dropdown-item" href="{{ route('frontend.user.account', [$subdomain]) }}">{{ trans('navs.frontend.user.account') }}</a>
                     </div>
                 </li>
             @endif

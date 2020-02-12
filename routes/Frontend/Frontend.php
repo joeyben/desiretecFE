@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\URL;
 Route::get('/', 'FrontendController@index')->name('index');
 
 Route::get('show', 'FrontendController@show');
+Route::get('wish/store', 'FrontendController@store')->name('storeWish');
+
 Route::get('/getTTRegions', 'RegionsController@getTTRegions');
 Route::get('/get-all-destinations', 'FrontendController@getAllDestinations');
 Route::get('/get-all-airports', 'FrontendController@getAllAirports');
@@ -37,18 +39,18 @@ Route::group(['namespace' => 'Auth', 'as' => 'auth.'], function ($subdomain) {
 */
 Route::group(['middleware' => 'auth'], function ($subdomain) {
 
-    Route::group(['namespace' => 'Users', 'as' => 'user.'], function ($subdomain) {
+    Route::group(['namespace' => 'Users', 'as' => 'user.'], function () {
         Route::get('account', 'AccountController@index')->name('account');
         Route::put('account/update/{id}', 'AccountController@update')->name('update');
         Route::patch('account/profilepic/update', 'AccountController@updateProfilePicture')->name('profile-picture');
     });
 
-    Route::group(['namespace' => 'Comments', 'as' => 'comments.'], function ($subdomain) {
+    Route::group(['namespace' => 'Comments', 'as' => 'comments.'], function () {
         Route::get('comments', 'CommentsController@index')->name('index');
         Route::post('comment/store', 'CommentsController@store')->name('store');
     });
 
-    Route::group(['namespace' => 'Contact', 'as' => 'contact.'], function ($subdomain) {
+    Route::group(['namespace' => 'Contact', 'as' => 'contact.'], function () {
         Route::post('contact/store', 'ContactController@store')->name('store');
         Route::post('callback/store', 'ContactController@storeCallback')->name('storecallback');
     });
@@ -60,7 +62,7 @@ Route::group(['middleware' => 'auth'], function ($subdomain) {
         Route::get('messages/{id}', 'MessagesController@delete')->name('delete');
     });
 
-    Route::group(['namespace' => 'Offers', 'as' => 'offers.'], function ($subdomain) {
+    Route::group(['namespace' => 'Offers', 'as' => 'offers.'], function () {
         Route::get('offers', 'OffersController@index')->name('index');
         Route::post('offers/get', 'OffersTableController')->name('get');
         Route::get('offers/create/{id}', 'OffersController@create')->name('create');
@@ -83,11 +85,15 @@ Route::group(['middleware' => 'auth'], function ($subdomain) {
         Route::get('agents/delete/{id}', 'AgentsController@delete')->name('delete');
     });
 
-    Route::group(['namespace' => 'Wishes', 'as' => 'wishes.'], function ($subdomain) {
+    Route::group(['namespace' => 'Wishes', 'as' => 'wishes.'], function () {
         Route::get('wishlist', 'WishesController@wishList')->name('list');
         Route::get('wishes/getlist', 'WishesController@getList')->name('getlist');
-
         Route::get('wishes/{id}', 'WishesController@show')->name('wish');
         Route::post('wishes/note/update', 'WishesController@updateNote')->name('updateNote');
+    });
+
+    Route::group(['namespace' => 'Autooffers', 'as' => 'autooffer.'], function () {
+        Route::get('offer/list/{wishId}', 'AutooffersController@list')->name('list');
+        Route::get('offer/ttlist/{wishId}', 'AutooffersController@listTt')->name('listTt');
     });
 });

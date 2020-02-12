@@ -27,6 +27,7 @@ class WhitelabelMiddleware
             $whitelabel = $api->getWlInfo($subdomain_str);
             Cache::forever( 'whitelabel', $whitelabel);
         }
+        \View::share('subdomain', $request->route('subdomain'));
         return $next($request);
     }
 }

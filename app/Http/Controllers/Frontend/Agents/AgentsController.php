@@ -31,7 +31,7 @@ class AgentsController extends Controller implements AgentsControllerInterface
         $this->storage = Storage::disk('s3');
     }
 
-    public function index()
+    public function index(string $subdomain)
     {
         try {
             $response = $this->apiService->get('/agents');
@@ -50,7 +50,7 @@ class AgentsController extends Controller implements AgentsControllerInterface
         }
     }
 
-    public function create()
+    public function create(string $subdomain)
     {
         return view('frontend.agents.create')->with([
             'body_class'  => $this::BODY_CLASS,
@@ -58,7 +58,7 @@ class AgentsController extends Controller implements AgentsControllerInterface
         ]);
     }
 
-    public function store(CreateAgentsRequest $request, Agent $agent)
+    public function store(string $subdomain, CreateAgentsRequest $request, Agent $agent)
     {
         try {
             $data = $request->all();
@@ -68,7 +68,7 @@ class AgentsController extends Controller implements AgentsControllerInterface
             $response = $this->apiService->post('/agents/create', $data);
 
             return redirect()
-                ->route('frontend.agents.index')
+                ->route('frontend.agents.index', [$subdomain])
                 ->with('flash_success', trans('alerts.frontend.agents.created'));
 
         } catch (\Exception $e) {
@@ -77,7 +77,7 @@ class AgentsController extends Controller implements AgentsControllerInterface
         }
     }
 
-    public function edit(int $id)
+    public function edit(string $subdomain, int $id)
     {
         try {
             $response = $this->apiService->get('/agents' . '/' . $id);
@@ -95,7 +95,7 @@ class AgentsController extends Controller implements AgentsControllerInterface
         }
     }
 
-    public function update(int $id, UpdateAgentsRequest $request)
+    public function update(string $subdomain, int $id, UpdateAgentsRequest $request)
     {
         try {
             $data = $request->all();
@@ -107,7 +107,7 @@ class AgentsController extends Controller implements AgentsControllerInterface
             $response = $this->apiService->put('/agents/update/' . $id, $data);
 
             return redirect()
-                ->route('frontend.agents.index')
+                ->route('frontend.agents.index', [$subdomain])
                 ->with('flash_success', trans('alerts.frontend.agents.updated'));
 
         } catch (\Exception $e) {
@@ -116,13 +116,13 @@ class AgentsController extends Controller implements AgentsControllerInterface
         }
     }
 
-    public function delete($id)
+    public function delete(string $subdomain, $id)
     {
         try {
            $response = $this->apiService->delete('/agents/delete/' . $id);
 
             return redirect()
-                ->route('frontend.agents.index')
+                ->route('frontend.agents.index', [$subdomain])
                 ->with('flash_success', trans('alerts.frontend.agents.deleted'));
 
         } catch (\Exception $e) {
