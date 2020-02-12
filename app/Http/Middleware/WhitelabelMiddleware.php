@@ -19,7 +19,7 @@ class WhitelabelMiddleware
     public function handle($request, Closure $next)
     {
         $url_arr = explode('.', URL::current());
-        $subdomain_str = str_replace('https://','', $url_arr[0]);
+        $subdomain_str = str_replace(env ('API_HTTP_LOCAL', 'https://'),'', $url_arr[0]);
         $cachedWhitelabel = Cache::get( 'whitelabel' );
 
         if((!$cachedWhitelabel || strtolower($cachedWhitelabel->name) !=  $subdomain_str)){

@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html lang="{{ config('app.locale') }}">
     <head>
+        <link rel="icon" type="image/png" href="{{ getWhitelabelInfo()['attachments']['favicon'] }}">
         <title>@yield('title', app_name())</title>
 
         @yield('meta')
