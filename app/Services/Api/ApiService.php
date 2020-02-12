@@ -37,6 +37,7 @@ class ApiService implements ApiServiceInterface
     public function getWlInfo(string $name)
     {
         $result = $this->get('/whitelabel' . '/' . $name);
+
         return $result->formatResponse('object')->data;
     }
 
