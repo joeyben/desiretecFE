@@ -42,11 +42,10 @@ class AuthController extends Controller
         }
     }
 
-    public function token (TokenRequest $request, string $token)
+    public function token (TokenRequest $request)
     {
         try {
-
-            ApiAuth::byToken($token, $request->get('email'));
+            ApiAuth::byToken($request->get('token'), $request->get('email'));
 
             return redirect('/');
         } catch (\Exception $e) {
