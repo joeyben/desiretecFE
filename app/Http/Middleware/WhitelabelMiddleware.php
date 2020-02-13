@@ -6,6 +6,7 @@ use App\Services\Api\ApiService;
 use Closure;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 
 class WhitelabelMiddleware
 {
@@ -42,7 +43,7 @@ class WhitelabelMiddleware
         $parts = explode('.', URL::current());
         $subDomain = str_replace('https://','', $parts[0]);
 
-        return str_replace('http://','', $subDomain);
+        return Str::studly(str_replace('http://','', $subDomain));
     }
 
     public static function getCacheKey(string $subDomain): string
