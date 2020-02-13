@@ -141,8 +141,8 @@ a.primary-btn, input.primary-btn{
 
 #app{
   .main-container{
-	margin-top: 80px;
-	margin-bottom: 80px;
+	margin-top: 120px;
+	margin-bottom: 60px;
   }
   .btn-main{
 	width: 100%;
@@ -151,7 +151,7 @@ a.primary-btn, input.primary-btn{
   }
 }
 [v-cloak] {
-  display: none;
+  display: none !important;
 }
 .btn{
   padding: 5px 25px;
@@ -171,30 +171,30 @@ a.primary-btn, input.primary-btn{
   text-align: center;
   .arrow{
 	padding: 5px 10px;
-	margin-right: 10px;
+	margin: 0 5px;
 	@include border-radius(3px);
-	background: $steel;
-	color: white;
-	cursor:pointer;
+	color: white !important;
+	cursor: pointer;
 	&.disabled{
-	  background: #eee;
-	  color: #ccc;
-	}
-	&:hover{
-	  text-decoration:none;
+      background: #eee;
+      cursor: default;
 	}
   }
   .pagination-list{
 	display: inline-block;
-	list-style: none;
-	padding: 0;
-	margin: 0 200px;
+    margin: 0 30px;
+    width: auto;
 	li{
 	  display: inline-block;
-	  margin: 0 10px;
+	  margin: 0 5px;
 	  a{
-		cursor:pointer;
+		cursor: pointer;
 		&.is-current{
+          cursor: default;
+          padding: 2px 8px 0;
+          border-radius: 3px;
+          display: inline-block;
+          min-width: auto;
 		  color: #ddd;
 		}
 	  }
@@ -1131,4 +1131,18 @@ footer{
       }
     }
   }
+}
+
+// caret
+.caret{
+  color: #000;
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-left: 2px;
+  vertical-align: middle;
+  border-top: 4px dashed;
+  border-top: 4px solid\9;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
 }
