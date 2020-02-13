@@ -56,6 +56,10 @@
                             <a class="dropdown-item" href="{{ env('API_URL') . '/login' }}" target="_blank" >Administration</a>
                         @endif
 
+                        @if ($logged_in_user && ($logged_in_user['role'] === "Executive"))
+                            <a class="dropdown-item" href="{{ route('frontend.cache.clear', [$subdomain]) }}">Cache Clear</a>
+                        @endif
+
                         @if ($logged_in_user && $logged_in_user['role'] === "Seller")
                             <a class="dropdown-item" href="{{ route('frontend.agents.index', [$subdomain]) }}">{{ trans('navs.frontend.agents') }}</a>
                             <a class="dropdown-item" href="{{ route('frontend.offers.index', [$subdomain]) }}">{{ trans('navs.frontend.offers') }}</a>

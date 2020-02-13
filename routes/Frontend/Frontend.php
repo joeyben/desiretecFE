@@ -32,6 +32,10 @@ Route::group(['namespace' => 'Auth', 'as' => 'auth.'], function ($subdomain) {
     Route::get('api/token', 'AuthController@token')->name('api.token');
 });
 
+Route::group(['namespace' => 'Admin'], function ($subdomain) {
+    Route::get('cache/clear', 'CacheController@clear')->name('cache.clear');
+});
+
 
 /*
 * These frontend controllers require the user to be logged in
