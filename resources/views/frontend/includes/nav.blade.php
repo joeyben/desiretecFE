@@ -57,7 +57,7 @@
                         @endif
 
                         @if ($logged_in_user && ($logged_in_user['role'] === "Executive"))
-                            <a class="dropdown-item" href="{{ route('frontend.cache.clear', [$subdomain]) }}" target="_blank" >Cache Clear</a>
+                            <a class="dropdown-item" href="{{ route('frontend.cache.clear', [$subdomain]) }}">Cache Clear</a>
                         @endif
 
                         @if ($logged_in_user && $logged_in_user['role'] === "Seller")
