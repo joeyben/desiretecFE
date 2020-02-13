@@ -18,16 +18,40 @@ class WhitelabelMiddleware
      */
     public function handle($request, Closure $next)
     {
-        $url_arr = explode('.', URL::current());
-        $subdomain_str = str_replace(env('API_HTTP_LOCAL', 'https://'),'', $url_arr[0]);
-        $cachedWhitelabel = Cache::get( 'whitelabel' );
+        $subDomain = self::getSubDomain();
 
-        if((!$cachedWhitelabel || strtolower($cachedWhitelabel->name) !=  $subdomain_str)){
-            $api = resolve(ApiService::class);
-            $whitelabel = $api->getWlInfo($subdomain_str);
-            Cache::forever( 'whitelabel', $whitelabel);
+        try {
+            Cache::rememberForever(static::getCacheKey($subDomain), function () use ($subDomain) {
+                $api = resolve(ApiService::class);
+                return $api->getWlInfo($subDomain);
+            });
+        } catch (\Exception $e) {
+            echo json_decode($e->getResponse()->getBody(true)->getContents())->error->message . ' ' . URL::current() . '<br/><br/>';
+            echo 'If not contact your support info@desiretec.com';
+            die();
         }
+
+
         \View::share('subdomain', $request->route('subdomain'));
+
         return $next($request);
+    }
+
+    public static function getSubDomain(): string
+    {
+        $parts = explode('.', URL::current());
+        $subDomain = str_replace('https://','', $parts[0]);
+
+        return str_replace('http://','', $subDomain);
+    }
+
+    public static function getCacheKey(string $subDomain): string
+    {
+        return "desiretec.whitelabel.{$subDomain}";
+    }
+
+    public static function whitelabelFromCache()
+    {
+        return json_decode(json_encode(Cache::get(self::getCacheKey(self::getSubDomain()))), true);
     }
 }
