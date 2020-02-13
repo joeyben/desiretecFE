@@ -3,25 +3,13 @@
 namespace App\Http\Controllers\Frontend\Wishes;
 
 use Illuminate\Http\Request;
-//use App\Http\Requests\Frontend\Wishes\ChangeWishesStatusRequest;
 use App\Http\Requests\Wishes\ManageWishesRequest;
-//use App\Http\Requests\Frontend\Wishes\StoreWishesRequest;
-//use App\Http\Requests\Frontend\Wishes\UpdateWishesRequest;
 use App\Http\Requests\Wishes\UpdateNoteRequest;
-//use App\Models\Access\User\User;
-//use App\Models\Access\User\UserToken;
-//use App\Models\Agents\Agent;
 use App\Models\Wishes\Wish;
 use App\Http\Controllers\Controller;
 use App\Services\Api\ApiService;
 use Illuminate\Support\Facades\Log;
-//use App\Repositories\Frontend\Wishes\WishesRepository;
-//use Illuminate\Auth\AuthManager;
-//use Illuminate\Session\Store;
 use Illuminate\Support\Facades\Auth;
-//use Modules\Categories\Repositories\Contracts\CategoriesRepository;
-//use Modules\Rules\Repositories\Eloquent\EloquentRulesRepository;
-//use App\Repositories\Backend\Access\User\UserRepository;
 
 /**
  * Class WishesController.
@@ -65,24 +53,6 @@ class WishesController extends Controller
         $this->wish = $wish;
     }
 
-    /**
-     * @param \App\Http\Requests\Frontend\Wishes\ManageWishesRequest $request
-     *
-     * @return mixed
-     */
-    public function index(ManageWishesRequest $request)
-    {
-        return view('frontend.wishes.index')->with([
-            'status'     => $this->status,
-            'category'   => $this->category,
-            'catering'   => $this->catering,
-            'count'      => $this->wish->getForDataTable()->get()->where('whitelabel_id', getCurrentWhiteLabelId())->count(),
-            'wishes'     => $this->wish->getForDataTable()->get()->toArray(),
-            'body_class' => $this::BODY_CLASS,
-        ]);
-    }
-
-
     public function show(string $subdomain, int $id, ManageWishesRequest $request)
     {
         try {
@@ -101,49 +71,14 @@ class WishesController extends Controller
         }
     }
 
-    public function newWish(ManageWishesRequest $request)
-    {
-        return view('frontend.wishes.newwishes.wish')->with([
-            'body_class' => $this::BODY_CLASS,
-        ]);
-    }
-
-    public function newUserWish(ManageWishesRequest $request)
-    {
-        return view('frontend.wishes.newwishes.wish-user')->with([
-            'body_class' => $this::BODY_CLASS,
-        ]);
-    }
-
-    public function offerLink(ManageWishesRequest $request)
-    {
-        return view('frontend.wishes.newwishes.offertextlink')->with([
-            'body_class' => $this::BODY_CLASS,
-        ]);
-    }
-
-    public function offerText(ManageWishesRequest $request)
-    {
-        return view('frontend.wishes.newwishes.offerviatext')->with([
-            'body_class' => $this::BODY_CLASS,
-        ]);
-    }
-
-    public function attach(ManageWishesRequest $request)
-    {
-        return view('frontend.wishes.newwishes.attach')->with([
-            'body_class' => $this::BODY_CLASS,
-        ]);
-    }
-
     /**
      * @param \App\Http\Requests\Frontend\Wishes\ManageWishesRequest $request
      *
      * @return mixed
      */
-    public function wishList()
+    public function wishList(string $subdomain)
     {
-        return view('frontend.wishes.index')->with([
+        return view( 'frontend.wishes.index')->with([
             'status'     => $this->status,
             'category'   => $this->category,
             'catering'   => $this->catering,
@@ -157,7 +92,7 @@ class WishesController extends Controller
      *
      * @return mixed
      */
-    public function getList(Request $request)
+    public function getList(string $subdomain, Request $request)
     {
         try {
             $params['page'] = $request->get('page') ? $request->get('page') : '1';
@@ -179,7 +114,7 @@ class WishesController extends Controller
      *
      * @return mixed
      */
-    public function create(ManageWishesRequest $request)
+    public function create(string $subdomain, ManageWishesRequest $request)
     {
         return view('frontend.wishes.create')->with([
             'status'         => $this->status,
@@ -194,7 +129,7 @@ class WishesController extends Controller
      *
      * @return mixed
      */
-    public function store(StoreWishesRequest $request)
+    public function store(string $subdomain, StoreWishesRequest $request)
     {
         $this->wish->create($request->except('_token'));
 
@@ -204,114 +139,11 @@ class WishesController extends Controller
     }
 
     /**
-     * @param \App\Models\Wishes\Wish                                $wish
-     * @param \App\Http\Requests\Frontend\Wishes\ManageWishesRequest $request
-     *
-     * @return mixed
-     */
-    public function edit(Wish $wish, ManageWishesRequest $request)
-    {
-        return view('frontend.wishes.edit')->with([
-            'wish'               => $wish,
-            'status'             => $this->status,
-            'category'           => $this->category,
-            'catering'           => $this->catering,
-            'body_class'         => $this::BODY_CLASS,
-        ]);
-    }
-
-    /**
-     * @param \App\Models\Wishes\Wish                                $wish
-     * @param \App\Http\Requests\Frontend\Wishes\UpdateWishesRequest $request
-     *
-     * @return mixed
-     */
-    public function update(Wish $wish, UpdateWishesRequest $request)
-    {
-        $input = $request->all();
-
-        $this->wish->update($wish, $request->except(['_token', '_method']));
-
-        return redirect()
-            ->route('frontend.wishes.index')
-            ->with('flash_success', trans('alerts.frontend.wishes.updated'));
-    }
-
-    /**
-     * @param \App\Models\Wishes\Wish                                $wish
-     * @param \App\Http\Requests\Frontend\Wishes\ManageWishesRequest $request
-     *
-     * @return mixed
-     */
-    public function destroy(Wish $wish, ManageWishesRequest $request)
-    {
-        $this->wish->delete($wish);
-
-        return redirect()
-            ->route('admin.wishes.index')
-            ->with('flash_success', trans('alerts.frontend.wishes.deleted'));
-    }
-
-    public function validateTokenWish(Wish $wish, $token)
-    {
-        $usertoken = UserToken::where('token', $token)->firstOrFail();
-
-        $user_id = $usertoken->user_id;
-
-        $user = User::where('id', $user_id)->firstOrFail();
-
-        if ($user) {
-            Auth::login($user);
-
-            return redirect()->to('/wish/' . $wish->id);
-        }
-
-        return redirect()->to('/');
-    }
-
-    // To do: Define Auto and Manuel offer in const
-
-    /**
-     * @param \App\Models\Wishes\Wish $wish
-     *
-     * @return string
-     */
-    public function manageRules($wish)
-    {
-        $rules = $this->rules->getRuleForWhitelabel((int) (getCurrentWhiteLabelId()));
-        $offer = 0;
-        switch ($rules['type']) {
-            case 'mix':
-                $destinations = \is_array($rules['destination']) ? $rules['destination'] : [];
-                $budget_lower = $wish->budget < $rules['budget'];
-                $description_notset = !$wish->description || '' === $wish->description;
-                $destination_exists = empty($destinations) || \in_array($wish->destination, $destinations, true);
-
-                if ($budget_lower && $description_notset && $destination_exists) {
-                    $offer = 1;
-                } else {
-                    $offer = 0;
-                }
-                break;
-            case 'auto':
-                $offer = 1;
-                break;
-            case 'manuel':
-                $offer = 0;
-                break;
-            default:
-                $offer = 0;
-        }
-
-        return $offer;
-    }
-
-    /**
      * @param \App\Http\Requests\Frontend\Wishes\ChangeWishesStatusRequest $request
      *
      * @return JSON response
      */
-    public function changeWishStatus(Request $request)
+    public function changeWishStatus(string $subdomain, Request $request)
     {
         try {
             $response = $this->apiService->post('/wishes/changeWishStatus', $request->all());
@@ -327,7 +159,7 @@ class WishesController extends Controller
      *
      * @return JSON response
      */
-    public function updateNote(UpdateNoteRequest $request)
+    public function updateNote(string $subdomain, UpdateNoteRequest $request)
     {
         try {
             $response = $this->apiService->post('/wishes/note/update', $request->all());

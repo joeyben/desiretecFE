@@ -18,7 +18,7 @@ class AutooffersController extends Controller implements AutooffersControllerInt
         $this->apiService = $apiService;
     }
 
-    public function list(int $wishId)
+    public function list(string $subdomain, int $wishId)
     {
         try {
 
@@ -42,7 +42,7 @@ class AutooffersController extends Controller implements AutooffersControllerInt
         }
     }
 
-    public function listTt(int $wishId)
+    public function listTt(string $subdomain, int $wishId)
     {
         try {
 
