@@ -39,13 +39,13 @@ const app = new Vue({
         messages: '',
         user_name: '',
         filter: '',
+        total: '',
     },
 
     mounted() {
         // TODO: Move fetchWishes() into component called only in wishes/index.blade.php
         this.fetchWishes();
 
-        // Code inside $nextTick will run only after the entire view has been rendered
         this.$nextTick(function () {
             this.applyColors();
         });
@@ -53,20 +53,20 @@ const app = new Vue({
 
     methods: {
         fetchWishes() {
-            axios.get('/wishes/getlist?page=' + this.pagination.current_page+'&status=' + this.status + '&filter=' + this.filter)
+            axios.get('/wishes/getlist?page=' + this.pagination.current_page + '&status=' + this.status + '&filter=' + this.filter)
                 .then(response => {
                     this.data = response.data.data.data;
                     this.pagination = response.data.pagination;
+                    this.total = response.data.pagination.total;
                     this.$nextTick(function () {
                         this.loading = false;
-                        //$('.custom-select').selectpicker('refresh');
+                        $('.selectpicker').selectpicker('refresh');
                         this.applyColors();
                     });
-
                 }
             )
             .catch(error => {
-                    console.log(error);
+                console.log(error);
             });
         },
 
@@ -93,8 +93,6 @@ const app = new Vue({
         },
 
         applyColors() {
-            // (Milena) TODO: Use this for all views, except for the layer
-
             $('.primary-btn, .btn-primary').css({
                 'background': brandColor,
                 'border': '1px solid ' + brandColor,
@@ -113,6 +111,15 @@ const app = new Vue({
             });
             $('.wish-note i').css({
                 'color': brandColor,
+            });
+            $('.pagination .pagination-list li a').css({
+                'color': brandColor,
+            });
+            $('.pagination .pagination-list li a.is-current').css({
+                'border': '1px solid ' + brandColor,
+            });
+            $('.pagination .arrow').not(".disabled").css({
+                'background': brandColor,
             });
         },
     }
