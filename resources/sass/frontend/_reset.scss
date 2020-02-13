@@ -61,3 +61,11 @@ html {
 
   /* Remember to define your own focus styles! */
   :focus { outline: 0; }
+
+  /* Remove blue highlight on click */
+  * {
+    -webkit-tap-highlight-color: transparent;
+    &:hover {
+      outline: none !important;
+    }
+  }

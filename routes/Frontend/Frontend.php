@@ -85,14 +85,15 @@ Route::group(['middleware' => 'auth'], function ($subdomain) {
         Route::get('agents/delete/{id}', 'AgentsController@delete')->name('delete');
     });
 
-    Route::group(['namespace' => 'Wishes', 'as' => 'wishes.'], function () {
+    Route::group(['namespace' => 'Wishes', 'as' => 'wishes.'], function ($subdomain) {
         Route::get('wishlist', 'WishesController@wishList')->name('list');
         Route::get('wishes/getlist', 'WishesController@getList')->name('getlist');
         Route::get('wishes/{id}', 'WishesController@show')->name('wish');
+        Route::post('wishes/changeWishStatus', 'WishesController@changeWishStatus')->name('changeWishStatus');
         Route::post('wishes/note/update', 'WishesController@updateNote')->name('updateNote');
     });
 
-    Route::group(['namespace' => 'Autooffers', 'as' => 'autooffer.'], function () {
+    Route::group(['namespace' => 'Autooffers', 'as' => 'autooffer.'], function ($subdomain) {
         Route::get('offer/list/{wishId}', 'AutooffersController@list')->name('list');
         Route::get('offer/ttlist/{wishId}', 'AutooffersController@listTt')->name('listTt');
     });

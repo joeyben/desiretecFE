@@ -108,3 +108,9 @@
   }
 }
 
+
+// dropdown (bootstrap-select)
+.dropup .dropdown-toggle:after{
+  display: none !important;
+}
+

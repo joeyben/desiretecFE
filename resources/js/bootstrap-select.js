@@ -664,12 +664,9 @@
                 '<div class="filter-option-inner-inner"></div>' +
                 '</div> ' +
                 '</div>' +
-                (version.major === '4' ?
-                        '' :
-                        '<span class="bs-caret">' +
-                        this.options.template.caret +
-                        '</span>'
-                ) +
+                '<span class="bs-caret">' +
+                this.options.template.caret +
+                '</span>' +
                 '</button>' +
                 '<div class="' + classNames.MENU + ' ' + (version.major === '4' ? '' : classNames.SHOW) + '" role="combobox">' +
                 header +
