@@ -30,10 +30,6 @@
                 @endif
             @endif
 
-            @if ($logged_in_user && $logged_in_user['role'] === "User")
-            <!-- <li>{{ link_to_route('frontend.wishes.create', trans('navs.frontend.create_wish'), ['subdomain']) }}</li> -->
-            @endif
-
             @if (! $logged_in_user)
                 <li><a href="{{ route('frontend.auth.sendtoken', [$subdomain]) }}">{{ trans('navs.frontend.login') }}</a></li>
 
