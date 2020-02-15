@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 
 @section('title')
-    {{ ucfirst(getCurrentWhiteLabelName()) }} {{ trans('wish.list.tab_title') }}
+    {{ ucfirst(getWhitelabelInfo()['name']) }} {{ trans('wish.list.tab_title') }}
 @endsection
 
 @section('before-scripts')
@@ -31,7 +31,6 @@
                     </div>
                 @endif
             </div>
-            <hr>
             <div class="skeleton" v-if="loading"></div>
             <div class="list wishlist" v-cloak>
                 <div class="list-element" v-for="wish in data">
@@ -93,9 +92,6 @@
     <script>
         $(document).ready(function() {
             $('.selectpicker').selectpicker();
-            // $("filter-option").append('<span class="bs-caret">' +
-            // '<span class="caret"></span>' +
-            // '</span>');
         });
     </script>
 @endsection

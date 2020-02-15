@@ -17,6 +17,10 @@
     export default {
         props: ['pagination', 'offset'],
 
+        mounted() {
+            this.applyColors();
+        },
+
         methods: {
             isCurrentPage(page) {
                 return this.pagination.current_page === page;
@@ -29,7 +33,18 @@
 
                 this.pagination.current_page = page;
                 this.$emit('paginate');
-            }
+            },
+
+            applyColors() {
+                $('.pagination .pagination-list li a').css({
+                    'color': brandColor,
+                });
+                $("<style type='text/css'>" +
+                ".pagination .pagination-list li a.is-current { border: 1px solid " + brandColor + "; }" +
+                ".pagination .arrow { background: " + brandColor + "}</style>")
+                    .appendTo("head");
+            },
+
         },
 
         computed: {
