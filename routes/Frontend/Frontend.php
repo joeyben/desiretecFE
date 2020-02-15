@@ -29,7 +29,11 @@ Route::group(['namespace' => 'Auth', 'as' => 'auth.'], function ($subdomain) {
     Route::post('api/login', 'AuthController@login')->name('api.login');
     Route::get('api/logout', 'AuthController@logout')->name('api.logout');
     Route::post('api/link', 'AuthController@link')->name('api.link');
-    Route::get('api/token/{token}', 'AuthController@token')->name('api.token');
+    Route::get('api/token', 'AuthController@token')->name('api.token');
+});
+
+Route::group(['namespace' => 'Admin'], function ($subdomain) {
+    Route::get('cache/clear', 'CacheController@clear')->name('cache.clear');
 });
 
 

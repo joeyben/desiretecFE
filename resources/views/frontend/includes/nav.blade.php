@@ -30,10 +30,6 @@
                 @endif
             @endif
 
-            @if ($logged_in_user && $logged_in_user['role'] === "User")
-            <!-- <li>{{ link_to_route('frontend.wishes.create', trans('navs.frontend.create_wish'), ['subdomain']) }}</li> -->
-            @endif
-
             @if (! $logged_in_user)
                 <li><a href="{{ route('frontend.auth.sendtoken', [$subdomain]) }}">{{ trans('navs.frontend.login') }}</a></li>
 
@@ -52,6 +48,14 @@
                             <span class="caret"></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
+                        @if ($logged_in_user && ($logged_in_user['role'] === "Executive"))
+                            <a class="dropdown-item" href="{{ env('API_URL') . '/login' }}" target="_blank" >Administration</a>
+                        @endif
+
+                        @if ($logged_in_user && ($logged_in_user['role'] === "Executive"))
+                            <a class="dropdown-item" href="{{ route('frontend.cache.clear', [$subdomain]) }}">Cache Clear</a>
+                        @endif
+
                         @if ($logged_in_user && $logged_in_user['role'] === "Seller")
                             <a class="dropdown-item" href="{{ route('frontend.agents.index', [$subdomain]) }}">{{ trans('navs.frontend.agents') }}</a>
                             <a class="dropdown-item" href="{{ route('frontend.offers.index', [$subdomain]) }}">{{ trans('navs.frontend.offers') }}</a>
