@@ -24,7 +24,7 @@ class AutooffersController extends Controller implements AutooffersControllerInt
 
             $offersResponse = $this->apiService->get('/offer/list/' . $wishId);
 
-            $offers = $offersResponse->formatResponse('object')->data;
+            $offers = $offersResponse->formatResponse('array')['data'];
 
             $wishResponse = $this->apiService->get('/wishes' . '/' . $wishId);
 
@@ -48,7 +48,7 @@ class AutooffersController extends Controller implements AutooffersControllerInt
 
             $offersResponse = $this->apiService->get('/offer/list/' . $wishId);
 
-            $offers = $offersResponse->formatResponse('object')->data;
+            $offers = $offersResponse->formatResponse('array')->data;
 
             $wishResponse = $this->apiService->get('/wishes' . '/' . $wishId);
 
