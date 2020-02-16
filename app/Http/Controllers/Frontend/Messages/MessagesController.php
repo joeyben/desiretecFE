@@ -18,7 +18,7 @@ class MessagesController extends Controller implements MessagesControllerInterfa
         $this->apiService = $apiService;
     }
 
-    public function list(int $wishId, int $groupId)
+    public function list(string $subdomain, int $wishId, int $groupId)
     {
         try {
             $response = $this->apiService->get('/messages'.'/'.$wishId.'/'. $groupId);
@@ -30,7 +30,7 @@ class MessagesController extends Controller implements MessagesControllerInterfa
         }
     }
 
-    public function create(Request $request)
+    public function create(string $subdomain, Request $request)
     {
         try {
             $response = $this->apiService->post('/messages', $request->all());
@@ -41,7 +41,7 @@ class MessagesController extends Controller implements MessagesControllerInterfa
         }
     }
 
-    public function delete(int $id)
+    public function delete(string $subdomain, int $id)
     {
         try {
             $response = $this->apiService->delete('/messages'.'/'.$id);
@@ -52,7 +52,7 @@ class MessagesController extends Controller implements MessagesControllerInterfa
         }
     }
 
-    public function update(int $id, Request $request)
+    public function update(string $subdomain, int $id, Request $request)
     {
         try {
             $response = $this->apiService->put('/messages'.'/'.$id, $request->all());

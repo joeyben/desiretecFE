@@ -6,11 +6,11 @@ use Illuminate\Http\Request;
 
 Interface MessagesControllerInterface {
 
-	public function list(int $wishId, int $groupId);
+	public function list(string $subdomain, int $wishId, int $groupId);
 
-	public function create(Request $request);
+	public function create(string $subdomain, Request $request);
 
-	public function delete(int $id);
+	public function delete(string $subdomain, int $id);
 
-	public function update(int $id, Request $request);
+	public function update(string $subdomain, int $id, Request $request);
 }

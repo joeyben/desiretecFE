@@ -23,7 +23,7 @@ class AccountController extends Controller implements AccountControllerInterface
         $this->user = $user;
     }
 
-    public function index()
+    public function index(string $subdomain)
     {
         try {
             $response = $this->apiService->post('/auth' . '/me');
@@ -40,7 +40,7 @@ class AccountController extends Controller implements AccountControllerInterface
         }
     }
 
-    public function update(UpdateAccountRequest $request, int $id)
+    public function update(string $subdomain, UpdateAccountRequest $request, int $id)
     {
         try {
             $response = $this->apiService->put('/account/update/' . $id, $request->all());

@@ -52,7 +52,7 @@ class OffersController extends Controller
      *
      * @return mixed
      */
-    public function index()
+    public function index(string $subdomain)
     {
         try {
             $response = $this->apiService->get('/offers');
@@ -99,7 +99,7 @@ class OffersController extends Controller
      *
      * @return mixed
      */
-    public function store($subdomain, Request $request)
+    public function store(string $subdomain, Request $request)
     {
         try {
             $response = $this->apiService->post('/offers/store', $request->all());
@@ -118,7 +118,7 @@ class OffersController extends Controller
      *
      * @return mixed
      */
-    public function edit(Offer $offer, ManageOffersRequest $request)
+    public function edit(string $subdomain, Offer $offer, ManageOffersRequest $request)
     {
         return view('frontend.offers.edit')->with([
             'offer'               => $offer,
@@ -133,7 +133,7 @@ class OffersController extends Controller
      *
      * @return mixed
      */
-    public function update(Offer $offer, UpdateOffersRequest $request)
+    public function update(string $subdomain, Offer $offer, UpdateOffersRequest $request)
     {
         $input = $request->all();
 
@@ -150,7 +150,7 @@ class OffersController extends Controller
      *
      * @return mixed
      */
-    public function destroy(Offer $offer, ManageOffersRequest $request)
+    public function destroy(string $subdomain, Offer $offer, ManageOffersRequest $request)
     {
         $this->offer->delete($offer);
 
@@ -165,7 +165,7 @@ class OffersController extends Controller
      *
      * @return mixed
      */
-    public function getWishOffers(Wish $wish, ManageOffersRequest $request)
+    public function getWishOffers(string $subdomain, Wish $wish, ManageOffersRequest $request)
     {
         return view('frontend.offers.wishoffers')->with([
             'status'     => $this->status,
