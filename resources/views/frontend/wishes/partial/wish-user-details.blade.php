@@ -1,18 +1,16 @@
- <div class="col-md-6 s2-first">
-        <h4>Reisewunsch Angaben</h4>
-        <p>Dies sind die Angaben zum Reisewunsch.</p>
-        <p><b>Kundennachricht:</b><br>
-            {{ $wish->description }}
-        </p>
-    </div>
+@if ($logged_in_user['role'] == 'Seller')
     <note :wishid="{{ $wish->id }}" :wishnote="{{ json_encode($wish->note) }}"  :lang="{{ json_encode(trans('strings.wishdetails.memo')) }}"></note>
-
+@endif
 
 <div class="col-md-12 s2-second">
 
     <div class="col-md-3">
         <i class="fal fa-plane-departure"></i>
-        <input class="data-content" value="{{ $wish->airport }}">
+        <div id="departure-mousehover-value" class="data-content ellipsised">{{ $wish->airport }}</div>
+        <span id="departure-mousehover" class="mousehover"></span>
+        <div class="departure-tooltip tooltip">
+            {{ $wish->airport }}
+        </div>
     </div>
     <div class="col-md-3">
         <i class="fal fa-calendar-alt"></i>
@@ -29,7 +27,11 @@
 
     <div class="col-md-3">
         <i class="fal fa-plane-arrival"></i>
-        <input class="data-content" value="{{ $wish->destination }}">
+        <div id="arrival-mousehover-value" class="data-content ellipsised">{{ $wish->destination }}</div>
+        <span id="arrival-mousehover" class="mousehover"></span>
+        <div class="arrival-tooltip tooltip">
+            {{ $wish->destination }}
+        </div>
     </div>
     <div class="col-md-3">
         <i class="fal fa-users"></i>
@@ -60,7 +62,25 @@
     </div>
     <div class="col-md-3">
         <i class="fal fa-utensils"></i>
-        <input class="data-content" value="">
+        <input class="data-content" value="{{ $wish->category }}">
     </div>
-    <!--<button class="secondary-btn">Daten andern</button>-->
 </div>
+@if ($logged_in_user['role'] = 'Seller' and $wish->extra_params)
+<div class="col-md-12 s2-second">
+    <b>Weitere vom Kunden ausgewählte Parameter: </b>
+
+    <?php $count = 0; ?>
+    @foreach($wish->extra_params as $key => $params)
+
+        @if ($params && $count > 0)
+           ,
+        @endif
+
+        @if ($params)
+            {{ $params }}
+            <?php $count++; ?>
+        @endif
+
+    @endforeach
+</div>
+@endif
