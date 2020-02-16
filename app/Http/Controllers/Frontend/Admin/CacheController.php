@@ -29,6 +29,6 @@ class CacheController  extends Controller
       $this->artisan->call('config:clear');
       $this->artisan->call('view:clear');
 
-      return redirect()->back()->with(['success' => 'Der Cache wurde erfolgreich geleert']);
+      return redirect('/');
   }
 }
