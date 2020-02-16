@@ -27,46 +27,53 @@
 </template>
 
 <script>
-   export default {
-      data() {
-         return {
+    export default {
+        data() {
+            return {
             editMode: false,
             isFocused: false,
             note: '',
             placeholderText: '',
-         };
-      },
+            };
+        },
 
-      props: ['wishid', 'wishnote', 'lang'],
+        props: ['wishid', 'wishnote', 'lang'],
 
-      mounted() {
-         this.note = this.wishnote;
-         this.placeholderText = this.lang;
+        mounted() {
+            this.note = this.wishnote;
+            this.placeholderText = this.lang;
 
-         if (!this.note) {
+            if (!this.note) {
             this.editMode = true;
-         }
-      },
+            }
 
-      methods: {
-         saveNote() {
-            axios.post('/wishes/note/update', {
-               id: this.wishid,
-               note: this.note
-            }).then(function (response) {
-            })
-            .catch(function (error) {
-               console.log(error);
-            });
+        this.applyColors();
+        },
 
-            this.resetEditMode();
-         },
-         resetEditMode() {
-            this.editMode = false;
-            this.isFocused = false;
-         },
-      }
-   }
+        methods: {
+            saveNote() {
+                axios.post('/wishes/note/update', {
+                    id: this.wishid,
+                    note: this.note
+                }).then(function (response) {
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+
+                this.resetEditMode();
+            },
+            resetEditMode() {
+                this.editMode = false;
+                this.isFocused = false;
+            },
+            applyColors() {
+                $('.wish-note i').css({
+                    'color': brandColor,
+                });
+            },
+        }
+    }
 </script>
 
 <style scoped>

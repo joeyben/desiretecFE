@@ -109,18 +109,8 @@ const app = new Vue({
             $("input").blur(function(){
                 $(this).css({'border-color': 'inherit'});
             });
-            $('.wish-note i').css({
-                'color': brandColor,
-            });
-            $('.pagination .pagination-list li a').css({
-                'color': brandColor,
-            });
-            $('.pagination .pagination-list li a.is-current').css({
-                'border': '1px solid ' + brandColor,
-            });
-            $('.pagination .arrow').not(".disabled").css({
-                'background': brandColor,
-            });
+            $("<style type='text/css'>::selection { background-color: " + brandColor + "; color: #fff; }</style>")
+                .appendTo("head");
         },
     }
 });
