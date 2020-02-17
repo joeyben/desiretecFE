@@ -1,177 +1,145 @@
-// Offers Styles
-body.wish{
-  #app{
-    .main-container{
+@import "variables";
+
+body.wish {
+  #app {
+    .main-container {
       width: 100%;
       min-width: 100%;
       margin: 0;
       padding: 0;
-      .row{
+      .row {
         margin: 0;
       }
-    }
-  }
-
-
-  // Wish Page
-  .wish-container{
-    background: #fff;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 0 16px -1px rgba(0,0,0,0.1);
-    .wish{
-      display: grid;
-      grid-template-columns: 30% 70%;
-      min-height: 200px;
-      .image{
-        height: 100%;
-        background-position: center;
-        background-size: cover;
-        @include border-radius(2px);
+      .col-md-6 {
+        width: 50%;
+        float: left;
       }
-      .wish-info{
-        display: grid;
-        grid-template-columns: 60% 40%;
-        .person{
+      section {
+        padding: 30px 0;
+        border-bottom: 1px solid $gray1;
+      }
 
+      .section-top{
+        padding: 0;
+        border-bottom: none;
+        p,a{
+          font-weight: 100;
         }
-        ul{
-          list-style: none;
-          li{
-            span{
-              &.label{
-                display: inline-block;
-                color: lighten($text-color, 20%);
-                width: 100px;
-                text-align: left;
-              }
-              &.text{
-                color: $text-color;
-                &.description{
-                  font-style: italic;
-                  font-size: 12px;
-                  color: lighten($text-color, 10%);
-                }
-              }
-            }
+        .img-background{
+          height: 400px;
+          display: flex;
+          background-image: linear-gradient(to left,  rgba(250,250,250,0) 0%, rgba(250,250,250,0.4) 35%, rgba(250,250,250,0.6) 45%, rgba(250,250,250,0.9) 60%, rgba(250,250,250,1) 70%),  url(https://www.matthewwilliams-ellis.com/wp-content/uploads/2014/02/Italy-panoramic-landscape-photography-showing-Isola-Bella-Beach-in-Taormina-Sicily-Italy-panoramic-landscape-photography-by-landscape-photographer-Matthew-Williams-Ellis.jpg);
+          background-size: cover;
+          background-position: center right;
+          flex-direction: column;
+          justify-content: center;
+          @media screen and (max-width: $break-iPad) {
+            background-position: center;
+            height: auto;
+            padding: 20px 0;
+          }
+          .bg-left-content{
+            display: flex;
+            flex-direction: column;
+            align-items: baseline;
           }
         }
-      }
-    }
-  }
-
-  .offer-container{
-    background: #fff;
-    padding: 20px;
-    box-shadow: 0 0 16px -1px rgba(0,0,0,.1);
-    margin-bottom: 20px;
-    img{
-      height: 60px;
-    width: 60px;
-    object-fit: cover;
-    float: left;
-    margin-right: 20px;
-    }
-    .offer-info{
-    display: flex;
-    flex-direction: column;
-    h6{
-      margin-top: 0;
-    }
-    .title{
-      margin-bottom: 10px;
-      font-weight: bold;
-    }
-    }
-  }
-
-  .message-container{
-    background: #fff;
-    padding: 20px;
-    box-shadow: 0 0 16px -1px rgba(0,0,0,.1);
-    margin-bottom: 20px;
-    img{
-      height: 60px;
-    width: 60px;
-    object-fit: cover;
-    float: left;
-    margin-right: 20px;
-    }
-  }
-
-  .comment-container{
-    background: #fff;
-    padding: 20px;
-    box-shadow: 0 0 16px -1px rgba(0,0,0,.1);
-    margin-bottom: 20px;
-    h4{
-      padding: 0 20px;
-    }
-    .comments-list{
-
-      .comment{
-        margin-bottom: 20px;
-        padding: 20px;
-        &.user{
-          background: #f9f9f9;
-          span{
-            text-align: right;
-          }
-        }
-        &:last-child{
-          border: none;
-        }
-        .user{
-          display: block;
-          font-weight: 700;
-        }
-        .date-created{
-          display: block;
-          color: #ccc;
-          font-size: 12px;
+        h3{
+          margin-bottom: 25px;
+          font-size:30px;
+          color: #000;
         }
         p{
-          margin-top: 20px;
+          margin-bottom: 15px;
+          font-weight: 100;
+        }
+        p.header-p{
+          font-size:20px;
+        }
+        .bg-bottom{
+          margin-top:35px;
+          .c-info{
+            display: flex;
+            align-items: center;
+            a{
+              text-decoration: underline;
+            }
+          }
+          h4{
+            padding-left: 15px;
+            margin-bottom: 20px;
+          }
+          i{
+            font-size: 36px;
+            color:#ddd;
+            margin-right:10px;
+          }
+          a, span{
+            color:#636b6f;
+            font-weight: 100;
+          }
+          p{
+            font-weight: 100;
+            margin-bottom: 8px;
+          }
         }
       }
-    }
 
-    .write-comment{
-      span.label{
-        display: inline-block;
-        color: lighten($text-color, 20%);
-        width: 100px;
-        text-align: left;
-      }
-      textarea{
-        width: 100%;
-        min-height: 100px;
-        border-color: #ddd;
-      }
-      input[type=submit]{
-        width: 200px !important;
-        float: right;
-      }
-    }
-  }
-
-  #edit-wish{
-    .modal-body-left{
-      border:none;
-      .group{
-        &:first-child{
-          padding-right: 10px !important;
+      .section-comments{
+        .fa-bell{
+          margin-left: 5px;
         }
-        &:last-child{
-          padding-left: 10px !important;
+        .col-md-12{
+          padding: 0;
         }
       }
-    }
-  }
 
-  .s2-second{
-    .col-md-3{
-      float: left;
+      .section-contact {
+        p,
+        a {
+          font-weight: 100;
+        }
+        h4 {
+          margin-bottom: 5px;
+        }
+        .sc-first-p {
+          margin-bottom: 20px;
+        }
+        .s2-second {
+          margin-top: 35px;
+          display: flex;
+          flex-wrap: wrap;
+          width: 50%;
+          @media(max-width: $break-iPad) {
+            width: 100%;
+          }
+          .circle {
+            padding: 15px;
+            background: #dedede;
+            border-radius: 100%;
+            display: inline-block;
+          }
+          i {
+            font-size: 20px;
+            width: 30px;
+          }
+          .data-content {
+            padding: 0px 10px;
+            display: inline-block;
+            margin-left: 5px;
+            font-weight: 100;
+            pointer-events: none;
+            border: none;
+            background: transparent;
+            width: 100%;
+          }
+          .col-md-3 {
+            margin-bottom: 15px;
+            display: flex;
+            padding-left: 0px;
+          }
+        }
+      }
     }
   }
 }

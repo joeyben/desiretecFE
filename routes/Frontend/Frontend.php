@@ -43,7 +43,7 @@ Route::group(['namespace' => 'Admin'], function ($subdomain) {
 */
 Route::group(['middleware' => 'auth'], function ($subdomain) {
 
-    Route::group(['namespace' => 'Users', 'as' => 'user.'], function () {
+    Route::group(['namespace' => 'Users', 'as' => 'user.'], function ($subdomain) {
         Route::get('account', 'AccountController@index')->name('account');
         Route::put('account/update/{id}', 'AccountController@update')->name('update');
         Route::patch('account/profilepic/update', 'AccountController@updateProfilePicture')->name('profile-picture');
@@ -66,7 +66,7 @@ Route::group(['middleware' => 'auth'], function ($subdomain) {
         Route::get('messages/{id}', 'MessagesController@delete')->name('delete');
     });
 
-    Route::group(['namespace' => 'Offers', 'as' => 'offers.'], function () {
+    Route::group(['namespace' => 'Offers', 'as' => 'offers.'], function ($subdomain) {
         Route::get('offers', 'OffersController@index')->name('index');
         Route::post('offers/get', 'OffersTableController')->name('get');
         Route::get('offers/create/{id}', 'OffersController@create')->name('create');

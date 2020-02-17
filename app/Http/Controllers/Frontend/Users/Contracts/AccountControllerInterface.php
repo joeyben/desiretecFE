@@ -6,7 +6,7 @@ use App\Http\Requests\Users\UpdateAccountRequest;
 
 Interface AccountControllerInterface
 {
-    public function index();
+    public function index(string $subdomain);
 
-    public function update(UpdateAccountRequest $request, int $id);
+    public function update(string $subdomain, UpdateAccountRequest $request, int $id);
 }

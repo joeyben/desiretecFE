@@ -108,3 +108,47 @@ $zindex-tooltip:           1030 !default;
 $zindex-navbar-fixed:      1030 !default;
 $zindex-modal-background:  1040 !default;
 $zindex-modal:             1050 !default;
+
+// Gradients
+.gradient-grey-orange {
+  background: -webkit-linear-gradient(top, rgb(181, 198, 207) 0%, rgb(224, 184, 157) 80%, rgb(234, 181, 143) 100%);
+  background: -o-linear-gradient(top, rgb(181, 198, 207) 0%, rgb(224, 184, 157) 80%, rgb(234, 181, 143) 100%);
+  background: -ms-linear-gradient(top, rgb(181, 198, 207) 0%, rgb(224, 184, 157) 80%, rgb(234, 181, 143) 100%);
+  background: -moz-linear-gradient(top, rgb(181, 198, 207) 0%, rgb(224, 184, 157) 80%, rgb(234, 181, 143) 100%);
+  background: linear-gradient(to bottom, rgb(181, 198, 207) 0%, rgb(224, 184, 157) 80%, rgb(234, 181, 143) 100%);
+}
+.gradient-orange-grey {
+  background: -webkit-linear-gradient(271deg, rgb(255, 87, 0) 0%, rgb(185, 93, 34) 52%, rgb(103, 87, 76) 93%, rgb(73, 73, 70) 100%);
+  background: -o-linear-gradient(271deg, rgb(255, 87, 0) 0%, rgb(185, 93, 34) 52%, rgb(103, 87, 76) 93%, rgb(73, 73, 70) 100%);
+  background: -ms-linear-gradient(271deg, rgb(255, 87, 0) 0%, rgb(185, 93, 34) 52%, rgb(103, 87, 76) 93%, rgb(73, 73, 70) 100%);
+  background: -moz-linear-gradient(271deg, rgb(255, 87, 0) 0%, rgb(185, 93, 34) 52%, rgb(103, 87, 76) 93%, rgb(73, 73, 70) 100%);
+  background: linear-gradient(179deg, rgb(255, 87, 0) 0%, rgb(185, 93, 34) 52%, rgb(103, 87, 76) 93%, rgb(73, 73, 70) 100%);
+}
+.gradient-orange-green {
+  background: -webkit-linear-gradient(bottom, rgb(0, 182, 197) 0%, rgb(37, 160, 138) 31%, rgb(140, 143, 94) 51%, rgb(203, 126, 48) 71%, rgb(255, 108, 0) 92%, rgb(255, 94, 0) 100%);
+  background: -o-linear-gradient(bottom, rgb(0, 182, 197) 0%, rgb(37, 160, 138) 31%, rgb(140, 143, 94) 51%, rgb(203, 126, 48) 71%, rgb(255, 108, 0) 92%, rgb(255, 94, 0) 100%);
+  background: -ms-linear-gradient(bottom, rgb(0, 182, 197) 0%, rgb(37, 160, 138) 31%, rgb(140, 143, 94) 51%, rgb(203, 126, 48) 71%, rgb(255, 108, 0) 92%, rgb(255, 94, 0) 100%);
+  background: -moz-linear-gradient(bottom, rgb(0, 182, 197) 0%, rgb(37, 160, 138) 31%, rgb(140, 143, 94) 51%, rgb(203, 126, 48) 71%, rgb(255, 108, 0) 92%, rgb(255, 94, 0) 100%);
+  background: linear-gradient(to top, rgb(0, 182, 197) 0%, rgb(37, 160, 138) 31%, rgb(140, 143, 94) 51%, rgb(203, 126, 48) 71%, rgb(255, 108, 0) 92%, rgb(255, 94, 0) 100%);
+}
+.gradient-orange-blue {
+  background: -webkit-linear-gradient(top, rgb(255, 103, 0) 0%, rgb(210, 122, 66) 41%, rgb(128, 142, 143) 81%, rgb(67, 146, 175) 100%);
+  background: -o-linear-gradient(top, rgb(255, 103, 0) 0%, rgb(210, 122, 66) 41%, rgb(128, 142, 143) 81%, rgb(67, 146, 175) 100%);
+  background: -ms-linear-gradient(top, rgb(255, 103, 0) 0%, rgb(210, 122, 66) 41%, rgb(128, 142, 143) 81%, rgb(67, 146, 175) 100%);
+  background: -moz-linear-gradient(top, rgb(255, 103, 0) 0%, rgb(210, 122, 66) 41%, rgb(128, 142, 143) 81%, rgb(67, 146, 175) 100%);
+  background: linear-gradient(to bottom, rgb(255, 103, 0) 0%, rgb(210, 122, 66) 41%, rgb(128, 142, 143) 81%, rgb(67, 146, 175) 100%);
+}
+.gradient-blue {
+  background: -webkit-linear-gradient(top, rgb(0, 181, 197) 0%, rgb(37, 156, 181) 88%, rgb(55, 145, 174) 100%);
+  background: -o-linear-gradient(top, rgb(0, 181, 197) 0%, rgb(37, 156, 181) 88%, rgb(55, 145, 174) 100%);
+  background: -ms-linear-gradient(top, rgb(0, 181, 197) 0%, rgb(37, 156, 181) 88%, rgb(55, 145, 174) 100%);
+  background: -moz-linear-gradient(top, rgb(0, 181, 197) 0%, rgb(37, 156, 181) 88%, rgb(55, 145, 174) 100%);
+  background: linear-gradient(to bottom, rgb(0, 181, 197) 0%, rgb(37, 156, 181) 88%, rgb(55, 145, 174) 100%);
+}
+.gradient-blue-grey {
+  background: -webkit-linear-gradient(top, rgb(61, 145, 175) 0%, rgb(84, 112, 121) 61%, rgb(82, 82, 81) 100%);
+  background: -o-linear-gradient(top, rgb(61, 145, 175) 0%, rgb(84, 112, 121) 61%, rgb(82, 82, 81) 100%);
+  background: -ms-linear-gradient(top, rgb(61, 145, 175) 0%, rgb(84, 112, 121) 61%, rgb(82, 82, 81) 100%);
+  background: -moz-linear-gradient(top, rgb(61, 145, 175) 0%, rgb(84, 112, 121) 61%, rgb(82, 82, 81) 100%);
+  background: linear-gradient(to bottom, rgb(61, 145, 175) 0%, rgb(84, 112, 121) 61%, rgb(82, 82, 81) 100%);
+}
