@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="col-md-12">
+        <div class="message">
             <h4>
                 Neue Nachrichten <span class="glyphicon glyphicon-bell"></span>
             </h4>
