@@ -46,7 +46,7 @@ class AccountController extends Controller implements AccountControllerInterface
             $response = $this->apiService->put('/account/update/' . $id, $request->all());
 
             return redirect()
-                ->route('frontend.user.account')
+                ->route('frontend.user.account', [$subdomain])
                 ->with('flash_success', trans('alerts.frontend.user.updated'));
 
         } catch (\Exception $e) {
