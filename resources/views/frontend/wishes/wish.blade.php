@@ -47,7 +47,7 @@
         @endif
 
         @if ($logged_in_user['role'] = ('Seller'))
-        <p class="header-p">{!! trans('wish.view.stage.seller_empty',['date' =>
+        <p class="header-p mb-30">{!! trans('wish.view.stage.seller_empty',['date' =>
           \Carbon\Carbon::parse($wish->created_at)->format('d.m.Y')]) !!}</p>
         <a href="{{route('frontend.offers.create', ['id' => $wish->id, 'subdomain' => $subdomain])}}"
           class="primary-btn">{{ trans('buttons.wishes.frontend.create_offer')}}</a>
@@ -81,7 +81,7 @@
   <div class="container">
     <div class="col-md-12">
       <h4>
-        Neue Nachrichten <i class="fal fa-bell"></i>
+        Neue Nachrichten <i class="fal fa-bell ml-5"></i>
       </h4>
       <chat-messages :wishid="{{ $wish->id }}" :userid="{{ $logged_in_user['id'] }}" :groupid="{{ $wish->group_id }}">
       </chat-messages>
@@ -95,15 +95,13 @@
             @if ($logged_in_user['role'] == 'Seller')
                 <h4>{{ trans('wish.details.subheadline.customer_wish') }}</h4>
                 <p>{{ trans('wish.details.subheadline.customer_wish_sub') }}</p>
-                <p><b>{{ trans('wish.details.subheadline.customer_wish_description') }}</b><br>
-                    {{ $wish->description }}
-                </p>
+                <p><strong>{{ trans('wish.details.subheadline.customer_wish_description') }}</strong></p>
+                <p>{{ $wish->description }}</p>
             @else
                 <h4>{{ trans('wish.details.subheadline.your_wish') }}</h4>
                 <p>{{ trans('wish.details.subheadline.your_wish_sub') }}</p>
-                <p><b>{{ trans('wish.details.subheadline.your_wish_description') }}</b><br>
-                    {{ $wish->description }}
-                </p>
+                <p><strong>{{ trans('wish.details.subheadline.your_wish_description') }}</strong></p>
+                <p>{{ $wish->description }}</p>
             @endif
         </div>
         @include('frontend.wishes.partial.wish-user-details')

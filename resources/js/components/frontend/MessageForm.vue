@@ -1,5 +1,5 @@
 <template>
-    <div class="col-md-12 no-pd">
+    <div class="message-form">
         <textarea name="antworten" id="antworten" v-model="newMessage"></textarea>
         <input id="edit-val" style="display: none;">
         <div class="cu-cl-buttons">

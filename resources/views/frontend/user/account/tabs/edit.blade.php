@@ -1,4 +1,4 @@
-{{ Form::model($logged_in_user, ['route' => ['frontend.user.update',$logged_in_user->id], 'class' => 'form-horizontal', 'method' => 'PUT']) }}
+{{ Form::model($logged_in_user, ['route' => [ 'frontend.user.update', $subdomain, $logged_in_user['id']], 'class' => 'form-horizontal', 'method' => 'PUT']) }}
 
     <div class="form-group">
         <div class="col-md-12">

@@ -6,7 +6,7 @@
 
 @section('before-scripts')
     <script type="application/javascript">
-        var brandColor = '#000';
+        var brandColor = {!! json_encode(getWhitelabelInfo()['color']) !!};
     </script>
 @endsection
 

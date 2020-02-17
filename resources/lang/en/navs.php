@@ -42,7 +42,8 @@ return [
             'my_information'  => 'Meine Informationen',
             'profile'         => 'Profil',
             'agents'          => 'Agenten',
-            'name'            => 'Ich'
+            'name'            => 'Ich',
+            'update_profile'  => 'Profil ändern'
         ],
 
     ]
