@@ -45,7 +45,7 @@ class LoginController extends Controller
         if (access()->allow('view-backend')) {
             return route('admin.dashboard');
         } elseif (access()->user()->hasRole('Seller')) {
-            return route('frontend.wishes.list');
+            return route('frontend.wishes.list', [$subdomain]);
         }
 
         return route('frontend.index');
