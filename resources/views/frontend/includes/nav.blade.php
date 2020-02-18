@@ -7,21 +7,21 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
-            @if ($logged_in_user && $logged_in_user['role'] === "Seller")
+            @if ($logged_in_user && $logged_in_user['isSeller'])
                 <li class="nav-item"><a href="{{ route('frontend.wishes.list', [$subdomain]) }}">{{ trans('navs.frontend.wisheslist') }}</a></li>
-                @if(false)
+                @if($currentAgent)
                     <li class="nav-item dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            {{ $logged_agent}}
-                            <img class="agent-menu-img" src="{{ Storage::disk('s3')->url('img/agent/' . $logged_avatar) }}">
+                            <img class="agent-menu-img" src="{{ Storage::disk('s3')->url('img/agent/' . $currentAgent['avatar']) }}">
+                            <span>{{ $currentAgent['name'] }}</span>
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             @foreach($agents as $agent)
                                 <li class="nav-item">
-                                    <a href="{{route('frontend.agents.status', ['id' =>$agent->id, 'subdomain' => $subdomain])}}" >
-                                        <img class="agent-dropdown-img" src="{{ Storage::disk('s3')->url('img/agent/' . $agent->avatar) }}">
-                                        <span>{{ $agent->name }}</span>
+                                    <a href="{{ route('frontend.agents.switch', ['id' => $agent['id'], 'subdomain' => $subdomain]) }}" >
+                                        <img class="agent-dropdown-img" src="{{ Storage::disk('s3')->url('img/agent/' . $agent['avatar']) }}">
+                                        <span>{{ $agent['name'] }}</span>
                                     </a>
                                 </li>
                             @endforeach
