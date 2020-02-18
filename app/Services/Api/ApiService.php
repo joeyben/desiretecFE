@@ -5,6 +5,7 @@ namespace App\Services\Api;
 use GuzzleHttp;
 use GuzzleHttp\Client;
 use App\Services\Contracts\ApiServiceInterface;
+use GuzzleHttp\Cookie\CookieJar;
 
 class ApiService implements ApiServiceInterface
 {
@@ -24,10 +25,11 @@ class ApiService implements ApiServiceInterface
         $this->client = new Client();
         $this->setHeader('Content-type', 'application/json');
         $this->setAuthorization(resolve('token'));
+        $this->setHeader('c-agent', session()->get('c-agent', null));
         $this->getWlInfo('tui');
     }
 
-    public function setHeader(string $key, string $value): self
+    public function setHeader(string $key, string $value = null): self
     {
         $this->headers[$key] = $value;
 
@@ -55,6 +57,7 @@ class ApiService implements ApiServiceInterface
     public function get(string $endpoint, array $data = [])
     {
         $this->setAuthorization(resolve('token'));
+        $this->setHeader('c-agent', session()->get('c-agent', null));
 
         $this->response = $this->client->get($this->apiUrl . $endpoint . '?' . http_build_query($data),
             [
@@ -68,6 +71,7 @@ class ApiService implements ApiServiceInterface
     public function post(string $endpoint, array $data = [])
     {
         $this->setAuthorization(resolve('token'));
+        $this->setHeader('c-agent', session()->get('c-agent', null));
 
         $this->response = $this->client->post($this->apiUrl . $endpoint,
             [
@@ -82,6 +86,7 @@ class ApiService implements ApiServiceInterface
     public function put(string $endpoint, array $data)
     {
         $this->setAuthorization(resolve('token'));
+        $this->setHeader('c-agent', session()->get('c-agent', null));
 
         $this->response = $this->client->put($this->apiUrl . $endpoint,
             [
@@ -96,6 +101,7 @@ class ApiService implements ApiServiceInterface
     public function delete(string $endpoint)
     {
         $this->setAuthorization(resolve('token'));
+        $this->setHeader('c-agent', session()->get('c-agent', null));
 
         $this->response = $this->client->delete($this->apiUrl . $endpoint,
             [

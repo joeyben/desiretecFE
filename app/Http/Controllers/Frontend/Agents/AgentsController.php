@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend\Agents;
 
+use App\ApiUser;
 use App\Http\Controllers\Frontend\Agents\Contracts\AgentsControllerInterface;
 use App\Http\Requests\Agents\UpdateAgentsRequest;
 use App\Http\Requests\Agents\CreateAgentsRequest;
@@ -48,6 +49,19 @@ class AgentsController extends Controller implements AgentsControllerInterface
             Log::error($e);
             return redirect()->back()->withErrors(['message' => $e->getMessage()]);
         }
+    }
+
+    public function switch(string $subdomain, int $id)
+    {
+        foreach (resolve('user')->user['agents'] as $agent) {
+            if ((int)$agent['id'] === $id) {
+                session()->put('c-agent', $id);
+                session()->put('currentAgent', $agent);
+            }
+        }
+
+
+        return redirect()->back();
     }
 
     public function create(string $subdomain)
