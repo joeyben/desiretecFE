@@ -40,7 +40,8 @@ deploy-development:
   image: pstauffer/curl
   only:
     - development
-  when: manual
+  variables:
+    GIT_STRATEGY: none
   script:
     - RESP=$(curl -X POST ${STAGE_SERVICE_WEBHOOK_APP})
     - if echo $RESP | grep -q ‘err’; then exit 1; fi
@@ -52,7 +53,8 @@ deploy-master:
   image: pstauffer/curl
   only:
     - master
-  when: manual
+  variables:
+    GIT_STRATEGY: none
   script:
     - RESP=$(curl -X POST ${PROD_SERVICE_WEBHOOK_APP})
     - if echo $RESP | grep -q ‘err’; then exit 1; fi
