@@ -139,7 +139,6 @@ class FrontendController extends Controller
      */
     public function show()
     {
-        dd("here");
         $html = view('frontend.whitelabel.layer')->with([
             'color'        => $this::COLOR,
             'adults_arr'   => $this::ADULTS_ARR,
@@ -185,7 +184,6 @@ class FrontendController extends Controller
         $data['whitelabel_id'] = getWhitelabelInfo()['id'];
         $data['title'] = "&nbsp;";
         $response = $this->apiService->get('/wish/store', $data);
-        dd($response);
         $html = view('frontend.whitelabel.created')->render();
 
         return response()->json(['success' => true, 'html'=>$html]);
