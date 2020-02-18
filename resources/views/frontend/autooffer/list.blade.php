@@ -217,7 +217,7 @@
                                         @for ($i = 0; $i < 3; $i++)
                                         <li>
                                             <i class="fal fa-check"></i>
-                                            <h4 class="dark-grey">{{ getKeywordText($offer['data']['hotelOffer']['hotel']['keywordList'][$i]) }}</h4>
+                                            <h4 class="dark-grey">{{ $offer['data']['hotelOffer']['hotel']['keywordHighlights'][$i] }}</h4>
                                         </li>
                                         @endfor
                                     </ul>
