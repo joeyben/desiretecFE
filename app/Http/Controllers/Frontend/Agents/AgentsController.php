@@ -56,7 +56,13 @@ class AgentsController extends Controller implements AgentsControllerInterface
 
     public function switch(string $subdomain, int $id)
     {
-        foreach (resolve('user')->user['agents'] as $agent) {
+        $agentsForSeller = session()->get('agents');
+
+        if (!session()->has('agents')) {
+            $agentsForSeller = resolve('user')->user['agents'];
+        }
+
+        foreach ($agentsForSeller as $agent) {
             if ((int)$agent['id'] === $id) {
                 session()->put('c-agent', $id);
                 session()->put('currentAgent', $agent);
