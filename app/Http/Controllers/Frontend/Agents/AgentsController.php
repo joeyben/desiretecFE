@@ -39,12 +39,15 @@ class AgentsController extends Controller implements AgentsControllerInterface
 
             $agents = $response->formatResponse('object')->data;
 
+            session()->put('agents', $b = array_map(function ($agent) {
+                return json_decode(json_encode($agent), true);;
+            }, $agents));
+
             return view('frontend.agents.index')->with([
                 'body_class'    => $this::BODY_CLASS,
                 'avatar_path'   => $this->storage->url('img/agent/'),
                 'agents'        => $agents,
             ]);
-
         } catch (\Exception $e) {
             Log::error($e);
             return redirect()->back()->withErrors(['message' => $e->getMessage()]);

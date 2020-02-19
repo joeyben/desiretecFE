@@ -19,7 +19,7 @@ class GlobalComposer
     {
         $id = Auth::id();
         $currentAgent = session()->get('currentAgent');
-        $agents = [];
+        $agentsForSeller = session()->get('agents');
 
         $user = \Illuminate\Support\Facades\Auth::guard('web')->user() ? \Illuminate\Support\Facades\Auth::guard('web')->user()->user : null;
 
@@ -27,10 +27,10 @@ class GlobalComposer
             $currentAgent = $user['currentAgent'];
         }
 
-        if ($user && $user['isSeller']) {
-            $agents = $user['agents'];
+        if ($user && $user['isSeller'] && !session()->has('agents')) {
+            $agentsForSeller = $user['agents'];
         }
 
-        $view->with(['logged_in_user' => $user, 'currentAgent' => $currentAgent, 'agents' => $agents]);
+        $view->with(['logged_in_user' => $user, 'currentAgent' => $currentAgent, 'agentsForSeller' => $agentsForSeller]);
     }
 }
