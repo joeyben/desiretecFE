@@ -17,7 +17,7 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            @foreach($agents as $agent)
+                            @foreach($agentsForSeller as $agent)
                                 <li class="nav-item">
                                     <a href="{{ route('frontend.agents.switch', ['id' => $agent['id'], 'subdomain' => $subdomain]) }}" >
                                         <img class="agent-dropdown-img" src="{{ Storage::disk('s3')->url('img/agent/' . $agent['avatar']) }}">
