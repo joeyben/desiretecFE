@@ -159,6 +159,9 @@
                             $locations = [];
                         @endphp
                         @foreach($offers as $key => $offer)
+                            @if (!isset($offer['hotel_data']['hotel']))
+                                @continue
+                            @endif
                             @php
                                 $hotelData = [
                                     'title' => $offer['hotel_data']['hotel']['name'],
