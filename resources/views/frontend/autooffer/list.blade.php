@@ -241,9 +241,7 @@
 
                                         $kids = $wish->ages ? "&children=".$wish->ages : "";
 
-                                        <!-- $wlAutooffer = getWhitelabelAutooffers();
-                                        $tourOperators = $wlAutooffer['tourOperators']; -->
-                                        $tourOperators = 'HARDCODED';
+                                        $tourOperators = getWhitelabelInfo()['tourOperators'];
                                         $duration = (int)$offer['data']['travelDate']['duration'] - 1;
                                     @endphp
                                     @if (getWhitelabelInfo()['id'] === 159)
