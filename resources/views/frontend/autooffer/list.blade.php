@@ -224,7 +224,7 @@
 
                                     <div class="travel-info">
                                         <h4>{{ $offer['data']['hotelOffer']['boardType']['name'] }}</h4>
-                                        <h4 data-toggle="tooltip" data-placement="bottom" title="{{ $offer['data']['serviceOffer']['description'] }}">{{ $offer['data']['travelDate']['duration'] }} Tage, {{ str_limit($offer['data']['serviceOffer']['description'], 20, "...") }}</h4>
+                                        <h4 data-toggle="tooltip" data-placement="bottom" title="{{ $offer['data']['serviceOffer']['description'] }}">{{ $offer['data']['travelDate']['duration'] }} Tage, {{ \Illuminate\Support\Str::limit($offer['data']['serviceOffer']['description'], 20, "...") }}</h4>
                                     </div>
                                 </div>
 
