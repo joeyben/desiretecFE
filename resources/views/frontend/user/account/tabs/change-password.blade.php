@@ -1,4 +1,4 @@
-{{ Form::open(['route' => ['frontend.auth.password.change', $subdomain], 'class' => 'form-horizontal', 'method' => 'patch']) }}
+{{ Form::open(['route' => ['frontend.user.changePassword', $subdomain], 'class' => 'form-horizontal', 'method' => 'put']) }}
 
     <div class="form-group">
         <div class="col-md-12">
