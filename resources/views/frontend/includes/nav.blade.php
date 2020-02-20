@@ -1,6 +1,6 @@
 
 <!--Navbar -->
-<nav class="mb-1 navbar navbar-expand-lg navbar-light info-color fixed-top">
+<nav class="header navbar navbar-expand-lg navbar-light info-color fixed-top mb-1">
     <a class="navbar-brand logo" href="{{ route('frontend.index', [$subdomain]) }}">
         <img class="" src="{{ getWhitelabelInfo()['attachments']['logo'] }}">
     </a>

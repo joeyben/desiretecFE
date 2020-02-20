@@ -13,7 +13,7 @@
   -ms-flex-align: center;
   align-items: center;
 }
-.navbar-light {
+.header {
   .nav-item {
     padding: 0 15px;
     position: relative;
@@ -47,40 +47,42 @@
     }
   }
 }
-.dropdown-toggle {
-  &:after {
-    font-family: inherit;
-    display: none;
-    border: 0;
-    vertical-align: middle;
-    font-size: 0.6875rem;
-    margin-left: 0.46875rem;
-    line-height: 1;
-    position: relative;
-    content: "\E9C9";
-  }
-}
-.dropdown-menu {
-  min-width: 180px;
-  top: 30px;
-}
-.dropdown-menu-agent {
-  .nav-item {
+.dropdown {
+  .dropdown-toggle {
     &:after {
-      content: none;
+      font-family: inherit;
+      display: none;
+      border: 0;
+      vertical-align: middle;
+      font-size: 0.6875rem;
+      margin-left: 0.46875rem;
+      line-height: 1;
+      position: relative;
+      content: "\E9C9";
     }
-    a {
-      display: flex;
-      align-items: center;
-      width: 100%;
-      padding: 5px 0;
-    }
-    .agent-dropdown-img {
-      margin-right: 10px;
-    }
-    .agent-menu-img {
-      float: left;
-      margin-right: 10px;
+  }
+  .agent-menu-img {
+    float: left;
+    margin-right: 10px;
+  }
+  .dropdown-menu {
+    min-width: 180px;
+    top: 30px;
+  }
+  .dropdown-menu-agent {
+    .nav-item {
+      &:after {
+        content: none;
+      }
+      a {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: 5px 0;
+      }
+      .agent-dropdown-img {
+        margin-right: 10px;
+      }
     }
   }
 }
