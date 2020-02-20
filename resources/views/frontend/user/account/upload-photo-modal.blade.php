@@ -9,7 +9,7 @@
         <h4 class="modal-title">Select from Avtars or upload your photo</h4>
       </div>
       <div class="modal-body">
-        {{ Form::open($logged_in_user, ['route' => [ 'frontend.user.profile-picture', $subdomain, 'files' => true]]) }}
+        {{ Form::open(['route' => [ 'frontend.user.profile-picture', $subdomain, 'files' => true]]) }}
         <div class="form-group">
           <label for="profile_pic">
             <img src="{{url('/').'/img/frontend/profile-picture/pic-1.png'}}" height=80 width=80>
