@@ -241,11 +241,12 @@
 
                                         $kids = $wish->ages ? "&children=".$wish->ages : "";
 
-                                        $wlAutooffer = getWhitelabelAutooffers();
-                                        $tourOperators = $wlAutooffer['tourOperators'];
+                                        <!-- $wlAutooffer = getWhitelabelAutooffers();
+                                        $tourOperators = $wlAutooffer['tourOperators']; -->
+                                        $tourOperators = 'HARDCODED';
                                         $duration = (int)$offer['data']['travelDate']['duration'] - 1;
                                     @endphp
-                                    @if (getCurrentWhiteLabelId() === 159)
+                                    @if (getWhitelabelInfo()['id'] === 159)
                                         <a class="btn btn-primary" target="_blank" href="https://ibe.traffics.de/1100000160000000/pauschalreise/angebote?giataIdList={{ $offer['hotel_data']['hotel']['giata']['hotelId'] }}&tourOperator={{ $offer['hotel_data']['hotel']['tourOperator']['code'] }}&roomTypeList=&minPricePerPerson={{ $offer['data']['personPrice']['value'] }}&searchDate={{ $hin }}%2C{{ $zu }}%2C{{ $duration }}&minBoardType={{ $offer['data']['hotelOffer']['boardType']['code'] }}&inclusiveList=&adults={{ $wish->adults }}{{ $kids }}&departureAirportList={{ $offer['data']['flightOffer']['flight']['departureAirport']['code'] }}&destinationName={{ $wish->destination }}&regionList={{ $offer['data']['hotelOffer']['hotel']['location']['region']['code'] }}&ref=desiretec">
                                             <i class="fas fa-chevron-right"></i>
                                         </a>
