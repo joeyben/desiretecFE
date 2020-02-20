@@ -3,7 +3,7 @@
         <div class="chat-messages" :id="message.id" v-for="message in messages" :key="message.id">
             <div v-bind:class="[userid == message.user_id ?  'cu-img-right' : 'cu-img-left']">
                 <img v-if="message.avatar" :src="message.avatar">
-                <img v-else :src="'/img/frontend/profile-picture/user.png'">
+                <img v-else :src="'/img/user.png'">
             </div>
 
             <confirmation-modal v-on:confirm="updateMessages" :id="message.id"></confirmation-modal>
