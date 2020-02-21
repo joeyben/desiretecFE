@@ -5,8 +5,7 @@
 @endsection
 
 @section("after-styles")
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/jquery.slick/1.5.5/slick.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/jquery.slick/1.5.5/slick-theme.css" />
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 @endsection
 
 @section('content')
@@ -159,6 +158,9 @@
                             $locations = [];
                         @endphp
                         @foreach($offers as $key => $offer)
+                            @if (!isset($offer['hotel_data']['hotel']))
+                                @continue
+                            @endif
                             @php
                                 $hotelData = [
                                     'title' => $offer['hotel_data']['hotel']['name'],
@@ -271,31 +273,14 @@
 @endsection
 
 @section('after-scripts')
-
-    <!-- jquery -->
-    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAE60OtWg7HL-wqOpGHcRGAD6HpYzAh6t4"></script>
-
-    <!-- sllick slider -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.slick/1.5.5/slick.min.js"></script>
-
 
     <script type="application/javascript">
 
         $(document).ready(function(){
             var brandColor = {!! json_encode(getCurrentWhiteLabelColor()) !!};
 
-            $('.btn-primary').css({
-                'background': brandColor,
-                'border': '1px solid ' + brandColor,
-                'color': '#fff',
-            });
-            $('.btn-secondary').css({
-                'background': '#fff',
-                'border': '1px solid ' + brandColor,
-                'color': brandColor,
-            });
             $('.about-section h3 a').css({'color': brandColor});
             $('.listed-offers-section .vertical-line').css({'background-color': brandColor});
             $('.fas.fa-heart, .fal.fa-check, .offers .fulfill span, .fas.fa-map-marker-alt, .offers .slick-slider i').css({'color': brandColor});
@@ -338,6 +323,7 @@
         });
 
     </script>
+
     @if (count($offers) > 0)
     <script>
         var locations = JSON.parse('{!! json_encode($locations) !!}');
