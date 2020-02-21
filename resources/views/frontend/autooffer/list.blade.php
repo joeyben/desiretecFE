@@ -279,7 +279,7 @@
     <script type="application/javascript">
 
         $(document).ready(function(){
-            var brandColor = {!! json_encode(getCurrentWhiteLabelColor()) !!};
+            var brandColor = {!! json_encode(getWhitelabelInfo()['color']) !!};
 
             $('.about-section h3 a').css({'color': brandColor});
             $('.listed-offers-section .vertical-line').css({'background-color': brandColor});
@@ -290,11 +290,18 @@
             if($('.offers .info-icons').length === 0) {
                 $('.offers .highlights').css({'padding-bottom': '15px'});
             }
-        });
 
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
-        })
+            $('.slick-slider').slick({
+                dots: false,
+                infinite: true,
+                speed: 300,
+                slidesToShow: 1,
+                prevArrow: '<div class="btn arrow-left"><i class="fa fa-chevron-left"></i></div>',
+                nextArrow: '<div class="btn arrow-right"><i class="fa fa-chevron-right"></i></div>'
+            });
+
+            $('[data-toggle="tooltip"]').tooltip();
+        });
 
         function scrollToAnchor(id) {
             $('html, body').animate({
@@ -306,21 +313,7 @@
             $('#offer-highlights').detach().appendTo('#main-offer-section-shell');
             $('#offer-highlights').css('height', '210px');
             $('#offer-highlights').toggle();
-
-            // TODO: Fix animation
-            // $('#offer-highlights').animate({
-            //     height: '180px'
-            // }, 500);
         }
-
-        $('.slick-slider').slick({
-            dots: false,
-            infinite: true,
-            speed: 300,
-            slidesToShow: 1,
-            prevArrow: '<div class="btn arrow-left"><i class="fa fa-chevron-left"></i></div>',
-            nextArrow: '<div class="btn arrow-right"><i class="fa fa-chevron-right"></i></div>'
-        });
 
     </script>
 
