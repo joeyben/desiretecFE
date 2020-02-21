@@ -58,17 +58,15 @@
                     @foreach($agents as $agent)
                         <tr>
                             <td>
-                                <img src="{{ $avatar_path . $agent->avatar }}"/>
+                                <img src="{{ Storage::disk('s3')->url('img/agent/' . $agent->avatar) }}"/>
                             </td>
                             <td>{{ $agent->id }}</td>
                             <td>{{ $agent->name }}</td>
                             <td>{{ $agent->created_at }}</td>
                             <td>
-
                                 <a class="" href="{{ route('frontend.agents.edit', [$subdomain, $agent->id]) }}">{{ trans('labels.agents.edit') }}</a>
                                 <span> / </span>
                                 <a class="" href="{{ route('frontend.agents.delete', [$subdomain, $agent->id]) }}">{{ trans('labels.agents.delete') }}</a>
-
                             </td>
                         </tr>
                     @endforeach

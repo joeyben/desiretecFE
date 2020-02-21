@@ -12,7 +12,6 @@
 
 @section('content')
     <div class="row">
-        @include('includes.alert')
         <div class="col-md-12 col-sm-12 col-xs-12 d-flex justify-content-center">
 
             <div class="card col-md-6">

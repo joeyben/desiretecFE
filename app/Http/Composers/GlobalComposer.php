@@ -18,7 +18,19 @@ class GlobalComposer
     public function compose(View $view)
     {
         $id = Auth::id();
+        $currentAgent = session()->get('currentAgent');
+        $agentsForSeller = session()->get('agents');
+
         $user = \Illuminate\Support\Facades\Auth::guard('web')->user() ? \Illuminate\Support\Facades\Auth::guard('web')->user()->user : null;
-        $view->with(['logged_in_user' => $user]);
+
+        if ($user && $user['isSeller'] && !session()->has('currentAgent')) {
+            $currentAgent = $user['currentAgent'];
+        }
+
+        if ($user && $user['isSeller'] && !session()->has('agents')) {
+            $agentsForSeller = $user['agents'];
+        }
+
+        $view->with(['logged_in_user' => $user, 'currentAgent' => $currentAgent, 'agentsForSeller' => $agentsForSeller]);
     }
 }

@@ -46,6 +46,7 @@ Route::group(['middleware' => 'auth'], function ($subdomain) {
     Route::group(['namespace' => 'Users', 'as' => 'user.'], function ($subdomain) {
         Route::get('account', 'AccountController@index')->name('account');
         Route::put('account/update/{id}', 'AccountController@update')->name('update');
+        Route::put('account/changePassword', 'AccountController@changePassword')->name('changePassword');
         Route::patch('account/profilepic/update', 'AccountController@updateProfilePicture')->name('profile-picture');
     });
 
@@ -81,6 +82,7 @@ Route::group(['middleware' => 'auth'], function ($subdomain) {
 
     Route::group(['namespace' => 'Agents', 'as' => 'agents.'], function ($subdomain) {
         Route::get('agents', 'AgentsController@index')->name('index');
+        Route::get('agent/switch/{id}', 'AgentsController@switch')->name('switch');
         Route::get('agent/profile', 'AgentsController@profile')->name('profile');
         Route::get('agents/create', 'AgentsController@create')->name('create');
         Route::post('agents/store', 'AgentsController@store')->name('store');

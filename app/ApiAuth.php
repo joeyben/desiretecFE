@@ -50,7 +50,8 @@ class ApiAuth
             $response = $client->post(env('API_URL', 'https://mvp.desiretec.com') . '/api/v1/auth/me',
                 [
                     'headers' => [
-                        'Authorization' => 'Bearer ' . $token
+                        'Authorization' => 'Bearer ' . $token,
+                        'c-agent' => session()->get('c-agent', null)
                     ]
                 ]
             );
@@ -131,7 +132,8 @@ class ApiAuth
         $response = $client->post(env('API_URL', 'https://mvp.desiretec.com') . '/api/v1/auth/me',
             [
                 'headers' => [
-                    'Authorization' => 'Bearer ' . $token
+                    'Authorization' => 'Bearer ' . $token,
+                    'c-agent' => session()->get('c-agent', null)
                 ]
             ]
         );
