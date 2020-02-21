@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\Frontend\Pages\PagesRepository;
 use App\Services\Api\ApiService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Modules\Translations\Entities\Translation;
 use Spatie\TranslationLoader\LanguageLine;
 use App\Http\Requests\Wishes\StoreWishesRequest;
@@ -252,9 +253,14 @@ class FrontendController extends Controller
      */
     public function showTnb()
     {
-        $response = $this->apiService->get('/tnb', ['id' => getWhitelabelInfo()['id']]);
-        $tnb = $response->formatResponse('array')['data'];
+        try{
+            $response = $this->apiService->get('/tnb', ['id' => getWhitelabelInfo()['id']]);
+            $tnb = $response->formatResponse('array')['data'];
 
-        return view('frontend.tnb.tnb', compact(['tnb']));
+            return view('frontend.tnb.tnb', compact(['tnb']));
+        } catch (\Exception $e) {
+            Log::error($e);
+            return redirect()->back()->withErrors(['message' => $e->getMessage()]);
+        }
     }
 }
