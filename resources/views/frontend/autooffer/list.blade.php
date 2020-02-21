@@ -272,6 +272,12 @@
     </main>
 @endsection
 
+@section('before-scripts')
+    <script type="application/javascript">
+        var brandColor = {!! json_encode(getWhitelabelInfo()['color']) !!};
+    </script>
+@endsection
+
 @section('after-scripts')
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAE60OtWg7HL-wqOpGHcRGAD6HpYzAh6t4"></script>
@@ -279,8 +285,6 @@
     <script type="application/javascript">
 
         $(document).ready(function(){
-            var brandColor = {!! json_encode(getWhitelabelInfo()['color']) !!};
-
             $('.about-section h3 a').css({'color': brandColor});
             $('.listed-offers-section .vertical-line').css({'background-color': brandColor});
             $('.fas.fa-heart, .fal.fa-check, .offers .fulfill span, .fas.fa-map-marker-alt, .offers .slick-slider i').css({'color': brandColor});
