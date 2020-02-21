@@ -252,6 +252,9 @@ class FrontendController extends Controller
      */
     public function showTnb()
     {
-        return view('frontend.tnb.tnb');
+        $response = $this->apiService->get('/tnb', ['id' => getWhitelabelInfo()['id']]);
+        $tnb = $response->formatResponse('array')['data'];
+
+        return view('frontend.tnb.tnb', compact(['tnb']));
     }
 }
