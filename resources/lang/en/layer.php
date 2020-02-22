@@ -42,7 +42,7 @@ return [
         'budget'           => 'Gesamtpreis',
         'category'         => 'Hotelkategorie',
         'catering'         => 'Verpflegung (mind.)',
-        'duration'         => 'Bitte auswählen',
+        'duration'         => 'Beliebig',
         'email'            => 'max.mustermann@urlaub.de',
         'name'             => 'Name',
     ],
