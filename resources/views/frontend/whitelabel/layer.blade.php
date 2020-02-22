@@ -14,7 +14,7 @@
 {{ Form::open() }}
 
 <div class="kwp-middle">
-    Unsere besten Reiseberater helfen Dir gerne, Deine persönliche Traumreise zu finden. Probiere es einfach aus!
+    Unsere besten Reiseberater helfen ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus!
 </div>
 <div class="kwp-minimal">
     <div class="kwp-content kwp-with-expansion">
@@ -214,6 +214,10 @@
         dt.applyBrandColor();
         dt.adjustResponsive();
         dt.autocomplete();
+
+        if($('.kwp-close-button .fa-times').lenght == 0) {
+            $('.kwp-close-button').append('<i class="fal fa-times"></i>');
+        }
 
         $("#earliest_start, #latest_return").on('change paste keyup input', function(){
             var earliest_start_arr = $("#earliest_start").val().split('.');
@@ -425,10 +429,6 @@
             check_button();
         });
         $("#latest_return").trigger("change");
-    });
-
-    $(window).on('resize', function() {
-        dt.adjustResponsive();
     });
 
     function check_button(){
