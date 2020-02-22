@@ -54,9 +54,6 @@ mix.setPublicPath('public')
     ], 'public/js/layer.js')
     //Frontend css
     .sass('resources/sass/frontend/app.scss', 'public/css/frontend.css')
-    .styles([
-        'public/css/plugin/datatables/jquery.dataTables.min.css',
-    ], 'public/css/frontend-custom.css')
     //Layer css
     .sass('resources/sass/frontend/layer/_datepicker.scss', 'public/css/layer/datepicker.css')
     .sass('resources/sass/frontend/layer/_bootstrap-tagsinput.scss', 'public/css/layer/bootstrap-tagsinput.css')
