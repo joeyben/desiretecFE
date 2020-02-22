@@ -67,28 +67,33 @@ $gutter: 30px;
   overflow-y: scroll;
   width: 100%;
   height: 100%;
-  top: 0;
   z-index: $zindex-modal;
-
   font-size: 14px;
   line-height: 19px;
+  top: 0;
+  opacity: 1;
+  transition: all 0.2s ease;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  margin: 0;
+
 
   ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
 	color: #dedede !important;
 	opacity: 1; /* Firefox */
   }
-
   :-ms-input-placeholder { /* Internet Explorer 10-11 */
 	color: #dedede !important;
   }
-
   ::-ms-input-placeholder { /* Microsoft Edge */
 	color: #dedede !important;
   }
 
-  textarea:focus, input:focus{
-	outline: none !important;
-	box-shadow: none;
+  .hidden {
+    display: none !important;
+  }
+  input:focus {
+    outline:none !important;
   }
 
   .teaser{
@@ -474,17 +479,6 @@ ul.kwp-form-errors {
   top: -22px;
 }
 
-.kwp-logo {
-  display: block;
-  height: 50px;
-  /*******/
-  position: absolute;
-  width: 30%;
-  left: 20px;
-  top: 20px;
-  background-size: contain !important;
-}
-
 .kwp-content, .kwp-content-extra-inner {
   padding: 15px $gutter;
 }
@@ -494,28 +488,53 @@ ul.kwp-form-errors {
   position:relative;
 }
 
-.kwp-header-content {
-  margin-top: 65px;
-
-  p {
-	margin: 10px 0 0 0;
-	color: #818181;
-	font-size: 17px;
-	font-weight: 400;
-	width: 445px;
-  }
-}
-
 .kwp-header {
+  width: 100%;
+  height: 200px;
   min-height: 40px;
+  padding: 0;
+  z-index: 11111;
+  position: relative;
   background: transparent url(../../../img/bild-layer.png) no-repeat center center;
   background-size: cover;
 
-  .kwp-header-content {
-	p {
-	  text-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
-	  color: #333;
-	}
+  .kwp-header-content{
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 0px;
+    opacity: 1;
+    transition: all 0.2s ease;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    &.hidden-content{
+      opacity: 0;
+      transition: all 0.2s ease;
+      -webkit-transition: all 0.2s ease;
+      -moz-transition: all 0.2s ease;
+    }
+  }
+  .kwp-logo {
+    display: block;
+    height: 50px;
+    position: absolute;
+    width: 30%;
+    left: 20px;
+    top: 20px;
+    background-size: contain !important;
+  }
+  h1{
+    font-size: 20px;
+    line-height: 30px;
+    margin: 0px;
+    color: $darkgrey2;
+    padding: 30px 0;
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+    border: none;
   }
 }
 
@@ -553,19 +572,6 @@ ul.kwp-form-errors {
 .kwp-content,
 .kwp-footer {
   background: #f3f0ec;
-}
-
-.kwp-header-content{
-  opacity: 1;
-  transition: all 0.2s ease;
-  -webkit-transition: all 0.2s ease;
-  -moz-transition: all 0.2s ease;
-  &.hidden-content{
-	opacity: 0;
-	transition: all 0.2s ease;
-	-webkit-transition: all 0.2s ease;
-	-moz-transition: all 0.2s ease;
-  }
 }
 
 p.kwp-info {
@@ -773,7 +779,7 @@ p.kwp-info {
   margin-top: -1px;
 }
 
-.kwp-star-full:after, .kwp-body.eil-at-body .kwp-star-full:after{
+.kwp-star-full:after{
   background: transparent url(../../../img/sun-master.svg) no-repeat 0px center;
   background-size: 20px;
 }
@@ -805,15 +811,6 @@ p.kwp-info {
 .kwp{
   width: 600px;
   height: auto;
-}
-.kwp-header{
-  /*background: linear-gradient(179deg, #fce136 0, #e4cd34 100%);*/
-  min-height: 40px;
-  height: 200px;
-  position: relative;
-  width: 100%;
-  z-index: 11111;
-  padding: 0;
 }
 .kwp-col-4, .kwp-col-2{
   width: calc(50% - 10px);
@@ -906,71 +903,10 @@ p.kwp-info {
 #__email{
   margin-bottom: 0px;
 }
-.kwp-header-content p{
-  width: auto;
-  display: none;
-  font-size: 14px;
-  font-weight: bold;
-  color: #fff;
-  margin: 5px 5px 0 0;
-  line-height: 1.2em;
-  transition: all 0.7s ease;
-  -webkit-transition: all 0.7s ease;
-  -moz-transition: all 0.7s ease;
-}
 .kwp input[type="text"],.kwp input[type="date"]{
   padding-left: 15px;
   height: 40px;
 }
-  .dt-modal{
-	top: 0 !important;
-	opacity: 1;
-	transition: all 0.2s ease;
-	-webkit-transition: all 0.2s ease;
-	-moz-transition: all 0.2s ease;
-	position: fixed;
-	height:100%;
-	margin: 0;
-	&.teaser-on{
-	  height: 100px;
-	  display: block !important;
-	  .kwp{
-		background: transparent;
-		box-shadow: none;
-	  }
-	  .teaser{
-		&.active{
-		  top: 10px;
-		  transition: all 0.5s ease;
-		  -webkit-transition: all 0.5s ease;
-		  -moz-transition: all 0.5s ease;
-		}
-	  }
-	}
-	&.m-open{
-	  top:0 !important;
-	  background: rgba(0,30,70,0.65);
-	  transition: all 0.2s ease;
-	  -webkit-transition: all 0.2s ease;
-	  -moz-transition: all 0.2s ease;
-	  overflow: scroll;
-	  .kwp-header{
-		box-shadow: 0px -30px 35px rgba(255,255,255,0.6) inset;
-		h1{
-		  margin: 0px;
-		  padding: 5px 0;
-		  color: $darkgrey2;
-		  position: absolute;
-		  bottom: 0px;
-		  font-size: 26px;
-		  text-align: center;
-		  width: 100%;
-		  font-weight: 500;
-		}
-	  }
-
-	}
-  }
   .kwp{
 	-webkit-transition: opacity 0.1s ease, -webkit-transform 0.5s ease;
 	transition: opacity 0.1s ease, -webkit-transform 0.5s ease;
@@ -1024,19 +960,6 @@ p.kwp-info {
 	  }
 	}
   }
-  .kwp-header{
-	h1{
-	  font-size: 20px;
-	  line-height: 30px;
-	  margin: 0px;
-	  color:$darkgrey2;
-	  padding: 35px 0;
-	  font-weight: bold;
-	  text-align: center;
-	  width: 100%;
-	  border: none;
-	}
-  }
   .kwp-body{
 	h1{
 	  font-size: 18px
@@ -1071,18 +994,10 @@ p.kwp-info {
   .kwp-content{
 	z-index: 11111111;
   }
-  .kwp-header-content{
-	margin-top: 0px;
-	font-weight: bold;
-	position: absolute;
-	bottom: 0;
-	text-align: center;
-	width: 100%;
-  }
   .kwp-close{
 	width: 25px;
 	height: 25px;
-	background: transparent url(../../../img/close_light.svg) no-repeat center center;
+	background: transparent url(../../../img/close_dark.svg) no-repeat center center;
 	position: absolute;
 	top: 10px;
 	right: 10px;
