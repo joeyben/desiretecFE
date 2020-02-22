@@ -292,9 +292,24 @@ var exitIntent = window.exitIntent || {};
             }
         });
 
-        $( window ).on( "orientationchange", function( event ) {
+        $(window).on( "orientationchange", function( event ) {
             $(".dt-modal").css({'top':(document.documentElement.clientHeight - 85)+"px"});
         });
+
+        $(window).on('resize', function() {
+            dt.adjustResponsive();
+        });
+
+        $(document).mouseup(function(e) {
+            if($('.dt-modal-visible').length > 0) {
+                // close if click event outside the modal
+                var dtModal = $('.dt-modal-visible');
+                if (!dtModal.is(e.target) && dtModal.has(e.target).length === 0) {
+                    dt.PopupManager.closePopup(e);
+                }
+            }
+        });
+
 
         dt.childrenAges = function () {
             (function ($, children, age) {
