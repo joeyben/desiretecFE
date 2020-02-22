@@ -15,12 +15,9 @@ use App\Http\Requests\Wishes\StoreWishesRequest;
  */
 class FrontendController extends Controller
 {
-    protected $apiService;
     const BODY_CLASS = 'landing';
-    const BG_IMAGE = 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/background/15734971371569923197homepage_bcg.jpg';
-    const DISPLAY_NAME = 'Default Whitelabel';
-    const LOGO = '';
-    const COLOR = '#000';
+
+    // TODO: Better solution for these arrays:
     const REQUEST_ARR = [
         "variant" => "eil-mobile",
         "category" => "3",
@@ -114,6 +111,8 @@ class FrontendController extends Controller
         28 => "28 Nächte",
     ];
 
+    protected $apiService;
+
     public function __construct(ApiService $apiService)
     {
         $this->apiService = $apiService;
@@ -125,10 +124,7 @@ class FrontendController extends Controller
     public function index()
     {
         $body_class = $this::BODY_CLASS;
-        $bg_image = "";
-        $display_name = "";
-        $logo = "";
-        return view('frontend.whitelabel.index', compact( 'body_class','bg_image', 'display_name','logo'));
+        return view('frontend.whitelabel.index', compact( 'body_class'));
     }
 
     /**
@@ -140,18 +136,15 @@ class FrontendController extends Controller
     public function show()
     {
         $html = view('frontend.whitelabel.layer')->with([
-            'color'        => $this::COLOR,
             'adults_arr'   => $this::ADULTS_ARR,
             'kids_arr'     => $this::KIDS_ARR,
             'ages_arr'     => $this::AGES_ARR,
             'catering_arr' => $this::CATERING_ARR,
             'duration_arr' => $this::DURATION_ARR,
             'request'      => $this::REQUEST_ARR,
-            'bg_image'     => $this::BG_IMAGE,
-            'display_name' => $this::DISPLAY_NAME,
-            'logo'         => $this::LOGO,
+            'logo'         => getWhitelabelInfo()['attachments']['logo'],
+            'color'        => getWhitelabelInfo()['color'],
         ])->render();
-
 
         return response()->json(['success' => true, 'html'=>$html]);
     }
@@ -167,15 +160,13 @@ class FrontendController extends Controller
             $html = view('frontend.whitelabel.layer')->with([
                 'errors'       => $request->errors(),
                 'request'      => $request->all(),
-                'color'        => $this::COLOR,
                 'adults_arr'   => $this::ADULTS_ARR,
                 'kids_arr'     => $this::KIDS_ARR,
                 'ages_arr'     => $this::AGES_ARR,
                 'catering_arr' => $this::CATERING_ARR,
                 'duration_arr' => $this::DURATION_ARR,
-                'bg_image'     => $this::BG_IMAGE,
-                'display_name' => $this::DISPLAY_NAME,
-                'logo'         => $this::LOGO,
+                'logo'         => getWhitelabelInfo()['attachments']['logo'],
+                'color'        => getWhitelabelInfo()['color'],
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);
