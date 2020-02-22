@@ -260,7 +260,7 @@ class FrontendController extends Controller
             return view('frontend.tnb.tnb', compact(['tnb']));
         } catch (\Exception $e) {
             Log::error($e);
-            abort(503, 'Teilnahmebedingungen is not set');
+            abort(503, trans('errors.tnb.notset'));
         }
     }
 }
