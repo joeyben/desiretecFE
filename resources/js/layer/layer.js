@@ -19,7 +19,6 @@ var exitIntent = window.exitIntent || {};
             '<div class="kwp-logo"></div>' +
             '<div class="kwp-header-content">' +
             '<h1>Dürfen wir Sie beraten?</h1>' +
-            '<p>Unsere besten Reiseberater helfen Ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus! Natürlich kostenlos und unverbindlich.</p>' +
             '</div>' +
             '</div>' +
             '<div class="kwp-body '+variant+'-body">' +
@@ -165,6 +164,7 @@ var exitIntent = window.exitIntent || {};
 
 
     dt.initCallbacks = dt.initCallbacks || [];
+
         dt.initCallbacks.push(function (popup) {
             exitIntent.init();
             document.addEventListener('exit-intent', function (e) {
@@ -260,6 +260,7 @@ var exitIntent = window.exitIntent || {};
         };
 
         $(document).ready(function (e) {
+
             var $event = e;
             if(deviceDetector.device === "phone") {
                 dt.PopupManager.teaser = true;
