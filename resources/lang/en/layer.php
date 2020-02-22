@@ -25,7 +25,7 @@ return [
         'category'         => 'Hotelkategorie',
         'catering'         => 'Verpflegung (mind.)',
         'duration'         => 'Reisedauer',
-        'duration_empty'   => 'Beliebig',
+        'duration_init'    => 'Beliebig',
         'email'            => 'Ihre E-Mail-Adresse',
         'name'             => 'Name',
         'terms'            => 'Name',

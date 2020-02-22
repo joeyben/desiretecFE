@@ -16,10 +16,10 @@ Route::get('/', 'FrontendController@index')->name('index');
 Route::get('show', 'FrontendController@show');
 Route::get('wish/store', 'FrontendController@store')->name('storeWish');
 
-Route::get('/getTTRegions', 'RegionsController@getTTRegions');
-Route::get('/get-all-destinations', 'FrontendController@getAllDestinations');
-Route::get('/get-all-airports', 'FrontendController@getAllAirports');
+Route::get('/destinations', 'FrontendController@getAllDestinations');
+Route::get('/airports', 'FrontendController@getAllAirports');
 Route::get('/get-tt-airports', 'RegionsController@getTTAirports');
+Route::get('/getTTRegions', 'RegionsController@getTTRegions');
 Route::get('macros', 'FrontendController@macros')->name('macros');
 Route::get('pages/{slug}', 'FrontendController@showPage')->name('pages.show');
 Route::get('/tnb', 'FrontendController@showTnb')->name('tnb');

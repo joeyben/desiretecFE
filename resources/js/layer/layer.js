@@ -494,7 +494,7 @@ var exitIntent = window.exitIntent || {};
                     minLength: 3,
                     highlight: true,
                     source: function(query) {
-                        return $.get('https://testkurenundwellness.reise-wunsch.com/get-all-destinations', {query: query});
+                        return $.get('/destinations', {query: query});
                     }
                 }
             });
@@ -508,7 +508,7 @@ var exitIntent = window.exitIntent || {};
                     minLength: 3,
                     highlight: true,
                     source: function(query) {
-                        return $.get('https://testkurenundwellness.reise-wunsch.com/get-all-airports', {query: query});
+                        return $.get('/airports', {query: query});
                     }
                 }
             });

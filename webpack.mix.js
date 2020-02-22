@@ -59,10 +59,12 @@ mix.setPublicPath('public')
     ], 'public/css/frontend-custom.css')
     //Layer css
     .sass('resources/sass/frontend/layer/_datepicker.scss', 'public/css/layer/datepicker.css')
+    .sass('resources/sass/frontend/layer/_bootstrap-tagsinput.scss', 'public/css/layer/bootstrap-tagsinput.css')
     .sass('resources/sass/frontend/layer/_layer.scss', 'public/css/layer/layer.css')
     .sass('resources/sass/frontend/layer/_layer-responsive.scss', 'public/css/layer/layer-responsive.css')
     .styles([
         'public/css/layer/datepicker.css',
+        'public/css/layer/bootstrap-tagsinput.css',
         'public/css/layer/layer.css',
         'public/css/layer/layer-responsive.css',
     ], 'public/css/layer.css')

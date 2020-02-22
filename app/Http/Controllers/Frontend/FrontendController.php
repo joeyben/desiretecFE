@@ -190,48 +190,20 @@ class FrontendController extends Controller
             ->withpage($result);
     }
 
-    /**
-     * URL: /get-all-destinations
-     * Returns all destinations.
-     *
-     * @return array
-     */
-    public function getAllDestinations(Request $request)
+    public function getAllDestinations()
     {
-        $query = $request->get('query');
-        $destinations = [];
-        Regions::select('regionName')
-            ->where('type', '1')
-            ->where('regionName', 'like', $query . '%')
-            ->groupBy('regionName')
-            ->chunk(200, function ($regions) use (&$destinations) {
-                foreach ($regions as $region) {
-                    $destinations[] = $region->regionName;
-                }
-            });
+        $response = $this->apiService->get('/destinations');
+
+        $destinations = $response->formatResponse('array');
 
         return $destinations;
     }
 
-    /**
-     * URL: /get-all-airports
-     * Returns all airports.
-     *
-     * @return array
-     */
     public function getAllAirports(Request $request)
     {
-        $query = $request->get('query');
-        $airports = [];
-        Regions::select('regionCode', 'regionName')
-            ->where('type', 0)
-            ->where('regionName', 'like', $query . '%')
-            ->groupBy('regionName')
-            ->chunk(200, function ($regions) use (&$airports) {
-                foreach ($regions as $region) {
-                    $airports[] = $region->regionName;
-                }
-            });
+        $response = $this->apiService->get('/airports');
+
+        $airports = $response->formatResponse('array');
 
         return $airports;
     }

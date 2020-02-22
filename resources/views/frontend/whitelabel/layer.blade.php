@@ -3,7 +3,7 @@
 </script>
 
 <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
-<link rel="stylesheet" href="https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
+
 <style>
     .kwp-logo {
         background: transparent url({{ $logo }}) no-repeat left top;
@@ -72,7 +72,7 @@
                         <div class="kwp-col-12">
                             {{ Form::label('duration', trans('layer.general.duration'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
-                                {{ Form::select('duration', array_merge(['' => trans('layer.general.duration_empty')], $duration_arr), key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
+                                {{ Form::select('duration', array_merge(['' => trans('layer.general.duration_init')], $duration_arr), key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
                             </div>
                         </div>
                         <div class="clearfix"></div>
@@ -163,7 +163,7 @@
                 <div class="kwp-custom-select">
                     {{ Form::select('catering', $catering_arr, key_exists('catering', $request) ? $request['catering'] : null,['class' => 'custom-select']) }}
                 </div>
-                <i class="master-icon--chevron-down"></i>
+                <i class="far fa-chevron-down"></i>
             </div>
 
         </div>
