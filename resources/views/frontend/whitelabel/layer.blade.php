@@ -215,7 +215,7 @@
         dt.adjustResponsive();
         dt.autocomplete();
 
-        if($('.kwp-close-button .fa-times').lenght == 0) {
+        if($('.kwp-close-button i').length === 0) {
             $('.kwp-close-button').append('<i class="fal fa-times"></i>');
         }
 
