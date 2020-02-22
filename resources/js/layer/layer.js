@@ -185,7 +185,7 @@ var exitIntent = window.exitIntent || {};
             var formSent = $('.kwp-content').hasClass('kwp-completed-master');
 
             this.modal.addClass('tmp-hidden');
-            if(!formSent) {
+            if(!formSent && $('.trigger-modal').length === 0) {
                 this.trigger =
                     $('<span/>', {'class': 'trigger-modal'});
                 $('body').prepend(this.trigger);
