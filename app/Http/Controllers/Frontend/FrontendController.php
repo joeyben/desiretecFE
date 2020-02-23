@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\Frontend\Pages\PagesRepository;
 use App\Services\Api\ApiService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Modules\Translations\Entities\Translation;
 use Spatie\TranslationLoader\LanguageLine;
 use App\Http\Requests\Wishes\StoreWishesRequest;
@@ -15,12 +16,9 @@ use App\Http\Requests\Wishes\StoreWishesRequest;
  */
 class FrontendController extends Controller
 {
-    protected $apiService;
     const BODY_CLASS = 'landing';
-    const BG_IMAGE = 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/background/15734971371569923197homepage_bcg.jpg';
-    const DISPLAY_NAME = 'Default Whitelabel';
-    const LOGO = '';
-    const COLOR = '#000';
+
+    // TODO: Better solution for these arrays:
     const REQUEST_ARR = [
         "variant" => "eil-mobile",
         "category" => "3",
@@ -114,6 +112,8 @@ class FrontendController extends Controller
         28 => "28 Nächte",
     ];
 
+    protected $apiService;
+
     public function __construct(ApiService $apiService)
     {
         $this->apiService = $apiService;
@@ -125,10 +125,7 @@ class FrontendController extends Controller
     public function index()
     {
         $body_class = $this::BODY_CLASS;
-        $bg_image = "";
-        $display_name = "";
-        $logo = "";
-        return view('frontend.whitelabel.index', compact( 'body_class','bg_image', 'display_name','logo'));
+        return view('frontend.whitelabel.index', compact( 'body_class'));
     }
 
     /**
@@ -137,21 +134,21 @@ class FrontendController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show()
+    public function show(Request $request)
     {
+        $host = $request->header('Host');
+        $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
         $html = view('frontend.whitelabel.layer')->with([
-            'color'        => $this::COLOR,
             'adults_arr'   => $this::ADULTS_ARR,
             'kids_arr'     => $this::KIDS_ARR,
             'ages_arr'     => $this::AGES_ARR,
             'catering_arr' => $this::CATERING_ARR,
             'duration_arr' => $this::DURATION_ARR,
             'request'      => $this::REQUEST_ARR,
-            'bg_image'     => $this::BG_IMAGE,
-            'display_name' => $this::DISPLAY_NAME,
-            'logo'         => $this::LOGO,
+            'logo'         => $whitelabel['attachments']['logo'],
+            'color'        => $whitelabel['color'],
+            '$whitelabel'  => $whitelabel
         ])->render();
-
 
         return response()->json(['success' => true, 'html'=>$html]);
     }
@@ -163,25 +160,25 @@ class FrontendController extends Controller
      */
     public function store(StoreWishesRequest $request)
     {
+        $host = $request->header('Host');
+        $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
         if ($request->failed()) {
             $html = view('frontend.whitelabel.layer')->with([
                 'errors'       => $request->errors(),
                 'request'      => $request->all(),
-                'color'        => $this::COLOR,
                 'adults_arr'   => $this::ADULTS_ARR,
                 'kids_arr'     => $this::KIDS_ARR,
                 'ages_arr'     => $this::AGES_ARR,
                 'catering_arr' => $this::CATERING_ARR,
                 'duration_arr' => $this::DURATION_ARR,
-                'bg_image'     => $this::BG_IMAGE,
-                'display_name' => $this::DISPLAY_NAME,
-                'logo'         => $this::LOGO,
+                'logo'         => $whitelabel['attachments']['logo'],
+                'color'        => $whitelabel['color'],
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);
         }
         $data = $request->all();
-        $data['whitelabel_id'] = getWhitelabelInfo()['id'];
+        $data['whitelabel_id'] = $whitelabel['id'];
         $data['title'] = "&nbsp;";
         $response = $this->apiService->get('/wish/store', $data);
         $html = view('frontend.whitelabel.created')->render();
@@ -199,48 +196,20 @@ class FrontendController extends Controller
             ->withpage($result);
     }
 
-    /**
-     * URL: /get-all-destinations
-     * Returns all destinations.
-     *
-     * @return array
-     */
-    public function getAllDestinations(Request $request)
+    public function getAllDestinations()
     {
-        $query = $request->get('query');
-        $destinations = [];
-        Regions::select('regionName')
-            ->where('type', '1')
-            ->where('regionName', 'like', $query . '%')
-            ->groupBy('regionName')
-            ->chunk(200, function ($regions) use (&$destinations) {
-                foreach ($regions as $region) {
-                    $destinations[] = $region->regionName;
-                }
-            });
+        $response = $this->apiService->get('/destinations');
+
+        $destinations = $response->formatResponse('array');
 
         return $destinations;
     }
 
-    /**
-     * URL: /get-all-airports
-     * Returns all airports.
-     *
-     * @return array
-     */
     public function getAllAirports(Request $request)
     {
-        $query = $request->get('query');
-        $airports = [];
-        Regions::select('regionCode', 'regionName')
-            ->where('type', 0)
-            ->where('regionName', 'like', $query . '%')
-            ->groupBy('regionName')
-            ->chunk(200, function ($regions) use (&$airports) {
-                foreach ($regions as $region) {
-                    $airports[] = $region->regionName;
-                }
-            });
+        $response = $this->apiService->get('/airports');
+
+        $airports = $response->formatResponse('array');
 
         return $airports;
     }
@@ -252,6 +221,14 @@ class FrontendController extends Controller
      */
     public function showTnb()
     {
-        return view('frontend.tnb.tnb');
+        try{
+            $response = $this->apiService->get('/tnb', ['id' => getWhitelabelInfo()['id']]);
+            $tnb = $response->formatResponse('array')['data'];
+
+            return view('frontend.tnb.tnb', compact(['tnb']));
+        } catch (\Exception $e) {
+            Log::error($e);
+            abort(503, trans('errors.tnb.notset'));
+        }
     }
 }

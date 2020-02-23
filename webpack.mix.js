@@ -12,6 +12,10 @@ const WebpackRTLPlugin = require('webpack-rtl-plugin');
  |
  */
 
+mix.options({
+    processCssUrls: false
+});
+
 mix.setPublicPath('public')
     //Frontend js
     .js([
@@ -50,15 +54,14 @@ mix.setPublicPath('public')
     ], 'public/js/layer.js')
     //Frontend css
     .sass('resources/sass/frontend/app.scss', 'public/css/frontend.css')
-    .styles([
-        'public/css/plugin/datatables/jquery.dataTables.min.css',
-    ], 'public/css/frontend-custom.css')
     //Layer css
     .sass('resources/sass/frontend/layer/_datepicker.scss', 'public/css/layer/datepicker.css')
+    .sass('resources/sass/frontend/layer/_bootstrap-tagsinput.scss', 'public/css/layer/bootstrap-tagsinput.css')
     .sass('resources/sass/frontend/layer/_layer.scss', 'public/css/layer/layer.css')
     .sass('resources/sass/frontend/layer/_layer-responsive.scss', 'public/css/layer/layer-responsive.css')
     .styles([
         'public/css/layer/datepicker.css',
+        'public/css/layer/bootstrap-tagsinput.css',
         'public/css/layer/layer.css',
         'public/css/layer/layer-responsive.css',
     ], 'public/css/layer.css')
@@ -69,5 +72,9 @@ mix.setPublicPath('public')
         plugins: [
             new WebpackRTLPlugin('/css/[name].rtl.css')
         ]
-    })
-    .version();
+    });
+
+if (mix.inProduction()) {
+    mix.version();
+}
+

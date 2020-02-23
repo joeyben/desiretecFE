@@ -43,6 +43,13 @@ class ApiService implements ApiServiceInterface
         return $result->formatResponse('object')->data;
     }
 
+    public function getWlFromHost(string $host)
+    {
+        $result = $this->get('/whitelabelfromhost' . '/' . $host);
+
+        return $result->formatResponse('object')->data;
+    }
+
 
     public function setAuthorization(?string $token): self
     {

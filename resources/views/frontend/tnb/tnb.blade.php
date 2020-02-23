@@ -8,9 +8,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>@yield('title', app_name())</title>
+        <title>@yield('title', getWhitelabelInfo()['display_name'])</title>
         @if(isWhiteLabel())
-            <link rel="icon" type="image/png" href="{{ getWhiteLabelLogoUrl('favicon') }}">
+            <link rel="icon" type="image/png" href="{{ getWhitelabelInfo()['attachments']['logo'] }}">
         @else
             <link rel="icon" type="image/png" href="{{ asset('favicon-96x96.png') }}">
         @endif
@@ -19,6 +19,7 @@
         <meta name="author" content="@yield('meta_author', 'Joe Ben Slimane')">
     </head>
     <body id="app-layout" class="{{ ( ! empty($body_class) ? $body_class : '' )}}" style="margin-bottom:30px; margin-top:30px;margin-right:20px;margin-left:20px;text-align: justify;text-justify:inter-word;">
-        {!! Lang::get('layer.footer.tnb') !!}
+    {{--        {!! Lang::get('layer.footer.tnb') !!}--}}
+            {!! $tnb !!}
     </body>
 </html>

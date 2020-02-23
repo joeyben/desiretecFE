@@ -224,41 +224,6 @@ var dt = window.dt || {};
                     dt.PopupManager.show();
                 });
         },
-        //getFieldValue: function(selector) {
-        //    field = $(selector);
-        //
-        //    switch (field.prop('tagName')) {
-        //        case 'INPUT':
-        //            switch (field.attr('type')) {
-        //                case 'file':
-        //                    return null;
-        //
-        //                case 'checkbox':
-        //                case 'radio':
-        //                    return field.filter(':checked').map(function () {
-        //                        return $(this).val();
-        //                    }).toArray();
-        //
-        //                default:
-        //                    return field.val();
-        //            }
-        //
-        //        case 'TEXTAREA':
-        //            return field.val();
-        //
-        //        case 'SELECT':
-        //            if (field.attr('multiple')) {
-        //                return field.find('option:selected').map(function () {
-        //                    return $(this).val();
-        //                }).toArray();
-        //            }
-        //
-        //            return field.val();
-        //
-        //        default:
-        //            Debug.error('Unknown form field type.');
-        //    }
-        //},
         selectDecoder: function() {
             for(var i = 0; i < dt.decoders.length; ++i) {
                 var decoder = dt.decoders[i],
@@ -307,6 +272,7 @@ var dt = window.dt || {};
             this.popupBody.html('<div class="kwp-spinner"></div>');
 
             tripData.first_fetch = 'yes';
+
             jQuery.ajax(this.config.baseUrl + this.config.popupPath + this.getQueryPart(), {
                 type: 'GET',
                 data: tripData,
