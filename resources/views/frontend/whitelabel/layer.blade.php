@@ -1,26 +1,21 @@
 <script type="application/javascript">
-    // (Milena) TODO: Move into local storage
     var brandColor = {!! json_encode($color) !!};
 </script>
 
 <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
-<link rel="stylesheet" href="https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
+
 <style>
     .kwp-logo {
         background: transparent url({{ $logo }}) no-repeat left top;
     }
 </style>
 
-<!-- Question: What does class name prefix "kwp-" stands for ? -->
-<!-- (Milena) TODO: Add header here, modify DOM where needed through layer.js -->
-<!-- (Milena) TODO: Move "kwp-middle" inside Form::open -->
-<div class="kwp-middle">
-    Unsere besten Reiseberater helfen Dir gerne, Deine persönliche Traumreise zu finden. Probiere es einfach aus!
-</div>
-
 {{-- Form::open(['route' => 'master.store' , 'method' => 'get', 'class' => '', 'role' => 'form', 'files' => true]) --}}
 {{ Form::open() }}
 
+<div class="kwp-middle">
+    Unsere besten Reiseberater helfen ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus!
+</div>
 <div class="kwp-minimal">
     <div class="kwp-content kwp-with-expansion">
         <div class="kwp-row">
@@ -77,7 +72,7 @@
                         <div class="kwp-col-12">
                             {{ Form::label('duration', trans('layer.general.duration'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
-                                {{ Form::select('duration', array_merge(['' => trans('layer.general.duration_empty')], $duration_arr), key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
+                                {{ Form::select('duration', array_merge(['' => trans('layer.general.duration_init')], $duration_arr), key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
                             </div>
                         </div>
                         <div class="clearfix"></div>
@@ -115,9 +110,6 @@
                             <div class="kwp-col-ages">
                                 <div class="kwp-form-group">
                                     <label class="main-label">Alter (Hinreise)</label>
-
-                                    <!-- TODO: Include ages logic that's on mvp -->
-
                                     <div class="kwp-col-3">
                                         <i class="master-icon--aircraft-down"></i>
                                     </div>
@@ -130,10 +122,7 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Question: Why is dt.childrenAges() called here and not where others functions are -->
                         <script>dt.childrenAges();</script>
-
                         <div class="kwp-col-12 button">
                             <a href="#">OK</a>
                         </div>
@@ -165,8 +154,6 @@
                         <span class="kwp-star" data-val="4"></span>
                         <span class="kwp-star" data-val="5"></span>
                     </div>
-
-                    <!-- Question: Why is dt.hotelStars() called here and not where others functions are -->
                     <script>dt.hotelStars();</script>
                 </div>
             </div>
@@ -176,7 +163,7 @@
                 <div class="kwp-custom-select">
                     {{ Form::select('catering', $catering_arr, key_exists('catering', $request) ? $request['catering'] : null,['class' => 'custom-select']) }}
                 </div>
-                <i class="master-icon--chevron-down"></i>
+                <i class="far fa-chevron-down"></i>
             </div>
 
         </div>
@@ -200,237 +187,6 @@
     </div>
 
     <div class="kwp-footer">
-        <script>
-            $("#earliest_start, #latest_return").on('change paste keyup input', function(){
-                var earliest_start_arr = $("#earliest_start").val().split('.');
-                var latest_return_arr = $("#latest_return").val().split('.');
-                var earliest_start = new Date(earliest_start_arr[2], earliest_start_arr[1]-1, earliest_start_arr[0]);
-                var latest_return = new Date(latest_return_arr[2], latest_return_arr[1]-1, latest_return_arr[0]);
-                var diff_days = Math.round((latest_return-earliest_start)/(1000*60*60*24));
-                var diff_nights =  diff_days - 1;
-                var options = document.getElementById("duration").getElementsByTagName("option");
-                for (var i = 0; i < options.length; i++) {
-                    if(options[i].value.includes('-')){
-                        var days = options[i].value.split('-');
-                        if(days[1].length){
-                            (parseInt(days[0]) <= parseInt(diff_days))
-                                ? options[i].disabled = false
-                                : options[i].disabled = true;
-                        } else {
-                            (parseInt(days[0]) <= parseInt(diff_days))
-                                ? options[i].disabled = false
-                                : options[i].disabled = true;
-                        }
-                    } else if (options[i].value == "exact" || options[i].value == "" || !options[i].value.length) {
-                        options[i].disabled = false;
-                    } else {
-                        (parseInt(options[i].value) <= parseInt(diff_nights))
-                            ? options[i].disabled = false
-                            : options[i].disabled = true;
-                    }
-                }
-
-                return true;
-            });
-
-            $(".dd-trigger").click(function(e) {
-                if(!$(this).parents('.main-col').hasClass('open')){
-                    $('.main-col').removeClass('open')
-                    $(this).parents('.main-col').addClass('open');
-                }else
-                    $(this).parents('.main-col').removeClass('open');
-
-                $('.kwp-content').animate({ scrollTop: $(this).offset().top}, 500);
-            });
-
-            $(".duration-more .button a").click(function(e) {
-                e.preventDefault();
-                $(this).parents('.duration-col').removeClass('open');
-                var from = $("#earliest_start").val();
-                var back = $("#latest_return").val();
-                var duration = $("#duration option:selected").text();
-
-                $(".duration-time .txt").text(from+" - "+back+", "+duration);
-                return false;
-            });
-
-            $(".pax-more .button a").click(function(e) {
-                e.preventDefault();
-                $(this).parents('.pax-col').removeClass('open');
-                var pax = $("#adults").val();
-                var children_count = parseInt($("#kids").val());
-                var children = children_count > 0 ? (children_count == 1 ? ", "+children_count+" Kind" : ", "+children_count+" Kinder")  : "" ;
-
-                var erwachsene = parseInt(pax) > 1 ? "Erwachsene" : "Erwachsener";
-                $(".travelers .txt").text(pax+" "+erwachsene+" "+children);
-                return false;
-            });
-
-            $('#budgetRange').rangeslider({
-                // Callback function
-                polyfill: false,
-                onInit: function() {
-                    $('.rangeslider__handle').on('mousedown touchstart mousemove touchmove', function(e) {
-                        e.preventDefault();
-                    })
-                },
-                fillClass: 'rangeslider__fill',
-                onSlide: function(position, value) {
-                    if($(".rangeslider-wrapper .haserrors").length)
-                        $(".rangeslider-wrapper .haserrors").removeClass('haserrors');
-
-                    if(value === 10000){
-                        $(".rangeslider-wrapper .text").text("beliebig");
-                        $("#budget").val("beliebig");
-                    }else if(value === 100){
-                        $(".rangeslider-wrapper .text").html("&nbsp;");
-                        $("#budget").val("");
-                    }else{
-                        $(".rangeslider-wrapper .text").text("bis "+value+" €");
-                        $("#budget").val(""+value);
-                    }
-                    check_button();
-                },
-            });
-
-            $(document).ready(function(){
-
-                dt.applyBrandColor();
-                dt.autocomplete();
-                dt.adjustResponsive();
-
-                dt.startDate = new Pikaday({
-                    field: document.getElementById('earliest_start'),
-                    format: 'dd.mm.YYYY',
-                    defaultDate: '01.01.2019',
-                    firstDay: 1,
-                    minDate: new Date(),
-                    toString: function(date, format) {
-                        // you should do formatting based on the passed format,
-                        // but we will just return 'D/M/YYYY' for simplicity
-                        const day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-                        const month = (date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
-                        const year = date.getFullYear();
-                        return day+"."+month+"."+year;
-                    },
-                    i18n: {
-                        previousMonth: 'Vormonat',
-                        nextMonth: 'Nächsten Monat',
-                        months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-                        weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
-                        weekdaysShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa']
-                    },
-                    onSelect: function(date) {
-                        var dateFrom = this.getDate();
-                        var dateTo = dt.endDate.getDate();
-                        if(dateFrom >= dateTo){
-                            var d = date.getDate();
-                            var m = date.getMonth();
-                            var y = date.getFullYear();
-                            var updatedDate = new Date(y, m, d);
-                            dt.endDate.setMinDate(updatedDate);
-                            updatedDate = new Date(y, m, d+7);
-                            dt.endDate.setDate(updatedDate);
-                        }
-                    },
-                    onOpen: function() {
-
-                    },
-                });
-                dt.endDate = new Pikaday({
-                    field: document.getElementById('latest_return'),
-                    format: 'dd.mm.YYYY',
-                    defaultDate: '01.01.2019',
-                    firstDay: 1,
-                    toString: function(date, format) {
-                        // you should do formatting based on the passed format,
-                        // but we will just return 'D/M/YYYY' for simplicity
-                        const day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-                        const month = (date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
-                        const year = date.getFullYear();
-                        return day+"."+month+"."+year;
-                    },
-                    i18n: {
-                        previousMonth: 'Vormonat',
-                        nextMonth: 'Nächsten Monat',
-                        months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-                        weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
-                        weekdaysShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa']
-                    }
-                });
-
-                if(!$("#earliest_start").val()){
-                    var date = new Date();
-                    date.setDate(date.getDate() + 3);
-                    var d = date.getDate();
-                    var m = date.getMonth()+1;
-                    var y = date.getFullYear();
-                    if (d < 10) {
-                        d = "0" + d;
-                    }
-                    if (m < 10) {
-                        m = "0" + m;
-                    }
-                    $("#earliest_start").val(d+"."+m+"."+y);
-                }
-
-                if(!$("#latest_return").val()){
-                    var date = new Date();
-                    date.setDate(date.getDate() + 10);
-                    var d = date.getDate();
-                    var m = date.getMonth()+1;
-                    var y = date.getFullYear();
-                    if (d < 10) {
-                        d = "0" + d;
-                    }
-                    if (m < 10) {
-                        m = "0" + m;
-                    }
-                    $("#latest_return").val(d+"."+m+"."+y);
-                }
-
-                var range = parseInt($("#budget").val().replace('.',''));
-                if(range)
-                    $('input[type="range"]').val(range).change();
-
-                $(".duration-time .txt").text($("#earliest_start").val()+" - "+$("#latest_return").val()+", "+$("#duration option:selected").text());
-                var pax = $("#adults").val();
-                var children_count = parseInt($("#kids").val());
-                var children = children_count > 0 ? (children_count == 1 ? ", "+children_count+" Kind" : ", "+children_count+" Kinder")  : "" ;
-                var erwachsene = parseInt(pax) > 1 ? "Erwachsene" : "Erwachsener";
-                $(".travelers .txt").text(pax+" "+erwachsene+" "+children);
-
-                if($(".dt-modal .haserrors").length){
-                    $('.dt-modal #submit-button').addClass('error-button');
-                }
-
-                if($(".duration-more .haserrors").length){
-                    $('.duration-group').addClass('haserrors');
-                }
-
-                $( ".haserrors input" ).keydown(function( event ) {
-                    $(this).parents('.haserrors').removeClass('haserrors');
-                    check_button();
-                });
-                $('.haserrors input[type="checkbox"]').change(function () {
-                    $(this).parents('.haserrors').removeClass('haserrors');
-                    check_button();
-                });
-                $("#latest_return").trigger("change");
-            });
-
-            $(window).on('resize', function() {
-                dt.adjustResponsive();
-            });
-
-            function check_button(){
-                if(!$(".dt-modal .haserrors").length){
-                    $('.dt-modal #submit-button').removeClass('error-button');
-                }
-            };
-
-        </script>
-
         <div class="kwp-row">
             <div class="kwp-col-12 white-col footer-col">
                 <div class="kwp-agb">
@@ -451,3 +207,234 @@
     </div>
 </div>
 {{ Form::close() }}
+
+<script>
+    $(document).ready(function(){
+
+        dt.applyBrandColor();
+        dt.adjustResponsive();
+        dt.autocomplete();
+
+        if($('.kwp-close-button i').length === 0) {
+            $('.kwp-close-button').append('<i class="fal fa-times"></i>');
+        }
+
+        $("#earliest_start, #latest_return").on('change paste keyup input', function(){
+            var earliest_start_arr = $("#earliest_start").val().split('.');
+            var latest_return_arr = $("#latest_return").val().split('.');
+            var earliest_start = new Date(earliest_start_arr[2], earliest_start_arr[1]-1, earliest_start_arr[0]);
+            var latest_return = new Date(latest_return_arr[2], latest_return_arr[1]-1, latest_return_arr[0]);
+            var diff_days = Math.round((latest_return-earliest_start)/(1000*60*60*24));
+            var diff_nights =  diff_days - 1;
+            var options = document.getElementById("duration").getElementsByTagName("option");
+            for (var i = 0; i < options.length; i++) {
+                if(options[i].value.includes('-')){
+                    var days = options[i].value.split('-');
+                    if(days[1].length){
+                        (parseInt(days[0]) <= parseInt(diff_days))
+                            ? options[i].disabled = false
+                            : options[i].disabled = true;
+                    } else {
+                        (parseInt(days[0]) <= parseInt(diff_days))
+                            ? options[i].disabled = false
+                            : options[i].disabled = true;
+                    }
+                } else if (options[i].value == "exact" || options[i].value == "" || !options[i].value.length) {
+                    options[i].disabled = false;
+                } else {
+                    (parseInt(options[i].value) <= parseInt(diff_nights))
+                        ? options[i].disabled = false
+                        : options[i].disabled = true;
+                }
+            }
+
+            return true;
+        });
+
+        $(".dd-trigger").click(function(e) {
+            if(!$(this).parents('.main-col').hasClass('open')){
+                $('.main-col').removeClass('open')
+                $(this).parents('.main-col').addClass('open');
+            }else
+                $(this).parents('.main-col').removeClass('open');
+
+            $('.kwp-content').animate({ scrollTop: $(this).offset().top}, 500);
+        });
+
+        $(".duration-more .button a").click(function(e) {
+            e.preventDefault();
+            $(this).parents('.duration-col').removeClass('open');
+            var from = $("#earliest_start").val();
+            var back = $("#latest_return").val();
+            var duration = $("#duration option:selected").text();
+
+            $(".duration-time .txt").text(from+" - "+back+", "+duration);
+            return false;
+        });
+
+        $(".pax-more .button a").click(function(e) {
+            e.preventDefault();
+            $(this).parents('.pax-col').removeClass('open');
+            var pax = $("#adults").val();
+            var children_count = parseInt($("#kids").val());
+            var children = children_count > 0 ? (children_count == 1 ? ", "+children_count+" Kind" : ", "+children_count+" Kinder")  : "" ;
+
+            var erwachsene = parseInt(pax) > 1 ? "Erwachsene" : "Erwachsener";
+            $(".travelers .txt").text(pax+" "+erwachsene+" "+children);
+            return false;
+        });
+
+        $('#budgetRange').rangeslider({
+            polyfill: false,
+            onInit: function() {
+                $('.rangeslider__handle').on('mousedown touchstart mousemove touchmove', function(e) {
+                    e.preventDefault();
+                })
+            },
+            fillClass: 'rangeslider__fill',
+            onSlide: function(position, value) {
+                if($(".rangeslider-wrapper .haserrors").length)
+                    $(".rangeslider-wrapper .haserrors").removeClass('haserrors');
+
+                if(value === 10000){
+                    $(".rangeslider-wrapper .text").text("beliebig");
+                    $("#budget").val("beliebig");
+                }else if(value === 100){
+                    $(".rangeslider-wrapper .text").html("&nbsp;");
+                    $("#budget").val("");
+                }else{
+                    $(".rangeslider-wrapper .text").text("bis "+value+" €");
+                    $("#budget").val(""+value);
+                }
+                check_button();
+            },
+        });
+
+
+        dt.startDate = new Pikaday({
+            field: document.getElementById('earliest_start'),
+            format: 'dd.mm.YYYY',
+            defaultDate: '01.01.2019',
+            firstDay: 1,
+            minDate: new Date(),
+            toString: function(date, format) {
+                // you should do formatting based on the passed format,
+                // but we will just return 'D/M/YYYY' for simplicity
+                const day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+                const month = (date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
+                const year = date.getFullYear();
+                return day+"."+month+"."+year;
+            },
+            i18n: {
+                previousMonth: 'Vormonat',
+                nextMonth: 'Nächsten Monat',
+                months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+                weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+                weekdaysShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa']
+            },
+            onSelect: function(date) {
+                var dateFrom = this.getDate();
+                var dateTo = dt.endDate.getDate();
+                if(dateFrom >= dateTo){
+                    var d = date.getDate();
+                    var m = date.getMonth();
+                    var y = date.getFullYear();
+                    var updatedDate = new Date(y, m, d);
+                    dt.endDate.setMinDate(updatedDate);
+                    updatedDate = new Date(y, m, d+7);
+                    dt.endDate.setDate(updatedDate);
+                }
+            },
+            onOpen: function() {
+
+            },
+        });
+        dt.endDate = new Pikaday({
+            field: document.getElementById('latest_return'),
+            format: 'dd.mm.YYYY',
+            defaultDate: '01.01.2019',
+            firstDay: 1,
+            toString: function(date, format) {
+                // you should do formatting based on the passed format,
+                // but we will just return 'D/M/YYYY' for simplicity
+                const day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+                const month = (date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
+                const year = date.getFullYear();
+                return day+"."+month+"."+year;
+            },
+            i18n: {
+                previousMonth: 'Vormonat',
+                nextMonth: 'Nächsten Monat',
+                months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+                weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+                weekdaysShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa']
+            }
+        });
+
+        if(!$("#earliest_start").val()){
+            var date = new Date();
+            date.setDate(date.getDate() + 3);
+            var d = date.getDate();
+            var m = date.getMonth()+1;
+            var y = date.getFullYear();
+            if (d < 10) {
+                d = "0" + d;
+            }
+            if (m < 10) {
+                m = "0" + m;
+            }
+            $("#earliest_start").val(d+"."+m+"."+y);
+        }
+
+        if(!$("#latest_return").val()){
+            var date = new Date();
+            date.setDate(date.getDate() + 10);
+            var d = date.getDate();
+            var m = date.getMonth()+1;
+            var y = date.getFullYear();
+            if (d < 10) {
+                d = "0" + d;
+            }
+            if (m < 10) {
+                m = "0" + m;
+            }
+            $("#latest_return").val(d+"."+m+"."+y);
+        }
+
+        var range = parseInt($("#budget").val().replace('.',''));
+        if(range)
+            $('input[type="range"]').val(range).change();
+
+        $(".duration-time .txt").text($("#earliest_start").val()+" - "+$("#latest_return").val()+", "+$("#duration option:selected").text());
+        var pax = $("#adults").val();
+        var children_count = parseInt($("#kids").val());
+        var children = children_count > 0 ? (children_count == 1 ? ", "+children_count+" Kind" : ", "+children_count+" Kinder")  : "" ;
+        var erwachsene = parseInt(pax) > 1 ? "Erwachsene" : "Erwachsener";
+        $(".travelers .txt").text(pax+" "+erwachsene+" "+children);
+
+        if($(".dt-modal .haserrors").length){
+            $('.dt-modal #submit-button').addClass('error-button');
+        }
+
+        if($(".duration-more .haserrors").length){
+            $('.duration-group').addClass('haserrors');
+        }
+
+        $( ".haserrors input" ).keydown(function( event ) {
+            $(this).parents('.haserrors').removeClass('haserrors');
+            check_button();
+        });
+        $('.haserrors input[type="checkbox"]').change(function () {
+            $(this).parents('.haserrors').removeClass('haserrors');
+            check_button();
+        });
+        $("#latest_return").trigger("change");
+    });
+
+    function check_button(){
+        if(!$(".dt-modal .haserrors").length){
+            $('.dt-modal #submit-button').removeClass('error-button');
+        }
+    };
+
+</script>

@@ -6,19 +6,6 @@
 
 @section('after-styles')
     <link rel="stylesheet" href="{{ asset('css/frontend.css') }}">
-    <link rel="stylesheet" href="https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
-@endsection
-
-@section('logo')
-    <a href="{{ route('frontend.index', ['subdomain']) }}" class="logo">
-        <img class="navbar-brand" src="{{ $logo }}">
-    </a>
-@endsection
-
-@section('before-scripts')
-    <script type="application/javascript">
-        var brandColor = {!! json_encode(getCurrentWhiteLabelColor()) !!};
-    </script>
 @endsection
 
 @section('after-scripts')
@@ -46,6 +33,12 @@
             if ($(".dt-modal").hasClass("teaser-on")) {
                 return false;
             }
+
+            if($(".trigger-modal").length){
+                $(".trigger-modal").click();
+                return false;
+            }
+
             dt.PopupManager.show();
 
             if (isMobile()) {

@@ -31,10 +31,10 @@
             @endif
 
             @if (! $logged_in_user)
-                <li><a href="{{ route('frontend.auth.sendtoken', [$subdomain]) }}">{{ trans('navs.frontend.login') }}</a></li>
+                <li class="nav-item"><a href="{{ route('frontend.auth.sendtoken', [$subdomain]) }}">{{ trans('navs.frontend.login') }}</a></li>
 
                 @if (config('access.users.registration') && false)
-                    <li>{{ link_to_route('frontend.auth.register', trans('navs.frontend.register')) }}</li>
+                    <li class="nav-item">{{ link_to_route('frontend.auth.register', trans('navs.frontend.register')) }}</li>
                 @endif
 
             @else
