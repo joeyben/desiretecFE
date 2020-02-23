@@ -277,12 +277,9 @@ var dt = window.dt || {};
             jQuery.ajax(this.config.baseUrl + this.config.popupPath + this.getQueryPart(), {
                 type: 'GET',
                 data: tripData,
-                dataType: 'html',
+                dataType: 'json',
                 contentType: 'application/x-www-form-urlencoded',
                 success: jQuery.proxy(this.onPopupFetched, this),
-                headers: {
-                    "Authorization": "Basic " + btoa(  "desiretec:PreProd2020#")
-                },
                 xhrFields: {
                     withCredentials: false
                 }
