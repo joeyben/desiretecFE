@@ -138,8 +138,10 @@ class FrontendController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show()
+    public function show(Request $request)
     {
+        $host = $request->get('host');
+        $whitelabel = $this->apiService->getWlFromHost($host);
 
         $html = view('frontend.whitelabel.layer')->with([
             'color'        => $this::COLOR,
