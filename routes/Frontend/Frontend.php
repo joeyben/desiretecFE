@@ -46,6 +46,7 @@ Route::group(['middleware' => 'auth'], function ($subdomain) {
     Route::group(['namespace' => 'Users', 'as' => 'user.'], function ($subdomain) {
         Route::get('account', 'AccountController@index')->name('account');
         Route::put('account/update/{id}', 'AccountController@update')->name('update');
+        Route::put('account/changePassword', 'AccountController@changePassword')->name('changePassword');
         Route::patch('account/profilepic/update', 'AccountController@updateProfilePicture')->name('profile-picture');
     });
 

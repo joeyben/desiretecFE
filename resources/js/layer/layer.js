@@ -4,13 +4,36 @@ var exitIntent = window.exitIntent || {};
 (function ($) {
 
     dt.defaultConfig = {
-        baseUrl: 'http://localhost',
+        baseUrl: 'https://www.wish-service.com',
         popupPath: '/show',
         popupStore:'/wish/store',
         cssPath: '/css/layer.css'
     };
 
     dt.popupTemplate = function (variant) {
+
+        var texts = {
+            'eil-n1-social': {
+                header: 'Dürfen wir Dich beraten?',
+                body: 'Unsere besten Reiseberater helfen Dir gerne, Deine persönliche Traumreise zu finden. Probiere es einfach aus! Natürlich kostenlos und unverbindlich.'
+            },
+            'eil-phone': {
+                header: 'Dürfen wir Sie beraten?',
+                body: 'Unsere besten Reiseberater helfen Ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus! Natürlich kostenlos und unverbindlich.'
+            },
+            'eil-desktop': {
+                header: 'Dürfen wir Sie beraten?',
+                body: 'Unsere besten Reiseberater helfen Ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus! Natürlich kostenlos und unverbindlich.'
+            },
+            'eil-tablet': {
+                header: 'Dürfen wir Ihnen helfen?',
+                body: 'Einer unserer erfahrenen Reiseberater hilft Ihnen gerne, die für Sie passende Reise zu finden. Probieren Sie es einfach kostenlos und unverbindlich aus!'
+            },
+            'eil-mobile': {
+                header: 'Dürfen wir Sie beraten?',
+                body: 'Unsere besten Reiseberater helfen Ihnen gerne, Ihre persönliche Traumreise zu finden!'
+            }
+        };
 
         return '' +
             '<div class="kwp-header kwp-variant-n1' + variant + '">' +
@@ -26,7 +49,10 @@ var exitIntent = window.exitIntent || {};
     };
 
 
-    var KwizzmeFakeTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
+
+
+
+    var DTTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'Master WL',
         matchesUrl: '',
         filterFormSelector: 'body',
@@ -144,23 +170,10 @@ var exitIntent = window.exitIntent || {};
             return arr[Math.floor(Math.random() * arr.length)];
         },
         getVariant: function () {
-            if(isMobile()){
-                return 'eil-mobile';
-            }else if(getUrlParams('utm_source') && getUrlParams('utm_source') == 'social'){
-                return this.getRandomElement([
-                    'eil-n1-social'
-                ]);
-            }else{
-                return this.getRandomElement([
-                    'eil-n1',
-                    'eil-n1',
-                    'eil-n2',
-                    'eil-n5'
-                ]);
-            }
+            return 'eil-'+deviceDetector.device;
         }
     });
-    dt.decoders.push(KwizzmeFakeTripDataDecoder);
+    dt.decoders.push(DTTripDataDecoder);
 
 
     dt.initCallbacks = dt.initCallbacks || [];
@@ -270,7 +283,7 @@ var exitIntent = window.exitIntent || {};
                 });
             }
             dt.PopupManager.init();
-            dt.Tracking.init('trendtours_exitwindow','UA-105970361-14');
+            dt.Tracking.init('desiretec_exitwindow','UA-105970361-21');
             dt.triggerButton($event);
             if(deviceDetector.device === "phone" && dt.PopupManager.decoder){
                 dt.scrollUpDetect();
@@ -395,14 +408,6 @@ var exitIntent = window.exitIntent || {};
             restoreValue();
         };
 
-
-        dt.darkGreyLayout = function (e) {
-            e && e.preventDefault();
-            $(".kw-overlay-notActive").click(function () {
-                $(this).fadeOut("slow");
-                $("#airport").focus();
-            });
-        };
 
 
         function isMobile(){

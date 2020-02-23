@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Console\Kernel;
+use Illuminate\Support\Facades\Artisan;
 
 /**
  * Class CacheController
@@ -25,10 +26,21 @@ class CacheController  extends Controller
 
     public function clear()
     {
-      $this->artisan->call('cache:clear');
-      $this->artisan->call('config:clear');
-      $this->artisan->call('view:clear');
+      self::flush();
 
       return redirect('/');
-  }
+    }
+
+    public static function flush()
+    {
+       Artisan::call('cache:clear');
+       Artisan::call('cache:clear');
+       Artisan::call('config:clear');
+       Artisan::call('view:clear');
+    }
+
+    public static function empty()
+    {
+        self::flush();
+    }
 }

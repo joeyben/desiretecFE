@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\Frontend\Pages\PagesRepository;
 use App\Services\Api\ApiService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Modules\Translations\Entities\Translation;
 use Spatie\TranslationLoader\LanguageLine;
 use App\Http\Requests\Wishes\StoreWishesRequest;
@@ -135,6 +136,7 @@ class FrontendController extends Controller
      */
     public function show()
     {
+
         $html = view('frontend.whitelabel.layer')->with([
             'adults_arr'   => $this::ADULTS_ARR,
             'kids_arr'     => $this::KIDS_ARR,
@@ -215,6 +217,14 @@ class FrontendController extends Controller
      */
     public function showTnb()
     {
-        return view('frontend.tnb.tnb');
+        try{
+            $response = $this->apiService->get('/tnb', ['id' => getWhitelabelInfo()['id']]);
+            $tnb = $response->formatResponse('array')['data'];
+
+            return view('frontend.tnb.tnb', compact(['tnb']));
+        } catch (\Exception $e) {
+            Log::error($e);
+            return redirect()->back()->withErrors(['message' => $e->getMessage()]);
+        }
     }
 }
