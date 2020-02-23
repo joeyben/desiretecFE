@@ -139,6 +139,7 @@ class FrontendController extends Controller
      */
     public function show()
     {
+
         $html = view('frontend.whitelabel.layer')->with([
             'color'        => $this::COLOR,
             'adults_arr'   => $this::ADULTS_ARR,
