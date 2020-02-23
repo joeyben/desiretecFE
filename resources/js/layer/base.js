@@ -272,8 +272,7 @@ var dt = window.dt || {};
             this.popupBody.html('<div class="kwp-spinner"></div>');
 
             tripData.first_fetch = 'yes';
-            tripData.host = window.location.host;
-            
+
             jQuery.ajax(this.config.baseUrl + this.config.popupPath + this.getQueryPart(), {
                 type: 'GET',
                 data: tripData,

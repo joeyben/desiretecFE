@@ -136,7 +136,7 @@ class FrontendController extends Controller
      */
     public function show(Request $request)
     {
-        $host = $request->get('host');
+        $host = $request->header('Host');
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
         $html = view('frontend.whitelabel.layer')->with([
             'adults_arr'   => $this::ADULTS_ARR,
@@ -160,6 +160,8 @@ class FrontendController extends Controller
      */
     public function store(StoreWishesRequest $request)
     {
+        $host = $request->header('Host');
+        $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
         if ($request->failed()) {
             $html = view('frontend.whitelabel.layer')->with([
                 'errors'       => $request->errors(),
@@ -169,14 +171,14 @@ class FrontendController extends Controller
                 'ages_arr'     => $this::AGES_ARR,
                 'catering_arr' => $this::CATERING_ARR,
                 'duration_arr' => $this::DURATION_ARR,
-                'logo'         => getWhitelabelInfo()['attachments']['logo'],
-                'color'        => getWhitelabelInfo()['color'],
+                'logo'         => $whitelabel['attachments']['logo'],
+                'color'        => $whitelabel['color'],
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);
         }
         $data = $request->all();
-        $data['whitelabel_id'] = getWhitelabelInfo()['id'];
+        $data['whitelabel_id'] = $whitelabel['id'];
         $data['title'] = "&nbsp;";
         $response = $this->apiService->get('/wish/store', $data);
         $html = view('frontend.whitelabel.created')->render();
