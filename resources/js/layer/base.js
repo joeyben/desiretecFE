@@ -280,6 +280,9 @@ var dt = window.dt || {};
                 dataType: 'html',
                 contentType: 'application/x-www-form-urlencoded',
                 success: jQuery.proxy(this.onPopupFetched, this),
+                headers: {
+                    "Authorization": "Basic " + btoa(  "desiretec:PreProd2020#")
+                },
                 xhrFields: {
                     withCredentials: false
                 }

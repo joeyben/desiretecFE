@@ -138,7 +138,6 @@ class FrontendController extends Controller
     {
         $host = $request->get('host');
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
-
         $html = view('frontend.whitelabel.layer')->with([
             'adults_arr'   => $this::ADULTS_ARR,
             'kids_arr'     => $this::KIDS_ARR,

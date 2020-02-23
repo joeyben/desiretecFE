@@ -4,7 +4,7 @@ var exitIntent = window.exitIntent || {};
 (function ($) {
 
     dt.defaultConfig = {
-        baseUrl: 'https://www.wish-service.com',
+        baseUrl: 'https://tui.wish-service.com',
         popupPath: '/show',
         popupStore:'/wish/store',
         cssPath: '/css/layer.css'
