@@ -13,8 +13,6 @@ use Illuminate\Support\Facades\URL;
 
 Route::get('/', 'FrontendController@index')->name('index');
 
-Route::get('show', 'FrontendController@show');
-Route::get('wish/store', 'FrontendController@store')->name('storeWish');
 
 Route::get('/destinations', 'FrontendController@getAllDestinations');
 Route::get('/airports', 'FrontendController@getAllAirports');

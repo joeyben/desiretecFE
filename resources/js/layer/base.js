@@ -273,11 +273,11 @@ var dt = window.dt || {};
 
             tripData.first_fetch = 'yes';
             tripData.host = window.location.host;
-
+            
             jQuery.ajax(this.config.baseUrl + this.config.popupPath + this.getQueryPart(), {
                 type: 'GET',
                 data: tripData,
-                dataType: 'json',
+                dataType: 'html',
                 contentType: 'application/x-www-form-urlencoded',
                 success: jQuery.proxy(this.onPopupFetched, this),
                 xhrFields: {
