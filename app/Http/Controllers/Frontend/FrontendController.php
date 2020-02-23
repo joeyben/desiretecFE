@@ -137,7 +137,7 @@ class FrontendController extends Controller
     public function show(Request $request)
     {
         $host = $request->get('host');
-        $whitelabel = $this->apiService->getWlFromHost($host);
+        $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
 
         $html = view('frontend.whitelabel.layer')->with([
             'adults_arr'   => $this::ADULTS_ARR,
@@ -146,8 +146,9 @@ class FrontendController extends Controller
             'catering_arr' => $this::CATERING_ARR,
             'duration_arr' => $this::DURATION_ARR,
             'request'      => $this::REQUEST_ARR,
-            'logo'         => getWhitelabelInfo()['attachments']['logo'],
-            'color'        => getWhitelabelInfo()['color'],
+            'logo'         => $whitelabel['attachments']['logo'],
+            'color'        => $whitelabel['color'],
+            '$whitelabel'  => $whitelabel
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);
