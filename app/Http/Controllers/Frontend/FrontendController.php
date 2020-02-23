@@ -16,12 +16,9 @@ use App\Http\Requests\Wishes\StoreWishesRequest;
  */
 class FrontendController extends Controller
 {
-    protected $apiService;
     const BODY_CLASS = 'landing';
-    const BG_IMAGE = 'https://desiretec.s3.eu-central-1.amazonaws.com/uploads/whitelabels/background/15734971371569923197homepage_bcg.jpg';
-    const DISPLAY_NAME = 'Default Whitelabel';
-    const LOGO = '';
-    const COLOR = '#000';
+
+    // TODO: Better solution for these arrays:
     const REQUEST_ARR = [
         "variant" => "eil-mobile",
         "category" => "3",
@@ -115,6 +112,8 @@ class FrontendController extends Controller
         28 => "28 Nächte",
     ];
 
+    protected $apiService;
+
     public function __construct(ApiService $apiService)
     {
         $this->apiService = $apiService;
@@ -126,10 +125,7 @@ class FrontendController extends Controller
     public function index()
     {
         $body_class = $this::BODY_CLASS;
-        $bg_image = "";
-        $display_name = "";
-        $logo = "";
-        return view('frontend.whitelabel.index', compact( 'body_class','bg_image', 'display_name','logo'));
+        return view('frontend.whitelabel.index', compact( 'body_class'));
     }
 
     /**
@@ -142,18 +138,15 @@ class FrontendController extends Controller
     {
 
         $html = view('frontend.whitelabel.layer')->with([
-            'color'        => $this::COLOR,
             'adults_arr'   => $this::ADULTS_ARR,
             'kids_arr'     => $this::KIDS_ARR,
             'ages_arr'     => $this::AGES_ARR,
             'catering_arr' => $this::CATERING_ARR,
             'duration_arr' => $this::DURATION_ARR,
             'request'      => $this::REQUEST_ARR,
-            'bg_image'     => $this::BG_IMAGE,
-            'display_name' => $this::DISPLAY_NAME,
-            'logo'         => $this::LOGO,
+            'logo'         => getWhitelabelInfo()['attachments']['logo'],
+            'color'        => getWhitelabelInfo()['color'],
         ])->render();
-
 
         return response()->json(['success' => true, 'html'=>$html]);
     }
@@ -169,15 +162,13 @@ class FrontendController extends Controller
             $html = view('frontend.whitelabel.layer')->with([
                 'errors'       => $request->errors(),
                 'request'      => $request->all(),
-                'color'        => $this::COLOR,
                 'adults_arr'   => $this::ADULTS_ARR,
                 'kids_arr'     => $this::KIDS_ARR,
                 'ages_arr'     => $this::AGES_ARR,
                 'catering_arr' => $this::CATERING_ARR,
                 'duration_arr' => $this::DURATION_ARR,
-                'bg_image'     => $this::BG_IMAGE,
-                'display_name' => $this::DISPLAY_NAME,
-                'logo'         => $this::LOGO,
+                'logo'         => getWhitelabelInfo()['attachments']['logo'],
+                'color'        => getWhitelabelInfo()['color'],
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);
@@ -201,48 +192,20 @@ class FrontendController extends Controller
             ->withpage($result);
     }
 
-    /**
-     * URL: /get-all-destinations
-     * Returns all destinations.
-     *
-     * @return array
-     */
-    public function getAllDestinations(Request $request)
+    public function getAllDestinations()
     {
-        $query = $request->get('query');
-        $destinations = [];
-        Regions::select('regionName')
-            ->where('type', '1')
-            ->where('regionName', 'like', $query . '%')
-            ->groupBy('regionName')
-            ->chunk(200, function ($regions) use (&$destinations) {
-                foreach ($regions as $region) {
-                    $destinations[] = $region->regionName;
-                }
-            });
+        $response = $this->apiService->get('/destinations');
+
+        $destinations = $response->formatResponse('array');
 
         return $destinations;
     }
 
-    /**
-     * URL: /get-all-airports
-     * Returns all airports.
-     *
-     * @return array
-     */
     public function getAllAirports(Request $request)
     {
-        $query = $request->get('query');
-        $airports = [];
-        Regions::select('regionCode', 'regionName')
-            ->where('type', 0)
-            ->where('regionName', 'like', $query . '%')
-            ->groupBy('regionName')
-            ->chunk(200, function ($regions) use (&$airports) {
-                foreach ($regions as $region) {
-                    $airports[] = $region->regionName;
-                }
-            });
+        $response = $this->apiService->get('/airports');
+
+        $airports = $response->formatResponse('array');
 
         return $airports;
     }

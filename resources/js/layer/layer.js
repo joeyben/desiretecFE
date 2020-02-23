@@ -36,17 +36,12 @@ var exitIntent = window.exitIntent || {};
         };
 
         return '' +
-            '<div class="kwp-header kwp-variant-' + variant + '">' +
+            '<div class="kwp-header kwp-variant-n1' + variant + '">' +
             '<div class="kwp-close-button kwp-close"></div>' +
             '<div class="kwp-overlay"></div>' +
             '<div class="kwp-logo"></div>' +
             '<div class="kwp-header-content">' +
-            '<h1>' +
-            texts[variant].header + ' <br/>' +
-            '</h1>' +
-            '<p>' +
-            texts[variant].body +
-            '</p>' +
+            '<h1>Dürfen wir Sie beraten?</h1>' +
             '</div>' +
             '</div>' +
             '<div class="kwp-body '+variant+'-body">' +
@@ -182,6 +177,7 @@ var exitIntent = window.exitIntent || {};
 
 
     dt.initCallbacks = dt.initCallbacks || [];
+
         dt.initCallbacks.push(function (popup) {
             exitIntent.init();
             document.addEventListener('exit-intent', function (e) {
@@ -202,7 +198,7 @@ var exitIntent = window.exitIntent || {};
             var formSent = $('.kwp-content').hasClass('kwp-completed-master');
 
             this.modal.addClass('tmp-hidden');
-            if(!formSent) {
+            if(!formSent && $('.trigger-modal').length === 0) {
                 this.trigger =
                     $('<span/>', {'class': 'trigger-modal'});
                 $('body').prepend(this.trigger);
@@ -277,6 +273,7 @@ var exitIntent = window.exitIntent || {};
         };
 
         $(document).ready(function (e) {
+
             var $event = e;
             if(deviceDetector.device === "phone") {
                 dt.PopupManager.teaser = true;
@@ -308,9 +305,24 @@ var exitIntent = window.exitIntent || {};
             }
         });
 
-        $( window ).on( "orientationchange", function( event ) {
+        $(window).on( "orientationchange", function( event ) {
             $(".dt-modal").css({'top':(document.documentElement.clientHeight - 85)+"px"});
         });
+
+        $(window).on('resize', function() {
+            dt.adjustResponsive();
+        });
+
+        $(document).mouseup(function(e) {
+            if($('.dt-modal-visible').length > 0) {
+                // close if click event outside the modal
+                var dtModal = $('.dt-modal-visible');
+                if (!dtModal.is(e.target) && dtModal.has(e.target).length === 0) {
+                    dt.PopupManager.closePopup(e);
+                }
+            }
+        });
+
 
         dt.childrenAges = function () {
             (function ($, children, age) {
@@ -474,49 +486,11 @@ var exitIntent = window.exitIntent || {};
 
         dt.applyBrandColor = function () {
 
-            // Style variables
-            // brandColor is passed through blade
-            var brandColorDarker = brandColor;
-
-            var btnPrimaryCss = {
+            var layerButtons = $('.kwp .primary-btn, .kwp .pax-more .button a, .kwp .duration-more .button a');
+            layerButtons.css({
                 'background': brandColor,
                 'border': '1px solid ' + brandColor,
                 'color': '#fff',
-            };
-            var btnPrimaryHoverCss = {
-                'background': brandColorDarker,
-                'border': '1px solid ' + brandColorDarker,
-                'color': '#fff',
-            };
-            var btnSecondaryCss = {
-                'background': '#fff',
-                'border': '1px solid ' + brandColor,
-                'color': brandColor,
-            };
-            var btnSecondaryHoverCss = {
-                'background': '#fff',
-                'border': '1px solid ' + brandColorDarker,
-                'color': brandColorDarker,
-            };
-
-            // Apply styles
-            var layerButtons = $('.primary-btn, .kwp .pax-col .kwp-form-group .pax-more .button a');
-            layerButtons
-                .css(btnPrimaryCss)
-                .mouseover(function () {
-                    $(this).css(btnPrimaryHoverCss);
-                }).mouseout(function () {
-                    $(this).css(btnPrimaryCss);
-                });
-
-            var paxMore = $('.kwp .pax-col .kwp-form-group .pax-more .button a');
-            paxMore.css({
-                'background': brandColor,
-            });
-
-            var durationMore = $('.kwp .duration-col .kwp-form-group .duration-more .button a');
-            durationMore.css({
-                'background': brandColor,
             });
 
             var footerLinks = $('.kwp-agb p a');
@@ -524,20 +498,8 @@ var exitIntent = window.exitIntent || {};
                 'color': brandColor,
             });
 
-            var checkboxEl = $('.kwp input[type="checkbox"]:checked:after');
             $('<style>.kwp input[type="checkbox"]:checked:after { background-color: ' + brandColor + '; border: 1px solid ' + brandColor + '; }</style>').appendTo('head');
 
-            var footerHref = $('.kwp-agb p a');
-            footerHref.css({
-                'color': brandColor,
-            });
-
-            var mobileLayerHeader = $('.kwp-header.kwp-variant-eil-mobile');
-            mobileLayerHeader.css({
-                'background': brandColor,
-            });
-
-            var successHref = $('.kwp-completed-master a');
             $("<style>.kwp-completed-master a { color: " + brandColor + "; }</style>")
                 .appendTo(document.documentElement);
         };
@@ -552,7 +514,7 @@ var exitIntent = window.exitIntent || {};
                     minLength: 3,
                     highlight: true,
                     source: function(query) {
-                        return $.get('https://testkurenundwellness.reise-wunsch.com/get-all-destinations', {query: query});
+                        return $.get('/destinations', {query: query});
                     }
                 }
             });
@@ -566,7 +528,7 @@ var exitIntent = window.exitIntent || {};
                     minLength: 3,
                     highlight: true,
                     source: function(query) {
-                        return $.get('https://testkurenundwellness.reise-wunsch.com/get-all-airports', {query: query});
+                        return $.get('/airports', {query: query});
                     }
                 }
             });

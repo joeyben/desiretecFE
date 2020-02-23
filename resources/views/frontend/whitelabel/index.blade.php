@@ -1,5 +1,11 @@
 @extends('frontend.whitelabel.master')
 
+@section('before-scripts')
+    <script type="application/javascript">
+        var brandColor = {!! json_encode(getWhitelabelInfo()['color']) !!};
+    </script>
+@endsection
+
 @section('content')
     <div class="slider" style="background-image: url({{ getWhitelabelInfo()['attachments']['background']  }})">
         <div class="welcome">
