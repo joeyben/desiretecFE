@@ -5,8 +5,7 @@
 @endsection
 
 @section("after-styles")
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/jquery.slick/1.5.5/slick.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/jquery.slick/1.5.5/slick-theme.css" />
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 @endsection
 
 @section('content')
@@ -159,6 +158,9 @@
                             $locations = [];
                         @endphp
                         @foreach($offers as $key => $offer)
+                            @if (!isset($offer['hotel_data']['hotel']))
+                                @continue
+                            @endif
                             @php
                                 $hotelData = [
                                     'title' => $offer['hotel_data']['hotel']['name'],
@@ -217,14 +219,14 @@
                                         @for ($i = 0; $i < 3; $i++)
                                         <li>
                                             <i class="fal fa-check"></i>
-                                            <h4 class="dark-grey">{{ getKeywordText($offer['data']['hotelOffer']['hotel']['keywordList'][$i]) }}</h4>
+                                            <h4 class="dark-grey">{{ $offer['data']['hotelOffer']['hotel']['keywordHighlights'][$i] }}</h4>
                                         </li>
                                         @endfor
                                     </ul>
 
                                     <div class="travel-info">
                                         <h4>{{ $offer['data']['hotelOffer']['boardType']['name'] }}</h4>
-                                        <h4 data-toggle="tooltip" data-placement="bottom" title="{{ $offer['data']['serviceOffer']['description'] }}">{{ $offer['data']['travelDate']['duration'] }} Tage, {{ str_limit($offer['data']['serviceOffer']['description'], 20, "...") }}</h4>
+                                        <h4 data-toggle="tooltip" data-placement="bottom" title="{{ $offer['data']['serviceOffer']['description'] }}">{{ $offer['data']['travelDate']['duration'] }} Tage, {{ \Illuminate\Support\Str::limit($offer['data']['serviceOffer']['description'], 20, "...") }}</h4>
                                     </div>
                                 </div>
 
@@ -241,11 +243,10 @@
 
                                         $kids = $wish->ages ? "&children=".$wish->ages : "";
 
-                                        $wlAutooffer = getWhitelabelAutooffers();
-                                        $tourOperators = $wlAutooffer['tourOperators'];
+                                        $tourOperators = getWhitelabelInfo()['tourOperators'];
                                         $duration = (int)$offer['data']['travelDate']['duration'] - 1;
                                     @endphp
-                                    @if (getCurrentWhiteLabelId() === 159)
+                                    @if (getWhitelabelInfo()['id'] === 159)
                                         <a class="btn btn-primary" target="_blank" href="https://ibe.traffics.de/1100000160000000/pauschalreise/angebote?giataIdList={{ $offer['hotel_data']['hotel']['giata']['hotelId'] }}&tourOperator={{ $offer['hotel_data']['hotel']['tourOperator']['code'] }}&roomTypeList=&minPricePerPerson={{ $offer['data']['personPrice']['value'] }}&searchDate={{ $hin }}%2C{{ $zu }}%2C{{ $duration }}&minBoardType={{ $offer['data']['hotelOffer']['boardType']['code'] }}&inclusiveList=&adults={{ $wish->adults }}{{ $kids }}&departureAirportList={{ $offer['data']['flightOffer']['flight']['departureAirport']['code'] }}&destinationName={{ $wish->destination }}&regionList={{ $offer['data']['hotelOffer']['hotel']['location']['region']['code'] }}&ref=desiretec">
                                             <i class="fas fa-chevron-right"></i>
                                         </a>
@@ -271,32 +272,19 @@
     </main>
 @endsection
 
+@section('before-scripts')
+    <script type="application/javascript">
+        var brandColor = {!! json_encode(getWhitelabelInfo()['color']) !!};
+    </script>
+@endsection
+
 @section('after-scripts')
-
-    <!-- jquery -->
-    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAE60OtWg7HL-wqOpGHcRGAD6HpYzAh6t4"></script>
-
-    <!-- sllick slider -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.slick/1.5.5/slick.min.js"></script>
-
 
     <script type="application/javascript">
 
         $(document).ready(function(){
-            var brandColor = {!! json_encode(getCurrentWhiteLabelColor()) !!};
-
-            $('.btn-primary').css({
-                'background': brandColor,
-                'border': '1px solid ' + brandColor,
-                'color': '#fff',
-            });
-            $('.btn-secondary').css({
-                'background': '#fff',
-                'border': '1px solid ' + brandColor,
-                'color': brandColor,
-            });
             $('.about-section h3 a').css({'color': brandColor});
             $('.listed-offers-section .vertical-line').css({'background-color': brandColor});
             $('.fas.fa-heart, .fal.fa-check, .offers .fulfill span, .fas.fa-map-marker-alt, .offers .slick-slider i').css({'color': brandColor});
@@ -306,11 +294,18 @@
             if($('.offers .info-icons').length === 0) {
                 $('.offers .highlights').css({'padding-bottom': '15px'});
             }
-        });
 
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
-        })
+            $('.slick-slider').slick({
+                dots: false,
+                infinite: true,
+                speed: 300,
+                slidesToShow: 1,
+                prevArrow: '<div class="btn arrow-left"><i class="fa fa-chevron-left"></i></div>',
+                nextArrow: '<div class="btn arrow-right"><i class="fa fa-chevron-right"></i></div>'
+            });
+
+            $('[data-toggle="tooltip"]').tooltip();
+        });
 
         function scrollToAnchor(id) {
             $('html, body').animate({
@@ -322,23 +317,10 @@
             $('#offer-highlights').detach().appendTo('#main-offer-section-shell');
             $('#offer-highlights').css('height', '210px');
             $('#offer-highlights').toggle();
-
-            // TODO: Fix animation
-            // $('#offer-highlights').animate({
-            //     height: '180px'
-            // }, 500);
         }
 
-        $('.slick-slider').slick({
-            dots: false,
-            infinite: true,
-            speed: 300,
-            slidesToShow: 1,
-            prevArrow: '<div class="btn arrow-left"><i class="fa fa-chevron-left"></i></div>',
-            nextArrow: '<div class="btn arrow-right"><i class="fa fa-chevron-right"></i></div>'
-        });
-
     </script>
+
     @if (count($offers) > 0)
     <script>
         var locations = JSON.parse('{!! json_encode($locations) !!}');

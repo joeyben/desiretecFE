@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend\Auth;
 
 use App\ApiAuth;
 use App\Http\Controllers\Controller;
+use App\Http\Middleware\WhitelabelMiddleware;
 use App\Http\Requests\LinkRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\TokenRequest;
@@ -58,8 +59,9 @@ class AuthController extends Controller
     {
         try {
             ApiAuth::logout();
+            session()->forget('c-agent');
 
-            return redirect()->route('frontend.index');
+            return redirect()->route('frontend.index', WhitelabelMiddleware::getSubDomain());
         } catch (\Exception $e) {
             Log::error($e);
             return redirect()->back()->withErrors(['message' => $e->getMessage()]);

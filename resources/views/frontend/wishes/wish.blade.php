@@ -10,34 +10,13 @@
 </script>
 @endsection
 
-@section('after-scripts')
-    <script type="text/javascript">
-        $(document).ready(function() {
-
-            function isEllipsisActive(element) {
-                return (element.offsetWidth < element.scrollWidth);
-            }
-
-            if(!isEllipsisActive(document.getElementById("departure-mousehover-value"))) {
-                document.getElementById("departure-mousehover").remove();
-            }
-            if(!isEllipsisActive(document.getElementById("arrival-mousehover-value"))) {
-                document.getElementById("arrival-mousehover").remove();
-            }
-        });
-
-    </script>
-@endsection
-
 @section('content')
-
 <section class="section-top">
   <div class="img-background">
     <div class="container">
       <div class="col-md-8 bg-left-content">
         @if ($logged_in_user && ($logged_in_user['role'] === "Seller" || $logged_in_user['role'] === "Executive"))
-        <!-- TODO: Get the active agent somehow -->
-        <h3>Hallo, active agent</h3>
+        <h3>Hallo, {{ $currentAgent['name'] }}</h3>
         @elseif ($logged_in_user['role'] == ('User') && $wish->owner->last_name !== trans('user.default.last_name'))
         <h3>Hallo {{ $wish->owner->first_name }} {{ $wish->owner->last_name }},</h3>
         @elseif ($logged_in_user['role'] == ('User') && $wish->owner->first_name)
@@ -261,11 +240,26 @@
 @section('after-scripts')
 
 <script type="application/javascript">
-function scrollToAnchor(id) {
-  $('html, body').animate({
-    scrollTop: $("#" + id).offset().top - 75
-  }, 1000);
-}
+
+    function scrollToAnchor(id) {
+        $('html, body').animate({
+            scrollTop: $("#" + id).offset().top - 75
+        }, 1000);
+    }
+
+    function isEllipsisActive(element) {
+        return (element.offsetWidth < element.scrollWidth);
+    }
+
+    $(document).ready(function() {
+        if(!isEllipsisActive(document.getElementById("departure-mousehover-value"))) {
+            document.getElementById("departure-mousehover").remove();
+        }
+        if(!isEllipsisActive(document.getElementById("arrival-mousehover-value"))) {
+            document.getElementById("arrival-mousehover").remove();
+        }
+    });
+
 </script>
 
 @endsection

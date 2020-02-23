@@ -12,6 +12,10 @@ const WebpackRTLPlugin = require('webpack-rtl-plugin');
  |
  */
 
+mix.options({
+    processCssUrls: false
+});
+
 mix.setPublicPath('public')
     //Frontend js
     .js([
@@ -69,5 +73,9 @@ mix.setPublicPath('public')
         plugins: [
             new WebpackRTLPlugin('/css/[name].rtl.css')
         ]
-    })
-    .version();
+    });
+
+if (mix.inProduction()) {
+    mix.version();
+}
+

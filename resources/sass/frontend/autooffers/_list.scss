@@ -36,43 +36,6 @@ i {
 ul {
   list-style: none;
 }
-
-.avatar {
- background-image: url(https://mvp.desiretec.com/img/frontend/profile-picture/travel-agency.jpg);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-.avatar-circle {
-  border-radius: 50%;
-}
-.avatar-square {
-  border-radius: none;
-}
-.avatar.size-1 {
-  width: 40px;
-  height: 40px;
-}
-.avatar.size-2 {
-  width: 30px;
-  height: 30px;
-}
-.avatar.size-3 {
-  width: 20px;
-  height: 20px;
-}
-.avatar.size-4 {
-  width: 16px;
-  height: 16px;
-}
-.avatar.size-5 {
-  width: 14px;
-  height: 14px;
-}
-.avatar.size-6 {
-  width: 12px;
-  height: 12px;
-}
 .btn {
   display: inline-block;
   text-align: center;
@@ -248,7 +211,7 @@ ul {
   position: absolute;
   right: 0;
   top: 0;
-  background-color: $black;
+  background-color: $white;
   // TODO: Uncomment when implement data
   background-image: url(https://images.unsplash.com/photo-1499232217236-f8a184148559?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1001&q=80);
   background-repeat: no-repeat;
