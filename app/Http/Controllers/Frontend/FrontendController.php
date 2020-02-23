@@ -224,7 +224,7 @@ class FrontendController extends Controller
             return view('frontend.tnb.tnb', compact(['tnb']));
         } catch (\Exception $e) {
             Log::error($e);
-            return redirect()->back()->withErrors(['message' => $e->getMessage()]);
+            abort(503, trans('errors.tnb.notset'));
         }
     }
 }
