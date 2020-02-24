@@ -103,10 +103,10 @@ const app = new Vue({
                 'border': '1px solid ' + brandColor,
                 'color': brandColor,
             });
-            $("input").focus(function(){
+            $("input, textarea").focus(function(){
                 $(this).css({'border-color': brandColor});
             });
-            $("input").blur(function(){
+            $("input, textarea").blur(function(){
                 $(this).css({'border-color': 'inherit'});
             });
             $("<style type='text/css'>::selection { background-color: " + brandColor + "; color: #fff; }</style>")
