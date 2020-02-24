@@ -137,7 +137,6 @@ class FrontendController extends Controller
     public function show(Request $request)
     {
         $host = $request->header('Host');
-        $host = 'sportreisen';
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
         $layer_details = [];
         if(!empty($whitelabel['layers'][0]) && !is_null($whitelabel['layers'][0])){
