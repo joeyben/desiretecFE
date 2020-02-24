@@ -137,7 +137,12 @@ class FrontendController extends Controller
     public function show(Request $request)
     {
         $host = $request->header('Host');
+        $host = 'sportreisen';
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
+        $layer_details = [];
+        if(!empty($whitelabel['layers'][0]) && !is_null($whitelabel['layers'][0])){
+            $layer_details = $whitelabel['layers'][0];
+        }
         $html = view('frontend.whitelabel.layer')->with([
             'adults_arr'   => $this::ADULTS_ARR,
             'kids_arr'     => $this::KIDS_ARR,
@@ -147,7 +152,8 @@ class FrontendController extends Controller
             'request'      => $this::REQUEST_ARR,
             'logo'         => $whitelabel['attachments']['logo'],
             'color'        => $whitelabel['color'],
-            '$whitelabel'  => $whitelabel
+            '$whitelabel'  => $whitelabel,
+            'layer_details'=> $layer_details
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);
@@ -181,7 +187,17 @@ class FrontendController extends Controller
         $data['whitelabel_id'] = $whitelabel['id'];
         $data['title'] = "&nbsp;";
         $response = $this->apiService->get('/wish/store', $data);
-        $html = view('frontend.whitelabel.created')->render();
+
+        $headline_success = trans('layer.success.headline');
+        $subheadline_success = trans('layer.success.subheadline');
+        if(!empty($whitelabel['layers'][0]) && !is_null($whitelabel['layers'][0])){
+            $headline_success = $whitelabel['layers'][0]['headline_success'];
+            $subheadline_success = $whitelabel['layers'][0]['subheadline_success'];
+        }
+        $html = view('frontend.whitelabel.created')->with([
+            'headline_success'       => $headline_success,
+            'subheadline_success'    => $subheadline_success,
+        ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);
     }

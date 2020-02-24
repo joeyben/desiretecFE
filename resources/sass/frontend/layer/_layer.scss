@@ -514,7 +514,9 @@ ul.kwp-form-errors {
   padding: 0;
   z-index: 11111;
   position: relative;
-  background: transparent url(https://i.imgur.com/lJInLa9.png) no-repeat;
+  background-color: transparent;
+  background: url(https://i.imgur.com/lJInLa9.png);
+  background-repeat: no-repeat;
   background-position: 100% 80%;
   background-size: cover;
 
