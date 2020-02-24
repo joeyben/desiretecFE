@@ -33,11 +33,6 @@
         display: none;
       }
     }
-    &:first-child {
-      &:after {
-        width: 0.5px;
-      }
-    }
     a {
       color: $black;
       &:hover {
@@ -66,7 +61,6 @@
     margin-right: 10px;
   }
   .dropdown-menu {
-    min-width: 180px;
     top: 30px;
   }
   .dropdown-menu-agent {

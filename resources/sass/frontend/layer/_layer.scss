@@ -87,7 +87,7 @@ $gutter: 30px;
   z-index: $zindex-modal;
   font-size: 14px;
   line-height: 19px;
-  top: 0;
+  top: 0 !important;
   opacity: 1;
   transition: all 0.2s ease;
   -webkit-transition: all 0.2s ease;
@@ -538,12 +538,12 @@ ul.kwp-form-errors {
   }
   .kwp-logo {
     display: block;
-    height: 50px;
     position: absolute;
     width: 30%;
+    height: 50px;
     left: 20px;
-    top: 20px;
-    background-size: contain !important;
+    top: 10px;
+    background-size: contain;
   }
   h1{
     font-size: 20px;
@@ -658,14 +658,6 @@ p.kwp-info {
 	font-weight: 500;
 	line-height: 1.3em;
 	color: #000;
-	a {
-	  text-decoration: none;
-	}
-	#agb_link, #datenschutz{
-	  &:hover {
-		text-decoration: none;
-	  }
-	}
   }
   label {
 	font-weight: normal;
@@ -821,8 +813,15 @@ p.kwp-info {
   }
 }
 
-#agb_link, #datenschutz{
-  text-decoration: underline;
+.kwp-footer{
+  padding: 20px 30px 30px;
+  #agb_link, #datenschutz{
+    text-decoration: underline;
+    color: $black;
+    &:hover {
+      text-decoration: none;
+    }
+  }
 }
 
 .email-label-info {
@@ -1032,18 +1031,8 @@ p.kwp-info {
 	-webkit-appearance:initial;
 	-moz-appearance: initial;
 	padding-left: 10px;
-	// option:checked, option:hover {
-	//   background: $darkgrey2;
-	//   color: #fff;
-	// }
   }
-  .kwp-footer{
-	padding: 20px 30px 30px;
-  }
-  /*.kwp input[type='date']:after {
-	  content: attr(placeholder);
-  }*/
-  /***** Fix layer on Mobile ******/
+
   .kwp{
 	.duration-time, .travelers{
 	  height: 25px;
@@ -1204,7 +1193,10 @@ p.kwp-info {
   }
   .kwp-custom-select{
 	#catering{
-	  padding: 0 10px;
+      padding: 0 10px;
+      &:hover{
+        box-shadow: none;
+      }
 	}
   }
   .kwp textarea{

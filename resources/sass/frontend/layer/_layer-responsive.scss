@@ -74,6 +74,14 @@
           letter-spacing: 0.03em;
           color: #fff;
         }
+        .kwp-close{
+          top: 7px;
+          right: 10px;
+          i{
+            color: $white;
+            bottom: auto;
+          }
+        }
       }
     }
   }
@@ -311,10 +319,6 @@
   .kwp-header-content{
     margin-top: 0px;
     font-weight: bold;
-  }
-  .kwp-close{
-    top: 7px;
-    right: 5px;
   }
   .dt-modal-agb .kwp-close{
     width: 50px;

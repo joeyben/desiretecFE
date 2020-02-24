@@ -486,16 +486,10 @@ var exitIntent = window.exitIntent || {};
 
         dt.applyBrandColor = function () {
 
-            var layerButtons = $('.kwp .primary-btn, .kwp .pax-more .button a, .kwp .duration-more .button a');
-            layerButtons.css({
+            $('.kwp .primary-btn, .kwp .pax-more .button a, .kwp .duration-more .button a').css({
                 'background': brandColor,
                 'border': '1px solid ' + brandColor,
                 'color': '#fff',
-            });
-
-            var footerLinks = $('.kwp-agb p a');
-            footerLinks.css({
-                'color': brandColor,
             });
 
             $('<style>.kwp input[type="checkbox"]:checked:after { background-color: ' + brandColor + '; border: 1px solid ' + brandColor + '; }</style>').appendTo('head');

@@ -20,7 +20,7 @@
                             @foreach($agentsForSeller as $agent)
                                 <li class="nav-item">
                                     <a href="{{ route('frontend.agents.switch', ['id' => $agent['id'], 'subdomain' => $subdomain]) }}" >
-                                        <img class="agent-dropdown-img avatar-size-1 avatar-circle" src="{{ Storage::disk('s3')->url('img/agent/' . $agent['avatar']) }}">
+                                        <img class="agent-dropdown-img avatar-size-2 avatar-circle" src="{{ Storage::disk('s3')->url('img/agent/' . $agent['avatar']) }}">
                                         <span>{{ $agent['name'] }}</span>
                                     </a>
                                 </li>
