@@ -38,7 +38,7 @@
                 @endif
 
             @else
-                <li class="dropdown nav-item">
+                <li class="dropdown nav-item dropdown-user">
                     <a class="dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="">
                         @if ($logged_in_user['name'] == "Muster Name")
                             {{ trans('navs.frontend.user.name') }}

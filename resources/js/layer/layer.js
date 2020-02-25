@@ -313,11 +313,14 @@ var exitIntent = window.exitIntent || {};
             dt.adjustResponsive();
         });
 
+        // close if click outside the modal
         $(document).mouseup(function(e) {
             if($('.dt-modal-visible').length > 0) {
-                // close if click event outside the modal
                 var dtModal = $('.dt-modal-visible');
-                if (!dtModal.is(e.target) && dtModal.has(e.target).length === 0) {
+                var datePicker = $('.pika-single');
+
+                if ((!dtModal.is(e.target) && dtModal.has(e.target).length === 0) &&
+                    (!datePicker.is(e.target) && datePicker.has(e.target).length === 0)) {
                     dt.PopupManager.closePopup(e);
                 }
             }
