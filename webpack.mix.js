@@ -71,7 +71,8 @@ mix.setPublicPath('public')
     .webpackConfig({
         plugins: [
             new WebpackRTLPlugin('/css/[name].rtl.css')
-        ]
+        ],
+        processCssUrls: false
     });
 
 if (mix.inProduction()) {
