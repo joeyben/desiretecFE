@@ -27,6 +27,8 @@
 
         methods: {
             sendMessage() {
+                var self = this;
+
                 var data = {
                     user_id: this.userid,
                     wish_id: this.wishid,
@@ -38,7 +40,7 @@
                     axios.post('/messages', data).then(response => {
                         $('#antworten').val('');
                         $('#antworten').slideUp();
-                        this.$emit('messaged');
+                        self.$emit('messaged');
                     });
                 }
 
@@ -53,6 +55,8 @@
             },
 
             updateMessage() {
+                var self = this;
+
                 var message = this.newMessage;
                 var messageid = $('#edit-val').val();
 
@@ -65,7 +69,7 @@
 
                     $('.button-show').css('display','inline-block')
                     $('.button-hide').css('display','none');
-                    this.$emit('messaged');
+                    self.$emit('messaged');
                 })
                 .catch(function (error) {
                     console.log(error);

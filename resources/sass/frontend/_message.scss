@@ -8,20 +8,12 @@
   h4{
     margin-bottom:20px;
   }
-  .glyphicon-bell{
-    top:3px;
-    color:$gray2;
-  }
   .cu-img-left{
     display: inline-block;
     float: left;
     margin-right: 25px;
-    margin-top:5px;
+    margin-top:15px;
     img{
-      border: 1px solid #ccc;
-      width: 35px;
-      height: 35px;
-      border-radius: 100%;
       object-fit: cover;
     }
   }
@@ -29,12 +21,8 @@
     display: inline-block;
     float: right;
     margin-left: 25px;
-    margin-top: 20px;
+    margin-top: 15px;
     img{
-      border: 1px solid #ccc;
-      width: 35px;
-      height: 35px;
-      border-radius: 100%;
       object-fit: cover;
     }
   }
@@ -118,13 +106,10 @@
 }
 #antworten{
   height: 80px;
-  border: 1px solid $gray2;
+  border: 1px solid $gray2 !important;
   padding: 3px 10px;
   display: none;
   @include border-radius(3px);
   width: 100%;
   margin-top: 25px;
-}
-#antworten:focus{
-  border: 1px solid #636b6f;
 }
