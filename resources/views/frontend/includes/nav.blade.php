@@ -20,7 +20,7 @@
                             @foreach($agentsForSeller as $agent)
                                 <li class="nav-item">
                                     <a href="{{ route('frontend.agents.switch', ['id' => $agent['id'], 'subdomain' => $subdomain]) }}" >
-                                        <img class="agent-dropdown-img avatar-size-1 avatar-circle" src="{{ Storage::disk('s3')->url('img/agent/' . $agent['avatar']) }}">
+                                        <img class="agent-dropdown-img avatar-size-2 avatar-circle" src="{{ Storage::disk('s3')->url('img/agent/' . $agent['avatar']) }}">
                                         <span>{{ $agent['name'] }}</span>
                                     </a>
                                 </li>
@@ -49,7 +49,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink-4">
                         @if ($logged_in_user && ($logged_in_user['role'] === "Executive"))
-                            <a class="dropdown-item" href="{{ env('API_URL') . '/admin/dashboard#/' }}" target="_blank" >Administration</a>
+                            <a class="dropdown-item" href="{{ env('ADMIN_URL', 'https://mvp.desiretec.com') . '/admin/dashboard#/' }}" target="_blank" >Administration</a>
                         @endif
 
                         @if ($logged_in_user && $logged_in_user['role'] === "Seller")

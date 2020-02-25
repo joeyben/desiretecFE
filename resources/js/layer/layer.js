@@ -41,7 +41,7 @@ var exitIntent = window.exitIntent || {};
             '<div class="kwp-overlay"></div>' +
             '<div class="kwp-logo"></div>' +
             '<div class="kwp-header-content">' +
-            '<h1>Dürfen wir Sie beraten?</h1>' +
+            '<h1 id="heading">Dürfen wir Sie beraten?</h1>' +
             '</div>' +
             '</div>' +
             '<div class="kwp-body '+variant+'-body">' +
@@ -486,22 +486,27 @@ var exitIntent = window.exitIntent || {};
 
         dt.applyBrandColor = function () {
 
-            var layerButtons = $('.kwp .primary-btn, .kwp .pax-more .button a, .kwp .duration-more .button a');
-            layerButtons.css({
+            $('.kwp .primary-btn, .kwp .pax-more .button a, .kwp .duration-more .button a').css({
                 'background': brandColor,
                 'border': '1px solid ' + brandColor,
                 'color': '#fff',
-            });
-
-            var footerLinks = $('.kwp-agb p a');
-            footerLinks.css({
-                'color': brandColor,
             });
 
             $('<style>.kwp input[type="checkbox"]:checked:after { background-color: ' + brandColor + '; border: 1px solid ' + brandColor + '; }</style>').appendTo('head');
 
             $("<style>.kwp-completed-master a { color: " + brandColor + "; }</style>")
                 .appendTo(document.documentElement);
+        };
+
+        dt.applyLayerContent = function () {
+            $('#heading').text(layerContent.headline);
+            if (typeof layerContent.attachments[0].url !== 'undefined') {
+                $('.kwp-header').css({
+                    'background-image': "url("+layerContent.attachments[0].url+")",
+                    'background-size': 'cover',
+                    'background-position': 'center',
+                });
+            }
         };
 
         dt.autocomplete = function(){
@@ -548,7 +553,7 @@ var exitIntent = window.exitIntent || {};
                 dt.PopupManager.isMobile = true;
                 dt.PopupManager.layerShown = true;
 
-                $(".kwp-header").css('background', brandColor);
+                $(".kwp-header").css('background-color', brandColor);
 
                 $('.error-input').siblings('i').css('bottom', '30px');
 
@@ -557,7 +562,7 @@ var exitIntent = window.exitIntent || {};
                 $("body").removeClass('mobile-layer');
                 $(".dt-modal").removeClass('m-open');
 
-                $(".kwp-header").removeAttr('style');
+                $(".kwp-header").css('background-color', 'transparent');
 
                 $('.footer-col .submit-col').detach().appendTo('.kwp-content .kwp-row:last-child');
             }

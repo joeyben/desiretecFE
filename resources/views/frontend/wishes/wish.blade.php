@@ -28,7 +28,7 @@
         @if ($logged_in_user['role'] = ('Seller'))
         <p class="header-p mb-30">{!! trans('wish.view.stage.seller_empty',['date' =>
           \Carbon\Carbon::parse($wish->created_at)->format('d.m.Y')]) !!}</p>
-        <a href="{{route('frontend.offers.create', ['id' => $wish->id, 'subdomain' => $subdomain])}}"
+        <a href="{{route('frontend.offers.create', ['id' => $wish->wish_id, 'subdomain' => $subdomain])}}"
           class="primary-btn">{{ trans('buttons.wishes.frontend.create_offer')}}</a>
         @elseif (count($wish->offers) > 0)
         <p class="header-p">{!! trans('wish.view.stage.user_offer',['date' =>
@@ -62,7 +62,7 @@
       <h4>
         Neue Nachrichten <i class="fal fa-bell ml-5"></i>
       </h4>
-      <chat-messages :wishid="{{ $wish->id }}" :userid="{{ $logged_in_user['id'] }}" :groupid="{{ $wish->group_id }}">
+      <chat-messages :wishid="{{ $wish->wish_id }}" :userid="{{ $logged_in_user['id'] }}" :groupid="{{ $wish->group_id }}">
       </chat-messages>
     </div>
   </div>
@@ -145,7 +145,7 @@
       </div>
 
       <div class="modal-footer">
-        <input type="hidden" name="wish_id" value="{{ $wish->id }}" />
+        <input type="hidden" name="wish_id" value="{{ $wish->wish_id }}" />
         <input type="hidden" name="period" value="no data" />
         <input type="submit" class="primary-btn wm-1-btn" value="Nachricht absenden" />
       </div>
@@ -199,7 +199,7 @@
               </select>
             </div>
 
-            <input type="hidden" name="wish_id" value="{{ $wish->id }}" />
+            <input type="hidden" name="wish_id" value="{{ $wish->wish_id }}" />
             <input type="hidden" name="subject" value="no data" />
             <input type="hidden" name="message" value="no data" />
             <input type="hidden" name="email" value="no data" />

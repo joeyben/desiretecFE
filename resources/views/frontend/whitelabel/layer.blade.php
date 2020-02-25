@@ -1,5 +1,6 @@
 <script type="application/javascript">
     var brandColor = {!! json_encode($color) !!};
+    var layerContent = {!! json_encode($layer_details) !!};
 </script>
 
 <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
@@ -14,7 +15,7 @@
 {{ Form::open() }}
 
 <div class="kwp-middle">
-    Unsere besten Reiseberater helfen ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus!
+    {{isset($layer_details['subheadline']) ? $layer_details['subheadline'] : trans('layer.show.subheadline')}}
 </div>
 <div class="kwp-minimal">
     <div class="kwp-content kwp-with-expansion">
@@ -213,6 +214,7 @@
 
         dt.applyBrandColor();
         dt.adjustResponsive();
+        dt.applyLayerContent();
         dt.autocomplete();
 
         if($('.kwp-close-button i').length === 0) {

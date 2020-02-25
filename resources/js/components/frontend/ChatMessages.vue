@@ -2,8 +2,8 @@
     <div>
         <div class="chat-messages" :id="message.id" v-for="message in messages" :key="message.id">
             <div v-bind:class="[userid == message.user_id ?  'cu-img-right' : 'cu-img-left']">
-                <img v-if="message.avatar" :src="message.avatar">
-                <img v-else :src="'/img/user.png'">
+                <img v-if="message.avatar" :src="message.avatar" class="avatar-size-1 avatar-circle">
+                <img v-else :src="'/img/user.png'" class="avatar-size-1 avatar-circle">
             </div>
 
             <confirmation-modal v-on:confirm="updateMessages" :id="message.id"></confirmation-modal>
@@ -61,7 +61,6 @@ export default {
             }).catch(function (error) {
                 console.log(error);
             });
-;
         },
 
         editMessage(messageid, message) {

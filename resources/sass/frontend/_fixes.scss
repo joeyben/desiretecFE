@@ -1,4 +1,4 @@
-// form-control
+// form-control (bootstrap)
 .form-control{
   background-color: #f8f8f8;
   border: none;
@@ -8,7 +8,6 @@
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
   -webkit-appearance: none;
   &:focus {
-    border-color: $orange;
     outline: 0;
     box-shadow: none;
   }
@@ -96,8 +95,14 @@
 }
 
 
-// dropdown (bootstrap-select)
-.dropup .dropdown-toggle:after{
-  display: none !important;
+// dropdown (bootstrap)
+.dropdown-menu{
+  .dropdown-item{
+    &:hover, &:active{
+      color: $steel;
+      background-color: transparent;
+      text-decoration: none;
+    }
+  }
 }
 
