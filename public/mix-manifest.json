@@ -1,11 +1,11 @@
 {
-    "/js/frontend.js": "/js/frontend.js?id=906bbef60f25f709ca8a",
-    "/css/frontend.css": "/css/frontend.css?id=b0711ddd673ca413395b",
-    "/css/layer/datepicker.css": "/css/layer/datepicker.css?id=245a9edb7e56f9f5a9e7",
-    "/css/layer/layer.css": "/css/layer/layer.css?id=e40a061176ee795a9c32",
-    "/css/layer/layer-responsive.css": "/css/layer/layer-responsive.css?id=ddab686333a5c9f25364",
-    "/js/dataTable.js": "/js/dataTable.js?id=5c7804ee8c7e5f939a28",
-    "/js/layer.js": "/js/layer.js?id=eeb52c14a5d493f286aa",
-    "/css/frontend-custom.css": "/css/frontend-custom.css?id=d41d8cd98f00b204e980",
-    "/css/layer.css": "/css/layer.css?id=ab8edc28143a9d855955"
+    "/js/frontend.js": "/js/frontend.js",
+    "/css/frontend.css": "/css/frontend.css",
+    "/css/layer/datepicker.css": "/css/layer/datepicker.css",
+    "/css/layer/bootstrap-tagsinput.css": "/css/layer/bootstrap-tagsinput.css",
+    "/css/layer/layer.css": "/css/layer/layer.css",
+    "/css/layer/layer-responsive.css": "/css/layer/layer-responsive.css",
+    "/js/dataTable.js": "/js/dataTable.js",
+    "/js/layer.js": "/js/layer.js",
+    "/css/layer.css": "/css/layer.css"
 }

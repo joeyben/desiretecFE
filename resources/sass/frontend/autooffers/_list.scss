@@ -423,7 +423,7 @@ ul {
     position: relative;
   }
   .right-side {
-    padding: 20px 15px 15px 30px;
+    padding: 20px 15px 10px 30px;
     width: 50%;
   }
   .label {
@@ -435,6 +435,15 @@ ul {
   .slick-slider {
     margin-bottom: 0;
     position: relative;
+    .slick-track{
+      position: relative;
+      top: 0;
+      left: 0;
+      display: block;
+    }
+    .slick-list{
+      overflow: hidden;
+    }
     .slider-item {
       height: 500px;
       border-radius: 5px 0 0 5px;
@@ -445,6 +454,7 @@ ul {
       -moz-background-size: cover;
       -o-background-size: cover;
       background-size: cover;
+      float: left;
     }
     .btn {
       min-width: auto;
