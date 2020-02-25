@@ -17,9 +17,9 @@
       <div class="col-md-8 bg-left-content">
         @if ($logged_in_user && ($logged_in_user['role'] === "Seller" || $logged_in_user['role'] === "Executive"))
         <h3>Hallo, {{ $currentAgent['name'] }}</h3>
-        @elseif ($logged_in_user['role'] == ('User') && $wish->owner->last_name !== trans('user.default.last_name'))
-        <h3>Hallo {{ $wish->owner->first_name }} {{ $wish->owner->last_name }},</h3>
-        @elseif ($logged_in_user['role'] == ('User') && $wish->owner->first_name)
+        @elseif ($logged_in_user['role'] == ('User') && $wish->last_name !== trans('user.default.last_name'))
+        <h3>Hallo {{ $wish->first_name }} {{ $wish->last_name }},</h3>
+        @elseif ($logged_in_user['role'] == ('User') && $wish->first_name)
         <h3>Hallo lieber Kunde,</h3>
         @else
         <h3>Hallo,</h3>
