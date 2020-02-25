@@ -8,6 +8,7 @@ COPY resources/sass /app/resources/sass
 COPY resources/js /app/resources/js
 COPY resources/fonts /app/resources/fonts
 COPY resources/img /app/resources/img
+COPY resources/images /app/reosources/images
 
 COPY package.json webpack.mix.js yarn.lock /app/
 
