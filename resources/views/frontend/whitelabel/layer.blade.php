@@ -15,7 +15,7 @@
 {{ Form::open() }}
 
 <div class="kwp-middle">
-    {{isset($layer_details['subheadline']) ? $layer_details['subheadline'] : trans('layer.show.subheadline')}}
+    {{ isset($layer_details['subheadline']) ? $layer_details['subheadline'] : trans('layer.show.subheadline') }}
 </div>
 <div class="kwp-minimal">
     <div class="kwp-content kwp-with-expansion">

@@ -500,11 +500,13 @@ var exitIntent = window.exitIntent || {};
 
         dt.applyLayerContent = function () {
             $('#heading').text(layerContent.headline);
-            if (typeof layerContent.attachments[0].url !== 'undefined') {
+            if (layerContent.attachments !== undefined && layerContent.attachments.length != 0) {
                 $('.kwp-header').css({
-                    'background-image': "url("+layerContent.attachments[0].url+")",
-                    'background-size': 'cover',
-                    'background-position': 'center',
+                    'background-image': "url("+layerContent.attachments[0].url+")"
+                });
+            } else {
+                $('.kwp-header').css({
+                    'background-image': "url(https://i.imgur.com/lJInLa9.png)"
                 });
             }
         };
