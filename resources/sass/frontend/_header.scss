@@ -23,7 +23,7 @@
       right: 0;
       z-index: 100;
       top: 1px;
-      width: 1px;
+      width: 0.5px;
       height: 80%;
       background: $black;
     }
@@ -39,6 +39,11 @@
         text-decoration: none;
         color: $steel;
       }
+    }
+  }
+  .nav-item.dropdown-user{
+    &:after{
+      width: 1px;
     }
   }
 }
