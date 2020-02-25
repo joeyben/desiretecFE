@@ -1,5 +1,5 @@
 @if ($logged_in_user['role'] == 'Seller')
-    <note :wishid="{{ $wish->id }}" :wishnote="{{ json_encode($wish->note) }}"  :lang="{{ json_encode(trans('strings.wishdetails.memo')) }}"></note>
+    <note :wishid="{{ $wish->wish_id }}" :wishnote="{{ json_encode($wish->note) }}"  :lang="{{ json_encode(trans('strings.wishdetails.memo')) }}"></note>
 @endif
 
 <div class="col-md-12 s2-second">
