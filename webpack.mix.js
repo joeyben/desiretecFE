@@ -68,6 +68,7 @@ mix.setPublicPath('public')
     //Copying all directories of tinymce to public folder
     .copyDirectory('resources/fonts', 'public/fonts')
     .copyDirectory('resources/img', 'public/img')
+    .copyDirectory('resources/images', 'public/images')
     .webpackConfig({
         plugins: [
             new WebpackRTLPlugin('/css/[name].rtl.css')
