@@ -66,8 +66,9 @@ mix.setPublicPath('public')
         'public/css/layer/layer-responsive.css',
     ], 'public/css/layer.css')
     //Copying all directories of tinymce to public folder
-    .copy('resources/fonts', 'public/fonts')
-    .copy('resources/img', 'public/img')
+    .copyDirectory('resources/fonts', 'public/fonts')
+    .copyDirectory('resources/img', 'public/img')
+    .copyDirectory('resources/images', 'public/images')
     .webpackConfig({
         plugins: [
             new WebpackRTLPlugin('/css/[name].rtl.css')
