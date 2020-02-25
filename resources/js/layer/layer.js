@@ -502,11 +502,11 @@ var exitIntent = window.exitIntent || {};
             $('#heading').text(layerContent.headline);
             if (layerContent.attachments !== undefined && layerContent.attachments.length != 0) {
                 $('.kwp-header').css({
-                    'background-image': "url("+layerContent.attachments[0].url+")",
+                    'background-image': "url("+layerContent.attachments[0].url+")"
                 });
             } else {
                 $('.kwp-header').css({
-                    'background-image': "url(https://i.imgur.com/lJInLa9.png)",
+                    'background-image': "url(https://i.imgur.com/lJInLa9.png)"
                 });
             }
         };
