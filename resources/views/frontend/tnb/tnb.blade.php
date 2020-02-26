@@ -10,7 +10,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>@yield('title', getWhitelabelInfo()['display_name'])</title>
         @if(isWhiteLabel())
-            <link rel="icon" type="image/png" href="{{ getWhitelabelInfo()['attachments']['logo'] }}">
+            <link rel="icon" type="image/png" href="{{ getWhitelabelInfo()['attachments']['favicon'] }}">
         @else
             <link rel="icon" type="image/png" href="{{ asset('favicon-96x96.png') }}">
         @endif
