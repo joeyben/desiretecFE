@@ -12,29 +12,6 @@ var exitIntent = window.exitIntent || {};
 
     dt.popupTemplate = function (variant) {
 
-        var texts = {
-            'eil-n1-social': {
-                header: 'Dürfen wir Dich beraten?',
-                body: 'Unsere besten Reiseberater helfen Dir gerne, Deine persönliche Traumreise zu finden. Probiere es einfach aus! Natürlich kostenlos und unverbindlich.'
-            },
-            'eil-phone': {
-                header: 'Dürfen wir Sie beraten?',
-                body: 'Unsere besten Reiseberater helfen Ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus! Natürlich kostenlos und unverbindlich.'
-            },
-            'eil-desktop': {
-                header: 'Dürfen wir Sie beraten?',
-                body: 'Unsere besten Reiseberater helfen Ihnen gerne, Ihre persönliche Traumreise zu finden. Probieren Sie es einfach aus! Natürlich kostenlos und unverbindlich.'
-            },
-            'eil-tablet': {
-                header: 'Dürfen wir Ihnen helfen?',
-                body: 'Einer unserer erfahrenen Reiseberater hilft Ihnen gerne, die für Sie passende Reise zu finden. Probieren Sie es einfach kostenlos und unverbindlich aus!'
-            },
-            'eil-mobile': {
-                header: 'Dürfen wir Sie beraten?',
-                body: 'Unsere besten Reiseberater helfen Ihnen gerne, Ihre persönliche Traumreise zu finden!'
-            }
-        };
-
         return '' +
             '<div class="kwp-header kwp-variant-n1' + variant + '">' +
             '<div class="kwp-color-overlay"></div>' +
@@ -508,20 +485,18 @@ var exitIntent = window.exitIntent || {};
                 });
             } else {
                 $('.kwp-header').css({
-                    'background-image': "url(https://i.imgur.com/lJInLa9.png)"
+                    'background-image': "url(https://i.imgur.com/lJInLa9.png)",
+                    'background-position': "100% 80%"
                 });
             }
-console.log('content');
-
         };
 
         dt.adjustResponsive = function(){
             if( $(window).outerWidth() <= 768 ) {
+                dt.PopupManager.isMobile = true;
+
                 $("body").addClass('mobile-layer');
                 $(".dt-modal").addClass('m-open');
-
-                dt.PopupManager.isMobile = true;
-                dt.PopupManager.layerShown = true;
 
                 $(".kwp-color-overlay").css('opacity', '1');
 
@@ -529,6 +504,8 @@ console.log('content');
 
                 $('.dt-modal .submit-col').detach().appendTo('.footer-col');
             } else {
+                dt.PopupManager.isMobile = false;
+
                 $("body").removeClass('mobile-layer');
                 $(".dt-modal").removeClass('m-open');
 
@@ -536,7 +513,6 @@ console.log('content');
 
                 $('.footer-col .submit-col').detach().appendTo('.kwp-content .kwp-row:last-child');
             }
-            console.log('responsive');
         };
 
         dt.autocomplete = function(){
