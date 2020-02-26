@@ -13,7 +13,7 @@
             <link rel="icon" type="image/png" href="{{ getWhitelabelInfo()['attachments']['favicon'] }}">
         @else
             <link rel="icon" type="image/png" href="{{ asset('favicon-96x96.png') }}">
-        @endifmas
+        @endif
         <!-- Meta -->
         <meta name="description" content="@yield('meta_description', 'desiretec')">
         <meta name="author" content="@yield('meta_author', 'Joe Ben Slimane')">
