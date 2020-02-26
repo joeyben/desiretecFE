@@ -167,6 +167,10 @@ class FrontendController extends Controller
     {
         $host = $request->header('Host');
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
+        $layer_details = [];
+        if(!empty($whitelabel['layers'][0]) && !is_null($whitelabel['layers'][0])){
+            $layer_details = $whitelabel['layers'][0];
+        }
         if ($request->failed()) {
             $html = view('frontend.whitelabel.layer')->with([
                 'errors'       => $request->errors(),
@@ -178,6 +182,7 @@ class FrontendController extends Controller
                 'duration_arr' => $this::DURATION_ARR,
                 'logo'         => $whitelabel['attachments']['logo'],
                 'color'        => $whitelabel['color'],
+                'layer_details'=> $layer_details
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);
