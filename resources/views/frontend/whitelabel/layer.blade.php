@@ -212,9 +212,9 @@
 <script>
     $(document).ready(function(){
 
+        dt.applyLayerContent();
         dt.applyBrandColor();
         dt.adjustResponsive();
-        dt.applyLayerContent();
         dt.autocomplete();
 
         if($('.kwp-close-button i').length === 0) {

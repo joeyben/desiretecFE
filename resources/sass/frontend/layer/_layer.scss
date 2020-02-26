@@ -30,23 +30,23 @@ $gutter: 30px;
       padding: 0 10px;
       margin: 3px 0 2px 10px;
     }
-    .dropdown-item {
-      &:hover,
-      &:active {
-        color: $black;
-        background-color: $gray1;
-        text-decoration: none;
+    .dropdown-menu{
+      >.active{
+        >a,>a:hover,>a:focus{
+          color: $black;
+          background-color: $gray1;
+        }
       }
     }
   }
 }
 
 .trigger-modal{
-  width: 75px;
-  height: 75px;
+  width: 70px;
+  height: 70px;
   position: fixed;
   display: none;
-  background: url(https://i.imgur.com/hs2GEPj.png) no-repeat center / 60%;
+  background: url(https://i.imgur.com/hs2GEPj.png) no-repeat 50% / 50%;
   left: 10px;
   bottom: 10px;
   border-radius: 50%;
@@ -583,6 +583,9 @@ ul.kwp-form-errors {
       color: $darkgrey2;
       font-size: 25px;
     }
+  }
+  .kwp-color-overlay{
+    height: 100%;
   }
 }
 
