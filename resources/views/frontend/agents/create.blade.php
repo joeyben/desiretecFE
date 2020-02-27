@@ -11,7 +11,7 @@
 @endsection
 
 @section('content')
-    {{ Form::open(['route' => ['frontend.agents.store', $subdomain], 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'post', 'id' => 'create-permission', 'files' => true]) }}
+    {{ Form::open(['route' => ['frontend.agents.store', $subdomain], 'class' => 'form-horizontal p-3', 'role' => 'form', 'method' => 'post', 'id' => 'create-permission', 'files' => true]) }}
 
         <div class="modal-header">
             <h5 class="modal-title">{{isset($customer)?'Edit':'New'}} Customer</h5>

@@ -11,9 +11,9 @@
 @endsection
 
 @section('content')
-    {{ Form::open(['route' => ['frontend.agents.update',$subdomain, $agent->id], 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'POST', 'id' => 'create-permission', 'files' => true]) }}
-        <div class="modal-header">
-            <h5 class="modal-title">{{ trans('labels.agents.edit_headline') }}</h5>
+    {{ Form::open(['route' => ['frontend.agents.update',$subdomain, $agent->id], 'class' => 'form-horizontal  col-md-6 mx-auto', 'role' => 'form', 'method' => 'POST', 'id' => 'create-permission', 'files' => true]) }}
+        <div class="modal-header pb-20">
+            <h4>{{ trans('labels.agents.edit_headline') }}</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -23,11 +23,9 @@
             @include("frontend.agents.form")
         </div>
         <div class="modal-footer">
-            <div class="col-lg-12">
-                <a class="btn btn-secondary btn-md" href="{{ route('frontend.agents.index', [$subdomain]) }}">{{ trans('labels.agents.cancel') }}</a>
+            <a class="btn btn-secondary btn-md" href="{{ route('frontend.agents.index', [$subdomain]) }}">{{ trans('labels.agents.cancel') }}</a>
 
-                {{ Form::submit(trans('labels.agents.save'), ['class' => 'btn btn-primary btn-md']) }}
-            </div>
+            {{ Form::submit(trans('labels.agents.save'), ['class' => 'btn btn-primary btn-md']) }}
         </div>
     {{ Form::close() }}
 @endsection
