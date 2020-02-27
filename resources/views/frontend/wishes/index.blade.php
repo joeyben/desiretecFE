@@ -67,8 +67,8 @@
                             @endif
                         </div>
                         <div class="budget">@{{ formatPrice(wish.budget) }}{{ trans('general.currency') }}</div>
-                        <a type="button" v-if="wish.manuelFlag" class="primary-btn" :href="'/wishes/'+wish.id">{{ trans('labels.frontend.wishes.goto') }}</a>
-                        <a type="button" v-else class="primary-btn" :href="'/offer/list/'+wish.id">{{ trans('labels.frontend.wishes.goto') }}</a>
+                        <a v-if="wish.manuelFlag" class="primary-btn" :href="'/wishes/'+wish.id">{{ trans('labels.frontend.wishes.goto') }}</a>
+                        <a v-else class="primary-btn" :href="'/offer/list/'+wish.id">{{ trans('labels.frontend.wishes.goto') }}</a>
                         @if($logged_in_user['role'] === "Seller")
                             <div class="status-change-action">
                                 <select class="selectpicker" id="change-status" v-bind:value="wish.status" v-model="status" @change="changeStatus(wish.id)">
