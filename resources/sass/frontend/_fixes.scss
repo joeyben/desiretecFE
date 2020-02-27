@@ -66,10 +66,7 @@
   }
   &-body{
     a{
-      color: $steel;
-      &:hover{
-        color: $text-color;
-      }
+      color: transparent;
     }
   }
 }

@@ -4,6 +4,12 @@
     {{ trans('general.url.offer') }}
 @endsection
 
+@section('before-scripts')
+    <script type="application/javascript">
+        var brandColor = {!! json_encode(getWhitelabelInfo()['color']) !!};
+    </script>
+@endsection
+
 @section('content')
     <div class="box box-info">
         @if (session('flash_success'))
@@ -12,14 +18,14 @@
             {{ session('flash_success') }}
         </div>
         @endif
-        <div class="box-header with-border">
-            <h3 class="box-title">{{ trans('labels.frontend.offers.management') }}</h3>
+        <div class="box-header">
+            <h3 class="mb-30">{{ trans('labels.frontend.offers.management') }}</h3>
 
         </div><!-- /.box-header -->
 
         <div class="box-body">
             <div class="table-responsive data-table-wrapper">
-                <table id="offers-table" class="table table-condensed table-hover table-bordered">
+                <table id="offers-table" class="table table-condensed table-hover">
                     <thead class="transparent-bg">
                         <tr>
                             <th>{{ trans('labels.frontend.offers.table.title') }}</th>
@@ -57,4 +63,15 @@
             {{-- {!! history()->renderType('Blog') !!} --}}
         </div><!-- /.box-body -->
     </div><!--box box-info-->
+@endsection
+
+
+@section('after-scripts')
+    <script>
+        $(document).ready(function() {
+            $('.box-body a').css({
+                'color': brandColor,
+            });
+        });
+    </script>
 @endsection
