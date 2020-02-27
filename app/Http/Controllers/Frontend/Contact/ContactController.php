@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Frontend\Contact;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Frontend\Contact\ManageContactRequest;
-use App\Http\Requests\Frontend\Contact\StoreCallbackRequest;
-use App\Http\Requests\Frontend\Contact\StoreContactRequest;
-use App\Http\Requests\Frontend\Contact\UpdateContactRequest;
+use App\Http\Requests\Contact\ManageContactRequest;
+use App\Http\Requests\Contact\StoreCallbackRequest;
+use App\Http\Requests\Contact\StoreContactRequest;
+use App\Http\Requests\Contact\UpdateContactRequest;
 use App\Models\Contact\Contact;
-use App\Repositories\Frontend\Contact\ContactRepository;
+use App\Services\Api\ApiService;
 
 /**
  * Class ContactController.
@@ -18,16 +18,17 @@ class ContactController extends Controller
     const BODY_CLASS = 'contact';
 
     /**
-     * @var ContactRepository
+     * @var ApiService
      */
-    protected $contact;
+    protected $apiService;
+
 
     /**
      * @param \App\Repositories\Frontend\Contact\ContactRepository $contact
      */
-    public function __construct(ContactRepository $contact)
+    public function __construct(ApiService $apiService)
     {
-        $this->contact = $contact;
+        $this->apiService = $apiService;
     }
 
     /**
@@ -46,12 +47,16 @@ class ContactController extends Controller
      */
     public function store(StoreContactRequest $request)
     {
-        $contact = $this->contact->create($request->except('_token'));
+        try {
+            $response = $this->apiService->post('/contact/store', $request->except('_token'));
 
-        return response()->json([
-            'success' => true,
-            'message' => trans('alerts.frontend.contact.success')
-        ]);
+            return response()->json([
+                'success' => true,
+                'message' => trans('alerts.frontend.contact.success')
+            ]);
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors(['message' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -61,12 +66,16 @@ class ContactController extends Controller
      */
     public function storeCallback(StoreCallbackRequest $request)
     {
-        $contact = $this->contact->create($request->except('_token'));
+        try {
+            $response = $this->apiService->post('/contact/storeCallback', $request->except('_token'));
 
-        return response()->json([
-            'success' => true,
-            'message' => trans('alerts.frontend.contact.success')
-        ]);
+            return response()->json([
+                'success' => true,
+                'message' => trans('alerts.frontend.contact.success')
+            ]);
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors(['message' => $e->getMessage()]);
+        }
     }
 
     /**

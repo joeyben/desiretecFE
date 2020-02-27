@@ -1,3 +1,8 @@
+@php
+    $contactInactivClass = count($wish->wishDetails->contacts) ? "" : "";
+    $callbackInactivClass = count($wish->wishDetails->callbacks) ? "" : "";
+    $actionButtonsSet = false;
+@endphp
 @extends('frontend.layouts.app')
 
 @section('title')
@@ -32,12 +37,12 @@
           class="primary-btn">{{ trans('buttons.wishes.frontend.create_offer')}}</a>
         @elseif (count($wish->wishDetails->offers) > 0)
         <p class="header-p">{!! trans('wish.view.stage.user_offer',['date' =>
-          \Carbon\Carbon::parse($wish->created_at)->format('d.m.Y'), 'seller' => $wish->group->users[0]->name]) !!}</p>
+          \Carbon\Carbon::parse($wish->created_at)->format('d.m.Y'), 'seller' => (isset($wish->wishDetails->group) ? $wish->wishDetails->group->users[0]->name : '' )]) !!}</p>
         <button class="primary-btn{{ $contactInactivClass }}"
           onclick="scrollToAnchor('angebote')">{{ trans_choice('wish.details.view-offers-button', count($wish->wishDetails->offers), ['count' => count($wish->wishDetails->offers)]) }}</button>
-        @elseif (count($wish->messages) > 0 && $wish->messages[count($wish->messages)-1]->user_id !== Auth::user()->id)
+        @elseif (isset($wish->wishDetails->messages) && count($wish->wishDetails->messages) > 0 && $wish->wishDetails->messages[count($wish->wishDetails->messages)-1]->user_id !== Auth::user()->id)
         <p class="header-p">{!! trans('wish.view.stage.user_message',['date' =>
-          \Carbon\Carbon::parse($wish->created_at)->format('d.m.Y'), 'seller' => $wish->group->users[0]->name]) !!}</p>
+          \Carbon\Carbon::parse($wish->created_at)->format('d.m.Y'), 'seller' => $wish->wishDetails->group->users[0]->name]) !!}</p>
         <button class="primary-btn{{ $contactInactivClass }}"
           onclick="scrollToAnchor('messages')">{{ trans('wish.details.view-messages-button') }}</button>
         @else
@@ -45,7 +50,7 @@
         $actionButtonsSet = true;
         @endphp
         <p class="header-p">{!! trans('wish.view.stage.user_empty',['date' =>
-          \Carbon\Carbon::parse($wish->created_at)->format('d.m.Y'), 'seller' => $wish->group->users[0]->name]) !!}</p>
+          \Carbon\Carbon::parse($wish->created_at)->format('d.m.Y'), 'seller' => (isset($wish->wishDetails->group) ? $wish->wishDetails->group->users[0]->name : '')]) !!}</p>
         <button class="primary-btn{{ $contactInactivClass }}" data-toggle="modal"
           data-target="#contact_modal">{{ trans('wish.details.kontakt-button') }}</button>
         <button class="secondary-btn{{ $callbackInactivClass }}" data-toggle="modal"

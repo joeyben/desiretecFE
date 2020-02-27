@@ -102,7 +102,18 @@ class OffersController extends Controller
     public function store(string $subdomain, Request $request)
     {
         try {
-            $response = $this->apiService->post('/offers/store', $request->all());
+            $data = $request->all();
+
+            if($request->hasfile('file')){
+                foreach ($data['file'] as &$file){
+                    $temp_variable = base64_encode(file_get_contents($file->getRealPath()));
+                    $fileData['content'] = json_encode($temp_variable);
+                    $fileData['name'] = $file->getClientOriginalName();
+                    $file = $fileData;
+                }
+            }
+
+            $response = $this->apiService->post('/offers/store', $data);
 
             return redirect()
                 ->route('frontend.offers.index', $subdomain)
