@@ -103,6 +103,9 @@ const app = new Vue({
                 'border': '1px solid ' + brandColor,
                 'color': brandColor,
             });
+            $('.link-btn').css({
+                'color': brandColor,
+            });
             $("input, textarea").focus(function(){
                 $(this).css({'border-color': brandColor});
             });
