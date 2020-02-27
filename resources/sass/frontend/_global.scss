@@ -88,6 +88,10 @@ html, body {
   }
 }
 
+.link-btn{
+  color: transparent;
+}
+
 .primary-btn, .secondary-btn{
   &.full{
 	width: 100%;
@@ -867,4 +871,36 @@ footer{
   white-space: nowrap;
   overflow: hidden !important;
   text-overflow: ellipsis;
+}
+
+
+// float-label
+#app {
+  .float-label.form-group {
+    position: relative;
+    margin-bottom: 2em;
+    label {
+      position: absolute;
+      top: 0;
+      padding: 7px 0 0 11px;
+      transition: all 200ms;
+      opacity: 0.5;
+    }
+    input {
+      &::placeholder,
+      &::-webkit-input-placeholder,
+      ::-moz-placeholder,
+      ::-ms-input-placeholder {
+        opacity: 0;
+      }
+      &:focus,
+      &:not(:placeholder-shown) {
+        + label {
+          font-size: 80%;
+          transform: translate3d(0, -100%, 0);
+          opacity: 1;
+        }
+      }
+    }
+  }
 }
