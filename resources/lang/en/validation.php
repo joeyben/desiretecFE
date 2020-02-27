@@ -150,7 +150,7 @@ return [
         'frontend' => [
             'register-user' => [
                 'email'    => 'E-Mail-Adresse',
-                'password' => 'Passwort'
+                'password' => 'Password'
             ],
             'offers' => [
                 'title'                 => 'Angebotstitel',

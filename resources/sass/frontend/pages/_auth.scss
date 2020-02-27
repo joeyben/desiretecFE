@@ -1,0 +1,19 @@
+.card-login {
+  padding: 2em;
+  .checkbox {
+    label {
+      display: flex;
+      align-items: center;
+      font-size: 12px;
+      input {
+        margin-right: 5px;
+      }
+    }
+  }
+  a {
+    color: transparent;
+  }
+  .btn {
+    margin-bottom: 0;
+  }
+}
