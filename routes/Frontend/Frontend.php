@@ -34,6 +34,10 @@ Route::group(['namespace' => 'Admin'], function ($subdomain) {
     Route::get('cache/clear', 'CacheController@clear')->name('cache.clear');
 });
 
+Route::group(['namespace' => 'Wishes', 'as' => 'wish.'], function ($subdomain) {
+    Route::get('wish/{id}/{token}', 'WishesController@wishToken')->name('wish.token');
+});
+
 
 /*
 * These frontend controllers require the user to be logged in

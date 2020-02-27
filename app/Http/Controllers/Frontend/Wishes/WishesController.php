@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend\Wishes;
 
+use App\ApiAuth;
 use Illuminate\Http\Request;
 use App\Http\Requests\Wishes\ManageWishesRequest;
 use App\Http\Requests\Wishes\UpdateNoteRequest;
@@ -165,6 +166,18 @@ class WishesController extends Controller
             $response = $this->apiService->post('/wishes/note/update', $request->all());
 
             return response()->json($response->formatResponse('object'));
+        } catch (Exception $e) {
+            return json_response_error($e);
+        }
+    }
+
+
+    public function wishToken(string $subdomain, int $id, string $token)
+    {
+        try {
+            ApiAuth::byWishToken($id, $token);
+
+            return  redirect('wishes/' . $id);
         } catch (Exception $e) {
             return json_response_error($e);
         }
