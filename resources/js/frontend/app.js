@@ -103,8 +103,13 @@ const app = new Vue({
                 'border': '1px solid ' + brandColor,
                 'color': brandColor,
             });
-            $('.link-btn').css({
+            $('.link-btn-primary').css({
                 'color': brandColor,
+            });
+            $('.link-btn-secondary').mouseover(function() {
+                $(this).css('color', brandColor);
+            }).mouseout(function() {
+                $(this).css('color','inherit');
             });
             $("input, textarea").focus(function(){
                 $(this).css({'border-color': brandColor});

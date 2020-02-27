@@ -30,11 +30,6 @@
       }
     }
   }
-  .nav-item.dropdown-user{
-    &:after{
-      width: 1px;
-    }
-  }
 }
 .dropdown {
   .dropdown-toggle {
@@ -59,9 +54,7 @@
   }
   .dropdown-menu-agent {
     .nav-item {
-      &:after {
-        content: none;
-      }
+      border-right: none;
       a {
         display: flex;
         align-items: center;
