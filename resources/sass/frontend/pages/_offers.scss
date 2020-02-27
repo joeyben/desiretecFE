@@ -1,16 +1,20 @@
 // Offers Styles
 body.offer{
   .box-info{
-    .edit-form-btn{
-      text-align: right;
-      padding: 0 15px;
-    }
     .readonly{
       border: none;
       height: 33px;
     }
-    .primary-btn, .secondary-btn{
-      display: inline-block;
+    .btn{
+      padding: 7px;
+      color: transparent;
+    }
+    .form-btns{
+      display: flex;
+      justify-content: flex-end;
+      .btn{
+        margin-left: 5px;
+      }
     }
   }
 }

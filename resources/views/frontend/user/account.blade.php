@@ -14,9 +14,11 @@
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12 d-flex justify-content-center">
 
-            <div class="card col-md-6">
+            <div class="card col-md-6 p-3">
 
-                <div class="card-header">{{ trans('navs.frontend.user.account') }}</div>
+                <div class="card-header">
+                    <h4>{{ trans('navs.frontend.user.account') }}</h4>
+                </div>
 
                 <div class="card-body">
 
@@ -44,12 +46,12 @@
                                 @include('frontend.user.account.tabs.profile')
                             </div>
 
-                            <div role="tabpanel" class="tab-pane mt-30" id="edit">
+                            <div role="tabpanel" class="tab-pane mt-45" id="edit">
                                 @include('frontend.user.account.tabs.edit')
                             </div>
 
                             {{-- @if ($logged_in_user->canChangePassword() && !$logged_in_user->hasRole('User')) --}}
-                                <div role="tabpanel" class="tab-pane mt-30" id="password">
+                                <div role="tabpanel" class="tab-pane mt-45" id="password">
                                     @include('frontend.user.account.tabs.change-password')
                                 </div>
                             {{-- @endif --}}

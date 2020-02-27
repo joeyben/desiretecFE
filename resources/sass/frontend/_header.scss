@@ -17,20 +17,11 @@
   .nav-item {
     padding: 0 15px;
     position: relative;
-    &:after {
-      content: "";
-      position: absolute;
-      right: 0;
-      z-index: 100;
-      top: 1px;
-      width: 0.5px;
-      height: 80%;
-      background: $black;
-    }
+    border-right: 1px solid $black;
     &:last-child {
       padding-right: 0;
       &:after {
-        display: none;
+        border-right: none;
       }
     }
     a {

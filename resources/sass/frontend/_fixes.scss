@@ -1,4 +1,10 @@
-// form-control (bootstrap)
+// forms (bootstrap)
+.form-group{
+  margin-bottom: 2em;
+  &:last-child{
+    margin-bottom: 0;
+  }
+}
 .form-control{
   background-color: #f8f8f8;
   border: none;
@@ -72,20 +78,21 @@
 // card (bootstrap)
 .card{
   &-header{
-    font-weight: bold;
-    .text{
-      padding: 0 .625rem;
-    }
+    padding-bottom: 1.25rem !important;
   }
-  .nav-tabs {
-    .nav-link{
-      &.active {
-        font-weight: bold;
-      }
-    }
+  &-body{
+    padding-top: 1.25rem !important;
   }
 }
 
+// tabs (bootstrap)
+.nav-tabs{
+  .nav-link{
+    &.active {
+      font-weight: bold;
+    }
+  }
+}
 
 // table (bootstrap)
 .table{
@@ -93,7 +100,6 @@
     font-weight: bold;
   }
 }
-
 
 // dropdown (bootstrap)
 .dropdown-menu{
