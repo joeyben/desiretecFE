@@ -15,7 +15,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content" id="modal_content">
         {{ Form::open(['route' => ['frontend.agents.store', $subdomain], 'class' => 'form-horizontal p-3', 'method' => 'post', 'files' => true]) }}
-            <div class="modal-header pb-20">
+            <div class="modal-header pb-30">
                 <h4>{{isset($customer) ? trans('agent.modal.title.edit') : trans('agent.modal.title.new') }}</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
