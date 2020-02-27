@@ -166,6 +166,7 @@ class FrontendController extends Controller
     public function store(StoreWishesRequest $request)
     {
         $host = $request->header('Host');
+
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
         $layer_details = [];
         if(!empty($whitelabel['layers'][0]) && !is_null($whitelabel['layers'][0])){
@@ -190,20 +191,25 @@ class FrontendController extends Controller
         $data = $request->all();
         $data['whitelabel_id'] = $whitelabel['id'];
         $data['title'] = "&nbsp;";
-        $response = $this->apiService->get('/wish/store', $data);
+        try {
+            $response = $this->apiService->get('/wish/store', $data);
 
-        $headline_success = trans('layer.success.headline');
-        $subheadline_success = trans('layer.success.subheadline');
-        if(!empty($whitelabel['layers'][0]) && !is_null($whitelabel['layers'][0])){
-            $headline_success = $whitelabel['layers'][0]['headline_success'];
-            $subheadline_success = $whitelabel['layers'][0]['subheadline_success'];
+            $headline_success = trans('layer.success.headline');
+            $subheadline_success = trans('layer.success.subheadline');
+            if(!empty($whitelabel['layers'][0]) && !is_null($whitelabel['layers'][0])){
+                $headline_success = $whitelabel['layers'][0]['headline_success'];
+                $subheadline_success = $whitelabel['layers'][0]['subheadline_success'];
+            }
+            $html = view('frontend.whitelabel.created')->with([
+                'headline_success'       => $headline_success,
+                'subheadline_success'    => $subheadline_success,
+            ])->render();
+
+            return response()->json(['success' => true, 'html'=>$html]);
+        } catch (\Exception $e) {
+            Log::error($e);
+            return redirect()->back()->withErrors(['message' => $e->getMessage()]);
         }
-        $html = view('frontend.whitelabel.created')->with([
-            'headline_success'       => $headline_success,
-            'subheadline_success'    => $subheadline_success,
-        ])->render();
-
-        return response()->json(['success' => true, 'html'=>$html]);
     }
     /**
      * show page by $page_slug.
