@@ -36,6 +36,7 @@ Route::group(['namespace' => 'Admin'], function ($subdomain) {
 
 Route::group(['namespace' => 'Wishes', 'as' => 'wish.'], function ($subdomain) {
     Route::get('wish/{id}/{token}', 'WishesController@wishToken')->name('wish.token');
+    Route::get('wishlist/{token}', 'WishesController@wishListToken')->name('wishlist.token');
 });
 
 
