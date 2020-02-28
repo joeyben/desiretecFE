@@ -17,4 +17,11 @@ body.offer{
       }
     }
   }
+  .pagination{
+    display: flex !important;
+    justify-content: flex-end !important;
+    span.page-link{
+      cursor: default;
+    }
+  }
 }
