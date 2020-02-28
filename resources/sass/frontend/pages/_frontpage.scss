@@ -89,10 +89,3 @@ input:-internal-autofill-selected{
     }
   }
 }
-
-// Wish modal
-.wish-modal-1 .modal-body-left input[value=""]~label {
-  top: 5px !important;
-  font-size: 10px !important;
-  color: #bbb !important;
-}
