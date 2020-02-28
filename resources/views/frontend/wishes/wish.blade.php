@@ -96,8 +96,8 @@
                 <p class="sa2-p2">
                     @if (count($wish->agent_name) > 0)
                         <span class="offer-avatar-cnt">
-                            <img class="avatar" title="{{ $wish->agent_name[$key]->name }}" alt="{{ $wish->agent_name[$key]->name }}" src="{{ Storage::disk('s3')->url('img/agent/') }}{{ $wish->agent_name[$key]->avatar }}" />
-                            <span class="agent-name">{{ $wish->agent_name[$key]->name }}</span>
+                            <img class="avatar" title="{{ $wish->agent_name[0]->name }}" alt="{{ $wish->agent_name[0]->name }}" src="{{ Storage::disk('s3')->url('img/agent/') }}{{ $wish->agent_name[0]->avatar }}" />
+                            <span class="agent-name">{{ $wish->agent_name[0]->name }}</span>
                         </span>
                     @else
                         @if($wish->agent)
@@ -111,13 +111,13 @@
                     {!! nl2br(e($offer->description)) !!}
                     @if ($offer->link)
                         <br><br>
-                        <b>Hier geht es zu unserer Angebotsseite:</b> <a href="{{ $offer->link }}" target="_blank">{{ $offer->link }}</a>
+                        <b>Hier geht es zu unserer Angebotsseite:</b> <a href="{{ (strpos($offer->link,'https://') === false && strpos($offer->link,'http://') === false) ? 'https://'.$offer->link : $offer->link }}" target="_blank" rel="noopener noreferrer">{{ $offer->link }}</a>
                     @endif
                 </p>
             </div>
         </div>
     </section>
-    @if (count($wish->offerFiles) > 0 && count($wish->offerFiles[$key]) > 0)
+    @if (count($wish->offerFiles) > 0&& isset($wish->offerFiles[$key]) && count($wish->offerFiles[$key]) > 0)
         <section class="section-angebote-download">
             <div class="container">
                 <div class="col-md-12">
@@ -132,7 +132,7 @@
                                 <i class="fal fa-file-image"></i>
                             @endif
 
-                            <a href="{{ Storage::disk('s3')->url('img/agent/' . $file->file) }}" target="_blank">{{ trans('wish.view.offer_number') }} {{ $key+1 }}</a>
+                            <a href="{{ Storage::disk('s3')->url('img/offer/' . $file->file) }}" target="_blank">{{ trans('wish.view.offer_number') }} {{ $key+1 }}</a>
                         </div>
                     @endforeach
                 </div>

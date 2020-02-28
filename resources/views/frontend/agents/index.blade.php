@@ -14,9 +14,9 @@
 <div class="modal fade" id="modalForm" tabindex="-1" role="dialog" data-backdrop="static">
     <div class="modal-dialog" role="document">
         <div class="modal-content" id="modal_content">
-        {{ Form::open(['route' => ['frontend.agents.store', $subdomain], 'class' => 'form-horizontal', 'method' => 'post', 'files' => true]) }}
-            <div class="modal-header">
-                <h5 class="modal-title">{{isset($customer) ? trans('agent.modal.title.edit') : trans('agent.modal.title.new') }}</h5>
+        {{ Form::open(['route' => ['frontend.agents.store', $subdomain], 'class' => 'form-horizontal p-3', 'method' => 'post', 'files' => true]) }}
+            <div class="modal-header pb-30">
+                <h4>{{isset($customer) ? trans('agent.modal.title.edit') : trans('agent.modal.title.new') }}</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -26,10 +26,8 @@
                 @include("frontend.agents.form")
             </div>
             <div class="modal-footer">
-                <div class="col-lg-12">
-                    <a class="btn secondary-btn" href="{{ route('frontend.agents.index', [$subdomain]) }}">{{ trans('seller.agent.create.cancel') }}</a>
-                    {{ Form::button(trans('seller.agent.create.submit'), ['type' => 'submit','class' => 'btn primary-btn']) }}
-                </div>
+                <a class="btn secondary-btn" href="{{ route('frontend.agents.index', [$subdomain]) }}">{{ trans('seller.agent.create.cancel') }}</a>
+                {{ Form::button(trans('seller.agent.create.submit'), ['type' => 'submit','class' => 'btn primary-btn']) }}
             </div>
         {{ Form::close() }}
         </div>
@@ -37,14 +35,14 @@
 </div>
 
 <div class="box box-info">
-    <div class="box-header with-border">
-        <h3 class="box-title">{{ trans('labels.frontend.agents.management') }}</h3>
+    <div class="box-header">
+        <h3 class="mb-30">{{ trans('labels.frontend.agents.management') }}</h3>
         @include('frontend.agents.partials.agents-header-buttons')
     </div>
 
     <div class="box-body">
         <div class="table-responsive data-table-wrapper">
-            <table id="agents-table" class="table table-condensed table-hover table-bordered">
+            <table id="agents-table" class="table table-condensed table-hover">
                 <thead class="transparent-bg">
                     <tr>
                         <th>{{ trans('labels.frontend.agents.table.avatar') }}</th>
@@ -64,9 +62,9 @@
                             <td>{{ $agent->name }}</td>
                             <td>{{ $agent->created_at }}</td>
                             <td>
-                                <a class="" href="{{ route('frontend.agents.edit', [$subdomain, $agent->id]) }}">{{ trans('labels.agents.edit') }}</a>
+                                <a class="link-btn-primary" href="{{ route('frontend.agents.edit', [$subdomain, $agent->id]) }}">{{ trans('labels.agents.edit') }}</a>
                                 <span> / </span>
-                                <a class="" href="{{ route('frontend.agents.delete', [$subdomain, $agent->id]) }}">{{ trans('labels.agents.delete') }}</a>
+                                <a class="link-btn-primary" href="{{ route('frontend.agents.delete', [$subdomain, $agent->id]) }}">{{ trans('labels.agents.delete') }}</a>
                             </td>
                         </tr>
                     @endforeach

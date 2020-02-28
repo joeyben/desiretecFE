@@ -1,6 +1,9 @@
 // forms (bootstrap)
 .form-group{
   margin-bottom: 2em;
+  &:last-child{
+    margin-bottom: 0;
+  }
 }
 .form-control{
   background-color: #f8f8f8;
@@ -63,10 +66,7 @@
   }
   &-body{
     a{
-      color: $steel;
-      &:hover{
-        color: $text-color;
-      }
+      color: transparent;
     }
   }
 }
@@ -82,7 +82,7 @@
   }
 }
 
-// nav-tabs (bootstrap)
+// tabs (bootstrap)
 .nav-tabs{
   .nav-link{
     &.active {
@@ -91,14 +91,12 @@
   }
 }
 
-
 // table (bootstrap)
 .table{
   th{
     font-weight: bold;
   }
 }
-
 
 // dropdown (bootstrap)
 .dropdown-menu{

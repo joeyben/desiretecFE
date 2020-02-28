@@ -88,7 +88,7 @@ html, body {
   }
 }
 
-.link-btn{
+.link-btn-primary{
   color: transparent;
 }
 
@@ -886,7 +886,8 @@ footer{
       transition: all 200ms;
       opacity: 0.5;
     }
-    input {
+    input,
+    textarea {
       &::placeholder,
       &::-webkit-input-placeholder,
       ::-moz-placeholder,
