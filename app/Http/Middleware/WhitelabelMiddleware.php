@@ -43,7 +43,12 @@ class WhitelabelMiddleware
         $parts = explode('.', URL::current());
         $subDomain = str_replace('https://','', $parts[0]);
 
-        return Str::studly(str_replace('http://','', $subDomain));
+        return str_replace('http://','', $subDomain);
+    }
+
+    public static function getName(): string
+    {
+        return Str::studly(self::getSubDomain());
     }
 
     public static function getCacheKey(string $subDomain): string
