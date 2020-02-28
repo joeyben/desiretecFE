@@ -20,8 +20,7 @@
         @endif
         <div class="box-header">
             <h3 class="mb-30">{{ trans('labels.frontend.offers.management') }}</h3>
-
-        </div><!-- /.box-header -->
+        </div>
 
         <div class="box-body">
             <div class="table-responsive data-table-wrapper">
@@ -45,32 +44,23 @@
                         @endforeach
                     </tbody>
                 </table>
-            </div><!--table-responsive-->
-            <div class="row">
+            </div>
+            <div class="row-pagination">
                 {{ $offers->links() }}
             </div>
-        </div><!-- /.box-body -->
-    </div><!--box-->
-
-    <!--<div class="box box-info">
-        <div class="box-header with-border">
-            <h3 class="box-title">{{ trans('history.frontend.recent_history') }}</h3>
-            <div class="box-tools pull-right">
-                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-            </div><!-- /.box tools -->
-        </div><!-- /.box-header -->
-        <div class="box-body">
-            {{-- {!! history()->renderType('Blog') !!} --}}
-        </div><!-- /.box-body -->
-    </div><!--box box-info-->
+        </div>
+    </div>
 @endsection
-
 
 @section('after-scripts')
     <script>
         $(document).ready(function() {
-            $('.box-body a').css({
+            $('.offer .box-body a').css({
                 'color': brandColor,
+            });
+            $('.offer .pagination span.page-link').css({
+                'background-color': brandColor,
+                'border-color': brandColor,
             });
         });
     </script>

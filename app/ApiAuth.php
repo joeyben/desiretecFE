@@ -126,6 +126,20 @@ class ApiAuth
         return self::byJwtToken(json_decode($response->getBody(), true)['access_token']);
     }
 
+    public static function byWishListToken(string $token)
+    {
+        $client = new Client();
+
+        $response = $client->post(env('API_URL', 'https://mvp.desiretec.com') . '/api/v1/auth/login/wishlist-token/' . $token,
+            [
+                'form_params' => []
+            ]
+        );
+
+
+        return self::byJwtToken(json_decode($response->getBody(), true)['access_token']);
+    }
+
     public static function byToken(string $token, string $email)
     {
         $client = new Client();
