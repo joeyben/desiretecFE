@@ -35,14 +35,14 @@
 </div>
 
 <div class="box box-info">
-    <div class="box-header with-border">
-        <h3 class="box-title">{{ trans('labels.frontend.agents.management') }}</h3>
+    <div class="box-header">
+        <h3 class="mb-30">{{ trans('labels.frontend.agents.management') }}</h3>
         @include('frontend.agents.partials.agents-header-buttons')
     </div>
 
     <div class="box-body">
         <div class="table-responsive data-table-wrapper">
-            <table id="agents-table" class="table table-condensed table-hover table-bordered">
+            <table id="agents-table" class="table table-condensed table-hover">
                 <thead class="transparent-bg">
                     <tr>
                         <th>{{ trans('labels.frontend.agents.table.avatar') }}</th>
@@ -62,9 +62,9 @@
                             <td>{{ $agent->name }}</td>
                             <td>{{ $agent->created_at }}</td>
                             <td>
-                                <a class="" href="{{ route('frontend.agents.edit', [$subdomain, $agent->id]) }}">{{ trans('labels.agents.edit') }}</a>
+                                <a class="link-btn-primary" href="{{ route('frontend.agents.edit', [$subdomain, $agent->id]) }}">{{ trans('labels.agents.edit') }}</a>
                                 <span> / </span>
-                                <a class="" href="{{ route('frontend.agents.delete', [$subdomain, $agent->id]) }}">{{ trans('labels.agents.delete') }}</a>
+                                <a class="link-btn-primary" href="{{ route('frontend.agents.delete', [$subdomain, $agent->id]) }}">{{ trans('labels.agents.delete') }}</a>
                             </td>
                         </tr>
                     @endforeach

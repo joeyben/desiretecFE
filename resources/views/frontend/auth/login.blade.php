@@ -41,7 +41,7 @@
 
                         <div class="form-group">
                             {{ Form::submit(trans('labels.frontend.auth.login_button'), ['class' => 'btn btn-primary', 'style' => 'margin-right:15px']) }}
-                            <a href="{{ route('frontend.auth.password.reset', [$subdomain]) }}" class="link-btn">{{ trans('labels.frontend.passwords.forgot_password') }}</a>
+                            <a href="{{ route('frontend.auth.password.reset', [$subdomain]) }}" class="link-btn-primary">{{ trans('labels.frontend.passwords.forgot_password') }}</a>
                         </div>
 
                     {{ Form::close() }}
