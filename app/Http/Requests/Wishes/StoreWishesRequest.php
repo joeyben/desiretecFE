@@ -61,11 +61,33 @@ class StoreWishesRequest extends FormRequest
     public function rules()
     {
         return [
-            'airport'         => 'required|max:200',
-            'destination'     => 'required|max:200',
-            'earliest_start'  => 'required|max:200',
-            'latest_return'   => 'required|max:200',
+            'airport'         => 'required',
+            'destination'     => 'required',
+            'earliest_start'  => 'required',
+            'latest_return'   => 'required',
+            'adults'          => 'required',
+            'terms'           => 'required',
+            'email'           => 'required|email'
         ];
+    }
+
+    protected function getValidatorInstance()
+    {
+        $validator = parent::getValidatorInstance();
+        $validator->sometimes('ages1', 'required', function ($input) {
+            return $input->kids >= 1;
+        });
+        $validator->sometimes('ages2', 'required', function ($input) {
+            return $input->kids >= 2;
+        });
+        $validator->sometimes('ages3', 'required', function ($input) {
+            return $input->kids >= 3;
+        });
+        $validator->sometimes('ages4', 'required', function ($input) {
+            return $input->kids >= 4;
+        });
+
+        return $validator;
     }
 
     /**
@@ -76,7 +98,17 @@ class StoreWishesRequest extends FormRequest
     public function messages()
     {
         return [
-            'airport.required' => 'Please insert Wish airport',
+            'email.required'            => trans('email.required'),
+            'email.email'               => trans('layer.email.required'),
+            'earliest_start.required'   => trans('earliest_start.required'),
+            'latest_return.required'    => trans('latest_return.required'),
+            'adults.required'           => trans('adults.required'),
+            'airport.required'          => trans('airport.required'),
+            'destination.required'      => trans('destination.required'),
+            'ages1.required'            => trans('ages1.required'),
+            'ages2.required'            => trans('ages2.required'),
+            'ages3.required'            => trans('ages3.required'),
+            'ages4.required'            => trans('ages4.required'),
         ];
     }
 }
