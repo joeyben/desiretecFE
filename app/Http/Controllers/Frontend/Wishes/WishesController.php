@@ -182,4 +182,15 @@ class WishesController extends Controller
             return json_response_error($e);
         }
     }
+
+    public function wishListToken(string $subdomain, string $token)
+    {
+        try {
+            ApiAuth::byWishListToken($token);
+
+            return  redirect('wishlist');
+        } catch (Exception $e) {
+            return json_response_error($e);
+        }
+    }
 }
