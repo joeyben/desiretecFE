@@ -38,7 +38,7 @@
                     </div>
                 </div>
 
-                @if(count($wish->wishDetails->offers) > 0 || count($wish->wishDetails->sellerMessages) > 0)
+                @if(count($wish->wishDetails->offers) > 0 || ($wish->wishDetails && count($wish->wishDetails->sellerMessages) > 0 ))
                     <div class="col-md-4 modal-body-right">
                         <img title="{{ $wish->agent->name }}" alt="{{ $wish->agent->name }}" src="{{ Storage::disk('s3')->url('img/agent/') }}{{ $wish->agent->avatar }}" />
                         <h4>{{ $wish->agent->name }}</h4>
