@@ -59,7 +59,6 @@ class WishesController extends Controller
 
         try {
             $response = $this->apiService->get('/wishes' . '/' . $id);
-
             $wish = $response->formatResponse('object')->data;
             return view('frontend.wishes.wish')->with([
                 'body_class' => $this::BODY_CLASS,
