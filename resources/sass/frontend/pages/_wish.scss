@@ -365,6 +365,10 @@ body.wish {
             font-size: 30px;
             color: $medgray1;
           }
+          a{
+            width: 100%;
+            word-break: break-word;
+          }
           a,
           a:hover,
           a:focus {
