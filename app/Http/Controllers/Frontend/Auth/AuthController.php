@@ -68,4 +68,26 @@ class AuthController extends Controller
         }
 
     }
+
+    public function password (LinkRequest $request)
+    {
+        try {
+            $host = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $request->getHttpHost();
+
+            $response = ApiAuth::passwordResetLink($request->get('email'), $host);
+
+            return redirect()->back()->with(['success' => $response->message]);
+        } catch (\Exception $e) {
+            Log::error($e);
+            return redirect()->back()->withErrors(['message' => $e->getMessage()]);
+        }
+
+    }
+
+    public function reset (string $subDomain, string $token, string $email)
+    {
+        return view('frontend.auth.passwords.reset')
+            ->withToken($token)
+            ->withEmail($email);
+    }
 }
