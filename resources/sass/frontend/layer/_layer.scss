@@ -561,12 +561,13 @@ ul.kwp-form-errors {
     font-size: 20px;
     line-height: 30px;
     margin: 0px;
-    color: $darkgrey2;
+    color: transparent; // color set through js
     padding: 30px 0;
     font-weight: bold;
     text-align: center;
-    width: 100%;
     border: none;
+    width: 80%;
+    margin: 0 auto;
   }
   .kwp-close{
 	width: 25px;
@@ -580,7 +581,7 @@ ul.kwp-form-errors {
         cursor: pointer;
     }
     i{
-      color: $darkgrey2;
+      color: transparent; // color set through js
       font-size: 25px;
     }
   }
