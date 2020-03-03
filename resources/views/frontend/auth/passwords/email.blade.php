@@ -26,7 +26,6 @@
 
 @section('content')
     <div class="row">
-        @include('includes.alert')
         <div class="col-md-8 col-md-offset-2">
 
             <div class="panel panel-default">
@@ -35,7 +34,7 @@
 
                 <div class="panel-body">
 
-                    {{ Form::open(['route' => 'frontend.auth.password.email', 'class' => 'form-horizontal']) }}
+                    {{ Form::open(['route' => ['frontend.auth.api.password', $subdomain], 'class' => 'form-horizontal']) }}
 
                     <div class="form-group">
                         {{ Form::label('email', trans('validation.attributes.frontend.register-user.email'), ['class' => 'col-md-4 control-label']) }}

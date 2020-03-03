@@ -28,6 +28,9 @@ Route::group(['namespace' => 'Auth', 'as' => 'auth.'], function ($subdomain) {
     Route::get('api/logout', 'AuthController@logout')->name('api.logout');
     Route::post('api/link', 'AuthController@link')->name('api.link');
     Route::get('api/token', 'AuthController@token')->name('api.token');
+    Route::post('api/password', 'AuthController@password')->name('api.password');
+    Route::get('reset/{token}/{email}', 'AuthController@reset')->name('reset');
+    Route::put('api/changePassword', 'AuthController@changePassword')->name('api.changePassword');
 });
 
 Route::group(['namespace' => 'Admin'], function ($subdomain) {
