@@ -44,21 +44,22 @@
                     <button type="submit" class="primary-btn">@lang('modals.callback.send')</button>
                 </div>
 
-                <div class="col-md-4 modal-body-right">
-                    <img src="/img/travel-agency.jpg" alt="travel agency">
-                    <h4>{{ $wish->agent->name }}</h4>
-                    <div class="modal-contact">
-                        <div class="mc-tel">
-                            <i class="fal fa-phone"></i>
-                            <a href="tel:{{ $wish->agent->telephone }}">{{ $wish->agent->telephone }}</a>
-                        </div>
-                        <div class="mc-mail">
-                            <i class="fal fa-envelope"></i>
-                            <a href="tel:{{ $wish->agent->email }}">{{ $wish->agent->email }}</a>
+                @if(isset($wish->wishDetails->group->users[0]->agents))
+                    <div class="col-md-4 modal-body-right">
+                        <img src="/img/travel-agency.jpg" alt="travel agency">
+                        <h4>{{ $wish->wishDetails->group->users[0]->agents[0]->name }}</h4>
+                        <div class="modal-contact">
+                            <div class="mc-tel">
+                                <i class="fal fa-phone"></i>
+                                <a href="tel:{{ $wish->wishDetails->group->users[0]->agents[0]->telephone }}">{{ $wish->wishDetails->group->users[0]->agents[0]->telephone }}</a>
+                            </div>
+                            <div class="mc-mail">
+                                <i class="fal fa-envelope"></i>
+                                <a href="tel:{{ $wish->wishDetails->group->users[0]->agents[0]->email }}">{{ $wish->wishDetails->group->users[0]->agents[0]->email }}</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-
+                @endif
             </div>
         </div>
         <div class="modal-footer">

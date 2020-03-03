@@ -88,6 +88,10 @@
     </div>
 @endsection
 
+@section('footer')
+    @include('frontend.whitelabel.footer')
+@endsection
+
 @section('after-scripts')
     <script>
         $(document).ready(function() {
