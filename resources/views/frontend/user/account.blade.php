@@ -33,11 +33,11 @@
                                 <a href="#edit" aria-controls="edit" role="tab" data-toggle="tab" class="nav-link">{{ trans('navs.frontend.user.update_profile') }}</a>
                             </li>
 
-                            {{-- @if ($logged_in_user->canChangePassword() && !$logged_in_user->hasRole('User')) --}}
+                            @if ($logged_in_user && !$logged_in_user['isUser'])
                                 <li role="presentation" class="nav-item" id="li-password">
                                     <a href="#password" aria-controls="password" role="tab" data-toggle="tab" class="nav-link">{{ trans('navs.frontend.user.change_password') }}</a>
                                 </li>
-                            {{-- @endif --}}
+                            @endif
                         </ul>
 
                         <div class="tab-content">

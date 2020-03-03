@@ -40,16 +40,16 @@
 
                 @if(count($wish->wishDetails->offers) > 0 || (isset($wish->wishDetails->sellerMessages) && count($wish->wishDetails->sellerMessages) > 0 ))
                     <div class="col-md-4 modal-body-right">
-                        <img title="{{ $wish->agent->name }}" alt="{{ $wish->agent->name }}" src="{{ Storage::disk('s3')->url('img/agent/') }}{{ $wish->agent->avatar }}" />
-                        <h4>{{ $wish->agent->name }}</h4>
+                        <img title="{{ $wish->wishDetails->group->users[0]->agents[0]->name }}" alt="{{ $wish->wishDetails->group->users[0]->agents[0]->name }}" src="{{ Storage::disk('s3')->url('img/agent/') }}{{ $wish->wishDetails->group->users[0]->agents[0]->avatar }}" />
+                        <h4>{{ $wish->wishDetails->group->users[0]->agents[0]->name }}</h4>
                         <div class="modal-contact">
                             <div class="mc-tel">
                                 <i class="fal fa-phone"></i>
-                                <a href="tel:{{ $wish->agent->telephone }}">{{ $wish->agent->telephone }}</a>
+                                <a href="tel:{{ $wish->wishDetails->group->users[0]->agents[0]->telephone }}">{{ $wish->wishDetails->group->users[0]->agents[0]->telephone }}</a>
                             </div>
                             <div class="mc-mail">
                                 <i class="fal fa-envelope"></i>
-                                <a href="mailto:{{ $wish->agent->email }}">{{ $wish->agent->email }}</a>
+                                <a href="mailto:{{ $wish->wishDetails->group->users[0]->agents[0]->email }}">{{ $wish->wishDetails->group->users[0]->agents[0]->email }}</a>
                             </div>
                         </div>
                     </div>

@@ -3,6 +3,7 @@
 
 namespace App;
 
+use App\Services\Api\ApiService;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -173,6 +174,16 @@ class ApiAuth
         $result['user']['token'] = $token;
 
         return static::auth(new ApiUser($result['user']));
+    }
+
+    public static function passwordResetLink(string $email, string $host)
+    {
+        $response =  resolve(ApiService::class)->post('/account/sendResetLinkEmail', [
+            'email' => $email,
+            'host' => $host
+        ]);
+
+        return  $response->formatResponse('object');
     }
 
     public static function getCacheKey(string $token): string

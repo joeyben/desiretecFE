@@ -47,6 +47,7 @@ class AccountController extends Controller implements AccountControllerInterface
         try {
             $response = $this->apiService->put('/account/update/' . $id, $request->all());
             $message = $response->formatResponse('object')->success->message;
+            CacheController::flush();
 
             return redirect()
                 ->route('frontend.user.account', [$subdomain])
