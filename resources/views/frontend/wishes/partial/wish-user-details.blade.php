@@ -22,7 +22,7 @@
     </div>
     <div class="col-md-3">
         <i class="fal fa-star"></i>
-        <input class="data-content" value="{{ $wish->category }} Sterne">
+        <input class="data-content" value="{{ $wish->category }}">
     </div>
 
     <div class="col-md-3">
