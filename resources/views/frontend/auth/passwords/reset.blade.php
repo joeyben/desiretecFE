@@ -26,7 +26,6 @@
 
 @section('content')
     <div class="row">
-        @include('includes.alert')
         <div class="col-md-8 col-md-offset-2">
 
             <div class="panel panel-default">
@@ -34,8 +33,7 @@
                 <div class="panel-heading">{{ trans('labels.frontend.passwords.reset_password_box_title') }}</div>
 
                 <div class="panel-body">
-
-                    {{ Form::open(['route' => ['frontend.auth.api.password', $subdomain], 'class' => 'form-horizontal']) }}
+                    {{ Form::open(['route' => ['frontend.auth.api.changePassword', $subdomain], 'class' => 'form-horizontal', 'method' => 'put']) }}
 
                     <input type="hidden" name="token" value="{{ $token }}">
 
