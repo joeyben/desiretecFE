@@ -55,7 +55,7 @@
                             </div>
                             <div class="mc-mail">
                                 <i class="fal fa-envelope"></i>
-                                <a href="tel:{{ $wish->wishDetails->group->users[0]->agents[0]->email }}">{{ $wish->wishDetails->group->users[0]->agents[0]->email }}</a>
+                                <a href="mailto:{{ $wish->wishDetails->group->users[0]->agents[0]->email }}">{{ $wish->wishDetails->group->users[0]->agents[0]->email }}</a>
                             </div>
                         </div>
                     </div>
