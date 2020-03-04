@@ -15,7 +15,7 @@
         @include('includes.alert')
         <div class="col-md-6 col-md-offset-2">
             <div class="card card-login">
-                <div class="card-header">
+                <div class="card-header mb-10">
                     <h4>{{ trans('labels.frontend.auth.login_box_title') }}</h4>
                 </div>
                 <div class="card-body">
