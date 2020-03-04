@@ -26,3 +26,7 @@
         </div>
     {{ Form::close() }}
 @endsection
+
+@section('footer')
+    @include('frontend.whitelabel.footer')
+@endsection
