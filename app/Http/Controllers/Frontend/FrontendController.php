@@ -151,7 +151,7 @@ class FrontendController extends Controller
             'request'      => $this::REQUEST_ARR,
             'logo'         => $whitelabel['attachments']['logo'],
             'color'        => $whitelabel['color'],
-            '$whitelabel'  => $whitelabel,
+            'whitelabel'  => $whitelabel,
             'layer_details'=> $layer_details
         ])->render();
 
