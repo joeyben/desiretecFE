@@ -475,6 +475,12 @@ footer{
 
 // Footer
 .footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 64px;
+    background-color: #f5f5f5;
     ul {
       text-align: center;
       padding: 2em 0;

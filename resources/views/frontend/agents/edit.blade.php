@@ -30,6 +30,10 @@
     {{ Form::close() }}
 @endsection
 
+@section('footer')
+    @include('frontend.whitelabel.footer')
+@endsection
+
 @section("after-scripts")
     <script type="text/javascript">
         $(document).on('change','.up', function(){
