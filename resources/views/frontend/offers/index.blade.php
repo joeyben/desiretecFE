@@ -62,7 +62,7 @@
             $('.offer .box-body a').css({
                 'color': brandColor,
             });
-            $('.offer .pagination span.page-link').css({
+            $('.offer .pagination .page-item.active .page-link').css({
                 'background-color': brandColor,
                 'border-color': brandColor,
             });
