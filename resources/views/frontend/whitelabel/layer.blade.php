@@ -280,14 +280,17 @@
 <script>
     $(document).ready(function(){
 
-        dt.applyLayerContent();
-        dt.applyBrandColor();
-        dt.adjustResponsive();
-        dt.autocomplete();
-
         if($('.kwp-close-button i').length === 0) {
             $('.kwp-close-button').append('<i class="fal fa-times"></i>');
         }
+
+        dt.applyLayerContent();
+
+        dt.applyBrandColor();
+
+        dt.adjustResponsive();
+
+        dt.autocomplete();
 
         $("#earliest_start, #latest_return").on('change paste keyup input', function(){
             var earliest_start_arr = $("#earliest_start").val().split('.');
