@@ -34,7 +34,9 @@
                     message: this.newMessage
                 }
 
-                if($('#send-button').hasClass('sendAntworten')){
+                if($('#antworten').val().length == 0) {
+                    $('#antworten').slideDown();
+                } else {
                     axios.post('/messages', data).then(response => {
                         $('#antworten').val('');
                         $('#antworten').slideUp();

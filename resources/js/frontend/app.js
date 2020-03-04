@@ -154,13 +154,4 @@ $(document).on('submit', 'form.contact_form', function (event) {
         }
     });
     return false;
-})
-
-
-$('.antworten-btn').click(function(){
-    $('#antworten').slideDown()
-    if($(this).hasClass('sendAntworten')){
-
-    }
-    $(this).addClass('sendAntworten');
-})
+});
