@@ -126,7 +126,13 @@
                             @endif
                             <i class="fal fa-calendar-alt"></i>
                         </div>
-                        <hr>
+                        <div class="kwp-col-12">
+                            {{ Form::label('duration', trans('layer.general.duration'), ['class' => 'control-label required']) }}
+                            <div class="kwp-custom-select">
+                                {{ Form::select('duration', array_merge(['0' => trans('layer.general.duration_init')], $duration_arr), key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
                         <div class="kwp-col-12 button">
                             <a href="#">OK</a>
                         </div>
