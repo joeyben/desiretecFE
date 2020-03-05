@@ -259,7 +259,7 @@ $gutter: 30px;
 	display: block;
 	width: 100%;
 	border: none;
-	padding: 15px;
+	padding: 10px;
 	margin-top: 5px;
 	// transition: background-color .3s ease;
 	&.error-button{
@@ -424,6 +424,7 @@ $gutter: 30px;
 		  background: transparent;
 		  .kwp-col-ages{
 			background: transparent;
+			margin: 0;
 			.main-label{
 			  color: $darkgrey2;
 			  padding: 0;
@@ -433,7 +434,7 @@ $gutter: 30px;
 			.kwp-col-3{
 			  background-color: #fff;
 			  padding: 0;
-			  width: 30%;
+			  width: 21%;
 			  margin-right: 12px;
 			  &:last-child{
 				margin-right: 0px;
