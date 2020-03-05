@@ -148,7 +148,7 @@ class FrontendController extends Controller
             $layer_details = $whitelabel['layers'][0];
         }
 
-        $layer = $host != 'dk-ferien' ? 'layer' : 'layer-holiday-home';
+        $layer = $whitelabel['id'] != 227 ? 'layer' : 'layer-holiday-home';
 
         $html = view('frontend.whitelabel.' . $layer)->with([
             'adults_arr'   => $this::ADULTS_ARR,
@@ -177,12 +177,13 @@ class FrontendController extends Controller
         $host = $request->header('Host');
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
 
-        $layer_details = [];
-        if(!empty($whitelabel['layers'][0]) && !is_null($whitelabel['layers'][0])){
-            $layer_details = $whitelabel['layers'][0];
-        }
         if ($request->failed()) {
-            $html = view('frontend.whitelabel.layer')->with([
+            $layer_details = [];
+            if(!empty($whitelabel['layers'][0]) && !is_null($whitelabel['layers'][0])){
+                $layer_details = $whitelabel['layers'][0];
+            }
+            $layer = $whitelabel['id'] != 227 ? 'layer' : 'layer-holiday-home';
+            $html = view('frontend.whitelabel.' . $layer)->with([
                 'errors'       => $request->errors(),
                 'request'      => $request->all(),
                 'adults_arr'   => $this::ADULTS_ARR,
@@ -190,6 +191,7 @@ class FrontendController extends Controller
                 'ages_arr'     => $this::AGES_ARR,
                 'catering_arr' => $this::CATERING_ARR,
                 'duration_arr' => $this::DURATION_ARR,
+                'pets_arr'     => $this::PETS_ARR,
                 'logo'         => $whitelabel['attachments']['logo'],
                 'color'        => $whitelabel['color'],
                 'layer_details'=> $layer_details
@@ -197,6 +199,7 @@ class FrontendController extends Controller
 
             return response()->json(['success' => true, 'html'=>$html]);
         }
+
         $data = $request->all();
         $data['whitelabel_id'] = $whitelabel['id'];
         $data['title'] = "&nbsp;";

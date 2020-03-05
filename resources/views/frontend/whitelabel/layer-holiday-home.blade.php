@@ -47,6 +47,8 @@
                 <i class="fal fa-home"></i>
             </div>
 
+            {{ Form::hidden('airport', 'null') }}
+
             <div class="kwp-col-4 pax-col main-col">
                 <div class="kwp-form-group pax-group">
                     <label for="travelers" class="required">{{ trans('whitelabel.layer.general.pax') }}</label>
@@ -96,7 +98,7 @@
 
             <div class="kwp-col-4 duration-col main-col">
                 <div class="kwp-form-group duration-group">
-                    <label for="duration-time" class="required">{{trans('layer.general.duration_time')}}</label>
+                    <label for="duration-time" class="required">{{trans('layer.general.duration')}}</label>
                     <span class="duration-time dd-trigger">
                         <span class="txt">15.11.2018 - 17.06.2019</span>
                         <i class="fal fa-calendar-alt not-triggered"></i>
