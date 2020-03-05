@@ -70,6 +70,10 @@ class FrontendController extends Controller
         4 => "Vollpension",
         5 => "all inclusive",
     ];
+    const PETS_ARR = [
+        'Ohne Haustier',
+        'Mit Haustier',
+    ];
     const DURATION_ARR = [
         "exact" => "Exakt wie angegeben",
         "7-" => "1 Woche",
@@ -138,20 +142,25 @@ class FrontendController extends Controller
     {
         $host = $request->header('Host');
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
+
         $layer_details = [];
         if(!empty($whitelabel['layers'][0]) && !is_null($whitelabel['layers'][0])){
             $layer_details = $whitelabel['layers'][0];
         }
-        $html = view('frontend.whitelabel.layer')->with([
+
+        $layer = $host != 'dk-ferien' ? 'layer' : 'layer-holiday-home';
+
+        $html = view('frontend.whitelabel.' . $layer)->with([
             'adults_arr'   => $this::ADULTS_ARR,
             'kids_arr'     => $this::KIDS_ARR,
             'ages_arr'     => $this::AGES_ARR,
             'catering_arr' => $this::CATERING_ARR,
             'duration_arr' => $this::DURATION_ARR,
             'request'      => $this::REQUEST_ARR,
+            'pets_arr'     => $this::PETS_ARR,
             'logo'         => $whitelabel['attachments']['logo'],
             'color'        => $whitelabel['color'],
-            'whitelabel'  => $whitelabel,
+            'whitelabel'   => $whitelabel,
             'layer_details'=> $layer_details
         ])->render();
 
@@ -166,8 +175,8 @@ class FrontendController extends Controller
     public function store(StoreWishesRequest $request)
     {
         $host = $request->header('Host');
-
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
+
         $layer_details = [];
         if(!empty($whitelabel['layers'][0]) && !is_null($whitelabel['layers'][0])){
             $layer_details = $whitelabel['layers'][0];
