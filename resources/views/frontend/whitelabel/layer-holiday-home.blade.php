@@ -38,15 +38,15 @@
                 <div class="kwp-form-group pax-group">
                     <label for="travelers" class="required">{{ trans('whitelabel.layer.general.pax') }}</label>
                     <span class="travelers dd-trigger">
-                        <span class="txt">2 Erwachsene</span>
-                         <i class="fal fa-users not-triggered"></i>
-                         <i class="fal fa-times triggered"></i>
+                        <span class="txt">2 Erwachsener</span>
+                        <i class="fal fa-users not-triggered"></i>
+                        <i class="fal fa-times triggered"></i>
                     </span>
                     <div class="pax-more">
                         <div class="kwp-col-12">
                             {{ Form::label('adults', trans('layer.general.adults'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
-                                {{ Form::select('adults', $adults_arr, key_exists('adults', $request) ? $request['adults'] : 2, ['class' => 'form-control box-size', 'required' => 'required']) }}
+                                {{ Form::select('adults', $adults_arr , key_exists('adults', $request) ? $request['adults'] : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
                             </div>
                             <i class="fal fa-users"></i>
                         </div>
@@ -58,71 +58,70 @@
                                 </div>
                                 <i class="fal fa-child"></i>
                             </div>
-                        </div>
-                        <div class="kwp-col-ages">
-                            <div class="kwp-form-group">
-                                <label class="main-label">Alter der Kinder bei Rückreise</label>
-                                <input name="ages" type="hidden">
-                                <div id="age_1" class="kwp-col-3">
-                                    <i class="master-icon--aircraft-down"></i>
-                                    <div class="kwp-custom-select" style="display: none">
-                                        {{ Form::select('ages1', $ages_arr,key_exists('ages1', $request) ? $request['ages1'] : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
+                            <div class="kwp-col-ages">
+                                <div class="kwp-form-group">
+                                    <label class="main-label">Alter der Kinder bei Rückreise</label>
+                                    <input name="ages" type="hidden">
+                                    <div id="age_1" class="kwp-col-3">
+                                        <i class="master-icon--aircraft-down"></i>
+                                        <div class="kwp-custom-select" style="display: none">
+                                            {{ Form::select('ages1', $ages_arr,key_exists('ages1', $request) ? $request['ages1'] : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
+                                        </div>
+                                        @if ($errors->any() && $errors->get('ages1'))
+                                            @foreach ($errors->get('ages1') as $error)
+                                                <span class="error-input">{{ $error }}</span>
+                                                <script>
+                                                    dt.Tracking.rawEvent('form_error', 'ages1', '{{ $error }}');
+                                                </script>
+                                            @endforeach
+                                        @endif
                                     </div>
-                                    @if ($errors->any() && $errors->get('ages1'))
-                                        @foreach ($errors->get('ages1') as $error)
-                                            <span class="error-input">{{ $error }}</span>
-                                            <script>
-                                                dt.Tracking.rawEvent('form_error', 'ages1', '{{ $error }}');
-                                            </script>
-                                        @endforeach
-                                    @endif
-                                </div>
-                                <div id="age_2" class="kwp-col-3">
-                                    <i class="master-icon--aircraft-down"></i>
-                                    <div class="kwp-custom-select" style="display: none">
-                                        {{ Form::select('ages2', $ages_arr,key_exists('ages2', $request) ? $request['ages2'] : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
+                                    <div id="age_2" class="kwp-col-3">
+                                        <i class="master-icon--aircraft-down"></i>
+                                        <div class="kwp-custom-select" style="display: none">
+                                            {{ Form::select('ages2', $ages_arr,key_exists('ages2', $request) ? $request['ages2'] : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
+                                        </div>
+                                        @if ($errors->any() && $errors->get('ages2'))
+                                            @foreach ($errors->get('ages2') as $error)
+                                                <span class="error-input">{{ $error }}</span>
+                                                <script>
+                                                    dt.Tracking.rawEvent('form_error', 'ages2', '{{ $error }}');
+                                                </script>
+                                            @endforeach
+                                        @endif
                                     </div>
-                                    @if ($errors->any() && $errors->get('ages2'))
-                                        @foreach ($errors->get('ages2') as $error)
-                                            <span class="error-input">{{ $error }}</span>
-                                            <script>
-                                                dt.Tracking.rawEvent('form_error', 'ages2', '{{ $error }}');
-                                            </script>
-                                        @endforeach
-                                    @endif
-                                </div>
-                                <div id="age_3" class="kwp-col-3">
-                                    <i class="master-icon--aircraft-down"></i>
-                                    <div class="kwp-custom-select" style="display: none">
-                                        {{ Form::select('ages3', $ages_arr,key_exists('ages3', $request) ? $request['ages3'] : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
+                                    <div id="age_3" class="kwp-col-3">
+                                        <i class="master-icon--aircraft-down"></i>
+                                        <div class="kwp-custom-select" style="display: none">
+                                            {{ Form::select('ages3', $ages_arr,key_exists('ages3', $request) ? $request['ages3'] : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
+                                        </div>
+                                        @if ($errors->any() && $errors->get('ages3'))
+                                            @foreach ($errors->get('ages3') as $error)
+                                                <span class="error-input">{{ $error }}</span>
+                                                <script>
+                                                    dt.Tracking.rawEvent('form_error', 'ages3', '{{ $error }}');
+                                                </script>
+                                            @endforeach
+                                        @endif
                                     </div>
-                                    @if ($errors->any() && $errors->get('ages3'))
-                                        @foreach ($errors->get('ages3') as $error)
-                                            <span class="error-input">{{ $error }}</span>
-                                            <script>
-                                                dt.Tracking.rawEvent('form_error', 'ages3', '{{ $error }}');
-                                            </script>
-                                        @endforeach
-                                    @endif
-                                </div>
-                                <div id="age_4" class="kwp-col-3">
-                                    <i class="master-icon--aircraft-down"></i>
-                                    <div class="kwp-custom-select" style="display: none">
-                                        {{ Form::select('ages4', $ages_arr,key_exists('ages4', $request) ? $request['ages4'] : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
+                                    <div id="age_4" class="kwp-col-3">
+                                        <i class="master-icon--aircraft-down"></i>
+                                        <div class="kwp-custom-select" style="display: none">
+                                            {{ Form::select('ages4', $ages_arr,key_exists('ages4', $request) ? $request['ages4'] : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
+                                        </div>
+                                        @if ($errors->any() && $errors->get('ages4'))
+                                            @foreach ($errors->get('ages4') as $error)
+                                                <span class="error-input">{{ $error }}</span>
+                                                <script>
+                                                    dt.Tracking.rawEvent('form_error', 'ages4', '{{ $error }}');
+                                                </script>
+                                            @endforeach
+                                        @endif
                                     </div>
-                                    @if ($errors->any() && $errors->get('ages4'))
-                                        @foreach ($errors->get('ages4') as $error)
-                                            <span class="error-input">{{ $error }}</span>
-                                            <script>
-                                                dt.Tracking.rawEvent('form_error', 'ages4', '{{ $error }}');
-                                            </script>
-                                        @endforeach
-                                    @endif
                                 </div>
                             </div>
                         </div>
                         <script>dt.childrenAges();</script>
-
                         <div class="kwp-col-12">
                             {{ Form::label('pets', trans('layer.general.pets'), ['class' => 'control-label required']) }}
                             <div class="kwp-custom-select">
@@ -132,30 +131,31 @@
                         </div>
 
                         <hr>
+
                         <div class="kwp-col-12 button">
                             <a href="#">OK</a>
                         </div>
-                        @if ($errors->any() && $errors->get('ages1'))
-                            @foreach ($errors->get('ages1') as $error)
-                                <span class="error-input">{{ $error }}</span>
-                            @endforeach
-                        @endif
-                        @if ($errors->any() && $errors->get('ages2'))
-                            @foreach ($errors->get('ages2') as $error)
-                                <span class="error-input">{{ $error }}</span>
-                            @endforeach
-                        @endif
-                        @if ($errors->any() && $errors->get('ages3'))
-                            @foreach ($errors->get('ages3') as $error)
-                                <span class="error-input">{{ $error }}</span>
-                            @endforeach
-                        @endif
-                        @if ($errors->any() && $errors->get('ages4'))
-                            @foreach ($errors->get('ages4') as $error)
-                                <span class="error-input">{{ $error }}</span>
-                            @endforeach
-                        @endif
                     </div>
+                    @if ($errors->any() && $errors->get('ages1'))
+                        @foreach ($errors->get('ages1') as $error)
+                            <span class="error-input">{{ $error }}</span>
+                        @endforeach
+                    @endif
+                    @if ($errors->any() && $errors->get('ages2'))
+                        @foreach ($errors->get('ages2') as $error)
+                            <span class="error-input">{{ $error }}</span>
+                        @endforeach
+                    @endif
+                    @if ($errors->any() && $errors->get('ages3'))
+                        @foreach ($errors->get('ages3') as $error)
+                            <span class="error-input">{{ $error }}</span>
+                        @endforeach
+                    @endif
+                    @if ($errors->any() && $errors->get('ages4'))
+                        @foreach ($errors->get('ages4') as $error)
+                            <span class="error-input">{{ $error }}</span>
+                        @endforeach
+                    @endif
                 </div>
             </div>
 
