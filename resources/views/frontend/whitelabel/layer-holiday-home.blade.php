@@ -308,6 +308,40 @@
 
         dt.adjustResponsive();
 
+        dt.autocomplete();
+
+        $("#earliest_start, #latest_return").on('change paste keyup input', function(){
+            var earliest_start_arr = $("#earliest_start").val().split('.');
+            var latest_return_arr = $("#latest_return").val().split('.');
+            var earliest_start = new Date(earliest_start_arr[2], earliest_start_arr[1]-1, earliest_start_arr[0]);
+            var latest_return = new Date(latest_return_arr[2], latest_return_arr[1]-1, latest_return_arr[0]);
+            var diff_days = Math.round((latest_return-earliest_start)/(1000*60*60*24));
+            var diff_nights =  diff_days - 1;
+            var options = document.getElementById("duration").getElementsByTagName("option");
+            for (var i = 0; i < options.length; i++) {
+                if(options[i].value.includes('-')){
+                    var days = options[i].value.split('-');
+                    if(days[1].length){
+                        (parseInt(days[0]) <= parseInt(diff_days))
+                            ? options[i].disabled = false
+                            : options[i].disabled = true;
+                    } else {
+                        (parseInt(days[0]) <= parseInt(diff_days))
+                            ? options[i].disabled = false
+                            : options[i].disabled = true;
+                    }
+                } else if (options[i].value == "exact" || options[i].value == "" || !options[i].value.length) {
+                    options[i].disabled = false;
+                } else {
+                    (parseInt(options[i].value) <= parseInt(diff_nights))
+                        ? options[i].disabled = false
+                        : options[i].disabled = true;
+                }
+            }
+
+            return true;
+        });
+
         dt.startDate = new Pikaday({
             field: document.getElementById('earliest_start'),
             format: 'dd.mm.YYYY',
@@ -423,6 +457,8 @@
             $(this).parents('.haserrors').removeClass('haserrors');
             check_button();
         });
+
+        $("#latest_return").trigger("change");
     });
 
     function check_button(){
