@@ -135,6 +135,26 @@
                         <div class="kwp-col-12 button">
                             <a href="#">OK</a>
                         </div>
+                        @if ($errors->any() && $errors->get('ages1'))
+                            @foreach ($errors->get('ages1') as $error)
+                                <span class="error-input">{{ $error }}</span>
+                            @endforeach
+                        @endif
+                        @if ($errors->any() && $errors->get('ages2'))
+                            @foreach ($errors->get('ages2') as $error)
+                                <span class="error-input">{{ $error }}</span>
+                            @endforeach
+                        @endif
+                        @if ($errors->any() && $errors->get('ages3'))
+                            @foreach ($errors->get('ages3') as $error)
+                                <span class="error-input">{{ $error }}</span>
+                            @endforeach
+                        @endif
+                        @if ($errors->any() && $errors->get('ages4'))
+                            @foreach ($errors->get('ages4') as $error)
+                                <span class="error-input">{{ $error }}</span>
+                            @endforeach
+                        @endif
                     </div>
                 </div>
             </div>
