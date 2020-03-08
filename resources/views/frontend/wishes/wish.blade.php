@@ -55,7 +55,7 @@
     </div>
 
     @include('frontend.wishes.partial.wish-contact-data')
-    
+
 </section>
 
 
