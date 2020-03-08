@@ -66,7 +66,7 @@
     @if(getWhitelabelInfo()['id'] == 227)
     <div class="col-md-3">
         <i class="fal fa-dog-leashed"></i>
-        <input class="data-content" value="{{ $wish->wishDetails->pets }}">
+        <input class="data-content" value="{{ trans_choice('labels.frontend.wishes.pets', $wish->wishDetails->pets) }}">
     </div>
     @endif
     @if(getWhitelabelInfo()['id'] != 227)
