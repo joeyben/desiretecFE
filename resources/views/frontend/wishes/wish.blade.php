@@ -64,7 +64,7 @@
                     </div>
                     <div class="col-md-3 c-info">
                         <i class="fas fa-user"></i>
-                        <span>{{ $wish->wishDetails->contacts[0]->name }}</span>
+                        <span>{{ $wish->wishDetails->contacts[0]->first_name }} {{ $wish->wishDetails->contacts[0]->last_name }}</span>
                     </div>
                     <div class="col-md-3 c-info c-tel">
                         <i class="fas fa-phone"></i>
