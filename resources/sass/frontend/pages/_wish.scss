@@ -23,9 +23,11 @@ body.wish {
         margin-bottom: 15px;
         color: $black;
       }
+      .sad-hr {
+        border-color: $gray1;
+      }
       section {
         padding: 30px 0;
-        border-bottom: 1px solid $gray1;
       }
 
       .section-top {
@@ -69,36 +71,33 @@ body.wish {
         p.header-p {
           font-size: 20px;
         }
-        .bg-bottom {
-          margin-top: 35px;
-          .c-info {
-            display: flex;
-            align-items: center;
-            a {
-              text-decoration: underline;
-            }
-          }
-          h4 {
-            padding-left: 15px;
-          }
-          i {
-            font-size: 36px;
-            color: #ddd;
-            margin-right: 10px;
-          }
-          a,
-          span {
-            color: #636b6f;
-            font-weight: 100;
-          }
-          p {
-            font-weight: 100;
-            margin-bottom: 8px;
-          }
-        }
       }
 
-      .section-comments {
+      .section-contact-data {
+        margin-top: 15px;
+        .c-info {
+          display: flex;
+          align-items: center;
+          a {
+            text-decoration: underline;
+          }
+        }
+        h4 {
+          width: 100%;
+        }
+        i {
+          font-size: 36px;
+          color: $gray2;
+          margin-right: 10px;
+        }
+        a,
+        span {
+          color: $medgray2;
+          font-weight: 100;
+        }
+        p {
+          margin-bottom: 8px;
+        }
       }
 
       .section-data {
@@ -119,7 +118,7 @@ body.wish {
             }
           }
           a {
-            color: #636b6f;
+            color: $medgray2;
           }
         }
         .s3-right {
@@ -128,7 +127,7 @@ body.wish {
           }
           .panel,
           .panel-heading {
-            color: #636b6f;
+            color: $medgray2;
             border-radius: 0px;
             background-color: transparent;
             border-color: transparent;
@@ -190,6 +189,7 @@ body.wish {
           -webkit-box-orient: vertical;
         }
       }
+
       .section-angebote-2 {
         p,
         a {
@@ -203,7 +203,7 @@ body.wish {
           a,
           a:hover,
           a:focus {
-            color: #636b6f;
+            color: $medgray2;
             text-decoration: underline;
           }
           .offer-avatar-cnt {
@@ -211,7 +211,7 @@ body.wish {
             margin-bottom: 10px;
             margin-top: 15px;
             .avatar {
-              border: 1px solid #ccc;
+              border: 1px solid $gray1;
               width: 35px;
               height: 35px;
               border-radius: 100%;
@@ -235,7 +235,7 @@ body.wish {
             i {
               font-size: 30px;
               margin-right: 5px;
-              color: #bbbbbb;
+              color: $gray2;
             }
           }
           .sa-buttons {
@@ -245,22 +245,18 @@ body.wish {
               display: inline-block;
             }
           }
-          .sad-hr {
-            border-color: #eee;
-            margin-bottom: 10px;
-          }
           a {
             margin-left: 5px;
           }
           a,
           a:hover,
           a:focus {
-            color: #636b6f;
+            color: $medgray2;
             text-decoration: underline;
           }
           span {
             font-size: 30px;
-            color: #ddd;
+            color: $gray2;
           }
         }
       }
@@ -287,7 +283,7 @@ body.wish {
           }
           .circle {
             padding: 15px;
-            background: #dedede;
+            background: $gray2;
             border-radius: 100%;
             display: inline-block;
           }
@@ -363,9 +359,9 @@ body.wish {
           align-items: center;
           i {
             font-size: 30px;
-            color: $medgray1;
+            color: $medgray2;
           }
-          a{
+          a {
             width: 100%;
             word-break: break-word;
           }
