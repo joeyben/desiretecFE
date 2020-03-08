@@ -54,10 +54,13 @@
         </div>
     </div>
 
-    @include('frontend.wishes.partial.wish-contact-data')
-
 </section>
 
+<div class="bg-bottom">
+    <div class="container">
+        @include('frontend.wishes.partial.wish-contact-data')
+    </div>
+</div>
 
 <div class="container">
     <div class="col-md-12">

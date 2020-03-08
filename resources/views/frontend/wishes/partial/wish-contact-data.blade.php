@@ -1,6 +1,4 @@
 @if ($logged_in_user['role'] == ('Seller') && count($wish->wishDetails->contacts) )
-    <div class="bg-bottom">
-        <div class="container">
             <h4>Kontaktdaten des Kunden</h4>
             <div class="row">
                 <div class="col-md-3 c-info">
@@ -33,18 +31,8 @@
                     </p>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="col-md-12">
-            <hr class="sad-hr">
-        </div>
-    </div>
-
+    
 @elseif ($logged_in_user['role'] == ('User'))
-    <div class="bg-bottom">
-        <div class="container">
             <h4>Zuständiges Reisebüro</h4>
             <div class="row">
                 <div class="col-md-3 c-info">
@@ -70,13 +58,4 @@
                     </div>
                 @endif
             </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="col-md-12">
-            <hr class="sad-hr">
-        </div>
-    </div>
-
 @endif
