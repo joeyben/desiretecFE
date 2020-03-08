@@ -505,7 +505,13 @@ var exitIntent = window.exitIntent || {};
                     'background-position': "100% 80%"
                 });
             }
+
+            dt.applyLayerHeadline();
+        };
+
+        dt.applyLayerHeadline = function () {
             $('#heading').text(layerContent.headline);
+
             if (layerContent.headline_color == 'dark') {
                 $('.kwp-header h1').css({'color': '#454545'});
                 $('.kwp-header .kwp-close-button i').css({'color': '#454545'});
@@ -519,6 +525,8 @@ var exitIntent = window.exitIntent || {};
             if( $(window).outerWidth() <= 768 ) {
                 dt.PopupManager.isMobile = true;
 
+                $('#heading').text('Dürfen wir Sie beraten?');
+
                 $("body").addClass('mobile-layer');
                 $(".dt-modal").addClass('m-open');
 
@@ -529,6 +537,8 @@ var exitIntent = window.exitIntent || {};
                 $('.dt-modal .submit-col').detach().appendTo('.footer-col');
             } else {
                 dt.PopupManager.isMobile = false;
+
+                dt.applyLayerHeadline();
 
                 $("body").removeClass('mobile-layer');
                 $(".dt-modal").removeClass('m-open');
