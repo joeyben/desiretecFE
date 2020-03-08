@@ -27,6 +27,11 @@
               -webkit-transition: all 0.5s ease;
               -moz-transition: all 0.5s ease;
             }
+            h1{
+              font-size: 20px;
+              text-align: center;
+              border: none;
+            }
           }
         }
         &.m-open{
@@ -41,7 +46,7 @@
             h1{
               margin: 0px;
               padding: 5px 0;
-              color: $darkgrey2;
+              color: $white;
               position: absolute;
               bottom: 0px;
               font-size: 26px;
@@ -72,13 +77,13 @@
           line-height: 1.7em;
           font-weight: 500;
           letter-spacing: 0.03em;
-          color: #fff;
+          color: $white !important;
         }
         .kwp-close{
           top: 7px;
           right: 10px;
           i{
-            color: $white;
+            color: $white !important;
             bottom: auto;
           }
         }
@@ -112,14 +117,6 @@
     }
     label{
       font-size: 14px;
-    }
-  }
-
-  .teaser{
-    h1{
-      font-size: 20px;
-      text-align: center;
-      border: none;
     }
   }
 
@@ -221,41 +218,14 @@
     top: 0 !important;
     background: rgba(255, 255, 255, 0.01);
     opacity: 1;
-    transition: all 0.2s ease;
-    -webkit-transition: all 0.2s ease;
-    -moz-transition: all 0.2s ease;
     position: fixed;
     height:100%;
     margin: 0;
-    &.teaser-on{
-      height: 100px;
-      display: block !important;
-      .kwp{
-        background: transparent;
-        box-shadow: none;
-      }
-      .teaser{
-        &.active{
-          top: 10px;
-          transition: all 0.5s ease;
-          -webkit-transition: all 0.5s ease;
-          -moz-transition: all 0.5s ease;
-        }
-      }
-    }
     &.m-open{
       top:0 !important;
       transition: all 0.2s ease;
       -webkit-transition: all 0.2s ease;
       -moz-transition: all 0.2s ease;
-      .kwp-header{
-        h1{
-          margin: 0px;
-          text-align: center;
-          padding: 5px 0;
-        }
-      }
-
     }
   }
   .kwp{
