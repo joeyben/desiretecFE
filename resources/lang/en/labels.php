@@ -54,6 +54,9 @@ return [
             'add-comment'   => 'Kommentar hinzufügen',
             'week'          => ':value Woche|:value Wochen',
             'night'         => ':value Nacht|:value Nächte',
+            'stars'         => 'Stern|Sterne',
+            'adults'        => 'Erwachsener|Erwachsene',
+            'kids'          => 'Kind|Kinder',
             'table'         => [
                 'adults' => ':count Erwachsener|:count Erwachsene',
                 'kids'   => '{0}Kein Kinder|Kind|Kinder',
