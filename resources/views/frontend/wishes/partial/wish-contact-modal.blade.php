@@ -17,15 +17,15 @@
                 <p class="statusMsg"></p>
                 <div class="col-md-8 modal-body-left">
                     <div class="form-group float-label">
-                        <input type="text" class="form-control name" name="first_name" id="first_name" placeholder="transparent" value="" required>
+                        <input type="text" class="form-control name" name="first_name" id="first_name" placeholder="transparent" value="{{ isset($wish->wishDetails->owner->first_name) ? $wish->wishDetails->owner->first_name : '' }}" required>
                         <label for="first_name">@lang('modals.callback.first_name')</label>
                     </div>
                     <div class="form-group float-label">
-                        <input type="text" class="form-control nachname" name="last_name" id="last_name" placeholder="transparent" value="" required>
+                        <input type="text" class="form-control nachname" name="last_name" id="last_name" placeholder="transparent" value="{{ isset($wish->wishDetails->owner->last_name) ? $wish->wishDetails->owner->last_name : '' }}" required>
                         <label for="last_name">@lang('modals.callback.last_name')</label>
                     </div>
                     <div class="form-group float-label">
-                        <input type="text" class="form-control email" name="email" id="email" placeholder="transparent" value="" required>
+                        <input type="text" class="form-control email" name="email" id="email" placeholder="transparent" value="{{ isset($wish->wishDetails->owner->email) ? $wish->wishDetails->owner->email : '' }}" required>
                         <label for="email">@lang('modals.callback.email')</label>
                     </div>
                     <div class="form-group float-label">
