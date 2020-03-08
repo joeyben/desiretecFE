@@ -57,10 +57,7 @@ return [
             'stars'         => 'Stern|Sterne',
             'adults'        => 'Erwachsener|Erwachsene',
             'kids'          => 'Kind|Kinder',
-            'table'         => [
-                'adults' => ':count Erwachsener|:count Erwachsene',
-                'kids'   => '{0}Kein Kinder|Kind|Kinder',
-            ]
+            'pets'          => '{0}Ohne Haustier|{1}Mit Haustier',
         ],
         'offers' => [
             'create'          => 'Neues Angebot erstellen',
