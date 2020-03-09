@@ -10,6 +10,14 @@ var exitIntent = window.exitIntent || {};
         cssPath: '/css/layer.css'
     };
 
+    var fontAwesomeIcons = jQuery("<link>");
+    fontAwesomeIcons.attr({
+        rel:  "stylesheet",
+        type: "text/css",
+        href: "https://mvp.desiretec.com/fontawsome/css/all.css"
+    });
+    $("head").append(fontAwesomeIcons);
+
     dt.popupTemplate = function (variant) {
 
         return '' +
@@ -24,10 +32,6 @@ var exitIntent = window.exitIntent || {};
             '<div class="kwp-body '+variant+'-body">' +
             '</div><div style="clear:both;"></div>';
     };
-
-
-
-
 
     var DTTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'Master WL',
@@ -559,7 +563,7 @@ var exitIntent = window.exitIntent || {};
                     minLength: 3,
                     highlight: true,
                     source: function(query) {
-                        return $.get('/destinations', {query: query});
+                        return $.get(domain + '/destinations', {query: query});
                     }
                 }
             });
@@ -572,7 +576,7 @@ var exitIntent = window.exitIntent || {};
                     minLength: 3,
                     highlight: true,
                     source: function(query) {
-                        return $.get('/airports', {query: query});
+                        return $.get(domain + '/airports', {query: query});
                     }
                 }
             });
