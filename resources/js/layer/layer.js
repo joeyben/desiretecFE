@@ -559,7 +559,7 @@ var exitIntent = window.exitIntent || {};
                     minLength: 3,
                     highlight: true,
                     source: function(query) {
-                        return $.get('/destinations', {query: query});
+                        return $.get(domain + '/destinations', {query: query});
                     }
                 }
             });
@@ -572,7 +572,7 @@ var exitIntent = window.exitIntent || {};
                     minLength: 3,
                     highlight: true,
                     source: function(query) {
-                        return $.get('/airports', {query: query});
+                        return $.get(domain + '/airports', {query: query});
                     }
                 }
             });
