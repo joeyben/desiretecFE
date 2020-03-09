@@ -43,7 +43,7 @@
             {{ $wish->wishDetails->group->users[0]->zip_code }} {{ $wish->wishDetails->group->users[0]->city }}
         </p>
     </div>
-    @if(count($wish->wishDetails->offers) > 0 || count($wish->wishDetails->messages) > 0)
+    @if($hasOffers || $hasNewMessage)
         <div class="col-md-3 c-info">
             <i class="fas fa-user"></i>
             <span>{{ $wish->wishDetails->group->users[0]->agents[0]->name }}</span>
