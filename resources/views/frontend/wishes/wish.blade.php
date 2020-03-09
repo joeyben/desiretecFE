@@ -53,15 +53,16 @@
             </div>
         </div>
     </div>
-
 </section>
-<section class="" id="contact-info">
+
+<section class="section-contact-data">
     <div class="container">
-        <div class="col-md-12 sa2-1">
+        <div class="col-md-12 d-flex flex-wrap align-items-start">
             @include('frontend.wishes.partial.wish-contact-data')
         </div>
     </div>
 </section>
+
 <div class="container">
     <div class="col-md-12">
         <hr class="sad-hr">
