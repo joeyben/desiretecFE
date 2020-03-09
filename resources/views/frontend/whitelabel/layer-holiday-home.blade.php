@@ -23,8 +23,8 @@
         <div class="kwp-row">
             <div class="kwp-col-4 destination">
 
-                {{ Form::label('destination', trans('layer.general.destination'), ['class' => 'control-label required']) }}
-                {{ Form::text('destination',  key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('layer.placeholder.destination'), 'required' => 'required']) }}
+                {{ Form::label('destination', 'Wohin soll es gehen?', ['class' => 'control-label required']) }}
+                {{ Form::text('destination',  key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => 'Destination', 'required' => 'required']) }}
                 @if ($errors->any() && $errors->get('destination'))
                     @foreach ($errors->get('destination') as $error)
                         <span class="error-input">{{ $error }}</span>
@@ -208,8 +208,8 @@
 
             <div class="kwp-col-4 destination">
                 <div class="kwp-form-group ">
-                    {{ Form::label('budget', trans('layer.general.budget'), ['class' => 'control-label required']) }}
-                    {{ Form::number('budget', key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.placeholder.budget_example', ['budget' => 1000]), 'required' => 'required', 'min' => '1', 'oninput' => 'validity.valid||(value="");']) }}
+                    {{ Form::label('budget', 'Mietpreis', ['class' => 'control-label required']) }}
+                    {{ Form::number('budget', key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size', 'placeholder' => 'Ihr max. Gesamtbudget', 'required' => 'required', 'min' => '1', 'oninput' => 'validity.valid||(value="");']) }}
                     <i class="fal fa-euro-sign"></i>
                     @if ($errors->any() && $errors->get('budget'))
                         @foreach ($errors->get('budget') as $error)
@@ -252,7 +252,7 @@
                   @endphp
                 @endif
                     {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
-                     <p>Ich habe die <a href="/tnb" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="{{ isset($layer_details['privacy']) ? $layer_details['privacy'] : '#'}}" target="_blank" rel="noopener noreferrer">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
+                     <p>Ich habe die <a href="{{isset($whitelabel['domain']) ? $whitelabel['domain'] : ''}}/tnb" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="{{ isset($layer_details['privacy']) ? $layer_details['privacy'] : '#'}}" target="_blank" rel="noopener noreferrer">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
                 </div>
             </div>
         </div>
