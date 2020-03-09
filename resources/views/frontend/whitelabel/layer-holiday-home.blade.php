@@ -181,7 +181,6 @@
                                 @endforeach
 
                             @endif
-                            <i class="fal fa-calendar-alt"></i>
                         </div>
                         <div class="kwp-col-4">
                             {{ Form::label('latest_return', trans('layer.general.latest_return'), ['class' => 'control-label required']) }}
@@ -191,7 +190,6 @@
                                     <span class="error-input">{{ $error }}</span>
                                 @endforeach
                             @endif
-                            <i class="fal fa-calendar-alt"></i>
                         </div>
                         <div class="kwp-col-12">
                             {{ Form::label('duration', trans('layer.general.duration'), ['class' => 'control-label required']) }}

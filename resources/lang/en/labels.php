@@ -54,10 +54,10 @@ return [
             'add-comment'   => 'Kommentar hinzufügen',
             'week'          => ':value Woche|:value Wochen',
             'night'         => ':value Nacht|:value Nächte',
-            'table'         => [
-                'adults' => ':count Erwachsener|:count Erwachsene',
-                'kids'   => '{0}Kein Kinder|Kind|Kinder',
-            ]
+            'stars'         => 'Stern|Sterne',
+            'adults'        => 'Erwachsener|Erwachsene',
+            'kids'          => 'Kind|Kinder',
+            'pets'          => '{0}Ohne Haustier|{1}Mit Haustier',
         ],
         'offers' => [
             'create'          => 'Neues Angebot erstellen',

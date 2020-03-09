@@ -4,7 +4,7 @@
             <ul class="d-flex justify-content-center flex-wrap">
                 @foreach (getWhitelabelInfo()['footers'] as $footer)
                      <li>
-                        <a href="{{ $footer['url'] }}" target="_blank">{{ $footer['name'] }}</a>
+                        <a href="{{ $footer['url'] }}" target="_blank" class="link-btn-secondary">{{ $footer['name'] }}</a>
                     </li>
                 @endforeach
             </ul>

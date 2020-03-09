@@ -18,11 +18,11 @@
             <div class="container d-flex flex-wrap">
                 <div class="col-md-8 modal-body-left">
                     <div class="form-group float-label">
-                        <input type="text" class="form-control name" name="first_name" id="first_name_" placeholder="transparent" value="" required>
+                        <input type="text" class="form-control name" name="first_name" id="first_name_" placeholder="transparent" value="{{ isset($wish->wishDetails->owner->first_name) ? $wish->wishDetails->owner->first_name : '' }}" required>
                         <label for="first_name_">@lang('modals.callback.first_name')</label>
                     </div>
                     <div class="form-group float-label">
-                        <input type="text" class="form-control nachname" name="last_name" id="last_name_" placeholder="transparent" value="" required>
+                        <input type="text" class="form-control nachname" name="last_name" id="last_name_" placeholder="transparent" value="{{ isset($wish->wishDetails->owner->last_name) ? $wish->wishDetails->owner->last_name : '' }}" required>
                         <label for="last_name_">@lang('modals.callback.last_name')</label>
                     </div>
                     <div class="form-group float-label">
