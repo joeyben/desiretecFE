@@ -255,14 +255,14 @@ $gutter: 30px;
 	text-align: center;
 	color: #fff;
 	font-size: 18px;
-	font-weight: 700;
+	font-weight: normal;
 	display: block;
 	width: 100%;
-	border: none;
+    border: none;
+    min-height: 48.4px;;
 	padding: 10px;
 	margin-top: 5px;
-	// transition: background-color .3s ease;
-	&.error-button{
+    &.error-button{
 	  background: $brand-danger;
 	}
   }
@@ -1112,7 +1112,7 @@ p.kwp-info {
 				padding: 3px 0 5px;
 				font-size: 14px;
 				color: $darkgrey2;
-				font-weight: 500;
+				font-weight: normal;
 				line-height: 1.5em;
 				display: block;
 			}
@@ -1148,7 +1148,7 @@ p.kwp-info {
 		display: block;
 		margin-top: 5px;
 		color: $darkgrey2;
-		font-weight: 500;
+		font-weight: normal;
 	  }
 	}
 	.catering{
@@ -1207,7 +1207,7 @@ p.kwp-info {
 	box-shadow: none;
 	background: none;
 	background-color: transparent;
-	font-weight: 500;
+	font-weight: normal;
 	border-bottom: 1px solid $medgray1;
 	border-radius: 0;
 	padding: 0 10px;
