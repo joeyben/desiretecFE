@@ -31,7 +31,7 @@
                     </p>
                 </div>
             </div>
-    
+
 @elseif ($logged_in_user['role'] == ('User'))
             <h4>Zuständiges Reisebüro</h4>
             <div class="row">

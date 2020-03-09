@@ -55,13 +55,13 @@
     </div>
 
 </section>
-
-<div class="bg-bottom">
+<section class="" id="contact-info">
     <div class="container">
-        @include('frontend.wishes.partial.wish-contact-data')
+        <div class="col-md-12 sa2-1">
+            @include('frontend.wishes.partial.wish-contact-data')
+        </div>
     </div>
-</div>
-
+</section>
 <div class="container">
     <div class="col-md-12">
         <hr class="sad-hr">
