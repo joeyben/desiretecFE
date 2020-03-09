@@ -15,7 +15,7 @@
     $callbackInactivClass = count($wish->wishDetails->callbacks) ? "" : "";
     $actionButtonsSet = false;
     $hasOffers = count($wish->wishDetails->offers) > 0;
-    $hasNewMessage = isset($wish->wishDetails->messages) && count($wish->wishDetails->messages) > 0 && $wish->wishDetails->messages[count($wish->wishDetails->messages)-1]->user_id !== Auth::user()->id;
+    $hasNewMessage = isset($wish->wishDetails->messages) && count($wish->wishDetails->messages) > 0 && $wish->wishDetails->messages[count($wish->wishDetails->messages)-1]->user_id !== $logged_in_user['id'];
 @endphp
 
 @section('content')
