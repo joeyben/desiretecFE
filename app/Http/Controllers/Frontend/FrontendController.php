@@ -198,6 +198,7 @@ class FrontendController extends Controller
                 'pets_arr'     => $this::PETS_ARR,
                 'logo'         => $whitelabel['attachments']['logo'],
                 'color'        => $whitelabel['color'],
+                'whitelabel'   => $whitelabel,
                 'layer_details'=> $layer_details
             ])->render();
 
