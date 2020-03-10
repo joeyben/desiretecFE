@@ -57,7 +57,7 @@
 
 <section class="section-contact-data">
     <div class="container">
-        <div class="col-md-12 d-flex flex-wrap align-items-start">
+        <div class="col-md-12 d-flex flex-wrap align-items-start justify-content-start">
             @include('frontend.wishes.partial.wish-contact-data')
         </div>
     </div>
