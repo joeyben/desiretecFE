@@ -38,7 +38,7 @@
                     </div>
                 </div>
 
-                @if(count($wish->wishDetails->offers) > 0 || (isset($wish->wishDetails->sellerMessages) && count($wish->wishDetails->sellerMessages) > 0 ))
+                @if($hasOffers || $hasNewMessage)
                     <div class="col-md-4 modal-body-right">
                         <img title="{{ $wish->wishDetails->group->users[0]->agents[0]->name }}" alt="{{ $wish->wishDetails->group->users[0]->agents[0]->name }}" src="{{ Storage::disk('s3')->url('img/agent/') }}{{ $wish->wishDetails->group->users[0]->agents[0]->avatar }}" />
                         <h4>{{ $wish->wishDetails->group->users[0]->agents[0]->name }}</h4>

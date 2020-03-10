@@ -39,7 +39,9 @@
             {{ $wish->wishDetails->group->users[0]->name }}
         </p>
         <p>
-            {{ $wish->wishDetails->group->users[0]->address }} <br>
+            {{ $wish->wishDetails->group->users[0]->address }}
+        </p>
+        <p>
             {{ $wish->wishDetails->group->users[0]->zip_code }} {{ $wish->wishDetails->group->users[0]->city }}
         </p>
     </div>
