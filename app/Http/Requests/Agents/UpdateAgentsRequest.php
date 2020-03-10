@@ -26,7 +26,7 @@ class UpdateAgentsRequest extends FormRequest
         return [
             'name'  => 'required|string|max:64',
             'email' => 'required|email|max:255',
-            'telephone' => 'required|integer'
+            'telephone' => 'required'
         ];
     }
 
