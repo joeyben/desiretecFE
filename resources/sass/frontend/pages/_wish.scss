@@ -75,6 +75,9 @@ body.wish {
 
       .section-contact-data {
         margin-top: 15px;
+        .row{
+            width: 100%;
+        }
         .c-info {
           display: flex;
           align-items: center;
