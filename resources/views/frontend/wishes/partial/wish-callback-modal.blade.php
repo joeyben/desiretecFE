@@ -44,9 +44,9 @@
                     <button type="submit" class="primary-btn">@lang('modals.callback.send')</button>
                 </div>
 
-                @if(isset($wish->wishDetails->group->users[0]->agents))
+                @if($hasOffers || $hasNewMessage)
                     <div class="col-md-4 modal-body-right">
-                        <img src="/img/travel-agency.jpg" alt="travel agency">
+                        <img title="{{ $wish->wishDetails->group->users[0]->agents[0]->name }}" alt="{{ $wish->wishDetails->group->users[0]->agents[0]->name }}" src="{{ Storage::disk('s3')->url('img/agent/') }}{{ $wish->wishDetails->group->users[0]->agents[0]->avatar }}" />
                         <h4>{{ $wish->wishDetails->group->users[0]->agents[0]->name }}</h4>
                         <div class="modal-contact">
                             <div class="mc-tel">
@@ -56,6 +56,20 @@
                             <div class="mc-mail">
                                 <i class="fal fa-envelope"></i>
                                 <a href="mailto:{{ $wish->wishDetails->group->users[0]->agents[0]->email }}">{{ $wish->wishDetails->group->users[0]->agents[0]->email }}</a>
+                            </div>
+                        </div>
+                    </div>
+                @else
+                    <div class="col-md-4 modal-body-right">
+                        <img src="/img/travel-agency.jpg" alt="travel agency">
+                        <h4>{{ $wish->wishDetails->group->users[0]->name }}</h4>
+                        <p>{{ $wish->wishDetails->group->users[0]->address }}<br>
+                            {{ $wish->wishDetails->group->users[0]->zip_code }} {{ $wish->wishDetails->group->users[0]->city }}
+                        </p>
+                        <div class="modal-contact">
+                            <div class="mc-mail">
+                                <i class="fal fa-envelope"></i>
+                                <a href="mailto:{{ $wish->wishDetails->group->users[0]->email }}">{{ $wish->wishDetails->group->users[0]->email }}</a>
                             </div>
                         </div>
                     </div>
