@@ -62,7 +62,7 @@
                         </p>
                         <div class="modal-contact">
                             <div class="mc-mail">
-                                <span class="glyphicon glyphicon-envelope"></span>
+                                <i class="fal fa-envelope"></i>
                                 <a href="mailto:{{ $wish->wishDetails->group->users[0]->email }}">{{ $wish->wishDetails->group->users[0]->email }}</a>
                             </div>
                         </div>
