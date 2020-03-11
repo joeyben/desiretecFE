@@ -4,7 +4,7 @@
 
 <div class="col-md-12 s2-second">
 
-    @if(getWhitelabelInfo()['id'] != 227)
+    @if(getWhitelabelInfo()['id'] != 77)
     <div class="col-md-3">
         <i class="fal fa-plane-departure"></i>
         <div id="departure-mousehover-value" class="data-content ellipsised">{{ $wish->wishDetails->airport }}</div>
@@ -22,7 +22,7 @@
         <i class="fal fa-usd-circle"></i>
         <input class="data-content" value="{{  number_format($wish->wishDetails->budget, 0, ',', '.') }}€">
     </div>
-    @if(getWhitelabelInfo()['id'] != 227)
+    @if(getWhitelabelInfo()['id'] != 77)
     <div class="col-md-3">
         <i class="fal fa-star"></i>
         <input class="data-content" value="{{ $wish->wishDetails->category }} {{ trans_choice('labels.frontend.wishes.stars', $wish->wishDetails->category) }}">
@@ -63,13 +63,13 @@
         <i class="fal fa-stopwatch"></i>
         <input class="data-content" value="{{ $wish->wishDetails->duration }}">
     </div>
-    @if(getWhitelabelInfo()['id'] == 227)
+    @if(getWhitelabelInfo()['id'] == 77)
     <div class="col-md-3">
         <i class="fal fa-dog-leashed"></i>
         <input class="data-content" value="{{ trans_choice('labels.frontend.wishes.pets', $wish->wishDetails->pets) }}">
     </div>
     @endif
-    @if(getWhitelabelInfo()['id'] != 227)
+    @if(getWhitelabelInfo()['id'] != 77)
     <div class="col-md-3">
         <i class="fal fa-utensils"></i>
         <input class="data-content" value="{{ $wish->wishDetails->catering }}">
