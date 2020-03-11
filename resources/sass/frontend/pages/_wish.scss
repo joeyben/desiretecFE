@@ -309,6 +309,19 @@ body.wish {
             display: flex;
             padding-left: 0px;
           }
+          .kids {
+            input {
+              width: 35%;
+              padding-left: 5px;
+              padding-right: 0;
+              @media (max-width: $break-iPad) {
+                width: 25%;
+              }
+            }
+            span {
+              font-weight: 100;
+            }
+          }
         }
       }
     }
