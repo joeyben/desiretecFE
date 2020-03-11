@@ -21,7 +21,7 @@ class ApiService implements ApiServiceInterface
 
     public function __construct()
     {
-        $this->apiUrl = env('API_URL', 'https://mvp.desiretec.com') . $this::API_PATH;
+        $this->apiUrl = env('API_URL', 'https://admin.desiretec.com') . $this::API_PATH;
         $this->client = new Client();
         $this->setHeader('Content-type', 'application/json');
         $this->setAuthorization(resolve('token'));

@@ -49,7 +49,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink-4">
                         @if ($logged_in_user && ($logged_in_user['role'] === "Executive"))
-                            <a class="dropdown-item link-btn-secondary" href="{{ env('ADMIN_URL', 'https://mvp.desiretec.com') . '/admin/dashboard#/' }}" target="_blank" >Administration</a>
+                            <a class="dropdown-item link-btn-secondary" href="{{ env('ADMIN_URL', 'https://admin.desiretec.com') . '/admin/dashboard#/' }}" target="_blank" >Administration</a>
                         @endif
 
                         @if ($logged_in_user && $logged_in_user['role'] === "Seller")

@@ -14,7 +14,7 @@ var exitIntent = window.exitIntent || {};
     fontAwesomeIcons.attr({
         rel:  "stylesheet",
         type: "text/css",
-        href: "https://mvp.desiretec.com/fontawsome/css/all.css"
+        href: "https://admin.desiretec.com/fontawsome/css/all.css"
     });
     $("head").append(fontAwesomeIcons);
 
