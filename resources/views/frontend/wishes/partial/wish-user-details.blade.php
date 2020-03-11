@@ -40,23 +40,13 @@
         <i class="fal fa-users"></i>
         <input class="data-content" value="{{ $wish->wishDetails->adults }} {{ trans_choice('labels.frontend.wishes.adults', $wish->wishDetails->adults) }}">
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 kids">
         <i class="fal fa-child"></i>
-        <input class="data-content" value="{{ $wish->wishDetails->kids }} {{ trans_choice('labels.frontend.wishes.kids', $wish->wishDetails->kids) }}" style="width: 30%">
+        <input class="data-content" value="{{ $wish->wishDetails->kids }} {{ trans_choice('labels.frontend.wishes.kids', $wish->wishDetails->kids) }}" >
         @if($wish->wishDetails->ages)
-        <div>(
-            <?php $count = 0; ?>
-            @foreach( explode("/", $wish->wishDetails->ages) as $age)
-                @if ($age && $count > 0)
-                    ,
-                @endif
-
-                @if ($age)
-                    {{ $age }}
-                    <?php $count++; ?>
-                @endif
-            @endforeach
-        )</div>
+            <span>(</span>
+            <span>{{ rtrim($wish->wishDetails->ages,",") }}</span>
+            <span>)</span>
         @endif
     </div>
     <div class="col-md-3">
