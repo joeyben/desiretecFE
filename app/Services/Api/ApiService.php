@@ -26,7 +26,6 @@ class ApiService implements ApiServiceInterface
         $this->setHeader('Content-type', 'application/json');
         $this->setAuthorization(resolve('token'));
         $this->setHeader('c-agent', session()->get('c-agent', null));
-        $this->getWlInfo('tui');
     }
 
     public function setHeader(string $key, string $value = null): self

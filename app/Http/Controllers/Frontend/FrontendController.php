@@ -152,7 +152,7 @@ class FrontendController extends Controller
             $layer_details = $whitelabel['layers'][0];
         }
 
-        $layer = $whitelabel['id'] != 227 ? 'layer' : 'layer-holiday-home';
+        $layer = $whitelabel['id'] != 77 ? 'layer' : 'layer-holiday-home';
 
         $html = view('frontend.whitelabel.' . $layer)->with([
             'adults_arr'   => $this::ADULTS_ARR,
@@ -186,7 +186,7 @@ class FrontendController extends Controller
             if(!empty($whitelabel['layers'][0]) && !is_null($whitelabel['layers'][0])){
                 $layer_details = $whitelabel['layers'][0];
             }
-            $layer = $whitelabel['id'] != 227 ? 'layer' : 'layer-holiday-home';
+            $layer = $whitelabel['id'] != 77 ? 'layer' : 'layer-holiday-home';
             $html = view('frontend.whitelabel.' . $layer)->with([
                 'errors'       => $request->errors(),
                 'request'      => $request->all(),
@@ -198,6 +198,7 @@ class FrontendController extends Controller
                 'pets_arr'     => $this::PETS_ARR,
                 'logo'         => $whitelabel['attachments']['logo'],
                 'color'        => $whitelabel['color'],
+                'whitelabel'   => $whitelabel,
                 'layer_details'=> $layer_details
             ])->render();
 

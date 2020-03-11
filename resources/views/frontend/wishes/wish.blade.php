@@ -15,7 +15,7 @@
     $callbackInactivClass = count($wish->wishDetails->callbacks) ? "" : "";
     $actionButtonsSet = false;
     $hasOffers = count($wish->wishDetails->offers) > 0;
-    $hasNewMessage = isset($wish->wishDetails->messages) && count($wish->wishDetails->messages) > 0 && $wish->wishDetails->messages[count($wish->wishDetails->messages)-1]->user_id !== Auth::user()->id;
+    $hasNewMessage = isset($wish->wishDetails->messages) && count($wish->wishDetails->messages) > 0 && $wish->wishDetails->messages[count($wish->wishDetails->messages)-1]->user_id !== $logged_in_user['id'];
 @endphp
 
 @section('content')
@@ -53,15 +53,16 @@
             </div>
         </div>
     </div>
-
 </section>
-<section class="" id="contact-info">
+
+<section class="section-contact-data">
     <div class="container">
-        <div class="col-md-12 sa2-1">
+        <div class="col-md-12 d-flex flex-wrap align-items-start justify-content-start">
             @include('frontend.wishes.partial.wish-contact-data')
         </div>
     </div>
 </section>
+
 <div class="container">
     <div class="col-md-12">
         <hr class="sad-hr">

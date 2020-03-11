@@ -1,6 +1,7 @@
 <script type="application/javascript">
     var brandColor = {!! json_encode($color) !!};
     var layerContent = {!! json_encode($layer_details) !!};
+    var domain = {!! json_encode($whitelabel['domain']) !!};
 </script>
 
 <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
@@ -22,8 +23,8 @@
         <div class="kwp-row">
             <div class="kwp-col-4 destination">
 
-                {{ Form::label('destination', trans('layer.general.destination'), ['class' => 'control-label required']) }}
-                {{ Form::text('destination',  key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('layer.placeholder.destination'), 'required' => 'required']) }}
+                {{ Form::label('destination', 'Wohin soll es gehen?', ['class' => 'control-label required']) }}
+                {{ Form::text('destination',  key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => 'Destination', 'required' => 'required']) }}
                 @if ($errors->any() && $errors->get('destination'))
                     @foreach ($errors->get('destination') as $error)
                         <span class="error-input">{{ $error }}</span>
@@ -207,8 +208,8 @@
 
             <div class="kwp-col-4 destination">
                 <div class="kwp-form-group ">
-                    {{ Form::label('budget', trans('layer.general.budget'), ['class' => 'control-label required']) }}
-                    {{ Form::number('budget', key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.placeholder.budget_example', ['budget' => 1000]), 'required' => 'required', 'min' => '1', 'oninput' => 'validity.valid||(value="");']) }}
+                    {{ Form::label('budget', 'Mietpreis', ['class' => 'control-label required']) }}
+                    {{ Form::number('budget', key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size', 'placeholder' => 'Ihr max. Gesamtbudget', 'required' => 'required', 'min' => '1', 'oninput' => 'validity.valid||(value="");']) }}
                     <i class="fal fa-euro-sign"></i>
                     @if ($errors->any() && $errors->get('budget'))
                         @foreach ($errors->get('budget') as $error)
@@ -251,7 +252,7 @@
                   @endphp
                 @endif
                     {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
-                     <p>Ich habe die <a href="/tnb" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="{{ isset($layer_details['privacy']) ? $layer_details['privacy'] : '#'}}" target="_blank" rel="noopener noreferrer">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
+                     <p>Ich habe die <a href="{{isset($whitelabel['domain']) ? $whitelabel['domain'] : ''}}/tnb" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="{{ isset($layer_details['privacy']) ? $layer_details['privacy'] : '#'}}" target="_blank" rel="noopener noreferrer">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
                 </div>
             </div>
         </div>
@@ -313,8 +314,8 @@
             var latest_return_arr = $("#latest_return").val().split('.');
             var earliest_start = new Date(earliest_start_arr[2], earliest_start_arr[1]-1, earliest_start_arr[0]);
             var latest_return = new Date(latest_return_arr[2], latest_return_arr[1]-1, latest_return_arr[0]);
-            var diff_days = Math.round((latest_return-earliest_start)/(1000*60*60*24));
-            var diff_nights =  diff_days - 1;
+            var diff_nights = Math.round((latest_return-earliest_start)/(1000*60*60*24));
+            var diff_days =  diff_nights + 1;
             var options = document.getElementById("duration").getElementsByTagName("option");
             for (var i = 0; i < options.length; i++) {
                 if(options[i].value.includes('-')){

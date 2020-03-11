@@ -1,6 +1,7 @@
 <script type="application/javascript">
     var brandColor = {!! json_encode($color) !!};
     var layerContent = {!! json_encode($layer_details) !!};
+    var domain = {!! json_encode($whitelabel['domain']) !!};
 </script>
 
 <link media="all" type="text/css" rel="stylesheet" href="https://mvp.desiretec.com/fontawsome/css/all.css">
@@ -54,7 +55,7 @@
                     <div class="duration-more">
                         <div class="kwp-col-4">
                             {{ Form::label('earliest_start', trans('layer.general.earliest_start'), ['class' => 'control-label required']) }}
-                            {{ Form::text('earliest_start', key_exists('earliest_start', $request) ? $request['earliest_start'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.general.earliest_start'), 'required' => 'required']) }}
+                            {{ Form::text('earliest_start', key_exists('earliest_start', $request) ? $request['earliest_start'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.general.earliest_start'), 'required' => 'required', 'readonly']) }}
                             @if ($errors->any() && $errors->get('earliest_start'))
                                 @foreach ($errors->get('earliest_start') as $error)
                                     <span class="error-input">{{ $error }}</span>
@@ -63,7 +64,7 @@
                         </div>
                         <div class="kwp-col-4">
                             {{ Form::label('latest_return', trans('layer.general.latest_return'), ['class' => 'control-label required']) }}
-                            {{ Form::text('latest_return', key_exists('latest_return', $request) ? $request['latest_return'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.general.latest_return'), 'required' => 'required']) }}
+                            {{ Form::text('latest_return', key_exists('latest_return', $request) ? $request['latest_return'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.general.latest_return'), 'required' => 'required', 'readonly']) }}
                             @if ($errors->any() && $errors->get('latest_return'))
                                 @foreach ($errors->get('latest_return') as $error)
                                     <span class="error-input">{{ $error }}</span>
@@ -297,8 +298,8 @@
             var latest_return_arr = $("#latest_return").val().split('.');
             var earliest_start = new Date(earliest_start_arr[2], earliest_start_arr[1]-1, earliest_start_arr[0]);
             var latest_return = new Date(latest_return_arr[2], latest_return_arr[1]-1, latest_return_arr[0]);
-            var diff_days = Math.round((latest_return-earliest_start)/(1000*60*60*24));
-            var diff_nights =  diff_days - 1;
+            var diff_nights = Math.round((latest_return-earliest_start)/(1000*60*60*24));
+            var diff_days =  diff_nights + 1;
             var options = document.getElementById("duration").getElementsByTagName("option");
             for (var i = 0; i < options.length; i++) {
                 if(options[i].value.includes('-')){
