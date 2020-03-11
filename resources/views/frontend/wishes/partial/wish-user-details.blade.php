@@ -46,9 +46,8 @@
         @if($wish->wishDetails->ages)
         <div>(
             <?php $count = 0; ?>
-            <?php $agesCount = count($wish->wishDetails->ages) - 1; ?>
             @foreach( explode("/", $wish->wishDetails->ages) as $age)
-                @if ($age && $count > 0 && $count < $agesCount)
+                @if ($age && $count > 0)
                     ,
                 @endif
 
