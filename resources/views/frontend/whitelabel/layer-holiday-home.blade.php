@@ -4,7 +4,7 @@
     var domain = {!! json_encode($whitelabel['domain']) !!};
 </script>
 
-<link media="all" type="text/css" rel="stylesheet" href="https://admin.desiretec.com/fontawsome/css/all.css">
+<link media="all" type="text/css" rel="stylesheet" href="https://www.wish-service.com/fontawsome/css/all.css">
 
 <style>
     .kwp-logo {
