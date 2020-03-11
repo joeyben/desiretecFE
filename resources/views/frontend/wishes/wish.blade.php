@@ -55,6 +55,7 @@
     </div>
 </section>
 
+@if ($logged_in_user['role'] === "User" || ($logged_in_user['role'] === "Seller" && count($wish->wishDetails->contacts)))
 <section class="section-contact-data">
     <div class="container">
         <div class="col-md-12 d-flex flex-wrap align-items-start justify-content-start">
@@ -68,6 +69,7 @@
         <hr class="sad-hr">
     </div>
 </div>
+@endif
 
 @if ($hasOffers)
     <section class="section-angebote-2" id="angebote">
