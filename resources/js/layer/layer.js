@@ -3,8 +3,12 @@ var exitIntent = window.exitIntent || {};
 
 (function ($) {
 
+    var scriptSrc = $('script#dt-layer').attr('src');
+    var host = scriptSrc.replace('/js/layer.js','');
+    console.log(host);
+
     dt.defaultConfig = {
-        baseUrl: 'https://www.wish-service.com',
+        baseUrl: host,
         popupPath: '/show',
         popupStore:'/wish/store',
         cssPath: '/css/layer.css'
@@ -14,7 +18,7 @@ var exitIntent = window.exitIntent || {};
     fontAwesomeIcons.attr({
         rel:  "stylesheet",
         type: "text/css",
-        href: "https://admin.desiretec.com/fontawsome/css/all.css"
+        href: "https://www.wish-service.com/fontawsome/css/all.css"
     });
     $("head").append(fontAwesomeIcons);
 
@@ -265,8 +269,9 @@ var exitIntent = window.exitIntent || {};
             }
             dt.PopupManager.init();
             var isNotBentour = $(location).attr('href').indexOf('bentour') >= 0;
+            debugger
             if(isNotBentour) {
-                dt.Tracking.init('desiretec_exitwindow','UA-105970361-21');
+                dt.Tracking.init('bentour_exitwindow','UA-105970361-21');
             }
             dt.triggerButton($event);
             if(deviceDetector.device === "phone" && dt.PopupManager.decoder){
