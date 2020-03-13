@@ -3,8 +3,12 @@ var exitIntent = window.exitIntent || {};
 
 (function ($) {
 
+    var scriptSrc = $('script#dt-layer').attr('src');
+    var host = scriptSrc.replace('/js/layer.js','');
+    console.log(host);
+
     dt.defaultConfig = {
-        baseUrl: 'https://www.wish-service.com',
+        baseUrl: host,
         popupPath: '/show',
         popupStore:'/wish/store',
         cssPath: '/css/layer.css'
@@ -265,6 +269,7 @@ var exitIntent = window.exitIntent || {};
             }
             dt.PopupManager.init();
             var isNotBentour = $(location).attr('href').indexOf('bentour') >= 0;
+            debugger
             if(isNotBentour) {
                 dt.Tracking.init('bentour_exitwindow','UA-105970361-21');
             }
