@@ -43,20 +43,6 @@
     }
   }
 }
-.navbar-header{
-  float: left;
-}
-.navbar-collapse{
-  width: auto;
-  display: block;
-  flex: none;
-  &.in{
-    @media screen and (max-width: $break-iPad) {
-      overflow: visible;
-    }
-  }
-}
-
 
 
 // box (bootstrap)

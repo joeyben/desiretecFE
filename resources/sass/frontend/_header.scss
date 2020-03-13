@@ -1,19 +1,29 @@
 @import "variables";
 
-.navbar-brand {
-  img {
-    height: 2rem;
+.navbar.header {
+  padding: 0 15px;
+  .navbar-brand {
+    padding: 10px 0;
+    img {
+      height: 2rem;
+    }
   }
-}
-.navbar-collapse {
-  -ms-flex-preferred-size: 100%;
-  flex-basis: 100%;
-  -ms-flex-positive: 1;
-  flex-grow: 1 !important;
-  -ms-flex-align: center;
-  align-items: center;
-}
-.header {
+  .navbar-collapse {
+    overflow: inherit !important;
+    padding: 5px 25px;
+    &.show {
+      width: 100%;
+      .dropdown-menu {
+        position: absolute;
+        margin-top: 6px !important;
+      }
+    }
+  }
+  .collapsing {
+    -webkit-transition: !important none;
+    transition: none !important;
+    display: none;
+  }
   .nav-item {
     padding: 0 15px;
     position: relative;

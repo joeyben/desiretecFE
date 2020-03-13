@@ -1,12 +1,14 @@
-
-<!--Navbar -->
-<nav class="header navbar navbar-expand-lg navbar-light info-color fixed-top mb-1">
+<nav class="header navbar navbar-expand-lg navbar-light info-color fixed-top">
     <a class="navbar-brand logo" href="{{ route('frontend.index', [$subdomain]) }}">
         <img class="" src="{{ getWhitelabelInfo()['attachments']['logo'] }}">
     </a>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="navbar-right collapse navbar-collapse navbar-right" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto flex-row align-items-baseline float-right">
             @if ($logged_in_user && $logged_in_user['isSeller'])
                 <li class="nav-item"><a href="{{ route('frontend.wishes.list', [$subdomain]) }}" class="link-btn-secondary">{{ trans('navs.frontend.wisheslist') }}</a></li>
                 @if($currentAgent)
@@ -77,4 +79,3 @@
         </ul>
     </div>
 </nav>
-<!--/.Navbar -->
