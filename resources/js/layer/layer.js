@@ -269,6 +269,7 @@ var exitIntent = window.exitIntent || {};
             }
             dt.PopupManager.init();
             var isNotBentour = $(location).attr('href').indexOf('bentour') >= 0;
+            debugger
             if(isNotBentour) {
                 dt.Tracking.init('desiretec_exitwindow','UA-105970361-21');
             }
