@@ -3,11 +3,12 @@ var exitIntent = window.exitIntent || {};
 
 (function ($) {
 
-    var scriptScr = $('script#dt-layer').attr('src');
-    console.log(scriptScr);
+    var scriptSrc = $('script#dt-layer').attr('src');
+    var host = scriptSrc.replace('/js/layer.js','');
+    console.log(host);
 
     dt.defaultConfig = {
-        baseUrl: 'https://www.wish-service.com',
+        baseUrl: host,
         popupPath: '/show',
         popupStore:'/wish/store',
         cssPath: '/css/layer.css'
