@@ -266,7 +266,7 @@ var exitIntent = window.exitIntent || {};
             dt.PopupManager.init();
             var isNotBentour = $(location).attr('href').indexOf('bentour') >= 0;
             if(isNotBentour) {
-                dt.Tracking.init('desiretec_exitwindow','UA-105970361-21');
+                dt.Tracking.init('bentour_exitwindow','UA-105970361-21');
             }
             dt.triggerButton($event);
             if(deviceDetector.device === "phone" && dt.PopupManager.decoder){
