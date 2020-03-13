@@ -3,6 +3,9 @@ var exitIntent = window.exitIntent || {};
 
 (function ($) {
 
+    var scriptScr = $('script#dt-layer').attr('src');
+    console.log(scriptScr);
+
     dt.defaultConfig = {
         baseUrl: 'https://www.wish-service.com',
         popupPath: '/show',
