@@ -1,3 +1,5 @@
+@import "variables";
+
 // Offers Styles
 body.offer{
   .box-info{
@@ -12,8 +14,14 @@ body.offer{
     .form-btns{
       display: flex;
       justify-content: flex-end;
+      flex-wrap: wrap;
       .btn{
         margin-left: 5px;
+      }
+      .secondary-btn{
+        @media(max-width: $break-iPad) {
+          order: 2;
+        }
       }
     }
   }
