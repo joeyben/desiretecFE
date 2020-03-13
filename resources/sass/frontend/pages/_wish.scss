@@ -81,6 +81,9 @@ body.wish {
         .c-info {
           display: flex;
           align-items: center;
+          @media(max-width: $break-iPad) {
+            padding: 10px;
+          }
           a {
             text-decoration: underline;
           }
