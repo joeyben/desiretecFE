@@ -7,8 +7,8 @@
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="navbar-right collapse navbar-collapse navbar-right" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto flex-row align-items-baseline float-right">
+    <div class="collapse navbar-collapse navbar-right" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto float-right">
             @if ($logged_in_user && $logged_in_user['isSeller'])
                 <li class="nav-item"><a href="{{ route('frontend.wishes.list', [$subdomain]) }}" class="link-btn-secondary">{{ trans('navs.frontend.wisheslist') }}</a></li>
                 @if($currentAgent)

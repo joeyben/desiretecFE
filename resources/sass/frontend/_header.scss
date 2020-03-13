@@ -32,11 +32,20 @@
       padding-right: 0;
       border-right: none;
     }
+    @media(max-width: $break-iPad) {
+      border: none;
+      text-align: right;
+      padding: 7px 0;
+    }
     a {
       color: $black;
       &:hover {
         text-decoration: none;
         color: $steel;
+      }
+      @media(max-width: $break-iPad) {
+        float: right;
+        font-size: 15px;
       }
     }
   }
