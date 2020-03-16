@@ -269,7 +269,6 @@ var exitIntent = window.exitIntent || {};
             }
             dt.PopupManager.init();
             var isNotBentour = $(location).attr('href').indexOf('bentour') >= 0;
-            debugger
             if(isNotBentour) {
                 dt.Tracking.init('bentour_exitwindow','UA-105970361-21');
             }
