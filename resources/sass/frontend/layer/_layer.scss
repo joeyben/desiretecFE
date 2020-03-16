@@ -104,7 +104,8 @@ $gutter: 30px;
   .teaser{
 	height: 90px !important;
 	top: -110px;
-	background-color: rgba(255, 221, 0, 0.8);
+    background-color: transparent;
+    opacity: 0.8;
 	width: 95%;
 	padding: 0 0px;
 	margin: auto;
@@ -136,12 +137,12 @@ $gutter: 30px;
 	  margin: 10px;
 	  text-align: center;
 	  padding-top: 25px;
-	  color: $darkgrey2;
+	  color: $white;
 	  line-height: 1.5em;
 	}
 	i{
 	  position: absolute;
-	  color: $darkgrey2;
+	  color: $white;
 	  right: 0px;
 	  top: 7px;
 	  font-size: 25px;
