@@ -46,7 +46,6 @@
                 <thead class="transparent-bg">
                     <tr>
                         <th>{{ trans('labels.frontend.agents.table.avatar') }}</th>
-                        <th>{{ trans('labels.frontend.agents.table.id') }}</th>
                         <th>{{ trans('labels.frontend.agents.table.name') }}</th>
                         <th>{{ trans('labels.frontend.agents.table.created_at') }}</th>
                         <th>{{ trans('labels.frontend.agents.table.actions') }}</th>
@@ -58,7 +57,6 @@
                             <td>
                                 <img src="{{ Storage::disk('s3')->url('img/agent/' . $agent->avatar) }}"/>
                             </td>
-                            <td>{{ $agent->id }}</td>
                             <td>{{ $agent->name }}</td>
                             <td>{{ $agent->created_at }}</td>
                             <td>
