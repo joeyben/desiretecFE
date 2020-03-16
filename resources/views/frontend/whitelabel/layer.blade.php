@@ -279,6 +279,8 @@
 {{ Form::close() }}
 
 <script>
+
+(function($) {
     $(document).ready(function(){
 
         if($('.kwp-close-button i').length === 0) {
@@ -510,5 +512,6 @@
             $('.dt-modal #submit-button').removeClass('error-button');
         }
     };
+})(jQuery);
 
 </script>

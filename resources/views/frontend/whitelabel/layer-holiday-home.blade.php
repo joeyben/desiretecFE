@@ -262,6 +262,7 @@
 
 <script>
 
+(function($) {
     $(".dd-trigger").click(function(e) {
         if(!$(this).parents('.main-col').hasClass('open')){
             $('.main-col').removeClass('open')
@@ -485,5 +486,6 @@
             $element.removeAttr('selected').parent().val('');
         }
     }
+})(jQuery);
 
 </script>
