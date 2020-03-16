@@ -1,16 +1,5 @@
 @import "../variables";
 
-@media (min-width: $break-iPad) {
-  .navbar-right {
-    .dropdown-menu {
-      right: 0; left: auto;
-    }
-    .dropdown-menu-left {
-      left: 0; right: auto;
-    }
-  }
-}
-
 @media(max-width: $break-iPad) {
     .dt-modal{
         &.teaser-on{
