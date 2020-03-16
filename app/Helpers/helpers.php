@@ -829,4 +829,19 @@ if (!function_exists('getWhitelabelInfo')) {
     }
 }
 
+/**
+ * Returns the Footers for the current WL
+ */
+if (!function_exists('getWhitelabelFooters')) {
+    function getWhitelabelFooters()
+    {
+        $footers = WhitelabelMiddleware::whitelabelFromCache()['footers'];
+
+        usort($footers, function ($footer1, $footer2) {
+            return $footer1['position'] <=> $footer2['position'];
+        });
+        return $footers;
+    }
+}
+
 
