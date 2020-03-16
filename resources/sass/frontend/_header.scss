@@ -24,6 +24,9 @@
     transition: none !important;
     display: none;
   }
+  .navbar-toggler {
+    margin: 10px 0;
+  }
   .nav-item {
     padding: 0 15px;
     position: relative;
@@ -46,6 +49,7 @@
       @media(max-width: $break-iPad) {
         float: right;
         font-size: 15px;
+        padding: 5px 15px !important;
       }
     }
   }

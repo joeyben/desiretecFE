@@ -250,6 +250,7 @@ var exitIntent = window.exitIntent || {};
                     removeLayer(event);
                 }
             });
+            $(".dt-modal .teaser").css('background-color', brandColor);
         };
 
         dt.hideTeaser = function (e) {
@@ -497,9 +498,6 @@ var exitIntent = window.exitIntent || {};
             $(".kwp-color-overlay").css('background-color', brandColor);
 
             $('<style>.kwp input[type="checkbox"]:checked:after { background-color: ' + brandColor + '; border: 1px solid ' + brandColor + '; }</style>').appendTo('head');
-
-            $("<style>.kwp-completed-master a { color: " + brandColor + "; }</style>")
-                .appendTo(document.documentElement);
         };
 
         dt.applyLayerContent = function () {
