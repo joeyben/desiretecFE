@@ -397,7 +397,7 @@ var dt = window.dt || {};
                 if(dt.PopupManager.teaser){
                     this.teaser = jQuery('<div/>', {'class': 'teaser'}).append('<h1>'+this.teaserText+'</h1><i class="fal fa-times"></i>');
                     this.modal.append(this.teaser);
-                    $(".dt-modal .teaser").css('background-color', dt.defaultConfig.teaserBgColor);
+                    $(".dt-modal .teaser").css('background-color', dt.config.teaserBgColor);
                 }
                 jQuery('body').prepend(this.modal);
             }

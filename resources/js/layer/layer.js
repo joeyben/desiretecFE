@@ -528,10 +528,6 @@ var exitIntent = window.exitIntent || {};
             }
         };
 
-        dt.changeTeaserColor = function ($color) {
-            dt.defaultConfig.teaserBgColor = $color;
-        };
-
         dt.adjustResponsive = function(){
             if( $(window).outerWidth() <= 768 ) {
                 dt.PopupManager.isMobile = true;
