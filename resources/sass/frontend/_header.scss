@@ -10,7 +10,7 @@
   }
   .navbar-collapse {
     overflow: inherit !important;
-    padding: 5px 25px;
+    padding: 0px 10px;
     &.show {
       width: 100%;
       .dropdown-menu {
@@ -38,7 +38,7 @@
     @media(max-width: $break-iPad) {
       border: none;
       text-align: right;
-      padding: 7px 0;
+      padding: 3px 0;
     }
     a {
       color: $black;
