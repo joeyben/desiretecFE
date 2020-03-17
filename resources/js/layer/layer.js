@@ -231,6 +231,7 @@ var exitIntent = window.exitIntent || {};
             $(".dt-modal").removeClass('teaser-on').find('.teaser').remove();
             $( ".dt-modal" ).addClass('m-open');
             dt.PopupManager.show();
+            $(".dt-modal").removeClass('teaser-on');
             $("body, html").css({'overflow':'hidden'});
             //$.cookie(dt.PopupManager.mobileCookieId,'true',dt.PopupManager.cookieOptions);
             ga('dt.send', 'event', 'Mobile Layer', 'Teaser shown', 'Mobile');
