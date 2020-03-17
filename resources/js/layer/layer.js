@@ -189,9 +189,11 @@ var exitIntent = window.exitIntent || {};
                     $('<span/>', {'class': 'trigger-modal'});
                 $('body').prepend(this.trigger);
                 this.trigger.fadeIn();
-                this.trigger.css({
-                    'background-color': brandColor,
-                });
+                if (typeof brandColor === 'undefined') {
+                    this.trigger.css({
+                        'background-color': brandColor,
+                    });
+                }
             }
 
             this.shown = false;
@@ -252,7 +254,9 @@ var exitIntent = window.exitIntent || {};
                     removeLayer(event);
                 }
             });
-            $(".dt-modal .teaser").css('background-color', brandColor);
+            if (typeof brandColor === 'undefined') {
+                $(".dt-modal .teaser").css('background-color', brandColor);
+            }
         };
 
         dt.hideTeaser = function (e) {
