@@ -11,7 +11,8 @@ var exitIntent = window.exitIntent || {};
         baseUrl: host,
         popupPath: '/show',
         popupStore:'/wish/store',
-        cssPath: '/css/layer.css'
+        cssPath: '/css/layer.css',
+        teaserBgColor: ''
     };
 
     var fontAwesomeIcons = jQuery("<link>");
@@ -528,7 +529,7 @@ var exitIntent = window.exitIntent || {};
         };
 
         dt.changeTeaserColor = function ($color) {
-            $(".dt-modal .teaser").css('background-color', $color);
+            dt.defaultConfig.teaserBgColor = $color;
         };
 
         dt.adjustResponsive = function(){
