@@ -189,7 +189,7 @@ var exitIntent = window.exitIntent || {};
                     $('<span/>', {'class': 'trigger-modal'});
                 $('body').prepend(this.trigger);
                 this.trigger.fadeIn();
-                if (typeof brandColor === 'undefined') {
+                if (typeof brandColor !== 'undefined') {
                     this.trigger.css({
                         'background-color': brandColor,
                     });
@@ -254,7 +254,7 @@ var exitIntent = window.exitIntent || {};
                     removeLayer(event);
                 }
             });
-            if (typeof brandColor === 'undefined') {
+            if (typeof brandColor !== 'undefined') {
                 $(".dt-modal .teaser").css('background-color', brandColor);
             }
         };
