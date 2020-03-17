@@ -395,9 +395,8 @@ var dt = window.dt || {};
                 //.click(jQuery.proxy(this.onBackdropClick, this))
                 ;
                 if(dt.PopupManager.teaser){
-                    this.teaser = jQuery('<div/>', {'class': 'teaser'}).append('<h1>'+this.teaserText+'</h1><i class="fal fa-times"></i>');
+                    this.teaser = jQuery('<div/>', {'class': 'teaser'}).append('<h1>'+this.teaserText+'</h1><i class="fal fa-times"></i>').css('background-color', dt.config.teaserBgColor);
                     this.modal.append(this.teaser);
-                    $(".dt-modal .teaser").css('background-color', dt.config.teaserBgColor);
                 }
                 jQuery('body').prepend(this.modal);
             }
