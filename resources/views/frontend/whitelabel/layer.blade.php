@@ -282,7 +282,7 @@
 
 (function($) {
     $(document).ready(function(){
-
+        dt.Tracking.init('desiretec1_exitwindow','UA-105970361-21');
         if($('.kwp-close-button i').length === 0) {
             $('.kwp-close-button').append('<i class="fal fa-times"></i>');
         }
