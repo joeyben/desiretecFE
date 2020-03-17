@@ -1,10 +1,15 @@
+@import "variables";
+
 .card-login {
   padding: 2em;
+  @media(max-width: $break-iPad) {
+    padding: 1em;
+  }
   .checkbox {
     label {
       display: flex;
       align-items: center;
-      font-size: 12px;
+      font-size: 13px;
       input {
         margin-right: 5px;
       }
@@ -15,5 +20,9 @@
   }
   .btn {
     margin-bottom: 0;
+  }
+  .link-btn-primary {
+    display: inline-block;
+    padding: 5px 0;
   }
 }
