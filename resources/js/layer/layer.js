@@ -527,6 +527,10 @@ var exitIntent = window.exitIntent || {};
             }
         };
 
+        dt.changeTeaserColor = function ($color) {
+            $(".dt-modal .teaser").css('background-color', $color);
+        };
+
         dt.adjustResponsive = function(){
             if( $(window).outerWidth() <= 768 ) {
                 dt.PopupManager.isMobile = true;
