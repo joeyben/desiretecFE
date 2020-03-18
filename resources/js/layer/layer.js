@@ -276,12 +276,7 @@ var exitIntent = window.exitIntent || {};
             }
             dt.PopupManager.init();
 
-            var whitelabelScriptSrc = $('script#dt-layer').attr('src');
-            var whitelabelPrefix = whitelabelScriptSrc.replace('.wish-service.com/js/layer.js', '').replace('/js/layer.js', '').replace('https://', '').replace('http://', '').replace('www.', '');
 
-            if (whitelabelPrefix !== 'bentour' && whitelabelPrefix.length > 0) {
-                dt.Tracking.init(whitelabelPrefix + '_exitwindow', 'UA-105970361-21');
-            }
 
             dt.triggerButton($event);
             if(deviceDetector.device === "phone" && dt.PopupManager.decoder){
