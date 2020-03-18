@@ -50,12 +50,13 @@ deploy-development:
     - if echo $RESP | grep -q ‘err’; then exit 1; fi
 
 deploy-preprod:
-  stage: deploy-production
+  stage: deploy
   image: pstauffer/curl
   only:
     - master
   variables:
     GIT_STRATEGY: none
+  when: manual
   script:
     - RESP=$(curl -X POST ${PREPROD_SERVICE_WEBHOOK_APP})
     - if echo $RESP | grep -q ‘err’; then exit 1; fi
