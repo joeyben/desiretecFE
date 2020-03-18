@@ -50,7 +50,7 @@ deploy-development:
     - if echo $RESP | grep -q ‘err’; then exit 1; fi
 
 deploy-preprod:
-  stage: deploy-production
+  stage: deploy
   image: pstauffer/curl
   only:
     - master
