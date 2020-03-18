@@ -1,6 +1,7 @@
 stages:
   - build
   - deploy
+  - deploy-production
 
 build-app:
   image: docker:latest
@@ -48,13 +49,27 @@ deploy-development:
     - RESP=$(curl -X POST ${STAGE_SERVICE_WEBHOOK_NGINX})
     - if echo $RESP | grep -q ‘err’; then exit 1; fi
 
-deploy-master:
-  stage: deploy
+deploy-preprod:
+  stage: deploy-production
   image: pstauffer/curl
   only:
     - master
   variables:
     GIT_STRATEGY: none
+  script:
+    - RESP=$(curl -X POST ${PREPROD_SERVICE_WEBHOOK_APP})
+    - if echo $RESP | grep -q ‘err’; then exit 1; fi
+    - RESP=$(curl -X POST ${PREPROD_SERVICE_WEBHOOK_NGINX})
+    - if echo $RESP | grep -q ‘err’; then exit 1; fi
+
+deploy-master:
+  stage: deploy-production
+  image: pstauffer/curl
+  only:
+    - master
+  variables:
+    GIT_STRATEGY: none
+  when: manual
   script:
     - RESP=$(curl -X POST ${PROD_SERVICE_WEBHOOK_APP})
     - if echo $RESP | grep -q ‘err’; then exit 1; fi
