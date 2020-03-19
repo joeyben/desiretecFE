@@ -23,8 +23,8 @@
         <div class="kwp-row">
             <div class="kwp-col-4 destination">
 
-                {{ Form::label('destination', 'Wohin soll es gehen?', ['class' => 'control-label required']) }}
-                {{ Form::text('destination',  key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => 'Destination', 'required' => 'required']) }}
+                {{ Form::label('destination', trans('layer.general.destination'), ['class' => 'control-label required']) }}
+                {{ Form::text('destination',  key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('layer.placeholder.destination'), 'required' => 'required']) }}
                 @if ($errors->any() && $errors->get('destination'))
                     @foreach ($errors->get('destination') as $error)
                         <span class="error-input">{{ $error }}</span>
