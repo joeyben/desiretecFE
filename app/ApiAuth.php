@@ -36,7 +36,8 @@ class ApiAuth
         $response = $client->post(env('API_URL', 'https://admin.desiretec.com') . '/api/v1/auth/login/email', [
             'form_params' => [
                 'email' => $email,
-                'host' => $host
+                'host' => $host,
+                'whitelabelId' => current_whitelabel()['id'],
             ]
         ]);
 

@@ -23,8 +23,8 @@
         <div class="kwp-row">
             <div class="kwp-col-4 destination">
 
-                {{ Form::label('destination', 'Wohin soll es gehen?', ['class' => 'control-label required']) }}
-                {{ Form::text('destination',  key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => 'Destination', 'required' => 'required']) }}
+                {{ Form::label('destination', trans('layer.general.destination'), ['class' => 'control-label required']) }}
+                {{ Form::text('destination',  key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('layer.placeholder.destination'), 'required' => 'required']) }}
                 @if ($errors->any() && $errors->get('destination'))
                     @foreach ($errors->get('destination') as $error)
                         <span class="error-input">{{ $error }}</span>
@@ -221,6 +221,14 @@
         </div>
 
         <div class="kwp-row">
+            <div class="kwp-col-12 description">
+                {{ Form::label('description', trans('layer.general.description'), ['class' => 'control-label required']) }}
+                {{ Form::textarea('description', key_exists('description', $request) ? $request['description'] : null,['class' => 'form-control', 'placeholder' => trans('layer.placeholder.description')]) }}
+                <i class="fal fa-pencil"></i>
+            </div>
+        </div>
+
+        <div class="kwp-row">
             <div class="kwp-col-4 email-col">
                 {{ Form::label('email', trans('layer.general.email'), ['class' => 'control-label']) }}
                 {{ Form::text('email', key_exists('email', $request) ? $request['email'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.placeholder.email'), 'required' => 'required']) }}
@@ -298,6 +306,13 @@
 
     $(document).ready(function(){
 
+        var whitelabelScriptSrc = $('script#dt-layer').attr('src');
+        var whitelabelPrefix = whitelabelScriptSrc.replace('.wish-service.com/js/layer.js', '').replace('/js/layer.js', '').replace('https://', '').replace('http://', '').replace('www.', '');
+
+        if (whitelabelPrefix !== 'bentour' && whitelabelPrefix.length > 0) {
+            dt.Tracking.init(whitelabelPrefix + '_exitwindow', 'UA-105970361-21');
+        }
+        
         if($('.kwp-close-button i').length === 0) {
             $('.kwp-close-button').append('<i class="fal fa-times"></i>');
         }
@@ -308,7 +323,7 @@
 
         dt.adjustResponsive();
 
-        dt.autocomplete();
+        //dt.autocomplete();
 
         $("#earliest_start, #latest_return").on('change paste keyup input', function(){
             var earliest_start_arr = $("#earliest_start").val().split('.');

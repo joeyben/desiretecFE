@@ -276,6 +276,8 @@ var exitIntent = window.exitIntent || {};
             }
             dt.PopupManager.init();
 
+
+
             dt.triggerButton($event);
             if(deviceDetector.device === "phone" && dt.PopupManager.decoder){
                 dt.scrollUpDetect();
