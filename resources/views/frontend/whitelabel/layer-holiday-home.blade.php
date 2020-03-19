@@ -221,6 +221,14 @@
         </div>
 
         <div class="kwp-row">
+            <div class="kwp-col-12 description">
+                {{ Form::label('description', trans('tui::layer.general.description'), ['class' => 'control-label required']) }}
+                {{ Form::textarea('description', key_exists('description', $request) ? $request['description'] : null,['class' => 'form-control', 'placeholder' => trans('tui::layer.placeholder.description')]) }}
+                <i class="fal fa-pencil"></i>
+            </div>
+        </div>
+
+        <div class="kwp-row">
             <div class="kwp-col-4 email-col">
                 {{ Form::label('email', trans('layer.general.email'), ['class' => 'control-label']) }}
                 {{ Form::text('email', key_exists('email', $request) ? $request['email'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.placeholder.email'), 'required' => 'required']) }}
@@ -308,7 +316,7 @@
 
         dt.adjustResponsive();
 
-        dt.autocomplete();
+        //dt.autocomplete();
 
         $("#earliest_start, #latest_return").on('change paste keyup input', function(){
             var earliest_start_arr = $("#earliest_start").val().split('.');
