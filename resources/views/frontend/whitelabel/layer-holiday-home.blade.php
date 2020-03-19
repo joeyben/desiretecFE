@@ -222,8 +222,8 @@
 
         <div class="kwp-row">
             <div class="kwp-col-12 description">
-                {{ Form::label('description', trans('tui::layer.general.description'), ['class' => 'control-label required']) }}
-                {{ Form::textarea('description', key_exists('description', $request) ? $request['description'] : null,['class' => 'form-control', 'placeholder' => trans('tui::layer.placeholder.description')]) }}
+                {{ Form::label('description', trans('layer.general.description'), ['class' => 'control-label required']) }}
+                {{ Form::textarea('description', key_exists('description', $request) ? $request['description'] : null,['class' => 'form-control', 'placeholder' => trans('layer.placeholder.description')]) }}
                 <i class="fal fa-pencil"></i>
             </div>
         </div>
