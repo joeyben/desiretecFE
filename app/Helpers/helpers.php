@@ -829,6 +829,13 @@ if (!function_exists('getWhitelabelInfo')) {
     }
 }
 
+if (!function_exists('current_whitelabel')) {
+    function current_whitelabel()
+    {
+        return WhitelabelMiddleware::whitelabelFromCache();
+    }
+}
+
 /**
  * Returns the Footers for the current WL
  */
