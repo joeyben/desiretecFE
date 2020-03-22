@@ -22,7 +22,7 @@ Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
         Route::get('wish/store', 'FrontendController@store')->name('storeWish');
 });
 
-Route::domain('{subdomain}.wish-service.com')->group( function () {
+Route::domain('{subdomain}.'.str_replace('https://www.','', env('APP_URL','wish-service.com')))->group( function () {
     Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
         Route::group(['middleware' => 'wl'], function () {
 
