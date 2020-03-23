@@ -29,7 +29,7 @@
                     @foreach ($errors->get('destination') as $error)
                         <span class="error-input">{{ $error }}</span>
                         <script>
-                            dt.Tracking.rawEvent('form_error', 'destination', '{{ $error }}');
+                            dt.Tracking.rawEvent('{{ $whitelabel['name'] }}_exitwindow', 'Error on destination', '{{ $error }}');
                         </script>
                     @endforeach
                 @endif
@@ -43,7 +43,7 @@
                     @foreach ($errors->get('airport') as $error)
                         <span class="error-input">{{ $error }}</span>
                         <script>
-                            dt.Tracking.rawEvent('form_error', 'airport', '{{ $error }}');
+                            dt.Tracking.rawEvent('{{ $whitelabel['name'] }}_exitwindow', 'Error on airport', '{{ $error }}');
                         </script>
                     @endforeach
                 @endif
@@ -66,7 +66,7 @@
                                 @foreach ($errors->get('earliest_start') as $error)
                                     <span class="error-input">{{ $error }}</span>
                                     <script>
-                                        dt.Tracking.rawEvent('form_error', 'earliest_start', '{{ $error }}');
+                                        dt.Tracking.rawEvent('{{ $whitelabel['name'] }}_exitwindow', 'Error on earliest_start', '{{ $error }}');
                                     </script>
                                 @endforeach
                             @endif
@@ -78,7 +78,7 @@
                                 @foreach ($errors->get('latest_return') as $error)
                                     <span class="error-input">{{ $error }}</span>
                                     <script>
-                                        dt.Tracking.rawEvent('form_error', 'latest_return', '{{ $error }}');
+                                        dt.Tracking.rawEvent('{{ $whitelabel['name'] }}_exitwindow', 'Error on latest_return', '{{ $error }}');
                                     </script>
                                 @endforeach
                             @endif
@@ -134,7 +134,7 @@
                                             @foreach ($errors->get('ages1') as $error)
                                                 <span class="error-input">{{ $error }}</span>
                                                 <script>
-                                                    dt.Tracking.rawEvent('form_error', 'ages1', '{{ $error }}');
+                                                    dt.Tracking.rawEvent('{{ $whitelabel['name'] }}_exitwindow', 'Error on ages1', '{{ $error }}');
                                                 </script>
                                             @endforeach
                                         @endif
@@ -148,7 +148,7 @@
                                             @foreach ($errors->get('ages2') as $error)
                                                 <span class="error-input">{{ $error }}</span>
                                                 <script>
-                                                    dt.Tracking.rawEvent('form_error', 'ages2', '{{ $error }}');
+                                                    dt.Tracking.rawEvent('{{ $whitelabel['name'] }}_exitwindow', 'Error on ages2', '{{ $error }}');
                                                 </script>
                                             @endforeach
                                         @endif
@@ -162,7 +162,7 @@
                                             @foreach ($errors->get('ages3') as $error)
                                                 <span class="error-input">{{ $error }}</span>
                                                 <script>
-                                                    dt.Tracking.rawEvent('form_error', 'ages3', '{{ $error }}');
+                                                    dt.Tracking.rawEvent('{{ $whitelabel['name'] }}_exitwindow', 'Error on ages3', '{{ $error }}');
                                                 </script>
                                             @endforeach
                                         @endif
@@ -176,7 +176,7 @@
                                             @foreach ($errors->get('ages4') as $error)
                                                 <span class="error-input">{{ $error }}</span>
                                                 <script>
-                                                    dt.Tracking.rawEvent('form_error', 'ages4', '{{ $error }}');
+                                                    dt.Tracking.rawEvent('{{ $whitelabel['name'] }}_exitwindow', 'Error on ages4', '{{ $error }}');
                                                 </script>
                                             @endforeach
                                         @endif
@@ -260,7 +260,7 @@
                     @foreach ($errors->get('email') as $error)
                         <span class="error-input">{{ $error }}</span>
                         <script>
-                            dt.Tracking.rawEvent('form_error', 'email', '{{ $error }}');
+                            dt.Tracking.rawEvent('{{ $whitelabel['name'] }}_exitwindow', 'Error on email', '{{ $error }}');
                         </script>
                     @endforeach
                 @endif
@@ -284,7 +284,7 @@
                   $terms_class = 'dt_terms hasError'
                   @endphp
                     <script>
-                        dt.Tracking.rawEvent('form_error', 'terms', '{{ $error }}');
+                        dt.Tracking.rawEvent('{{ $whitelabel['name'] }}_exitwindow', 'Error on terms', '{{ $error }}');
                     </script>
                 @endif
                     {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
