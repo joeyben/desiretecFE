@@ -162,8 +162,18 @@ input:-internal-autofill-selected{
   input,
   textarea {
     &:focus,
-    &:-webkit-autofill,
     &:not(:placeholder-shown) {
+      + label {
+        font-size: 90%;
+        transform: translate3d(0, -100%, 0);
+        opacity: 1;
+      }
+    }
+  }
+  input,
+  textarea {
+    &:focus,
+    &:-webkit-autofill {
       + label {
         font-size: 90%;
         transform: translate3d(0, -100%, 0);
