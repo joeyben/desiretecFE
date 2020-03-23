@@ -19,7 +19,7 @@
         var kwz = document.createElement('script');
         kwz.id = 'dt-layer';
         kwz.type = 'application/javascript'; kwz.async = true;
-        kwz.src = '/js/layer.js';
+        kwz.src = '{!! url('/js/layer.js') !!}' ;
         var s = document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(kwz, s);
 

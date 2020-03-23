@@ -219,6 +219,7 @@ class FrontendController extends Controller
             $html = view('frontend.whitelabel.created')->with([
                 'headline_success'       => $headline_success,
                 'subheadline_success'    => $subheadline_success,
+                'whitelabel_name'        => $whitelabel['name']
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);

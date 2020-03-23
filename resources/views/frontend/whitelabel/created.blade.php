@@ -5,5 +5,5 @@
     </p>
 </div>
 <script>
-    dt.Tracking.rawEvent('form_success', 'success', 'Form sent successfully');
+    dt.Tracking.rawEvent('{{ $whitelabel_name }}_exitwindow', 'success', 'Form sent successfully');
 </script>

@@ -28,6 +28,9 @@
                 @if ($errors->any() && $errors->get('destination'))
                     @foreach ($errors->get('destination') as $error)
                         <span class="error-input">{{ $error }}</span>
+                        <script>
+                            dt.Tracking.rawEvent('{{ $whitelabel['name'] }}_exitwindow', 'Error on destination', '{{ $error }}');
+                        </script>
                     @endforeach
                 @endif
             </div>
@@ -39,6 +42,9 @@
                 @if ($errors->any() && $errors->get('airport'))
                     @foreach ($errors->get('airport') as $error)
                         <span class="error-input">{{ $error }}</span>
+                        <script>
+                            dt.Tracking.rawEvent('{{ $whitelabel['name'] }}_exitwindow', 'Error on airport', '{{ $error }}');
+                        </script>
                     @endforeach
                 @endif
             </div>
@@ -59,6 +65,9 @@
                             @if ($errors->any() && $errors->get('earliest_start'))
                                 @foreach ($errors->get('earliest_start') as $error)
                                     <span class="error-input">{{ $error }}</span>
+                                    <script>
+                                        dt.Tracking.rawEvent('{{ $whitelabel['name'] }}_exitwindow', 'Error on earliest_start', '{{ $error }}');
+                                    </script>
                                 @endforeach
                             @endif
                         </div>
@@ -68,6 +77,9 @@
                             @if ($errors->any() && $errors->get('latest_return'))
                                 @foreach ($errors->get('latest_return') as $error)
                                     <span class="error-input">{{ $error }}</span>
+                                    <script>
+                                        dt.Tracking.rawEvent('{{ $whitelabel['name'] }}_exitwindow', 'Error on latest_return', '{{ $error }}');
+                                    </script>
                                 @endforeach
                             @endif
                         </div>
@@ -122,7 +134,7 @@
                                             @foreach ($errors->get('ages1') as $error)
                                                 <span class="error-input">{{ $error }}</span>
                                                 <script>
-                                                    dt.Tracking.rawEvent('form_error', 'ages1', '{{ $error }}');
+                                                    dt.Tracking.rawEvent('{{ $whitelabel['name'] }}_exitwindow', 'Error on ages1', '{{ $error }}');
                                                 </script>
                                             @endforeach
                                         @endif
@@ -136,7 +148,7 @@
                                             @foreach ($errors->get('ages2') as $error)
                                                 <span class="error-input">{{ $error }}</span>
                                                 <script>
-                                                    dt.Tracking.rawEvent('form_error', 'ages2', '{{ $error }}');
+                                                    dt.Tracking.rawEvent('{{ $whitelabel['name'] }}_exitwindow', 'Error on ages2', '{{ $error }}');
                                                 </script>
                                             @endforeach
                                         @endif
@@ -150,7 +162,7 @@
                                             @foreach ($errors->get('ages3') as $error)
                                                 <span class="error-input">{{ $error }}</span>
                                                 <script>
-                                                    dt.Tracking.rawEvent('form_error', 'ages3', '{{ $error }}');
+                                                    dt.Tracking.rawEvent('{{ $whitelabel['name'] }}_exitwindow', 'Error on ages3', '{{ $error }}');
                                                 </script>
                                             @endforeach
                                         @endif
@@ -164,7 +176,7 @@
                                             @foreach ($errors->get('ages4') as $error)
                                                 <span class="error-input">{{ $error }}</span>
                                                 <script>
-                                                    dt.Tracking.rawEvent('form_error', 'ages4', '{{ $error }}');
+                                                    dt.Tracking.rawEvent('{{ $whitelabel['name'] }}_exitwindow', 'Error on ages4', '{{ $error }}');
                                                 </script>
                                             @endforeach
                                         @endif
@@ -247,6 +259,9 @@
                 @if ($errors->any() && $errors->get('email'))
                     @foreach ($errors->get('email') as $error)
                         <span class="error-input">{{ $error }}</span>
+                        <script>
+                            dt.Tracking.rawEvent('{{ $whitelabel['name'] }}_exitwindow', 'Error on email', '{{ $error }}');
+                        </script>
                     @endforeach
                 @endif
             </div>
@@ -268,6 +283,9 @@
                   @php
                   $terms_class = 'dt_terms hasError'
                   @endphp
+                    <script>
+                        dt.Tracking.rawEvent('{{ $whitelabel['name'] }}_exitwindow', 'Error on terms', '{{ $error }}');
+                    </script>
                 @endif
                     {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
                      <p>Ich habe die <a href="{{isset($whitelabel['domain']) ? $whitelabel['domain'] : ''}}/tnb" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="{{ isset($layer_details['privacy']) ? $layer_details['privacy'] : '#'}}" target="_blank" rel="noopener noreferrer">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
@@ -283,7 +301,7 @@
 (function($) {
   $(document).ready(function () {
     var whitelabelScriptSrc = $('script#dt-layer').attr('src');
-    var whitelabelPrefix = whitelabelScriptSrc.replace('.wish-service.com/js/layer.js', '').replace('/js/layer.js', '').replace('https://', '').replace('http://', '').replace('www.', '');
+    var whitelabelPrefix = whitelabelScriptSrc.replace('.{!! baseUrlWithoutPrefix() !!}/js/layer.js', '').replace('/js/layer.js', '').replace('https://', '').replace('http://', '').replace('www.', '');
 
     if (whitelabelPrefix !== 'bentour' && whitelabelPrefix.length > 0) {
       dt.Tracking.init(whitelabelPrefix + '_exitwindow', 'UA-105970361-21');
