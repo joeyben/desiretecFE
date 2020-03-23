@@ -43,7 +43,7 @@
     <div class="col-md-3 kids">
         <i class="fal fa-child"></i>
         <input class="data-content" value="{{ $wish->wishDetails->kids }} {{ trans_choice('labels.frontend.wishes.kids', $wish->wishDetails->kids) }}" >
-        @if($wish->wishDetails->ages)
+        @if($wish->wishDetails->kids > 0 && $wish->wishDetails->ages)
             <span>(</span>
             <span>{{ rtrim($wish->wishDetails->ages,",") }}</span>
             <span>)</span>
