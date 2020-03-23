@@ -852,3 +852,13 @@ if (!function_exists('getWhitelabelFooters')) {
 }
 
 
+
+/**
+ * Returns base ur without https://www.
+ */
+if (!function_exists('baseUrlWithoutPrefix')) {
+    function baseUrlWithoutPrefix()
+    {
+        return str_replace('https://www.','', env('APP_URL','wish-service.com'));
+    }
+}
