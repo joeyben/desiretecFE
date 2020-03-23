@@ -225,7 +225,7 @@ var exitIntent = window.exitIntent || {};
                 }
                 dt.PopupManager.modal.removeClass('tmp-hidden');
                 $(this).remove();
-                ga('dt.send', 'event', 'Mobile Layer', 'Trigger button tap', 'Tablet');
+                dt.Tracking.event('Trigger button click', this.trackingLabel);
             });
         }
 
