@@ -28,6 +28,9 @@
                 @if ($errors->any() && $errors->get('destination'))
                     @foreach ($errors->get('destination') as $error)
                         <span class="error-input">{{ $error }}</span>
+                        <script>
+                            dt.Tracking.rawEvent('form_error', 'destination', '{{ $error }}');
+                        </script>
                     @endforeach
                 @endif
             </div>
@@ -39,6 +42,9 @@
                 @if ($errors->any() && $errors->get('airport'))
                     @foreach ($errors->get('airport') as $error)
                         <span class="error-input">{{ $error }}</span>
+                        <script>
+                            dt.Tracking.rawEvent('form_error', 'airport', '{{ $error }}');
+                        </script>
                     @endforeach
                 @endif
             </div>
@@ -59,6 +65,9 @@
                             @if ($errors->any() && $errors->get('earliest_start'))
                                 @foreach ($errors->get('earliest_start') as $error)
                                     <span class="error-input">{{ $error }}</span>
+                                    <script>
+                                        dt.Tracking.rawEvent('form_error', 'earliest_start', '{{ $error }}');
+                                    </script>
                                 @endforeach
                             @endif
                         </div>
@@ -68,6 +77,9 @@
                             @if ($errors->any() && $errors->get('latest_return'))
                                 @foreach ($errors->get('latest_return') as $error)
                                     <span class="error-input">{{ $error }}</span>
+                                    <script>
+                                        dt.Tracking.rawEvent('form_error', 'latest_return', '{{ $error }}');
+                                    </script>
                                 @endforeach
                             @endif
                         </div>
@@ -247,6 +259,9 @@
                 @if ($errors->any() && $errors->get('email'))
                     @foreach ($errors->get('email') as $error)
                         <span class="error-input">{{ $error }}</span>
+                        <script>
+                            dt.Tracking.rawEvent('form_error', 'email', '{{ $error }}');
+                        </script>
                     @endforeach
                 @endif
             </div>
@@ -268,6 +283,9 @@
                   @php
                   $terms_class = 'dt_terms hasError'
                   @endphp
+                    <script>
+                        dt.Tracking.rawEvent('form_error', 'terms', '{{ $error }}');
+                    </script>
                 @endif
                     {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
                      <p>Ich habe die <a href="{{isset($whitelabel['domain']) ? $whitelabel['domain'] : ''}}/tnb" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="{{ isset($layer_details['privacy']) ? $layer_details['privacy'] : '#'}}" target="_blank" rel="noopener noreferrer">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
