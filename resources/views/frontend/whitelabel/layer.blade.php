@@ -304,7 +304,7 @@
     var whitelabelPrefix = whitelabelScriptSrc.replace('.{!! baseUrlWithoutPrefix() !!}/js/layer.js', '').replace('/js/layer.js', '').replace('https://', '').replace('http://', '').replace('www.', '');
 
     if (whitelabelPrefix !== 'bentour' && whitelabelPrefix.length > 0) {
-      dt.Tracking.init(whitelabelPrefix + '_exitwindow', 'UA-105970361-8');
+      dt.Tracking.init(whitelabelPrefix + '_exitwindow', 'UA-105970361-21');
     }
         if($('.kwp-close-button i').length === 0) {
             $('.kwp-close-button').append('<i class="fal fa-times"></i>');
