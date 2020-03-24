@@ -13,6 +13,7 @@ use App\Http\Requests\Users\ChangePasswordRequest;
 use App\Http\Requests\Users\ResetPasswordRequest;
 use App\Services\Api\ApiService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -42,7 +43,9 @@ class AuthController extends Controller
             return redirect()->back()->with(['success' => $response['message']]);
         } catch (\Exception $e) {
             Log::error($e);
-            return redirect()->back()->withErrors(['message' => $e->getMessage()]);
+            return redirect()->back()->withErrors([
+                'message' => Lang:: get('alert.whitelabel.missing', ['attribute' => current_whitelabel()['display_name']]),
+            ]);
         }
     }
 
