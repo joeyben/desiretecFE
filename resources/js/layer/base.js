@@ -6,6 +6,8 @@ if (!window.jQuery) {
     document.getElementsByTagName('head')[0].appendChild(jQueryScript);
 }
 
+jQuery.noConflict();
+
 (function($) {
     var Debug = {
         enabled: window.dt && window.dt.debug,
