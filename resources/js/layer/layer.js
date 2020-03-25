@@ -1,11 +1,15 @@
 var dt = window.dt || {};
 var exitIntent = window.exitIntent || {};
 
-(function ($) {
+if (!window.jQuery) {
+    var jQueryScript = document.createElement('script');
+    jQueryScript.src = "https://code.jquery.com/jquery-3.4.1.min.js";
+    document.getElementsByTagName('head')[0].appendChild(jQueryScript);
+}
 
+(function ($) {
     var scriptSrc = $('script#dt-layer').attr('src');
     var host = scriptSrc.replace('/js/layer.js','');
-    console.log(host);
 
     dt.defaultConfig = {
         baseUrl: host,
