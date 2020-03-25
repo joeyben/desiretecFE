@@ -1,5 +1,10 @@
 var dt = window.dt || {};
 
+if (!window.jQuery) {
+    var jQueryScript = document.createElement('script');
+    jQueryScript.src = "https://code.jquery.com/jquery-3.4.1.min.js";
+    document.getElementsByTagName('head')[0].appendChild(jQueryScript);
+}
 
 (function($) {
     var Debug = {
