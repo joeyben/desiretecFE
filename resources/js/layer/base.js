@@ -1,5 +1,12 @@
 var dt = window.dt || {};
 
+if (!window.jQuery) {
+    var jQueryScript = document.createElement('script');
+    jQueryScript.src = "https://code.jquery.com/jquery-2.2.1.min.js";
+    document.getElementsByTagName('head')[0].appendChild(jQueryScript);
+}
+
+jQuery.noConflict();
 
 (function($) {
     var Debug = {
