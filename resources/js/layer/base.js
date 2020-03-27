@@ -1,14 +1,14 @@
 var dt = window.dt || {};
 
-if (!window.jQuery) {
-    var jQueryScript = document.createElement('script');
-    jQueryScript.src = "https://code.jquery.com/jquery-2.2.1.min.js";
-    document.getElementsByTagName('head')[0].appendChild(jQueryScript);
+var isDtDomain = window.location.href.indexOf("wish-service.com") > -1 
+            || window.location.href.indexOf("reise-wunsch.de") > -1 
+            || window.location.href.indexOf("travelwishservice.com") > -1;
+
+if(!isDtDomain) {
+    jQuery.noConflict(); /* for websites using libraries in conflict with '$' */
 }
 
-jQuery.noConflict();
-
-(function($) {
+jQuery(function($) {
     var Debug = {
         enabled: window.dt && window.dt.debug,
         log: function(message, color) {
@@ -618,5 +618,5 @@ jQuery.noConflict();
         });
     }
 
-})(jQuery);
+});
 

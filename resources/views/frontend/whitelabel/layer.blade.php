@@ -4,8 +4,6 @@
     var domain = {!! json_encode($whitelabel['domain']) !!};
 </script>
 
-<link media="all" type="text/css" rel="stylesheet" href="https://www.wish-service.com/fontawsome/css/all.css">
-
 <style>
     .kwp-logo {
         background: transparent url({{ $logo }}) no-repeat left top;
@@ -298,7 +296,7 @@
 
 <script>
 
-(function($) {
+jQuery(function($){
   $(document).ready(function () {
     var whitelabelScriptSrc = $('script#dt-layer').attr('src');
     var whitelabelPrefix = whitelabelScriptSrc.replace('.{!! baseUrlWithoutPrefix() !!}/js/layer.js', '').replace('/js/layer.js', '').replace('https://', '').replace('http://', '').replace('www.', '').replace('.wish-service.com.', '');
@@ -535,6 +533,6 @@
             $('.dt-modal #submit-button').removeClass('error-button');
         }
     };
-})(jQuery);
+});
 
 </script>

@@ -1,9 +1,9 @@
 var dt = window.dt || {};
 var exitIntent = window.exitIntent || {};
 
-(function ($) {
+jQuery(function($){
     var scriptSrc = $('script#dt-layer').attr('src');
-    var host = scriptSrc.replace('/js/layer.js','');
+    var host = scriptSrc.replace('/js/layer.js','').replace('/js/layer-jquery.js','');
 
     dt.defaultConfig = {
         baseUrl: host,
@@ -592,4 +592,4 @@ var exitIntent = window.exitIntent || {};
             });
         };
 
-    })(jQuery);
+    });
