@@ -4,7 +4,7 @@
  * Frontend Access Controllers
  * All route names are prefixed with 'frontend.auth'.
  */
-Route::domain('{subdomain}.wish-service.com')->group( function () {
+Route::domain('{subdomain}.'.baseUrlWithoutPrefix())->group( function () {
 
 
 Route::group(['namespace' => 'Auth', 'as' => 'auth.'], function ($subdomain) {
