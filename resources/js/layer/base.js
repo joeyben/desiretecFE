@@ -313,7 +313,13 @@ jQuery(function($) {
             return true;
         },
         onPopupFetched: function(data, status, jqxhr) {
-            var json = $.parseJSON(data);
+            var json;
+            try {
+                json = JSON.parse(data);
+            }
+            catch(err) {
+                json = JSON.decode(data); /* solution for website where JSON.parse is not working */
+            }
             this.showContent(json.html);
         },
         show: function() {
