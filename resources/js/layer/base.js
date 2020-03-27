@@ -1,14 +1,14 @@
 var dt = window.dt || {};
 
-if (!window.jQuery) {
-    var jQueryScript = document.createElement('script');
-    jQueryScript.src = "https://code.jquery.com/jquery-2.2.1.min.js";
-    document.getElementsByTagName('head')[0].appendChild(jQueryScript);
+var isDtDomain = window.location.href.indexOf("wish-service.com") > -1 
+            || window.location.href.indexOf("reise-wunsch.de") > -1 
+            || window.location.href.indexOf("travelwishservice.com") > -1;
+
+if(!isDtDomain) {
+    jQuery.noConflict(); /* for websites using libraries in conflict with '$' */
 }
 
-jQuery.noConflict();
-
-(function($) {
+jQuery(function($) {
     var Debug = {
         enabled: window.dt && window.dt.debug,
         log: function(message, color) {
@@ -313,7 +313,13 @@ jQuery.noConflict();
             return true;
         },
         onPopupFetched: function(data, status, jqxhr) {
-            var json = $.parseJSON(data);
+            var json;
+            try {
+                json = JSON.parse(data);
+            }
+            catch(err) {
+                json = JSON.decode(data); /* solution for website where JSON.parse is not working */
+            }
             this.showContent(json.html);
         },
         show: function() {
@@ -618,5 +624,5 @@ jQuery.noConflict();
         });
     }
 
-})(jQuery);
+});
 
