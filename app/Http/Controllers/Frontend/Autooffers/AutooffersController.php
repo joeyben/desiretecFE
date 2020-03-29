@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Frontend\Autooffers;
-
 use App\Http\Controllers\Frontend\Autooffers\Contracts\AutooffersControllerInterface;
 use App\Services\Api\ApiService;
 use Illuminate\Routing\Controller;
@@ -23,7 +22,7 @@ class AutooffersController extends Controller implements AutooffersControllerInt
         try {
 
             $offersResponse = $this->apiService->get('/offer/list/' . $wishId);
-
+            dd();
             $offers = $offersResponse->formatResponse('array')['data'];
 
             $wishResponse = $this->apiService->get('/wishes' . '/' . $wishId);
@@ -44,17 +43,17 @@ class AutooffersController extends Controller implements AutooffersControllerInt
 
     public function listTt(string $subdomain, int $wishId)
     {
+
         try {
 
-            $offersResponse = $this->apiService->get('/offer/list/' . $wishId);
-
+            $offersResponse = $this->apiService->get('/offer/ttlist/' . $wishId);
             $offers = $offersResponse->formatResponse('array')->data;
 
             $wishResponse = $this->apiService->get('/wishes' . '/' . $wishId);
 
             $wish = $wishResponse->formatResponse('object')->data;
 
-            return view('frontend.autooffer.listTt')->with([
+            return view('frontend.autooffer.list_tt')->with([
                 'body_class'    => $this::BODY_CLASS_PREFIX . '_list',
                 'wish'          => $wish,
                 'offers'        => $offers,
