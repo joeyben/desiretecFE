@@ -277,6 +277,12 @@
     </div>
 @endsection
 
+@section('before-scripts')
+    <script type="application/javascript">
+        var brandColor = {!! json_encode(getWhitelabelInfo()['color']) !!};
+    </script>
+@endsection
+
 @section('after-scripts')
 
     <!-- jquery -->
@@ -291,7 +297,6 @@
     <script type="application/javascript">
 
         $(document).ready(function(){
-            var brandColor = {!! json_encode(getCurrentWhiteLabelColor()) !!};
 
             $('.btn-primary').css({
                 'background': brandColor,
