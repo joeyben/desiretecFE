@@ -39,6 +39,7 @@ mix.setPublicPath('public')
     ], 'public/js/dataTable.js')
     //Layer js
     .scripts([
+        'node_modules/jquery/dist/jquery.js',
         'resources/js/layer/exitintent.js',
         'resources/js/layer/exitintent-new.js',
         // 'node_modules/js-cookie/src/js.cookie.js',
@@ -52,21 +53,6 @@ mix.setPublicPath('public')
         'resources/js/layer/tagsinput.min.js',
         'resources/js/layer/layer.js',
     ], 'public/js/layer.js')
-    //Layer js
-    .scripts([
-        'node_modules/jquery/dist/jquery.js',
-        'resources/js/layer/exitintent.js',
-        'resources/js/layer/exitintent-new.js',
-        'resources/js/layer/base.js',
-        'resources/js/layer/rangeslider.js',
-        'resources/js/layer/datepicker.js',
-        'resources/js/layer/devicedetector.min.js',
-        'resources/js/layer/touchswipe.js',
-        'resources/js/layer/typeahead.js',
-        'resources/js/layer/bootstrap3-typeahead.min.js',
-        'resources/js/layer/tagsinput.min.js',
-        'resources/js/layer/layer.js',
-    ], 'public/js/layer-v2.js')
     //Frontend css
     .sass('resources/sass/frontend/app.scss', 'public/css/frontend.css')
     //Layer css
