@@ -42,6 +42,10 @@ Route::group(['namespace' => 'Wishes', 'as' => 'wish.'], function ($subdomain) {
     Route::get('wishlist/{token}', 'WishesController@wishListToken')->name('wishlist.token');
 });
 
+Route::group(['namespace' => 'Autooffers', 'as' => 'autooffer.'], function ($subdomain) {
+    Route::get('offer/ttlist/{id}/{token}', 'AutooffersController@autooferToken')->name('listTt.token');
+
+});
 
 /*
 * These frontend controllers require the user to be logged in

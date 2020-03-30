@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Frontend\Autooffers;
+use App\ApiAuth;
 use App\Http\Controllers\Frontend\Autooffers\Contracts\AutooffersControllerInterface;
 use App\Services\Api\ApiService;
 use Illuminate\Routing\Controller;
@@ -62,6 +63,17 @@ class AutooffersController extends Controller implements AutooffersControllerInt
         } catch (\Exception $e) {
             Log::error($e);
             return redirect()->back()->withErrors(['message' => $e->getMessage()]);
+        }
+    }
+
+    public function autooferToken(string $subdomain, int $id, string $token)
+    {
+        try {
+            ApiAuth::byWishToken($id, $token);
+
+            return  redirect('offer/ttlist/' . $id);
+        } catch (Exception $e) {
+            return json_response_error($e);
         }
     }
 }
