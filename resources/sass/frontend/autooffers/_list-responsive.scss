@@ -102,7 +102,7 @@
 // .main-offer-section
 @media (max-width: 1550px) {
   .main-offer-section {
-    margin-bottom: 400px;
+    margin-bottom: 200px;
   }
 }
 @media (max-width: 1200px) {
@@ -449,8 +449,16 @@
     .price {
       .info-icons {
         bottom: 75px;
+        i {
+          padding: 5px;
+        }
         .info {
-          padding: 0 10px 0 10px;
+          padding: 0 10px;
+          &:nth-child(4), &:nth-child(5) {
+            .info-detail {
+              right: 0;
+            }
+          }
         }
       }
     }
