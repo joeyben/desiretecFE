@@ -603,3 +603,64 @@ ul {
     }
   }
 }
+
+/*****ICONS CUSTOM********/
+.price{
+    position: relative;
+    .info-icons{
+      position: absolute;
+      left: 0;
+      display: inline-flex;
+      .info{
+        padding: 0px 5px;
+        i{
+          padding: 7px ;
+        }
+      }
+    }
+    .info:hover i {
+      background-color: #df007a;
+      color: white !important;
+    }
+    .info i{
+      color: #777777;
+    }
+    .info:hover .info-detail{
+      display: block;
+    }
+    .info-detail{
+      position: absolute;
+      top: 50px;
+      display: none;
+      z-index: 900;
+      ul {
+        list-style: none;
+        li{
+          white-space: nowrap;
+        }
+      }
+
+      ul li:before {
+        content: '✓';
+        font-size: 18px !important;
+        color: green !important;
+        font-weight: bold !important;
+        margin-right: 10px;
+      }
+      .up{
+        background-color: #DF007A;
+        border-radius: 5px 5px 0px 0px;
+        color: white;
+        padding: 5px;
+        text-align: center;
+        border: 1px solid #DF007A;
+      }
+      .down{
+        border-radius: 0px 0px 5px 5px;
+        padding: 5px;
+        border: 1px solid #DF007A;
+        background-color: white;
+      }
+    }
+  }
+  /***End Custom CSS***/

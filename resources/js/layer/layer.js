@@ -3,7 +3,7 @@ var exitIntent = window.exitIntent || {};
 
 jQuery(function($){
     var scriptSrc = $('script#dt-layer').attr('src');
-    var host = scriptSrc.replace('/js/layer.js','').replace('/js/layer-jquery.js','');
+    var host = scriptSrc.replace('/js/layer.js','').replace('/js/layer-v2.js','');
 
     dt.defaultConfig = {
         baseUrl: host,
