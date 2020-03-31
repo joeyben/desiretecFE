@@ -1,7 +1,7 @@
 // generic styles
 h1 {
-  font-size: 80px;
-  line-height: 90px;
+  font-size: 60px;
+  line-height: 80px;
   color: $black;
 }
 h2 {
@@ -45,15 +45,15 @@ ul {
 }
 // .btn-primary {
 //   border: none;
-//   background-color: $orange;
+//   background-color: transparent;
 //   color: $white;
 //   &:hover {
 //     background-color: $darkorange;
 //   }
 // }
 // .btn-secondary {
-//   color: $orange;
-//   border: 1.5px solid #f96500;
+//   color: transparent;
+//   border: 1.5px solid transparent;
 //   &:hover {
 //     color: $darkorange;
 //     border: 1.5px solid #BC4700;
@@ -80,7 +80,7 @@ ul {
     color: $white;
     position: absolute;
     right: -1px;
-    background-color: $orange;
+    background-color: transparent;
   }
   .vertical-line {
     position: absolute;
@@ -88,13 +88,14 @@ ul {
     bottom: 0;
     height: 33px;
     border-radius: 5px;
-    border-left: 3px solid #f96500;
+    border-left: 3px solid transparent;
     transition: all 0.3s;
   }
 }
 .price {
   display: flex;
   align-items: baseline;
+  position: relative;
   .ascci-euro {
     margin-left: 8px;
   }
@@ -105,6 +106,60 @@ ul {
     font-size: 26px;
     padding: 0;
     color: $white;
+  }
+  .info-icons{
+    position: absolute;
+    left: 0;
+    display: inline-flex;
+    .info{
+      padding: 0px 5px;
+      i{
+        padding: 7px;
+      }
+    }
+  }
+  .info:hover i {
+    background-color: #df007a;
+    color: white !important;
+  }
+  .info i{
+    color: #777777;
+  }
+  .info:hover .info-detail{
+    display: block;
+  }
+  .info-detail{
+    position: absolute;
+    top: 50px;
+    display: none;
+    z-index: 900;
+    ul {
+      list-style: none;
+      li{
+        white-space: nowrap;
+      }
+    }
+    ul li:before {
+      content: '✓';
+      font-size: 18px !important;
+      color: green !important;
+      font-weight: bold !important;
+      margin-right: 10px;
+    }
+    .up{
+      background-color: #DF007A;
+      border-radius: 5px 5px 0px 0px;
+      color: white;
+      padding: 5px;
+      text-align: center;
+      border: 1px solid #DF007A;
+    }
+    .down{
+      border-radius: 0px 0px 5px 5px;
+      padding: 5px;
+      border: 1px solid #DF007A;
+      background-color: white;
+    }
   }
 }
 .tabs {
@@ -120,18 +175,18 @@ ul {
       padding: 5px 0;
       position: relative;
       &:hover {
-        color: $orange;
+        color: transparent;
       }
     }
   }
   li.active {
     a {
-      color: $orange;
+      color: transparent;
       &:before {
         content: '';
         width: 100%;
         height: 2px;
-        background: $orange;
+        background: transparent;
         position: absolute;
         top: 100%;
         border-radius: 5px;
@@ -140,12 +195,12 @@ ul {
   }
 }
 .label {
-  z-index: 420;
+  z-index: 2;
   padding: 5px 15px;
   font-size: 12px;
   border-radius: 5px;
   border: 1px solid #eee;
-  color: $orange;
+  color: transparent;
   display: inline-block;
 }
 .box-shadow {
@@ -259,7 +314,7 @@ ul {
 .main-offer-section {
   padding: 80px 0;
   height: 1120px;
-  margin-bottom: 300px;
+  margin-bottom: 200px;
   width: 80%;
   background-color: $steel;
   color: $white;
@@ -413,7 +468,6 @@ ul {
       top: -30px;
       right: 50px;
       display: block;
-      z-index: 111111;
       font-weight: 600;
       font-size: 17px;
     }
@@ -478,10 +532,7 @@ ul {
   }
   i {
     font-size: 20px;
-    color: $orange;
-  }
-  h3 {
-    font-size: 40px;
+    color: transparent;
   }
   h4 {
     font-size: 18px;
@@ -500,6 +551,7 @@ ul {
     color: $medgray2;
   }
   .title {
+    position: relative;
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 5px;
@@ -509,6 +561,10 @@ ul {
       overflow: hidden;
       line-height: 1em;
       max-width: calc(100% - 150px);
+    }
+    .tooltip {
+      font-size: 16px;
+      bottom: 3em;
     }
     .rating {
       width: 150px;
@@ -533,7 +589,7 @@ ul {
       margin-left: 20px;
     }
     span {
-      color: $orange;
+      color: transparent;
     }
     progress {
       -webkit-appearance: none;
@@ -547,10 +603,10 @@ ul {
     }
     progress::-webkit-progress-value {
       border-radius: 5px;
-      background: $orange;
+      background: transparent;
     }
     progress::-moz-progress-bar {
-      background: $orange;
+      background: transparent;
     }
   }
   .recommandations {
@@ -560,7 +616,7 @@ ul {
     .average {
       padding: 10px;
       font-size: 30px;
-      border: 4px solid #f96500;
+      border: 4px solid transparent;
       border-radius: 5px;
       min-width: 50px;
       text-align: center;
@@ -599,68 +655,6 @@ ul {
     }
     i {
       font-size: 28px;
-      color: $white;
     }
   }
 }
-
-/*****ICONS CUSTOM********/
-.price{
-    position: relative;
-    .info-icons{
-      position: absolute;
-      left: 0;
-      display: inline-flex;
-      .info{
-        padding: 0px 5px;
-        i{
-          padding: 7px ;
-        }
-      }
-    }
-    .info:hover i {
-      background-color: #df007a;
-      color: white !important;
-    }
-    .info i{
-      color: #777777;
-    }
-    .info:hover .info-detail{
-      display: block;
-    }
-    .info-detail{
-      position: absolute;
-      top: 50px;
-      display: none;
-      z-index: 900;
-      ul {
-        list-style: none;
-        li{
-          white-space: nowrap;
-        }
-      }
-
-      ul li:before {
-        content: '✓';
-        font-size: 18px !important;
-        color: green !important;
-        font-weight: bold !important;
-        margin-right: 10px;
-      }
-      .up{
-        background-color: #DF007A;
-        border-radius: 5px 5px 0px 0px;
-        color: white;
-        padding: 5px;
-        text-align: center;
-        border: 1px solid #DF007A;
-      }
-      .down{
-        border-radius: 0px 0px 5px 5px;
-        padding: 5px;
-        border: 1px solid #DF007A;
-        background-color: white;
-      }
-    }
-  }
-  /***End Custom CSS***/

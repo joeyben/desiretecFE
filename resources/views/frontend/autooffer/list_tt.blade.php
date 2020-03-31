@@ -189,7 +189,10 @@
                             </div>
                             <div class="right-side">
                                 <div class="title">
-                                    <h3>{{ $offer['hotel_data']['data']['Hotelname'] }}</h3>
+                                    <h3 class="ellipsised">{{ $offer['hotel_data']['data']['Hotelname'] }}</h3>
+                                    <span class="mousehover"></span>
+                                    <div class="tooltip">{{ $offer['hotel_data']['data']['Hotelname'] }}</div>
+
                                     <div class="rating">
                                         @if (key_exists('Hotelkategorie', $offer['hotel_data']['data']))
                                             @for ($i = 0; $i < intval($offer['hotel_data']['data']['Hotelkategorie']); $i++)
@@ -274,6 +277,12 @@
     </div>
 @endsection
 
+@section('before-scripts')
+    <script type="application/javascript">
+        var brandColor = {!! json_encode(getWhitelabelInfo()['color']) !!};
+    </script>
+@endsection
+
 @section('after-scripts')
 
     <!-- jquery -->
@@ -288,7 +297,6 @@
     <script type="application/javascript">
 
         $(document).ready(function(){
-            var brandColor = {!! json_encode(getCurrentWhiteLabelColor()) !!};
 
             $('.btn-primary').css({
                 'background': brandColor,
@@ -304,6 +312,7 @@
             $('.listed-offers-section .vertical-line').css({'background-color': brandColor});
             $('.fas.fa-heart, .fal.fa-check, .offers .fulfill span, .fas.fa-map-marker-alt, .offers .slick-slider i').css({'color': brandColor});
             $('.offers .recommandations .average').css({'border-color': brandColor});
+            $('.offers .label').css({'color': brandColor});
             $('head').append('<style> progress::-webkit-progress-value { background: ' + brandColor + ' !important; } </style>');
 
             if($('.offers .info-icons').length === 0) {
@@ -311,9 +320,14 @@
             }
         });
 
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
-        })
+        $(function() {
+            $('.ellipsised').each(function() {
+                var isEllipsisActive = $(this)[0].offsetWidth < $(this)[0].scrollWidth;
+                if(!isEllipsisActive) {
+                    $(this).siblings('.tooltip').remove();
+                }
+            });
+        });
 
         function scrollToAnchor(id) {
             $('html, body').animate({
