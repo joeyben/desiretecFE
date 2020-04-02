@@ -2,6 +2,7 @@
     var brandColor = {!! json_encode($color) !!};
     var layerContent = {!! json_encode($layer_details) !!};
     var domain = {!! json_encode($whitelabel['domain']) !!};
+    var wl_name = {!! json_encode($whitelabel['name']) !!};
 </script>
 
 <link media="all" type="text/css" rel="stylesheet" href="https://www.wish-service.com/fontawsome/css/all.css">
@@ -324,10 +325,13 @@
 
     $(document).ready(function(){
 
-        var whitelabelScriptSrc = $('script#dt-layer').attr('src');
-        var whitelabelPrefix = whitelabelScriptSrc.replace('.{!! baseUrlWithoutPrefix() !!}/js/layer.js', '').replace('/js/layer.js', '').replace('https://', '').replace('http://', '').replace('www.', '');
 
-        if (whitelabelPrefix !== 'bentour' && whitelabelPrefix.length > 0) {
+        var whitelabelPrefix = (window.location.indexOf('reise-wunsch.de') !== -1
+                                || window.location.indexOf('wish-service.com') !== -1
+                                || window.location.indexOf('travelwishservice.com') !== -1
+                                ) ?  wl_name+"_WL" : wl_name;
+
+        if (wl_name !== 'bentour') {
             dt.Tracking.init(whitelabelPrefix + '_exitwindow', 'UA-105970361-21');
         }
         
