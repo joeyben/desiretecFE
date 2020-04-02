@@ -2,6 +2,7 @@
     var brandColor = {!! json_encode($color) !!};
     var layerContent = {!! json_encode($layer_details) !!};
     var domain = {!! json_encode($whitelabel['domain']) !!};
+    var wl_name = {!! json_encode($whitelabel['name']) !!};
 </script>
 
 <style>
