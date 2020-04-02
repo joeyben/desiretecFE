@@ -3,6 +3,12 @@
     var layerContent = {!! json_encode($layer_details) !!};
     var domain = {!! json_encode($whitelabel['domain']) !!};
     var wl_name = {!! json_encode($whitelabel['name']) !!};
+
+    var url = window.location.hostname;
+    var whitelabelPrefix = (url.indexOf('reise-wunsch.de') !== -1
+        || url.indexOf('wish-service.com') !== -1
+        || url.indexOf('travelwishservice.com') !== -1
+    ) ?  wl_name+"_WL" : wl_name;
 </script>
 
 <link media="all" type="text/css" rel="stylesheet" href="https://www.wish-service.com/fontawsome/css/all.css">
@@ -30,7 +36,7 @@
                     @foreach ($errors->get('destination') as $error)
                         <span class="error-input">{{ $error }}</span>
                         <script>
-                            dt.Tracking.rawEvent('{{ $whitelabel['name'] }}_exitwindow', 'Error on destination', '{{ $error }}');
+                            dt.Tracking.rawEvent(whitelabelPrefix+'_exitwindow', 'Error on destination', '{{ $error }}');
                         </script>
                     @endforeach
                 @endif
@@ -76,7 +82,7 @@
                                             @foreach ($errors->get('ages1') as $error)
                                                 <span class="error-input">{{ $error }}</span>
                                                 <script>
-                                                    dt.Tracking.rawEvent('{{ $whitelabel['name'] }}_exitwindow', 'Error on ages1', '{{ $error }}');
+                                                    dt.Tracking.rawEvent(whitelabelPrefix+'_exitwindow', 'Error on ages1', '{{ $error }}');
                                                 </script>
                                             @endforeach
                                         @endif
@@ -90,7 +96,7 @@
                                             @foreach ($errors->get('ages2') as $error)
                                                 <span class="error-input">{{ $error }}</span>
                                                 <script>
-                                                    dt.Tracking.rawEvent('{{ $whitelabel['name'] }}_exitwindow', 'Error on ages2', '{{ $error }}');
+                                                    dt.Tracking.rawEvent(whitelabelPrefix+'_exitwindow', 'Error on ages2', '{{ $error }}');
                                                 </script>
                                             @endforeach
                                         @endif
@@ -104,7 +110,7 @@
                                             @foreach ($errors->get('ages3') as $error)
                                                 <span class="error-input">{{ $error }}</span>
                                                 <script>
-                                                    dt.Tracking.rawEvent('{{ $whitelabel['name'] }}_exitwindow', 'Error on ages3', '{{ $error }}');
+                                                    dt.Tracking.rawEvent(whitelabelPrefix+'_exitwindow', 'Error on ages3', '{{ $error }}');
                                                 </script>
                                             @endforeach
                                         @endif
@@ -118,7 +124,7 @@
                                             @foreach ($errors->get('ages4') as $error)
                                                 <span class="error-input">{{ $error }}</span>
                                                 <script>
-                                                    dt.Tracking.rawEvent('{{ $whitelabel['name'] }}_exitwindow', 'Error on ages4', '{{ $error }}');
+                                                    dt.Tracking.rawEvent(whitelabelPrefix+'_exitwindow', 'Error on ages4', '{{ $error }}');
                                                 </script>
                                             @endforeach
                                         @endif
@@ -184,7 +190,7 @@
                                 @foreach ($errors->get('earliest_start') as $error)
                                     <span class="error-input">{{ $error }}</span>
                                     <script>
-                                        dt.Tracking.rawEvent('{{ $whitelabel['name'] }}_exitwindow', 'Error on earliest_start', '{{ $error }}');
+                                        dt.Tracking.rawEvent(whitelabelPrefix+'_exitwindow', 'Error on earliest_start', '{{ $error }}');
                                     </script>
                                 @endforeach
 
@@ -197,7 +203,7 @@
                                 @foreach ($errors->get('latest_return') as $error)
                                     <span class="error-input">{{ $error }}</span>
                                     <script>
-                                        dt.Tracking.rawEvent('{{ $whitelabel['name'] }}_exitwindow', 'Error on latest_return', '{{ $error }}');
+                                        dt.Tracking.rawEvent(whitelabelPrefix+'_exitwindow', 'Error on latest_return', '{{ $error }}');
                                     </script>
                                 @endforeach
                             @endif
@@ -225,7 +231,7 @@
                         @foreach ($errors->get('budget') as $error)
                             <span class="error-input">{{ $error }}</span>
                             <script>
-                                dt.Tracking.rawEvent('{{ $whitelabel['name'] }}_exitwindow', 'Error on budget', '{{ $error }}');
+                                dt.Tracking.rawEvent(whitelabelPrefix+'_exitwindow', 'Error on budget', '{{ $error }}');
                             </script>
                         @endforeach
                     @endif
@@ -251,7 +257,7 @@
                     @foreach ($errors->get('email') as $error)
                         <span class="error-input">{{ $error }}</span>
                         <script>
-                            dt.Tracking.rawEvent('{{ $whitelabel['name'] }}_exitwindow', 'Error on email', '{{ $error }}');
+                            dt.Tracking.rawEvent(whitelabelPrefix+'_exitwindow', 'Error on email', '{{ $error }}');
                         </script>
                     @endforeach
                 @endif
@@ -275,7 +281,7 @@
                   $terms_class = 'dt_terms hasError'
                   @endphp
                     <script>
-                        dt.Tracking.rawEvent('{{ $whitelabel['name'] }}_exitwindow', 'Error on terms', '{{ $error }}');
+                        dt.Tracking.rawEvent(whitelabelPrefix+'_exitwindow', 'Error on terms', '{{ $error }}');
                     </script>
                 @endif
                     {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
@@ -324,13 +330,7 @@
     });
 
     $(document).ready(function(){
-
-        var url = window.location.hostname;
-        var whitelabelPrefix = (url.indexOf('reise-wunsch.de') !== -1
-                                || url.indexOf('wish-service.com') !== -1
-                                || url.indexOf('travelwishservice.com') !== -1
-                                ) ?  wl_name+"_WL" : wl_name;
-
+        
         if (wl_name !== 'bentour') {
             dt.Tracking.init(whitelabelPrefix + '_exitwindow', 'UA-105970361-21');
         }
