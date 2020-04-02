@@ -298,12 +298,15 @@
 
 jQuery(function($){
   $(document).ready(function () {
-    var whitelabelScriptSrc = $('script#dt-layer').attr('src');
-    var whitelabelPrefix = whitelabelScriptSrc.replace('.{!! baseUrlWithoutPrefix() !!}/js/layer.js', '').replace('/js/layer.js', '').replace('https://', '').replace('http://', '').replace('www.', '').replace('.wish-service.com', '').replace('.reise-wunsch.de', '').replace('.travelwishservice.com', '');
+      var url = window.location.hostname;
+      var whitelabelPrefix = (url.indexOf('reise-wunsch.de') !== -1
+          || url.indexOf('wish-service.com') !== -1
+          || url.indexOf('travelwishservice.com') !== -1
+      ) ?  wl_name+"_WL" : wl_name;
 
-    if (whitelabelPrefix !== 'bentour' && whitelabelPrefix.length > 0) {
-      dt.Tracking.init(whitelabelPrefix + '_exitwindow', 'UA-105970361-21');
-    }
+      if (wl_name !== 'bentour') {
+          dt.Tracking.init(whitelabelPrefix + '_exitwindow', 'UA-105970361-21');
+      }
         if($('.kwp-close-button i').length === 0) {
             $('.kwp-close-button').append('<i class="fal fa-times"></i>');
         }
