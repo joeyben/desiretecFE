@@ -325,10 +325,10 @@
 
     $(document).ready(function(){
 
-
-        var whitelabelPrefix = (window.location.indexOf('reise-wunsch.de') !== -1
-                                || window.location.indexOf('wish-service.com') !== -1
-                                || window.location.indexOf('travelwishservice.com') !== -1
+        var url = window.location.hostname;
+        var whitelabelPrefix = (url.indexOf('reise-wunsch.de') !== -1
+                                || url.indexOf('wish-service.com') !== -1
+                                || url.indexOf('travelwishservice.com') !== -1
                                 ) ?  wl_name+"_WL" : wl_name;
 
         if (wl_name !== 'bentour') {
