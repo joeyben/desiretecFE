@@ -180,6 +180,7 @@ class FrontendController extends Controller
     public function store(StoreWishesRequest $request)
     {
         $host = preg_replace('#^https?://#', '', rtrim(request()->headers->get('origin'),'/'));
+        $host = preg_replace('#^http?://#', '', rtrim($host,'/'));
         $host = $host ? $host : $request->header('Host');
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
 
@@ -220,7 +221,7 @@ class FrontendController extends Controller
             }
             $external = (strpos($host, 'travelwishservice.com') === false &&
                 strpos($host, 'reise-wunsch.de') === false &&
-                strpos($host, 'wish-service.com') === false) ? '' : '-WL';
+                strpos($host, 'wish-service.com') === false) ? '' : '_WL';
             
             $html = view('frontend.whitelabel.created')->with([
                 'headline_success'       => $headline_success,
