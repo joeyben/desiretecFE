@@ -188,7 +188,10 @@
                             </div>
                             <div class="right-side">
                                 <div class="title">
-                                    <h3>{{ $offer['data']['hotelOffer']['hotel']['name'] }}</h3>
+                                    <h3 class="ellipsised">{{ $offer['data']['hotelOffer']['hotel']['name'] }}</h3>
+                                    <span class="mousehover"></span>
+                                    <div class="tooltip">{{ $offer['data']['hotelOffer']['hotel']['name'] }}</div>
+
                                     <div class="rating">
                                         @for ($i = 0; $i < intval($offer['data']['hotelOffer']['hotel']['category']); $i++)
                                             <i class="fas fa-heart"></i>
@@ -290,6 +293,7 @@
             $('.listed-offers-section .vertical-line').css({'background-color': brandColor});
             $('.fas.fa-heart, .fal.fa-check, .offers .fulfill span, .fas.fa-map-marker-alt, .offers .slick-slider i').css({'color': brandColor});
             $('.offers .recommandations .average').css({'border-color': brandColor});
+            $('.offers .label').css({'color': brandColor});
             $('head').append('<style> progress::-webkit-progress-value { background: ' + brandColor + ' !important; } </style>');
 
             if($('.offers .info-icons').length === 0) {
@@ -306,6 +310,13 @@
             });
 
             $('[data-toggle="tooltip"]').tooltip();
+
+            $('.ellipsised').each(function() {
+                var isEllipsisActive = $(this)[0].offsetWidth < $(this)[0].scrollWidth;
+                if(!isEllipsisActive) {
+                    $(this).siblings('.tooltip').remove();
+                }
+            });
         });
 
         function scrollToAnchor(id) {
