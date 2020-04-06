@@ -144,7 +144,8 @@ class FrontendController extends Controller
      */
     public function show(Request $request)
     {
-        $host = $request->header('Host');
+        $host = preg_replace('#^https?://#', '', rtrim(request()->headers->get('origin'),'/'));
+        $host = $host ? $host : $request->header('Host');
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
 
         $layer_details = [];
@@ -178,7 +179,8 @@ class FrontendController extends Controller
      */
     public function store(StoreWishesRequest $request)
     {
-        $host = $request->header('Host');
+        $host = preg_replace('#^https?://#', '', rtrim(request()->headers->get('origin'),'/'));
+        $host = $host ? $host : $request->header('Host');
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
 
         if ($request->failed()) {
@@ -216,10 +218,14 @@ class FrontendController extends Controller
                 $headline_success = $whitelabel['layers'][0]['headline_success'];
                 $subheadline_success = $whitelabel['layers'][0]['subheadline_success'];
             }
+            $external = (strpos($host, 'travelwishservice.com') === false &&
+                strpos($host, 'reise-wunsch.de') === false &&
+                strpos($host, 'wish-service.com') === false) ? '' : '-WL';
+            
             $html = view('frontend.whitelabel.created')->with([
                 'headline_success'       => $headline_success,
                 'subheadline_success'    => $subheadline_success,
-                'whitelabel_name'        => $whitelabel['name']
+                'whitelabel_name'        => $whitelabel['name'].$external
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);
