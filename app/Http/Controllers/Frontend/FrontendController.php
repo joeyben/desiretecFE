@@ -142,7 +142,7 @@ class FrontendController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Request $request, $type)
+    public function show(Request $request)
     {
         $host = preg_replace('#^https?://#', '', rtrim(request()->headers->get('origin'),'/'));
         $host = $host ? $host : $request->header('Host');
