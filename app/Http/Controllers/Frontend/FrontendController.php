@@ -142,7 +142,7 @@ class FrontendController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Request $request)
+    public function show(Request $request, $type)
     {
         $host = preg_replace('#^https?://#', '', rtrim(request()->headers->get('origin'),'/'));
         $host = $host ? $host : $request->header('Host');
@@ -155,7 +155,7 @@ class FrontendController extends Controller
 
         $layer = $whitelabel['id'] != 77 ? 'layer' : 'layer-holiday-home';
 
-        $html = view('frontend.whitelabel.' . $layer)->with([
+        $html = view('frontend.whitelabel.' . $type)->with([
             'adults_arr'   => $this::ADULTS_ARR,
             'kids_arr'     => $this::KIDS_ARR,
             'ages_arr'     => $this::AGES_ARR,
@@ -182,6 +182,7 @@ class FrontendController extends Controller
         $host = preg_replace('#^https?://#', '', rtrim(request()->headers->get('origin'),'/'));
         $host = preg_replace('#^http?://#', '', rtrim($host,'/'));
         $host = $host ? $host : $request->header('Host');
+
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
 
         if ($request->failed()) {

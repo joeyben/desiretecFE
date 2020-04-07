@@ -20,6 +20,7 @@
 {{-- Form::open(['route' => 'master.store' , 'method' => 'get', 'class' => '', 'role' => 'form', 'files' => true]) --}}
 {{ Form::open() }}
 
+
 <div class="kwp-middle">
     {{ isset($layer_details['subheadline']) ? $layer_details['subheadline'] : trans('layer.show.subheadline') }}
 </div>
