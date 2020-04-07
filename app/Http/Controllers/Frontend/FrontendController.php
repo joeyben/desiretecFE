@@ -155,7 +155,7 @@ class FrontendController extends Controller
 
         $layer = $whitelabel['id'] != 77 ? 'layer' : 'layer-holiday-home';
 
-        $html = view('frontend.whitelabel.' . $type)->with([
+        $html = view('frontend.whitelabel.' . $layer)->with([
             'adults_arr'   => $this::ADULTS_ARR,
             'kids_arr'     => $this::KIDS_ARR,
             'ages_arr'     => $this::AGES_ARR,
