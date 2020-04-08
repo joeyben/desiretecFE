@@ -306,9 +306,7 @@
 
 jQuery(function($){
   $(document).ready(function () {
-      if (wl_name !== 'bentour') {
-          dt.Tracking.init(whitelabelPrefix + '_exitwindow', 'UA-105970361-21');
-      }
+
         if($('.kwp-close-button i').length === 0) {
             $('.kwp-close-button').append('<i class="fal fa-times"></i>');
         }
