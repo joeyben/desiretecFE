@@ -449,8 +449,8 @@ jQuery(function($) {
             catch(err) {
                 json = JSON.decode(data); /* solution for website where JSON.parse is not working */
             }
-            if(json.success && !data.whitelabel_name.includes('bentour')){
-                dt.Tracking.init(data.whitelabel_name + '_exitwindow', 'UA-105970361-21');
+            if(json.success && !json.whitelabel_name.includes('bentour')){
+                dt.Tracking.init(json.whitelabel_name + '_exitwindow', 'UA-105970361-21');
             }else{
                 return false;
             }
