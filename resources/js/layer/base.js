@@ -445,6 +445,7 @@ jQuery(function($) {
             });
         },
         onHostname: function (data, status, jqxhr) {
+            console.log(data)
 
         }, getQueryPart: function() {
             var part = '';
