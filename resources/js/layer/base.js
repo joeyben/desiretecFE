@@ -427,15 +427,12 @@ jQuery(function($) {
 
             this.popup.html(html);
             this.popupBody = this.popup.find('.kwp-body');
+            this.initGA();
         },
         initGA: function(){
-            var host = window.location.hostname;
-
-            var tripData = {};
-            tripData.host = host;
             jQuery.ajax(this.config.baseUrl + "/gwl", {
                 type: 'GET',
-                data: tripData,
+                data: {},
                 dataType: 'html',
                 contentType: 'application/x-www-form-urlencoded',
                 success: jQuery.proxy(this.onHostname, this),
@@ -452,10 +449,10 @@ jQuery(function($) {
             catch(err) {
                 json = JSON.decode(data); /* solution for website where JSON.parse is not working */
             }
-            if(json.success){
-
+            if(json.success && !data.whitelabel_name.includes('bentour')){
+                dt.Tracking.init(data.whitelabel_name + '_exitwindow', 'UA-105970361-21');
             }else{
-
+                return false;
             }
         }, getQueryPart: function() {
             var part = '';
