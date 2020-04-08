@@ -281,4 +281,10 @@ class FrontendController extends Controller
             abort(503, trans('errors.tnb.notset'));
         }
     }
+
+    public function getWhitelabelByHostname(Request $request){
+        $host = $request->input('host');
+        $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
+        return response()->json(['success' => true, 'whitelabel'=>$whitelabel]);
+    }
 }

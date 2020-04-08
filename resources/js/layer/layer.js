@@ -235,7 +235,7 @@ jQuery(function($){
             $("body, html").css({'overflow':'hidden'});
             //$.cookie(dt.PopupManager.mobileCookieId,'true',dt.PopupManager.cookieOptions);
             //ga('dt.send', 'event', 'Mobile Layer', 'Teaser shown', 'Mobile');
-            dt.Tracking.event('Mobile layer shown', this.trackingLabel);
+            ga('dt.send', 'event', 'Mobile layer shown', 'Teaser shown', 'Mobile');
         };
 
         dt.showTeaser = function (e) {

@@ -428,7 +428,25 @@ jQuery(function($) {
             this.popup.html(html);
             this.popupBody = this.popup.find('.kwp-body');
         },
-        getQueryPart: function() {
+        initGA: function(){
+            var host = window.location.hostname;
+
+            var tripData = {};
+            tripData.host = host;
+            jQuery.ajax(this.config.baseUrl + "/gwl", {
+                type: 'GET',
+                data: tripData,
+                dataType: 'html',
+                contentType: 'application/x-www-form-urlencoded',
+                success: jQuery.proxy(this.onHostname, this),
+                xhrFields: {
+                    withCredentials: false
+                }
+            });
+        },
+        onHostname: function (data, status, jqxhr) {
+
+        }, getQueryPart: function() {
             var part = '';
 
             if (this.variant) {
