@@ -198,7 +198,7 @@ jQuery(function($){
             $("body").removeClass('mobile-layer');
             $("body, html").css({'overflow':'auto'});
 
-            dt.Tracking.event('close', this.trackingLabel);
+            dt.Tracking.event('close', dt.PopupManager.trackingLabel);
 
         };
 
@@ -223,7 +223,7 @@ jQuery(function($){
                 }
                 dt.PopupManager.modal.removeClass('tmp-hidden');
                 $(this).remove();
-                dt.Tracking.event('Trigger button click', this.trackingLabel);
+                dt.Tracking.event('Trigger button click', dt.PopupManager.trackingLabel);
             });
         }
 
