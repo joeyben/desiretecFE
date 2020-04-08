@@ -198,7 +198,7 @@ jQuery(function($){
             $("body").removeClass('mobile-layer');
             $("body, html").css({'overflow':'auto'});
 
-            dt.Tracking.event('close', dt.PopupManager.trackingLabel);
+            dt.Tracking.event('close', dt.Tracking.category);
 
         };
 
@@ -223,7 +223,7 @@ jQuery(function($){
                 }
                 dt.PopupManager.modal.removeClass('tmp-hidden');
                 $(this).remove();
-                dt.Tracking.event('Trigger button click', dt.PopupManager.trackingLabel);
+                dt.Tracking.event('Trigger button click', dt.Tracking.category);
             });
         }
 
@@ -235,7 +235,7 @@ jQuery(function($){
             $("body, html").css({'overflow':'hidden'});
             //$.cookie(dt.PopupManager.mobileCookieId,'true',dt.PopupManager.cookieOptions);
             //ga('dt.send', 'event', 'Mobile Layer', 'Teaser shown', 'Mobile');
-            dt.Tracking.event('Mobile layer shown', dt.PopupManager.trackingLabel);
+            dt.Tracking.event('Mobile layer shown', dt.Tracking.category);
         };
 
         dt.showTeaser = function (e) {
@@ -256,7 +256,7 @@ jQuery(function($){
             if (typeof brandColor !== 'undefined') {
                 $(".dt-modal .teaser").css('background-color', brandColor);
             }
-            dt.Tracking.event('Mobile Teaser shown', dt.PopupManager.trackingLabel);
+            dt.Tracking.event('Mobile Teaser shown', dt.Tracking.category);
         };
 
         dt.hideTeaser = function (e) {

@@ -330,7 +330,7 @@
     });
 
     $(document).ready(function(){
-        
+
         
         if($('.kwp-close-button i').length === 0) {
             $('.kwp-close-button').append('<i class="fal fa-times"></i>');

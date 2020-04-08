@@ -398,6 +398,7 @@ jQuery(function($) {
             // );
         },
         createPopup: function() {
+            this.initGA();
             if(null === this.popup) {
                 this.popup = jQuery('<div/>', {'class': 'kwp'});
 
@@ -427,7 +428,7 @@ jQuery(function($) {
 
             this.popup.html(html);
             this.popupBody = this.popup.find('.kwp-body');
-            this.initGA();
+
         },
         initGA: function(){
             jQuery.ajax(this.config.baseUrl + "/gwl", {
