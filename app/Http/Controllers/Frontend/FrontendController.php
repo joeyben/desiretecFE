@@ -144,8 +144,7 @@ class FrontendController extends Controller
      */
     public function show(Request $request)
     {
-        $host = preg_replace('#^https?://#', '', rtrim(request()->headers->get('origin'),'/'));
-        $host = $host ? $host : $request->header('Host');
+        $host = $this->getHost($request, request()->headers->get('origin'));
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
 
         $layer_details = [];
@@ -179,10 +178,7 @@ class FrontendController extends Controller
      */
     public function store(StoreWishesRequest $request)
     {
-        $host = preg_replace('#^https?://#', '', rtrim(request()->headers->get('origin'),'/'));
-        $host = preg_replace('#^http?://#', '', rtrim($host,'/'));
-        $host = $host ? $host : $request->header('Host');
-
+        $host = $this->getHost($request, request()->headers->get('origin'));
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
 
         if ($request->failed()) {
@@ -283,8 +279,17 @@ class FrontendController extends Controller
     }
 
     public function getWhitelabelByHostname(Request $request){
-        $host = $request->input('host');
+        $host = $this->getHost($request, request()->headers->get('origin'));
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
-        return response()->json(['success' => true, 'whitelabel'=>$whitelabel]);
+        $fromWL = strpos($host, 'reise-wunsch.de') === false
+            && strpos($host, 'travelwishservice.com') === false
+            && strpos($host, 'wish-service.com') === false ? "" : "_WL";
+        return response()->json(['success' => true, 'whitelabel_name'=>$whitelabel['name'].$fromWL]);
+    }
+
+    public function getHost($request, $origin){
+        $host = preg_replace('#^https?://#', '', rtrim($origin,'/'));
+        $host = preg_replace('#^http?://#', '', rtrim($host,'/'));
+        return $host ? $host : $request->header('Host');
     }
 }

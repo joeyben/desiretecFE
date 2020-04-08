@@ -445,8 +445,18 @@ jQuery(function($) {
             });
         },
         onHostname: function (data, status, jqxhr) {
-            console.log(data)
+            var json;
+            try {
+                json = JSON.parse(data);
+            }
+            catch(err) {
+                json = JSON.decode(data); /* solution for website where JSON.parse is not working */
+            }
+            if(json.success){
 
+            }else{
+
+            }
         }, getQueryPart: function() {
             var part = '';
 
