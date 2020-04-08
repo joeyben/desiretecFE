@@ -235,7 +235,7 @@ jQuery(function($){
             $("body, html").css({'overflow':'hidden'});
             //$.cookie(dt.PopupManager.mobileCookieId,'true',dt.PopupManager.cookieOptions);
             //ga('dt.send', 'event', 'Mobile Layer', 'Teaser shown', 'Mobile');
-            dt.Tracking.event('Mobile layer shown', this.trackingLabel);
+            dt.Tracking.event('Mobile layer shown', dt.PopupManager.trackingLabel);
         };
 
         dt.showTeaser = function (e) {
@@ -256,7 +256,7 @@ jQuery(function($){
             if (typeof brandColor !== 'undefined') {
                 $(".dt-modal .teaser").css('background-color', brandColor);
             }
-            dt.Tracking.event('Mobile Teaser shown', this.trackingLabel);
+            dt.Tracking.event('Mobile Teaser shown', dt.PopupManager.trackingLabel);
         };
 
         dt.hideTeaser = function (e) {
