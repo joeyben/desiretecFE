@@ -144,7 +144,7 @@ class FrontendController extends Controller
      */
     public function show(Request $request)
     {
-        $host = $request->header('Host');
+        $host = $this->getHost($request, request()->headers->get('origin'));
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
 
         $layer = $request->query->has('version') ? 'layers.' . $request->input('version') : 'layer';
@@ -173,7 +173,7 @@ class FrontendController extends Controller
 
     public function store(StoreWishesRequest $request)
     {
-        $host = $request->header('Host');
+        $host = $this->getHost($request, request()->headers->get('origin'));
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
 
         if ($request->failed()) {
@@ -207,10 +207,14 @@ class FrontendController extends Controller
                 $headline_success = $whitelabel['layers'][0]['headline_success'];
                 $subheadline_success = $whitelabel['layers'][0]['subheadline_success'];
             }
+            $external = (strpos($host, 'travelwishservice.com') === false &&
+                strpos($host, 'reise-wunsch.de') === false &&
+                strpos($host, 'wish-service.com') === false) ? '' : '_WL';
+            
             $html = view('frontend.whitelabel.created')->with([
                 'headline_success'       => $headline_success,
                 'subheadline_success'    => $subheadline_success,
-                'whitelabel_name'        => $whitelabel['name']
+                'whitelabel_name'        => $whitelabel['name'].$external
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);
@@ -263,5 +267,20 @@ class FrontendController extends Controller
             Log::error($e);
             abort(503, trans('errors.tnb.notset'));
         }
+    }
+
+    public function getWhitelabelByHostname(Request $request){
+        $host = $this->getHost($request, request()->headers->get('origin'));
+        $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
+        $fromWL = strpos($host, 'reise-wunsch.de') === false
+            && strpos($host, 'travelwishservice.com') === false
+            && strpos($host, 'wish-service.com') === false ? "" : "_WL";
+        return response()->json(['success' => true, 'whitelabel_name'=>$whitelabel['name'].$fromWL]);
+    }
+
+    public function getHost($request, $origin){
+        $host = preg_replace('#^https?://#', '', rtrim($origin,'/'));
+        $host = preg_replace('#^http?://#', '', rtrim($host,'/'));
+        return $host ? $host : $request->header('Host');
     }
 }
