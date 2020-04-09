@@ -298,7 +298,9 @@ jQuery(function($) {
                 // mixpanel.track(
                 //    "Show Layer"
                 // );
-                dt.Tracking.event('shown', this.trackingLabel);
+                if(!dt.PopupManager.isMobile){
+                    dt.Tracking.event('shown', this.trackingLabel);
+                }
                 this.shown = true;
             }
             this.showPopup();
