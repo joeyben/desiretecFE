@@ -1,4 +1,4 @@
-<div class="kwp-content kwp-completed-master">
+<div class="kwp-content kwp-completed">
     <h1><i class="master-icon--check"></i>{{$headline_success}}</h1>
     <p>
         {{$subheadline_success}}

@@ -19,12 +19,6 @@ class FrontendController extends Controller
     const BODY_CLASS = 'landing';
 
     // TODO: Better solution for these arrays:
-    const REQUEST_ARR = [
-        "variant" => "eil-mobile",
-        "category" => "3",
-        "is_popup_allowed" => "true",
-        "first_fetch" => "yes",
-    ];
     const CLASS_ARR = [
         3 => "Economy",
         2 => "Premium Economy",
@@ -77,6 +71,12 @@ class FrontendController extends Controller
     const PETS_ARR = [
         'Ohne Haustier',
         'Mit Haustier',
+    ];
+    const ROOMS_ARR = [
+        1 => "1",
+        2 => "2",
+        3 => "3",
+        4 => "4",
     ];
     const DURATION_ARR = [
         "exact" => "Exakt wie angegeben",
@@ -147,25 +147,19 @@ class FrontendController extends Controller
         $host = $this->getHost($request, request()->headers->get('origin'));
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
 
-        $layer_details = [];
-        if(!empty($whitelabel['layers'][0]) && !is_null($whitelabel['layers'][0])){
-            $layer_details = $whitelabel['layers'][0];
-        }
-
-        $layer = $whitelabel['id'] != 77 ? 'layer' : 'layer-holiday-home';
+        $layer = $request->query->has('version') ? 'layers.' . $request->input('version') : 'layer';
 
         $html = view('frontend.whitelabel.' . $layer)->with([
             'adults_arr'   => $this::ADULTS_ARR,
             'kids_arr'     => $this::KIDS_ARR,
             'ages_arr'     => $this::AGES_ARR,
             'catering_arr' => $this::CATERING_ARR,
+            'class_arr'    => $this::CLASS_ARR,
             'duration_arr' => $this::DURATION_ARR,
-            'request'      => $this::REQUEST_ARR,
             'pets_arr'     => $this::PETS_ARR,
-            'logo'         => $whitelabel['attachments']['logo'],
-            'color'        => $whitelabel['color'],
+            'rooms_arr'    => $this::ROOMS_ARR,
+            'request'      => $request,
             'whitelabel'   => $whitelabel,
-            'layer_details'=> $layer_details
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);
@@ -176,30 +170,27 @@ class FrontendController extends Controller
      *
      * @return mixed
      */
+
     public function store(StoreWishesRequest $request)
     {
         $host = $this->getHost($request, request()->headers->get('origin'));
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
 
         if ($request->failed()) {
-            $layer_details = [];
-            if(!empty($whitelabel['layers'][0]) && !is_null($whitelabel['layers'][0])){
-                $layer_details = $whitelabel['layers'][0];
-            }
-            $layer = $whitelabel['id'] != 77 ? 'layer' : 'layer-holiday-home';
+            $layer = $request->query->has('version') ? 'layers.' . $request->input('version') : 'layer';
+
             $html = view('frontend.whitelabel.' . $layer)->with([
-                'errors'       => $request->errors(),
-                'request'      => $request->all(),
                 'adults_arr'   => $this::ADULTS_ARR,
                 'kids_arr'     => $this::KIDS_ARR,
                 'ages_arr'     => $this::AGES_ARR,
                 'catering_arr' => $this::CATERING_ARR,
+                'class_arr'    => $this::CLASS_ARR,
                 'duration_arr' => $this::DURATION_ARR,
                 'pets_arr'     => $this::PETS_ARR,
-                'logo'         => $whitelabel['attachments']['logo'],
-                'color'        => $whitelabel['color'],
+                'rooms_arr'    => $this::ROOMS_ARR,
+                'request'      => $request->all(),
+                'errors'       => $request->errors(),
                 'whitelabel'   => $whitelabel,
-                'layer_details'=> $layer_details
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);

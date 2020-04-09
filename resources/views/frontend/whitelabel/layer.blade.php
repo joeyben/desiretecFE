@@ -1,14 +1,15 @@
 <script type="application/javascript">
-    var brandColor = {!! json_encode($color) !!};
-    var layerContent = {!! json_encode($layer_details) !!};
-    var domain = {!! json_encode($whitelabel['domain']) !!};
-    var wl_name = {!! json_encode($whitelabel['name']) !!};
-
+    var whitelabel = @json($whitelabel);
+    var brandColor = @json($whitelabel['color']);
+    var layers = @json($whitelabel['layers']);
+    var wl_name = @json($whitelabel['name']);
     var url = window.location.hostname;
     var whitelabelPrefix = (url.indexOf('reise-wunsch.de') !== -1
         || url.indexOf('wish-service.com') !== -1
         || url.indexOf('travelwishservice.com') !== -1
     ) ?  wl_name+"_WL" : wl_name;
+<<<<<<< HEAD
+=======
 </script>
 
 <style>
@@ -276,15 +277,15 @@
             </div>
         </div>
     </div>
+>>>>>>> development
 
-    <div class="kwp-footer">
-        <div class="kwp-row">
-            <div class="kwp-col-12 white-col footer-col">
-                <div class="kwp-agb">
-                @php
-                   $terms_class = 'dt_terms'
-                @endphp
+    jQuery(function($){
+        $(document).ready(function () {
+            dt.initLayerVersion();
+            dt.handleClickTabs();
 
+<<<<<<< HEAD
+=======
                 @if ($errors->any() && $errors->get('terms'))
                   @php
                   $terms_class = 'dt_terms hasError'
@@ -359,183 +360,7 @@ jQuery(function($){
                 $(this).parents('.main-col').removeClass('open');
 
             $('.kwp-content').animate({ scrollTop: $(this).offset().top}, 500);
+>>>>>>> development
         });
-
-        $(".duration-more .button a").click(function(e) {
-            e.preventDefault();
-            $(this).parents('.duration-col').removeClass('open');
-            var from = $("#earliest_start").val();
-            var back = $("#latest_return").val();
-            var duration = $("#duration option:selected").text();
-
-            $(".duration-time .txt").text(from+" - "+back+", "+duration);
-            return false;
-        });
-
-        $(".pax-more .button a").click(function(e) {
-            e.preventDefault();
-            $(this).parents('.pax-col').removeClass('open');
-            var pax = $("#adults").val();
-            var children_count = parseInt($("#kids").val());
-            var children = children_count > 0 ? (children_count == 1 ? ", "+children_count+" Kind" : ", "+children_count+" Kinder")  : "" ;
-
-            var erwachsene = parseInt(pax) > 1 ? "Erwachsene" : "Erwachsener";
-            $(".travelers .txt").text(pax+" "+erwachsene+" "+children);
-            return false;
-        });
-
-        $('#budgetRange').rangeslider({
-            polyfill: false,
-            onInit: function() {
-                $('.rangeslider__handle').on('mousedown touchstart mousemove touchmove', function(e) {
-                    e.preventDefault();
-                })
-            },
-            fillClass: 'rangeslider__fill',
-            onSlide: function(position, value) {
-                if($(".rangeslider-wrapper .haserrors").length)
-                    $(".rangeslider-wrapper .haserrors").removeClass('haserrors');
-
-                if(value === 10000){
-                    $(".rangeslider-wrapper .text").text("beliebig");
-                    $("#budget").val("beliebig");
-                }else if(value === 100){
-                    $(".rangeslider-wrapper .text").html("&nbsp;");
-                    $("#budget").val("");
-                }else{
-                    $(".rangeslider-wrapper .text").text("bis "+value+" €");
-                    $("#budget").val(""+value);
-                }
-                check_button();
-            },
-        });
-
-
-        dt.startDate = new Pikaday({
-            field: document.getElementById('earliest_start'),
-            format: 'dd.mm.YYYY',
-            defaultDate: '01.01.2019',
-            firstDay: 1,
-            minDate: new Date(),
-            toString: function(date, format) {
-                // you should do formatting based on the passed format,
-                // but we will just return 'D/M/YYYY' for simplicity
-                const day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-                const month = (date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
-                const year = date.getFullYear();
-                return day+"."+month+"."+year;
-            },
-            i18n: {
-                previousMonth: 'Vormonat',
-                nextMonth: 'Nächsten Monat',
-                months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-                weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
-                weekdaysShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa']
-            },
-            onSelect: function(date) {
-                var dateFrom = this.getDate();
-                var dateTo = dt.endDate.getDate();
-                if(dateFrom >= dateTo){
-                    var d = date.getDate();
-                    var m = date.getMonth();
-                    var y = date.getFullYear();
-                    var updatedDate = new Date(y, m, d);
-                    dt.endDate.setMinDate(updatedDate);
-                    updatedDate = new Date(y, m, d+7);
-                    dt.endDate.setDate(updatedDate);
-                }
-            },
-            onOpen: function() {
-
-            },
-        });
-        dt.endDate = new Pikaday({
-            field: document.getElementById('latest_return'),
-            format: 'dd.mm.YYYY',
-            defaultDate: '01.01.2019',
-            firstDay: 1,
-            toString: function(date, format) {
-                // you should do formatting based on the passed format,
-                // but we will just return 'D/M/YYYY' for simplicity
-                const day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-                const month = (date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
-                const year = date.getFullYear();
-                return day+"."+month+"."+year;
-            },
-            i18n: {
-                previousMonth: 'Vormonat',
-                nextMonth: 'Nächsten Monat',
-                months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-                weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
-                weekdaysShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa']
-            }
-        });
-
-        if(!$("#earliest_start").val()){
-            var date = new Date();
-            date.setDate(date.getDate() + 3);
-            var d = date.getDate();
-            var m = date.getMonth()+1;
-            var y = date.getFullYear();
-            if (d < 10) {
-                d = "0" + d;
-            }
-            if (m < 10) {
-                m = "0" + m;
-            }
-            $("#earliest_start").val(d+"."+m+"."+y);
-        }
-
-        if(!$("#latest_return").val()){
-            var date = new Date();
-            date.setDate(date.getDate() + 10);
-            var d = date.getDate();
-            var m = date.getMonth()+1;
-            var y = date.getFullYear();
-            if (d < 10) {
-                d = "0" + d;
-            }
-            if (m < 10) {
-                m = "0" + m;
-            }
-            $("#latest_return").val(d+"."+m+"."+y);
-        }
-
-        var range = parseInt($("#budget").val().replace('.',''));
-        if(range)
-            $('input[type="range"]').val(range).change();
-
-        $(".duration-time .txt").text($("#earliest_start").val()+" - "+$("#latest_return").val()+", "+$("#duration option:selected").text());
-        var pax = $("#adults").val();
-        var children_count = parseInt($("#kids").val());
-        var children = children_count > 0 ? (children_count == 1 ? ", "+children_count+" Kind" : ", "+children_count+" Kinder")  : "" ;
-        var erwachsene = parseInt(pax) > 1 ? "Erwachsene" : "Erwachsener";
-        $(".travelers .txt").text(pax+" "+erwachsene+" "+children);
-
-        if($(".dt-modal .haserrors").length){
-            $('.dt-modal #submit-button').addClass('error-button');
-        }
-
-        if($(".duration-more .haserrors").length){
-            $('.duration-group').addClass('haserrors');
-        }
-
-        $( ".haserrors input" ).keydown(function( event ) {
-            $(this).parents('.haserrors').removeClass('haserrors');
-            check_button();
-        });
-        $('.haserrors input[type="checkbox"]').change(function () {
-            $(this).parents('.haserrors').removeClass('haserrors');
-            check_button();
-        });
-        $("#latest_return").trigger("change");
     });
-
-    function check_button(){
-        if(!$(".dt-modal .haserrors").length){
-            $('.dt-modal #submit-button').removeClass('error-button');
-        }
-    };
-});
-
 </script>

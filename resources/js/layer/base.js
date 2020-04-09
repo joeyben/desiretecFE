@@ -1,7 +1,7 @@
 var dt = window.dt || {};
 
-var isDtDomain = window.location.href.indexOf("wish-service.com") > -1 
-            || window.location.href.indexOf("reise-wunsch.de") > -1 
+var isDtDomain = window.location.href.indexOf("wish-service.com") > -1
+            || window.location.href.indexOf("reise-wunsch.de") > -1
             || window.location.href.indexOf("travelwishservice.com") > -1;
 
 if(!isDtDomain) {
@@ -17,7 +17,7 @@ jQuery(function($) {
             }
 
             if(typeof color !== undefined) {
-                console.log('%cKwizzme Popup: ' + message, 'color: ' + color + '; background: #f5f5f5;');
+                console.log('%cPopup: ' + message, 'color: ' + color + '; background: #f5f5f5;');
                 return;
             }
 
@@ -60,7 +60,6 @@ jQuery(function($) {
         },
         formArrayToObject: function(arr) {
             var obj = {};
-            console.log(arr);
 
             for(var i = 0; i < arr.length; ++i) {
                 if (!arr[i]) {
@@ -163,6 +162,7 @@ jQuery(function($) {
         popupBody: null,
         isZeroResult: null,
         variant: null,
+        version: null,
         trackingLabel: null,
         back: false,
         next: false,
@@ -310,24 +310,28 @@ jQuery(function($) {
                 return obj;
             }, {});
 
-            // mixpanel.identify(data.data_id);
-
             return true;
         },
+        // showTabs: function() {
+        //     $('.kwp-tabs li').removeClass('current');
+        //     $('.tab-content').removeClass('current');
+        //     $('[data-tab=' + this.version + ']').addClass('current');
+        //     $("#" + this.version).addClass('current');
+        // },
         onPopupFetched: function(data, status, jqxhr) {
             var json;
             try {
                 json = JSON.parse(data);
             }
             catch(err) {
-                json = JSON.decode(data); /* solution for website where JSON.parse is not working */
+                json = JSON.decode(data); /* solution for a website where JSON.parse is not working */
             }
             this.showContent(json.html);
         },
         show: function() {
             Debug.info('::show:start');
 
-            if(this.shown || this.blocked) {
+            if((this.shown || this.blocked) && !this.version) {
                 return;
             }
 
@@ -343,30 +347,16 @@ jQuery(function($) {
                 Debug.info('::shown');
             }
         },
-        changeTexts: function(headline, tagline) {
-            this.popup.find('.kwp-header-content h1').html(headline);
-            this.popup.find('.kwp-header-content p').html(tagline);
-        },
         showContent: function(content) {
             this.popupBody.html(content);
             this.popup.find('#back-button').click($.proxy(this.setBack, this));
             this.popup.find('#submit-button').click($.proxy(this.onFormSubmit, this));
             this.popup.find('#next-button').click($.proxy(this.setNext, this));
-            this.popup.find('.kwp-close').click($.proxy(this.closePopup, this));
-            if($(".kwp-content").hasClass('kwp-completed-tui') || $(".kwp-content").hasClass('kwp-completed')){
-                if( dt.PopupManager.isMobile){
-                    $(".kwp-header").hide();
-                }
-                $(".kwp-header").addClass('success');
-                $(".kwp-header-content").addClass('hidden-content');
-            }else{
-                if(dt.PopupManager.decoder.name == "TUI IBE"){
+            this.popup.find('.kwp-close-btn').click($.proxy(this.closePopup, this));
 
-                }else {
-
-                }
+            if($(".kwp-content").hasClass('kwp-completed')){
+                $(".kwp-header").hide();
             }
-
         },
         showPopup: function() {
             var self = this;
@@ -395,9 +385,6 @@ jQuery(function($) {
             this.shown = false;
 
             dt.Tracking.event('close', this.trackingLabel);
-            // mixpanel.track(
-            //     "Close Layer"
-            // );
         },
         createPopup: function() {
             this.initGA();
@@ -464,6 +451,11 @@ jQuery(function($) {
                 part +=  '?variant=' + this.variant;
             }
 
+            if(this.version) {
+                part += '&version=';
+                part += this.version;
+            }
+
             if(this.back) {
                 part += '&back=true'
             }
@@ -503,32 +495,6 @@ jQuery(function($) {
             });
 
             dt.Tracking.event('Submit-Button', this.trackingLabel);
-            /*  mixpanel.track(
-                  "Layer submitted",
-                  {
-                      "__email": dataArray.__email,
-                      "__name": dataArray.__name,
-                      "age_1": dataArray.age_1  ? dataArray.age_1: "",
-                      "age_2": dataArray.age_2  ? dataArray.age_2: "",
-                      "age_3": dataArray.age_3  ? dataArray.age_3: "",
-                      "airport": dataArray.airport,
-                      "budget": dataArray.budget,
-                      "catering": dataArray.catering,
-                      "children": dataArray.children,
-                      "description": dataArray.description,
-                      "destination": dataArray.destination,
-                      "duration": dataArray.duration,
-                      "earliest_start": dataArray.earliest_start,
-                      "hotel_category": dataArray.hotel_category,
-                      "latest_return": dataArray.latest_return,
-                      "pax": dataArray.pax
-                  }
-              );
-
-              mixpanel.people.set({
-                  "$name": dataArray.__name,
-                  "$email": dataArray.__email
-              });*/
 
             this.back = false;
             this.next = false;
@@ -561,24 +527,6 @@ jQuery(function($) {
             if(typeof category !== 'undefined') {
                 this.category = category;
             }
-        },
-        initMixpanel: function(siteId){
-
-            /*(function(e,a){if(!a.__SV){var b=window;try{var c,l,i,j=b.location,g=j.hash;c=function(a,b){return(l=a.match(RegExp(b+"=([^&]*)")))?l[1]:null};g&&c(g,"state")&&(i=JSON.parse(decodeURIComponent(c(g,"state"))),"mpeditor"===i.action&&(b.sessionStorage.setItem("_mpcehash",g),history.replaceState(i.desiredHash||"",e.title,j.pathname+j.search)))}catch(m){}var k,h;window.mixpanel=a;a._i=[];a.init=function(b,c,f){function e(b,a){var c=a.split(".");2==c.length&&(b=b[c[0]],a=c[1]);b[a]=function(){b.push([a].concat(Array.prototype.slice.call(arguments,
-                0)))}}var d=a;"undefined"!==typeof f?d=a[f]=[]:f="mixpanel";d.people=d.people||[];d.toString=function(b){var a="mixpanel";"mixpanel"!==f&&(a+="."+f);b||(a+=" (stub)");return a};d.people.toString=function(){return d.toString(1)+".people (stub)"};k="disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config reset people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
-                for(h=0;h<k.length;h++)e(d,k[h]);a._i.push([b,c,f])};a.__SV=1.2;b=e.createElement("script");b.type="text/javascript";b.async=!0;b.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===e.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";c=e.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c)}})(document,window.mixpanel||[]);
-            mixpanel.init("a7f133d26ec0d61821d143437f67f6f3");*/
-
-
-            /*  mixpanel.people.set({
-                  "$siteID": siteId
-              });
-              jQuery('body').on('blur','.dt-modal input[type=text]',function() {
-                  mixpanel.track(
-                      jQuery(this).attr('name'),
-                      {'value':jQuery(this).val()}
-                  )
-              });*/
         },
         rawEvent: function (category, action, label) {
             ga('DesireTec.send', 'event', category, action, label);
