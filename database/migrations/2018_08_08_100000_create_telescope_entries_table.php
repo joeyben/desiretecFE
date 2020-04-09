@@ -57,10 +57,9 @@ class CreateTelescopeEntriesTable extends Migration
 
         $this->schema->create('telescope_entries_tags', function (Blueprint $table) {
             $table->uuid('entry_uuid');
-            $table->string('tag');
+            $table->text('tag');
 
-            $table->index(['entry_uuid', 'tag']);
-            $table->index('tag');
+            $table->index(['entry_uuid']);
 
             $table->foreign('entry_uuid')
                   ->references('uuid')
@@ -69,7 +68,7 @@ class CreateTelescopeEntriesTable extends Migration
         });
 
         $this->schema->create('telescope_monitoring', function (Blueprint $table) {
-            $table->string('tag');
+            $table->text('tag');
         });
     }
 
