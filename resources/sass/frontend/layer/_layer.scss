@@ -965,6 +965,7 @@ p.kwp-info {
   }
   .rangeslider-wrapper {
     background: transparent;
+    margin-top: 5px;
     .kwp-form-group {
       label {
         margin-bottom: 0px;
@@ -1018,12 +1019,14 @@ p.kwp-info {
     background: transparent;
     .text {
       display: block;
-      margin-top: 5px;
+      margin: 3px 0;
       color: $darkgrey2;
       font-weight: normal;
     }
     label {
       padding-left: 0;
+      color: #4c4c4c;
+      font-weight: bold;
     }
   }
   .catering {
@@ -1031,6 +1034,8 @@ p.kwp-info {
     background: transparent;
     label {
       padding-left: 9px;
+      color: #4c4c4c;
+      font-weight: bold;
     }
     .dropdown {
       margin-top: 20px;
