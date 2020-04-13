@@ -763,9 +763,7 @@ jQuery(function($){
         dt.handleKidsAges = function () {
             (function ($, children, age) {
                 function update() {
-                    console.log(children);
                     var val = $(children).val();
-                    console.log(val);
 
                     if (val>0) {
                         $('.kwp-col-ages').addClass('kwp-show-ages');
@@ -831,7 +829,9 @@ jQuery(function($){
                         $(".rangeslider-wrapper .text").text("bis "+value+" €");
                         $("#budget").val(""+value);
                     }
-                    check_button();
+                    if(!$(".dt-modal .haserrors").length){
+                        $('.dt-modal #submit-button').removeClass('error-button');
+                    }
                 },
             });
 
