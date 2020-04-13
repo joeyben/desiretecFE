@@ -160,7 +160,7 @@ jQuery(function($){
         dt.initCallbacks.push(function (popup) {
             exitIntent.init();
             document.addEventListener('exit-intent', function (e) {
-                if(!exitIntent.checkCookie()) {
+                if(!exitIntent.checkCookie() && !popup.shown) {
                     popup.show();
                     // set cookies
                     exitIntent.cookieManager.create("exit_intent", "yes", exitIntent.cookieExp, exitIntent.sessionOnly);
