@@ -42,13 +42,13 @@
                     <div class="main-info">
                         <ul class="info">
                             <li><i class="icon_pin"></i><span class="value">@{{ wish.destination }}</span></li>
-                            @if(wish.airport)
+                            @if($wish.airport)
                                 <li><i class="fa fa-plane"></i><span class="value">@{{ wish.airport }}</span></li>
                             @endif
                             <li><i class="icon_calendar"></i><span class="value">@{{ wish.earliest_start | moment("DD.MM.YYYY") }}</span> bis <span class="value">@{{ wish.latest_return | moment("DD.MM.YYYY") }}</span></li>
                             <li><i class="icon_hourglass"></i><span class="value">@{{ wish.duration }}</span></li>
                             <li><i class="icon_group"></i><span class="value">@{{ wish.adults }}</span></li>
-                            @if(wish.rooms)
+                            @if($wish.rooms)
                                 <li><i class="fal fa-door-closed"></i><span class="value">@{{ wish.rooms }}</span></li>
                             @endif
                             @if(wish.pets)
