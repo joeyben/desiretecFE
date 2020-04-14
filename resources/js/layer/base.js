@@ -312,12 +312,6 @@ jQuery(function($) {
 
             return true;
         },
-        // showTabs: function() {
-        //     $('.kwp-tabs li').removeClass('current');
-        //     $('.tab-content').removeClass('current');
-        //     $('[data-tab=' + this.version + ']').addClass('current');
-        //     $("#" + this.version).addClass('current');
-        // },
         onPopupFetched: function(data, status, jqxhr) {
             var json;
             try {

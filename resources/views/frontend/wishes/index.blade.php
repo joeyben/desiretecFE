@@ -42,18 +42,18 @@
                     <div class="main-info">
                         <ul class="info">
                             <li><i class="icon_pin"></i><span class="value">@{{ wish.destination }}</span></li>
-                            @if(wish.airport)
+                            @isset($wish['airport'])
                                 <li><i class="fa fa-plane"></i><span class="value">@{{ wish.airport }}</span></li>
-                            @endif
+                            @endisset
                             <li><i class="icon_calendar"></i><span class="value">@{{ wish.earliest_start | moment("DD.MM.YYYY") }}</span> bis <span class="value">@{{ wish.latest_return | moment("DD.MM.YYYY") }}</span></li>
                             <li><i class="icon_hourglass"></i><span class="value">@{{ wish.duration }}</span></li>
                             <li><i class="icon_group"></i><span class="value">@{{ wish.adults }}</span></li>
-                            @if(wish.rooms)
+                            @isset($wish['rooms'])
                                 <li><i class="fal fa-door-closed"></i><span class="value">@{{ wish.rooms }}</span></li>
-                            @endif
-                            @if(wish.pets)
+                            @endisset
+                            @isset($wish['pets'])
                                 <li><i class="fal fa-dog-leashed"></i><span class="value">@{{ wish.pets }}</span></li>
-                            @endif
+                            @endisset
                             <li v-if="wish.senderEmail"><i class="fal fa-at"></i><span class="value">@{{ wish.senderEmail }}</span></li>
                             <li>{{ trans('labels.frontend.wishes.created_at') }} <span class="value">@{{ wish['created_at'] | moment("DD.MM.YYYY") }}</span></li>
                         </ul>

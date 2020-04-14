@@ -205,17 +205,19 @@
 
             var layer = layers[2];
 
-            dt.showTabs(layers);
+            if(layers.length > 1) {
+                dt.showTabs(layers);
 
-            dt.showCurrentTab(layer);
+                dt.showCurrentTab(layer);
+
+                dt.handleClickTabs();
+            }
 
             dt.fillContent(layer);
 
             dt.applyBrandColor();
 
             dt.adjustResponsive();
-
-            dt.handleClickTabs();
 
             dt.handleTriggers();
 
