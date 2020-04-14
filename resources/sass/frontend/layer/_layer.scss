@@ -322,6 +322,9 @@ $gutter: 30px;
         display: none;
       }
     }
+    .kwp-col-4:nth-child(2) {
+      margin-right: 0;
+    }
   }
   .kwp-form-group {
     position: relative;
@@ -747,6 +750,9 @@ p.kwp-info {
 }
 
 // kwp-col-*
+.kwp-col-12 {
+  width: 100%;
+}
 .kwp-col-4, .kwp-col-3 {
   width: calc(50% - 10px);
   height: 100%;
@@ -959,6 +965,7 @@ p.kwp-info {
   }
   .rangeslider-wrapper {
     background: transparent;
+    margin-top: 5px;
     .kwp-form-group {
       label {
         margin-bottom: 0px;
@@ -1012,12 +1019,14 @@ p.kwp-info {
     background: transparent;
     .text {
       display: block;
-      margin-top: 5px;
+      margin: 3px 0;
       color: $darkgrey2;
       font-weight: normal;
     }
     label {
       padding-left: 0;
+      color: #4c4c4c;
+      font-weight: bold;
     }
   }
   .catering {
@@ -1025,6 +1034,8 @@ p.kwp-info {
     background: transparent;
     label {
       padding-left: 9px;
+      color: #4c4c4c;
+      font-weight: bold;
     }
     .dropdown {
       margin-top: 20px;
@@ -1200,8 +1211,9 @@ select option:disabled {
 .kwp-col-ages {
   @extend  .kwp-col-4;
   display: none;
+  width: 100%;
 
-.kwp-show-ages & {
+  .kwp-show-ages & {
     display: block;
   }
 }

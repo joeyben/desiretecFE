@@ -223,8 +223,6 @@
 
             dt.handleDuration();
 
-            dt.handleTriggers();
-
             dt.hanglePax();
 
             dt.handleKidsAges();

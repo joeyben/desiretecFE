@@ -218,7 +218,7 @@
                 <div class="kwp-col-3 stars">
                     <div class="kwp-form-group">
                         {{ Form::label('category', trans('layer.general.category'), ['class' => 'control-label required']) }}
-                        {{ Form::number('category', key_exists('category', $request) ? $request['category'] : null, ['class' => 'form-control box-size hidden', 'placeholder' => trans('layer.placeholder.category')]) }}
+                        {{ Form::number('category', key_exists('category', $request) ? $request['category'] : 3, ['class' => 'form-control box-size hidden', 'placeholder' => trans('layer.placeholder.category')]) }}
 
                         <span class="text">ab 0 Sonnen</span>
                         <div class="kwp-star-input">

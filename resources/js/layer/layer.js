@@ -160,7 +160,7 @@ jQuery(function($){
         dt.initCallbacks.push(function (popup) {
             exitIntent.init();
             document.addEventListener('exit-intent', function (e) {
-                if(!exitIntent.checkCookie()) {
+                if(!exitIntent.checkCookie() && !popup.shown) {
                     popup.show();
                     // set cookies
                     exitIntent.cookieManager.create("exit_intent", "yes", exitIntent.cookieExp, exitIntent.sessionOnly);
@@ -567,7 +567,7 @@ jQuery(function($){
             if( $(window).outerWidth() <= 768 ) {
                 dt.PopupManager.isMobile = true;
 
-                $('#heading').text('Dürfen wir Sie beraten?');
+                $('.kwp-header-text h1').text('Dürfen wir Sie beraten?');
 
                 $("body").addClass('mobile-layer');
                 $(".dt-modal").addClass('m-open');
@@ -763,9 +763,7 @@ jQuery(function($){
         dt.handleKidsAges = function () {
             (function ($, children, age) {
                 function update() {
-                    console.log(children);
                     var val = $(children).val();
-                    console.log(val);
 
                     if (val>0) {
                         $('.kwp-col-ages').addClass('kwp-show-ages');
@@ -831,7 +829,9 @@ jQuery(function($){
                         $(".rangeslider-wrapper .text").text("bis "+value+" €");
                         $("#budget").val(""+value);
                     }
-                    check_button();
+                    if(!$(".dt-modal .haserrors").length){
+                        $('.dt-modal #submit-button').removeClass('error-button');
+                    }
                 },
             });
 
