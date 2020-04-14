@@ -205,13 +205,11 @@
 
             var layer = layers[2];
 
-            if(layers.length > 1) {
-                dt.showTabs(layers);
+            dt.showTabs(layers);
 
-                dt.showCurrentTab(layer);
+            dt.showCurrentTab(layer);
 
-                dt.handleClickTabs();
-            }
+            dt.handleClickTabs();
 
             dt.fillContent(layer);
 

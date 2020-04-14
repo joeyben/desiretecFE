@@ -511,12 +511,14 @@ jQuery(function($){
         };
 
         dt.showTabs = function(layers) {
-            $.each(layers, function(index, layer) {
-                var version = layer.layer.path;
-                var li = '<li class="tab-link" data-tab="' + version + '">' + version + '</li>';
-                $(".kwp-tabs").append(li);
-            });
-            $('.kwp-tabs').show();
+            if(layers.length > 1) {
+                $.each(layers, function(index, layer) {
+                    var version = layer.layer.path;
+                    var li = '<li class="tab-link" data-tab="' + version + '">' + version + '</li>';
+                    $(".kwp-tabs").append(li);
+                });
+                $('.kwp-tabs').show();
+            }
         };
 
         dt.showCurrentTab = function(layer) {
