@@ -24,7 +24,7 @@ jQuery(function($){
     dt.popupTemplate = function (variant) {
 
         return '' +
-            '<ul class="kwp-tabs"></ul>' +
+            '<ul class="kwp-tabs" style="display: none;"></ul>' +
             '<div class="kwp-header"></div>' +
             '<div class="kwp-close-btn"><span></span><span></span></div>' +
             '<div class="kwp-body">' +
@@ -516,6 +516,7 @@ jQuery(function($){
                 var li = '<li class="tab-link" data-tab="' + version + '">' + version + '</li>';
                 $(".kwp-tabs").append(li);
             });
+            $('.kwp-tabs').show();
         };
 
         dt.showCurrentTab = function(layer) {
