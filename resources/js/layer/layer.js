@@ -567,7 +567,7 @@ jQuery(function($){
             if( $(window).outerWidth() <= 768 ) {
                 dt.PopupManager.isMobile = true;
 
-                $('#heading').text('Dürfen wir Sie beraten?');
+                $('.kwp-header-text h1').text('Dürfen wir Sie beraten?');
 
                 $("body").addClass('mobile-layer');
                 $(".dt-modal").addClass('m-open');
