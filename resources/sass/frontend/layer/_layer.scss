@@ -257,7 +257,7 @@ $gutter: 30px;
 
 // dt-modal
 .dt-modal {
-  background: #f2f2f2;
+  background: rgba(0, 0, 0, 0.5);
   position: fixed;
   display: block;
   overflow-y: scroll;
@@ -572,7 +572,9 @@ ul.kwp-form-errors {
 
 .kwp-content-extra,
 .kwp-content,
-.kwp-footer {
+.kwp-body,
+.kwp-footer,
+.kwp-tabs {
   background: #f3f0ec;
 }
 
