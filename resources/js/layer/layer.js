@@ -337,15 +337,29 @@ jQuery(function($){
             }
 
             function highlight(cnt) {
-                $('.kwp-star-input .kwp-star').each(function () {
-                    var val = parseInt($(this).attr('data-val'));
+                if($('.kwp-star-input .kwp-star').length > 0) {
+                    $('.kwp-star-input .kwp-star').each(function () {
+                        var val = parseInt($(this).attr('data-val'));
 
-                    if (val <= cnt) {
-                        $(this).addClass('kwp-star-full');
-                    } else {
-                        $(this).removeClass('kwp-star-full');
-                    }
-                });
+                        if (val <= cnt) {
+                            $(this).addClass('kwp-star-full');
+                        } else {
+                            $(this).removeClass('kwp-star-full');
+                        }
+                    });
+                } else {
+                    $('.kwp-star-input .fa-star').each(function () {
+                        var val = parseInt($(this).attr('data-val'));
+
+                        if (val <= cnt) {
+                            $(this).addClass('fas');
+                            $(this).removeClass('fal');
+                        } else {
+                            $(this).removeClass('fas');
+                            $(this).addClass('fal');
+                        }
+                    });
+                }
                 setText(cnt);
             }
 
@@ -511,7 +525,10 @@ jQuery(function($){
         };
 
         dt.showTabs = function(layers) {
-            if(layers.length > 1) {
+            var hasTabs = layers.length > 1;
+            var hasErrors = $('.hasError').length > 0 || $('.error-input').length > 0;
+
+            if(hasTabs && !hasErrors) {
                 $.each(layers, function(index, layer) {
                     var version = layer.layer.path;
                     var li = '<li class="tab-link" data-tab="' + version + '">' + version + '</li>';
@@ -549,6 +566,7 @@ jQuery(function($){
                 $('.kwp-header-dynamic h1').css({'color': '#454545'});
             } else if (layer.headline_color == 'light') {
                 $('.kwp-header-dynamic h1').css({'color': '#fff', 'text-shadow': '0 1px 0 #000'});
+                $('.kwp-close-btn span').css({'background': '#fff', 'height': '2px'});
             }
 
             if (layer.attachments !== undefined && layer.attachments.length != 0) {
@@ -557,7 +575,7 @@ jQuery(function($){
                 });
             } else {
                 $('.kwp-header-dynamic').css({
-                    'background-image': "url(https://i.imgur.com/lJInLa9.png)"
+                    'background': "url(https://i.imgur.com/lJInLa9.png) 48% 68%"
                 });
             }
 
@@ -829,7 +847,8 @@ jQuery(function($){
                         $(".rangeslider-wrapper .text").html("&nbsp;");
                         $("#budget").val("");
                     }else{
-                        $(".rangeslider-wrapper .text").text("bis "+value+" €");
+                        var currency = wl_name !== 'Lastminute' ? ' €' : ' CHF';
+                        $(".rangeslider-wrapper .text").text("bis "+value+currency);
                         $("#budget").val(""+value);
                     }
                     if(!$(".dt-modal .haserrors").length){

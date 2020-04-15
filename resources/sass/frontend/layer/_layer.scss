@@ -482,7 +482,7 @@ ul.kwp-form-errors {
   height: 15px;
   position: absolute;
   top: 10px;
-  right: 10px;
+  right: 15px;
   z-index: 9;
   &:hover {
     cursor: pointer;
@@ -1308,4 +1308,31 @@ select option:disabled {
   &.current {
     display: inherit;
   }
+}
+
+// lastminute customization
+.kwp-minimal-lastminute{
+ .kwp-row:first-child {
+   margin-bottom: 10px;
+ }
+ .direktflug {
+   position: absolute;
+   left: 0;
+   bottom: -22px;
+   display: flex;
+   align-items: center;
+   input[type="checkbox"] {
+     height: 15px;
+     margin-top: 0;
+     &:after {
+       height: 16px;
+       width: 16px;
+     }
+   }
+   span{
+     margin-top: 2px;
+     display: block;
+     margin-left: 5px;
+   }
+ }
 }

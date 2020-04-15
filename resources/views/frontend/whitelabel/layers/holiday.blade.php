@@ -282,7 +282,7 @@
     jQuery(function($){
         $(document).ready(function () {
 
-            var layer = layers[4];
+            var layer = layers.find(l => l.layer_id === 5);
 
             dt.showTabs(layers);
 

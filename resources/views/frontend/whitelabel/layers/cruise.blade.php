@@ -1,3 +1,12 @@
+<?php $class_arr = [
+    '0' => 'Innenkabine',
+    '1' => 'Außenkabine',
+    '2' => 'Balkonkabine',
+    '3' => 'Junior-Suite',
+    '4' => 'Suite',
+    '5' => 'beliebig',
+]; ?>
+
 <div id="cruise" class="tab-content">
 
     <div class="kwp-header-dynamic">
@@ -203,7 +212,7 @@
     jQuery(function($){
         $(document).ready(function () {
 
-            var layer = layers[2];
+            var layer = layers.find(l => l.layer_id === 3);
 
             dt.showTabs(layers);
 
