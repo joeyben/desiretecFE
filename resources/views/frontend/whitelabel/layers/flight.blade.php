@@ -285,7 +285,7 @@
     jQuery(function($){
         $(document).ready(function () {
 
-            var layer = layers[1];
+            var layer = layers.find(l => l.layer_id === 2);
 
             dt.showTabs(layers);
 
@@ -306,8 +306,6 @@
             dt.handleAirport();
 
             dt.handleDuration();
-
-            dt.handleTriggers();
 
             dt.hanglePax();
 

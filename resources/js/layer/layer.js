@@ -511,7 +511,10 @@ jQuery(function($){
         };
 
         dt.showTabs = function(layers) {
-            if(layers.length > 1) {
+            var hasTabs = layers.length > 1;
+            var hasErrors = $('.hasError').length > 0 || $('.error-input').length > 0;
+
+            if(hasTabs && !hasErrors) {
                 $.each(layers, function(index, layer) {
                     var version = layer.layer.path;
                     var li = '<li class="tab-link" data-tab="' + version + '">' + version + '</li>';
@@ -557,7 +560,7 @@ jQuery(function($){
                 });
             } else {
                 $('.kwp-header-dynamic').css({
-                    'background-image': "url(https://i.imgur.com/lJInLa9.png)"
+                    'background': "url(https://i.imgur.com/lJInLa9.png) 48% 68%"
                 });
             }
 
