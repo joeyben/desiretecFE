@@ -10,7 +10,7 @@
 
     <div class="kwp-middle"></div>
 
-    <div class="kwp-minimal">
+    <div class="kwp-minimal {{ $whitelabel['name'] !== 'Lastminute' ? '' : 'kwp-minimal-lastminute' }}">
         <div class="kwp-content kwp-with-expansion">
             <div class="kwp-row">
                 <div class="kwp-col-4 destination">
@@ -31,6 +31,12 @@
                     {{ Form::label('airport', trans('layer.general.airport'), ['class' => 'control-label required']) }}
                     {{ Form::text('airport', key_exists('airport', $request) ? $request['airport'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('layer.placeholder.airport'), 'required' => 'required']) }}
                     <i class="fal fa-home"></i>
+                    @if($whitelabel['name'] === 'Lastminute')
+                        <div class="direktflug ">
+                            {{ Form::checkbox('direkt_flug', null, key_exists('direkt_flug', $request) ? 'true' : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
+                            <span>Direktflug</span>
+                        </div>
+                    @endif
                     @if ($errors->any() && $errors->get('airport'))
                         @foreach ($errors->get('airport') as $error)
                             <span class="error-input">{{ $error }}</span>
@@ -222,11 +228,19 @@
 
                         <span class="text">ab 0 Sonnen</span>
                         <div class="kwp-star-input">
-                            <span class="kwp-star kwp-star-full" data-val="1"></span>
-                            <span class="kwp-star" data-val="2"></span>
-                            <span class="kwp-star" data-val="3"></span>
-                            <span class="kwp-star" data-val="4"></span>
-                            <span class="kwp-star" data-val="5"></span>
+                            @if($whitelabel['name'] !== 'Lastminute')
+                                <span class="kwp-star" data-val="1"></span>
+                                <span class="kwp-star" data-val="2"></span>
+                                <span class="kwp-star" data-val="3"></span>
+                                <span class="kwp-star" data-val="4"></span>
+                                <span class="kwp-star" data-val="5"></span>
+                            @else
+                                <span class="fas fa-star" data-val="1"></span>
+                                <span class="fas fa-star" data-val="2"></span>
+                                <span class="fas fa-star" data-val="3"></span>
+                                <span class="fal fa-star" data-val="4"></span>
+                                <span class="fal fa-star" data-val="5"></span>
+                            @endif
                         </div>
                         <script>dt.hotelStars();</script>
                     </div>
