@@ -242,7 +242,6 @@
                                 <span class="fal fa-star" data-val="5"></span>
                             @endif
                         </div>
-                        <script>dt.hotelStars();</script>
                     </div>
                 </div>
 
@@ -340,6 +339,8 @@
             dt.handleKidsAges();
 
             dt.handleBudgetRange();
+
+            dt.handleHotelStars();
 
             dt.handleErrors();
         });
