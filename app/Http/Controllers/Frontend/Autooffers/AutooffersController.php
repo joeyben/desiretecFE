@@ -23,7 +23,7 @@ class AutooffersController extends Controller implements AutooffersControllerInt
         try {
 
             $offersResponse = $this->apiService->get('/offer/list/' . $wishId);
-            dd();
+            
             $offers = $offersResponse->formatResponse('array')['data'];
 
             $wishResponse = $this->apiService->get('/wishes' . '/' . $wishId);
