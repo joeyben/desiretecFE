@@ -294,7 +294,7 @@
 
             dt.handleClickTabs();
 
-            dt.fillContent(layer);
+            dt.fillContent(layer, layers.length > 1);
 
             dt.applyBrandColor();
 

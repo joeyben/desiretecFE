@@ -491,7 +491,7 @@ jQuery(function($){
             });
         }
 
-        dt.fillContent = function(layer) {
+        dt.fillContent = function(layer, hasTabs) {
             $('.kwp-logo').css({
                 'background-image': "url(" + whitelabel.attachments.logo + ")"
             });
@@ -502,7 +502,17 @@ jQuery(function($){
                 $('.kwp-header-dynamic h1').css({'color': '#454545'});
             } else if (layer.headline_color == 'light') {
                 $('.kwp-header-dynamic h1').css({'color': '#fff', 'text-shadow': '0 1px 0 #000'});
-                $('.kwp-close-btn span').css({'background': '#fff', 'height': '2px'});
+            }
+
+            if(!hasTabs) {
+                $('.kwp-close-btn').css({'top': '15px'});
+                if (layer.headline_color == 'dark') {
+                    $('.kwp-close-btn span').css({'background': '#454545', 'height': '1.5px'});
+                } else if (layer.headline_color == 'light') {
+                    $('.kwp-close-btn span').css({'background': '#fff', 'height': '1.5px'});
+                }
+            } else {
+                $('.kwp-close-btn span').css({'background': '#454545'});
             }
 
             if (layer.attachments !== undefined && layer.attachments.length != 0) {
