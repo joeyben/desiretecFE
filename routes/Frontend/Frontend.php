@@ -43,7 +43,7 @@ Route::group(['namespace' => 'Wishes', 'as' => 'wish.'], function ($subdomain) {
 });
 
 Route::group(['namespace' => 'Autooffers', 'as' => 'autooffer.'], function ($subdomain) {
-    Route::get('offer/ttlist/{id}/{token}', 'AutooffersController@autooferToken')->name('listTt.token');
+    Route::get('offer/list/{id}/{token}', 'AutooffersController@autooferToken')->name('list.token');
 
 });
 
