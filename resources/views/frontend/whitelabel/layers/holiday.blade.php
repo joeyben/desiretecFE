@@ -255,20 +255,24 @@
             <div class="kwp-row">
                 <div class="kwp-col-12 white-col footer-col">
                     <div class="kwp-agb">
-                    @php
-                    $terms_class = 'dt_terms'
-                    @endphp
+                        @php
+                            $terms_class = 'dt_terms'
+                        @endphp
 
-                    @if ($errors->any() && $errors->get('terms'))
-                    @php
-                    $terms_class = 'dt_terms hasError'
-                    @endphp
-                        <script>
-                            dt.Tracking.rawEvent(whitelabelPrefix+'_exitwindow', 'Error on terms', '{{ $error }}');
-                        </script>
-                    @endif
+                        @if ($errors->any() && $errors->get('terms'))
+                            @php
+                                $terms_class = 'dt_terms hasError'
+                            @endphp
+                            <script>
+                                dt.Tracking.rawEvent(whitelabelPrefix+'_exitwindow', 'Error on terms', '{{ $error }}');
+                            </script>
+                        @endif
+
                         {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
-                        <p>Ich habe die <a href="{{isset($whitelabel['domain']) ? $whitelabel['domain'] : ''}}/tnb" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="{{ isset($layer_details['privacy']) ? $layer_details['privacy'] : '#'}}" target="_blank" rel="noopener noreferrer">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
+                        <p>Ich habe die
+                        <a href="#" id="agb_link" target="_blank">Teilnahmebedingungen</a> und
+                        <a href="#" id="datenschutz" target="_blank" rel="noopener noreferrer">Datenschutzrichtlinien</a>
+                        zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
                     </div>
                 </div>
             </div>

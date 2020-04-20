@@ -580,8 +580,8 @@ jQuery(function($){
             }
 
             $('.kwp-middle').text(layer.subheadline);
-            $('.datenschutz').attr('href', layer.privacy);
-            $('.agb-link').attr('href', whitelabel.domain + '/tnb');
+            $('#datenschutz').attr('href', layer.privacy);
+            $('#agb_link').attr('href', whitelabel.domain + '/tnb');
         };
 
         dt.adjustResponsive = function(){
