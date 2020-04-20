@@ -70,7 +70,7 @@ class AutooffersController extends Controller implements AutooffersControllerInt
     {
         try {
             ApiAuth::byWishToken($id, $token);
-
+            dd(current_whitelabel());
             return  redirect('offer/ttlist/' . $id);
         } catch (Exception $e) {
             return json_response_error($e);
