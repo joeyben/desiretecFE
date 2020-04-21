@@ -493,7 +493,7 @@ ul.kwp-form-errors {
     border-radius: 5px;
     position: absolute;
     top: 8px;
-    background: black;
+    background: transparent;
     z-index: 9;
     transform: rotate(45deg);
     &:nth-child(2) {
@@ -858,6 +858,7 @@ p.kwp-info {
     margin: 0;
   }
   input[type="checkbox"] {
+    position: static;
     display: block;
     margin-top: 5px;
     margin-left: 5px;
@@ -1029,6 +1030,9 @@ p.kwp-info {
       padding-left: 0;
       color: #4c4c4c;
       font-weight: bold;
+    }
+    .fa-star {
+      color: #454545;
     }
   }
   .catering {

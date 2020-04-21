@@ -314,70 +314,6 @@ jQuery(function($){
             }
         });
 
-
-        dt.hotelStars = function () {
-            function restoreValue() {
-                var val = $('#category').val();
-
-                if (!val) {
-                    val = 0;
-                }
-
-                highlight(parseInt(val));
-            }
-
-            function setValue(val) {
-                $('#category').val(val);
-                restoreValue(val);
-            }
-
-            function setText(cnt){
-                var sonnen = cnt === 1 ? "Sonne" : "Sonnen";
-                $('.kwp-star-input').parents('.kwp-form-group').find('.text').text("ab "+cnt+" "+sonnen);
-            }
-
-            function highlight(cnt) {
-                if($('.kwp-star-input .kwp-star').length > 0) {
-                    $('.kwp-star-input .kwp-star').each(function () {
-                        var val = parseInt($(this).attr('data-val'));
-
-                        if (val <= cnt) {
-                            $(this).addClass('kwp-star-full');
-                        } else {
-                            $(this).removeClass('kwp-star-full');
-                        }
-                    });
-                } else {
-                    $('.kwp-star-input .fa-star').each(function () {
-                        var val = parseInt($(this).attr('data-val'));
-
-                        if (val <= cnt) {
-                            $(this).addClass('fas');
-                            $(this).removeClass('fal');
-                        } else {
-                            $(this).removeClass('fas');
-                            $(this).addClass('fal');
-                        }
-                    });
-                }
-                setText(cnt);
-            }
-
-            $('.kwp-star-input .kwp-star').hover(function () {
-                highlight(parseInt($(this).attr('data-val')));
-            }).click(function () {
-                setValue(parseInt($(this).attr('data-val')));
-                var sonnen = parseInt($(this).attr('data-val')) === 1 ? "Sonne" : "Sonnen";
-                $('.kwp-star-input').parents('.kwp-form-group').find('.text').text("ab "+$(this).attr('data-val')+" "+sonnen);
-            });
-
-            $('.kwp-star-input').mouseout(function () {
-                restoreValue();
-            });
-
-            restoreValue();
-        };
-
         function isMobile(){
             if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
                 return true;
@@ -555,7 +491,7 @@ jQuery(function($){
             });
         }
 
-        dt.fillContent = function(layer) {
+        dt.fillContent = function(layer, hasTabs) {
             $('.kwp-logo').css({
                 'background-image': "url(" + whitelabel.attachments.logo + ")"
             });
@@ -566,7 +502,17 @@ jQuery(function($){
                 $('.kwp-header-dynamic h1').css({'color': '#454545'});
             } else if (layer.headline_color == 'light') {
                 $('.kwp-header-dynamic h1').css({'color': '#fff', 'text-shadow': '0 1px 0 #000'});
-                $('.kwp-close-btn span').css({'background': '#fff', 'height': '2px'});
+            }
+
+            if(!hasTabs) {
+                $('.kwp-close-btn').css({'top': '15px'});
+                if (layer.headline_color == 'dark') {
+                    $('.kwp-close-btn span').css({'background': '#454545', 'height': '1.5px'});
+                } else if (layer.headline_color == 'light') {
+                    $('.kwp-close-btn span').css({'background': '#fff', 'height': '1.5px'});
+                }
+            } else {
+                $('.kwp-close-btn span').css({'background': '#454545'});
             }
 
             if (layer.attachments !== undefined && layer.attachments.length != 0) {
@@ -580,8 +526,8 @@ jQuery(function($){
             }
 
             $('.kwp-middle').text(layer.subheadline);
-            $('.datenschutz').attr('href', layer.privacy);
-            $('.agb-link').attr('href', whitelabel.domain + '/tnb');
+            $('#datenschutz').attr('href', layer.privacy);
+            $('#agb_link').attr('href', whitelabel.domain + '/tnb');
         };
 
         dt.adjustResponsive = function(){
@@ -861,6 +807,84 @@ jQuery(function($){
             if(range) {
                 $('input[type="range"]').val(range).change();
             }
+        };
+
+        dt.handleHotelStars = function () {
+            var isLastminute = wl_name === 'Lastminute';
+
+            function restoreValue() {
+                var val = $('#category').val();
+                if (!val) {
+                    val = 0;
+                }
+
+                highlight(parseInt(val));
+            }
+
+            function setValue(val) {
+                $('#category').val(val);
+                restoreValue(val);
+            }
+
+            function setText(cnt){
+                if(!isLastminute) {
+                    var sonnen = cnt === 1 ? "Sonne" : "Sonnen";
+                } else {
+                    var sonnen = cnt === 1 ? "Stern" : "Sterne";
+                }
+                $('.kwp-star-input').parents('.kwp-form-group').find('.text').text("ab "+cnt+" "+sonnen);
+            }
+
+            function highlight(cnt) {
+                if(!isLastminute) {
+                    $('.kwp-star-input .kwp-star').each(function () {
+                        var val = parseInt($(this).attr('data-val'));
+
+                        if (val <= cnt) {
+                            $(this).addClass('kwp-star-full');
+                        } else {
+                            $(this).removeClass('kwp-star-full');
+                        }
+                    });
+                } else {
+                    $('.kwp-star-input .fa-star').each(function () {
+                        var val = parseInt($(this).attr('data-val'));
+
+                        if (val <= cnt) {
+                            $(this).addClass('fas');
+                            $(this).removeClass('fal');
+                        } else {
+                            $(this).removeClass('fas');
+                            $(this).addClass('fal');
+                        }
+                    });
+                }
+                setText(cnt);
+            }
+
+            if(!isLastminute) {
+                $('.kwp-star-input .kwp-star').hover(function () {
+                    highlight(parseInt($(this).attr('data-val')));
+                }).click(function () {
+                    setValue(parseInt($(this).attr('data-val')));
+                    var sonnen = parseInt($(this).attr('data-val')) === 1 ? "Sonne" : "Sonnen";
+                    $('.kwp-star-input').parents('.kwp-form-group').find('.text').text("ab "+$(this).attr('data-val')+" "+sonnen);
+                });
+            } else {
+                $('.kwp-star-input .fa-star').hover(function () {
+                    highlight(parseInt($(this).attr('data-val')));
+                }).click(function () {
+                    setValue(parseInt($(this).attr('data-val')));
+                    var sonnen = parseInt($(this).attr('data-val')) === 1 ? "Stern" : "Sterne";
+                    $('.kwp-star-input').parents('.kwp-form-group').find('.text').text("ab "+$(this).attr('data-val')+" "+sonnen);
+                });
+            }
+
+            $('.kwp-star-input').mouseout(function () {
+                restoreValue();
+            });
+
+            restoreValue();
         };
 
         dt.handleErrors = function() {

@@ -177,27 +177,31 @@
                 <div class="kwp-col-4 white-col">
                     <button id="submit-button" type="submit" class="primary-btn">Reisewunsch abschicken</button>
                 </div>
-
-
             </div>
-
         </div>
 
         <div class="kwp-footer">
             <div class="kwp-row">
-                <div class="kwp-col-12 white-col">
-                    <div class="kwp-agb ">
-                    @php
-                    $terms_class = 'dt_terms'
-                    @endphp
+                <div class="kwp-col-12 white-col footer-col">
+                    <div class="kwp-agb">
+                        @php
+                            $terms_class = 'dt_terms'
+                        @endphp
 
-                    @if ($errors->any() && $errors->get('terms'))
-                    @php
-                    $terms_class = 'dt_terms hasError'
-                    @endphp
-                    @endif
+                        @if ($errors->any() && $errors->get('terms'))
+                            @php
+                                $terms_class = 'dt_terms hasError'
+                            @endphp
+                            <script>
+                                dt.Tracking.rawEvent(whitelabelPrefix+'_exitwindow', 'Error on terms', '{{ $error }}');
+                            </script>
+                        @endif
+
                         {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
-                        <p>Ich habe die <a href="/tnb" id="agb_link" target="_blank">Teilnahmebedingungen</a> und <a id="datenschutz" href="https://www.kreuzfahrtberatung.de/datenschutz.html" target="_blank">Datenschutzrichtlinien</a> zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
+                        <p>Ich habe die
+                        <a href="#" id="agb_link" target="_blank">Teilnahmebedingungen</a> und
+                        <a href="#" id="datenschutz" target="_blank" rel="noopener noreferrer">Datenschutzrichtlinien</a>
+                        zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
                     </div>
                 </div>
             </div>
@@ -220,7 +224,7 @@
 
             dt.handleClickTabs();
 
-            dt.fillContent(layer);
+            dt.fillContent(layer, layers.length > 1);
 
             dt.applyBrandColor();
 
