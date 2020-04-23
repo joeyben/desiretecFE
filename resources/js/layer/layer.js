@@ -404,7 +404,7 @@ jQuery(function($){
                 maxTags: 3,
                 maxChars: 20,
                 allowDuplicates: false,
-                typeaheadjs: {
+                typeahead: {
                     autoSelect: false,
                     minLength: 3,
                     highlight: true,
@@ -425,7 +425,7 @@ jQuery(function($){
                 maxTags: 3,
                 maxChars: 20,
                 allowDuplicates: false,
-                typeaheadjs: {
+                typeahead: {
                     autoSelect: false,
                     minLength: 3,
                     highlight: true,
