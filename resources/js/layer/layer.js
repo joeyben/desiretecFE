@@ -446,7 +446,7 @@ jQuery(function($){
             var currentLocation = window.location.href;
 
             $.each(layers, function(index, layer) {
-                if(layer.domain == currentLocation) {
+                if(layer.layer_url.replace(/\/$/, '') == currentLocation.replace(/\/$/, '')) {
                     dt.PopupManager.version = layer.layer.path;
                     matchDomains = true;
                     return;
