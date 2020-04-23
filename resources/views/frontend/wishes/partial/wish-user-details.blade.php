@@ -4,7 +4,7 @@
 
 <div class="col-md-12 s2-second">
 
-    @if($wish->wishDetails->airport)
+    @if($wish->wishDetails->airport !== '-')
     <div class="col-md-3">
         <i class="fal fa-plane-departure"></i>
         <div id="departure-mousehover-value" class="data-content ellipsised">{{ $wish->wishDetails->airport }}</div>
@@ -56,7 +56,7 @@
     @if($wish->wishDetails->rooms)
     <div class="col-md-3">
         <i class="fal fa-door-closed"></i>
-        <input class="data-content" value="{{ trans_choice('labels.frontend.wishes.rooms', $wish->wishDetails->rooms) }}">
+        <input class="data-content" value="{{ $wish->wishDetails->rooms }}">
     </div>
     @endif
     @if($wish->wishDetails->pets)
