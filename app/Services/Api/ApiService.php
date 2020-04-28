@@ -26,6 +26,7 @@ class ApiService implements ApiServiceInterface
         $this->setHeader('Content-type', 'application/json');
         $this->setAuthorization(resolve('token'));
         $this->setHeader('c-agent', session()->get('c-agent', null));
+        $this->setHeader('wl-id', session()->get('wl-id', null));
     }
 
     public function setHeader(string $key, string $value = null): self
@@ -64,6 +65,7 @@ class ApiService implements ApiServiceInterface
     {
         $this->setAuthorization(resolve('token'));
         $this->setHeader('c-agent', session()->get('c-agent', null));
+        $this->setHeader('wl-id', session()->get('wl-id', null));
 
         $this->response = $this->client->get($this->apiUrl . $endpoint . '?' . http_build_query($data),
             [
