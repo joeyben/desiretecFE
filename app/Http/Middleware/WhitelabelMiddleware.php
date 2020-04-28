@@ -22,8 +22,11 @@ class WhitelabelMiddleware
         $subDomain = self::getSubDomain();
 
         try {
+            Cache::flush();
             Cache::rememberForever(static::getCacheKey($subDomain), function () use ($subDomain) {
                 $api = resolve(ApiService::class);
+                $whitelabel = $api->getWlInfo($subDomain);
+                session()->put('wl-id', $whitelabel->id);
                 return $api->getWlInfo($subDomain);
             });
         } catch (\Exception $e) {
