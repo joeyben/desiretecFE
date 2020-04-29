@@ -236,10 +236,9 @@ class FrontendController extends Controller
     public function getAllDestinations()
     {
         $whitelabel = current_whitelabel();
-
-        if ($whitelabel->traffics)
+        if ($whitelabel['traffics'])
             $response = $this->apiService->get('/destinations');
-        elseif ($whitelabel->tt)
+        elseif ($whitelabel['tt'])
             $response = $this->apiService->get('/ttdestinations');
         else
             $response = $this->apiService->get('/destinations');
@@ -253,9 +252,9 @@ class FrontendController extends Controller
     {
         $whitelabel = current_whitelabel();
 
-        if ($whitelabel->traffics)
+        if ($whitelabel['traffics'])
             $response = $this->apiService->get('/airports');
-        elseif ($whitelabel->tt)
+        elseif ($whitelabel['tt'])
             $response = $this->apiService->get('/ttairports');
         else
             $response = $this->apiService->get('/airports');
