@@ -291,10 +291,13 @@
         $(document).ready(function(){
             $('.about-section h3 a').css({'color': brandColor});
             $('.listed-offers-section .vertical-line').css({'background-color': brandColor});
-            $('.fas.fa-heart, .fal.fa-check, .offers .fulfill span, .fas.fa-map-marker-alt, .offers .slick-slider i').css({'color': brandColor});
+            $('.fas.fa-heart, .fal.fa-check, .offers .fulfill span, .fas.fa-map-marker-alt').css({'color': brandColor});
             $('.offers .recommandations .average').css({'border-color': brandColor});
             $('.offers .label').css({'color': brandColor});
-            $('head').append('<style> progress::-webkit-progress-value { background: ' + brandColor + ' !important; } </style>');
+            $('head').append('<style>' +
+                'progress::-webkit-progress-value { background: ' + brandColor + ' !important; } ' +
+                '.offers .slick-slider i { color: ' + brandColor + '; }' +
+                '</style>');
 
             if($('.offers .info-icons').length === 0) {
                 $('.offers .highlights').css({'padding-bottom': '15px'});
