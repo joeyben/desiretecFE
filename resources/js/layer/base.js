@@ -347,10 +347,6 @@ jQuery(function($) {
             this.popup.find('#submit-button').click($.proxy(this.onFormSubmit, this));
             this.popup.find('#next-button').click($.proxy(this.setNext, this));
             this.popup.find('.kwp-close-btn').click($.proxy(this.closePopup, this));
-
-            if($(".kwp-content").hasClass('kwp-completed')){
-                $(".kwp-header").hide();
-            }
         },
         showPopup: function() {
             var self = this;

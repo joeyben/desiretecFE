@@ -199,22 +199,17 @@ class FrontendController extends Controller
         $data = $request->all();
         $data['whitelabel_id'] = $whitelabel['id'];
         $data['title'] = "&nbsp;";
+
         try {
             $response = $this->apiService->get('/wish/store', $data);
-            $headline_success = trans('layer.success.headline');
-            $subheadline_success = trans('layer.success.subheadline');
-            if(!empty($whitelabel['layers'][0]) && !is_null($whitelabel['layers'][0])){
-                $headline_success = $whitelabel['layers'][0]['headline_success'];
-                $subheadline_success = $whitelabel['layers'][0]['subheadline_success'];
-            }
+
             $external = (strpos($host, 'travelwishservice.com') === false &&
                 strpos($host, 'reise-wunsch.de') === false &&
                 strpos($host, 'wish-service.com') === false) ? '' : '_WL';
-            
+
             $html = view('frontend.whitelabel.created')->with([
-                'headline_success'       => $headline_success,
-                'subheadline_success'    => $subheadline_success,
-                'whitelabel_name'        => $whitelabel['name'].$external
+                'whitelabel_name'        => $whitelabel['name'].$external,
+                'layers'                 => $whitelabel['layers'],
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);
