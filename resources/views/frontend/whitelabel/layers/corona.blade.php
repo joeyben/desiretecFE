@@ -1,5 +1,5 @@
 @php
-    $layerName = 'holiday';
+    $layerName = 'corona';
 @endphp
 
 <div id="{{ $layerName }}" class="tab-content">
@@ -12,12 +12,9 @@
 
     {{ Form::open() }}
 
-    {{ Form::hidden('airport', '-') }}
-    {{ Form::hidden('category', 0) }}
-
     <div class="kwp-middle"></div>
 
-    <div class="kwp-minimal">
+    <div class="kwp-minimal {{ $whitelabel['name'] !== 'Lastminute' ? '' : 'kwp-minimal-lastminute' }}">
         <div class="kwp-content kwp-with-expansion">
             <div class="kwp-row">
                 <div class="kwp-col-4 destination">
@@ -34,6 +31,75 @@
                     @endif
                 </div>
 
+                <div class="kwp-col-4 airport">
+                    {{ Form::label('airport', trans('layer.general.airport'), ['class' => 'control-label required']) }}
+                    {{ Form::text('airport', key_exists('airport', $request) ? $request['airport'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('layer.placeholder.airport'), 'required' => 'required']) }}
+                    <i class="fal fa-home"></i>
+                    @if($whitelabel['name'] === 'Lastminute')
+                        <div class="direktflug ">
+                            {{ Form::checkbox('direkt_flug', null, key_exists('direkt_flug', $request) ? 'true' : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
+                            <span>Direktflug</span>
+                        </div>
+                    @endif
+                    @if ($errors->any() && $errors->get('airport'))
+                        @foreach ($errors->get('airport') as $error)
+                            <span class="error-input">{{ $error }}</span>
+                            <script>
+                                dt.Tracking.rawEvent(whitelabelPrefix+'_exitwindow', 'Error on airport', '{{ $error }}');
+                            </script>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+
+            <div class="kwp-row">
+                <div class="kwp-col-4 duration-col main-col">
+                    <div class="kwp-form-group duration-group duration-group">
+                        <label for="duration-time" class="required">{{ trans('layer.general.duration') }}</label>
+                        <span class="duration-time duration-time dd-trigger">
+                            <span class="txt">15.11.2018 - 17.06.2019, 1 Woche</span>
+                            <i class="fal fa-calendar-alt not-triggered"></i>
+                            <i class="fal fa-times triggered"></i>
+                        </span>
+                        <div class="duration-more duration-more">
+                            <div class="kwp-col-4">
+                                {{ Form::label('earliest_start', trans('layer.general.earliest_start'), ['class' => 'control-label required']) }}
+                                {{ Form::text('earliest_start', key_exists('earliest_start', $request) ? $request['earliest_start'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.general.earliest_start'), 'required' => 'required', 'readonly']) }}
+                                @if ($errors->any() && $errors->get('earliest_start'))
+                                    @foreach ($errors->get('earliest_start') as $error)
+                                        <span class="error-input">{{ $error }}</span>
+                                        <script>
+                                            dt.Tracking.rawEvent(whitelabelPrefix+'_exitwindow', 'Error on earliest_start', '{{ $error }}');
+                                        </script>
+                                    @endforeach
+                                @endif
+                            </div>
+                            <div class="kwp-col-4">
+                                {{ Form::label('latest_return', trans('layer.general.latest_return'), ['class' => 'control-label required']) }}
+                                {{ Form::text('latest_return', key_exists('latest_return', $request) ? $request['latest_return'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.general.latest_return'), 'required' => 'required', 'readonly']) }}
+                                @if ($errors->any() && $errors->get('latest_return'))
+                                    @foreach ($errors->get('latest_return') as $error)
+                                        <span class="error-input">{{ $error }}</span>
+                                        <script>
+                                            dt.Tracking.rawEvent(whitelabelPrefix+'_exitwindow', 'Error on latest_return', '{{ $error }}');
+                                        </script>
+                                    @endforeach
+                                @endif
+                            </div>
+                            <div class="kwp-col-12">
+                                {{ Form::label('duration', trans('layer.general.duration'), ['class' => 'control-label required']) }}
+                                <div class="kwp-custom-select">
+                                    {{ Form::select('duration', array_merge(['0' => trans('layer.general.duration_init')], $duration_arr), key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="kwp-col-12 button">
+                                <a href="#">OK</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="kwp-col-4 pax-col main-col">
                     <div class="kwp-form-group pax-group">
                         <label for="travelers" class="required">{{ trans('whitelabel.layer.general.pax') }}</label>
@@ -46,7 +112,7 @@
                             <div class="kwp-col-12">
                                 {{ Form::label('adults', trans('layer.general.adults'), ['class' => 'control-label required']) }}
                                 <div class="kwp-custom-select">
-                                    {{ Form::select('adults', $adults_arr , key_exists('adults', $request) ? $request['adults'] : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
+                                    {{ Form::select('adults', $adults_arr, key_exists('adults', $request) ? $request['adults'] : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
                                 </div>
                                 <i class="fal fa-users"></i>
                             </div>
@@ -121,16 +187,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="kwp-col-12">
-                                {{ Form::label('pets', trans('layer.general.pets'), ['class' => 'control-label required']) }}
-                                <div class="kwp-custom-select">
-                                    {{ Form::select('pets', $pets_arr, key_exists('pets', $request) ? $request['pets'] : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
-                                </div>
-                                <i class="fal fa-dog-leashed"></i>
-                            </div>
-
-                            <hr>
-
                             <div class="kwp-col-12 button">
                                 <a href="#">OK</a>
                             </div>
@@ -157,72 +213,48 @@
                         @endif
                     </div>
                 </div>
-
             </div>
 
             <div class="kwp-row">
+                <div class="kwp-col-3 rangeslider-wrapper">
+                    <div class="kwp-form-group ">
+                        {{ Form::label('budget', trans('layer.general.budget'), ['class' => 'control-label required']) }}
+                        {{ Form::number('budget', key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size hidden', 'placeholder' => trans('layer.placeholder.budget'), 'required' => 'required']) }}
+                    </div>
+                    <span class="text">&nbsp;</span>
+                    <input type="range" min="100" max="10000" value="50"  step="50" id="budgetRange">
+                </div>
 
-                <div class="kwp-col-4 duration-col main-col">
-                    <div class="kwp-form-group duration-group duration-group">
-                        <label for="duration-time" class="required">{{ trans('layer.general.duration') }}</label>
-                        <span class="duration-time duration-time dd-trigger">
-                            <span class="txt">15.11.2018 - 17.06.2019, 1 Woche</span>
-                            <i class="fal fa-calendar-alt not-triggered"></i>
-                            <i class="fal fa-times triggered"></i>
-                        </span>
-                        <div class="duration-more duration-more">
-                            <div class="kwp-col-4">
-                                {{ Form::label('earliest_start', trans('layer.general.earliest_start'), ['class' => 'control-label required']) }}
-                                {{ Form::text('earliest_start', key_exists('earliest_start', $request) ? $request['earliest_start'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.general.earliest_start'), 'required' => 'required', 'readonly']) }}
-                                @if ($errors->any() && $errors->get('earliest_start'))
-                                    @foreach ($errors->get('earliest_start') as $error)
-                                        <span class="error-input">{{ $error }}</span>
-                                        <script>
-                                            dt.Tracking.rawEvent(whitelabelPrefix+'_exitwindow', 'Error on earliest_start', '{{ $error }}');
-                                        </script>
-                                    @endforeach
-                                @endif
-                            </div>
-                            <div class="kwp-col-4">
-                                {{ Form::label('latest_return', trans('layer.general.latest_return'), ['class' => 'control-label required']) }}
-                                {{ Form::text('latest_return', key_exists('latest_return', $request) ? $request['latest_return'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.general.latest_return'), 'required' => 'required', 'readonly']) }}
-                                @if ($errors->any() && $errors->get('latest_return'))
-                                    @foreach ($errors->get('latest_return') as $error)
-                                        <span class="error-input">{{ $error }}</span>
-                                        <script>
-                                            dt.Tracking.rawEvent(whitelabelPrefix+'_exitwindow', 'Error on latest_return', '{{ $error }}');
-                                        </script>
-                                    @endforeach
-                                @endif
-                            </div>
-                            <div class="kwp-col-12">
-                                {{ Form::label('duration', trans('layer.general.duration'), ['class' => 'control-label required']) }}
-                                <div class="kwp-custom-select">
-                                    {{ Form::select('duration', array_merge(['0' => trans('layer.general.duration_init')], $duration_arr), key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
-                                </div>
-                            </div>
-                            <div class="clearfix"></div>
-                            <div class="kwp-col-12 button">
-                                <a href="#">OK</a>
-                            </div>
+                <div class="kwp-col-3 stars">
+                    <div class="kwp-form-group">
+                        {{ Form::label('category', trans('layer.general.category'), ['class' => 'control-label required']) }}
+                        {{ Form::number('category', key_exists('category', $request) ? $request['category'] : 3, ['class' => 'form-control box-size hidden', 'placeholder' => trans('layer.placeholder.category')]) }}
+
+                        <span class="text">ab 0 Sonnen</span>
+                        <div class="kwp-star-input">
+                            @if($whitelabel['name'] !== 'Lastminute')
+                                <span class="kwp-star" data-val="1"></span>
+                                <span class="kwp-star" data-val="2"></span>
+                                <span class="kwp-star" data-val="3"></span>
+                                <span class="kwp-star" data-val="4"></span>
+                                <span class="kwp-star" data-val="5"></span>
+                            @else
+                                <span class="fas fa-star" data-val="1"></span>
+                                <span class="fas fa-star" data-val="2"></span>
+                                <span class="fas fa-star" data-val="3"></span>
+                                <span class="fal fa-star" data-val="4"></span>
+                                <span class="fal fa-star" data-val="5"></span>
+                            @endif
                         </div>
                     </div>
                 </div>
 
-                <div class="kwp-col-4 budget">
-                    <div class="kwp-form-group ">
-                        {{ Form::label('budget', 'Mietpreis', ['class' => 'control-label required']) }}
-                        {{ Form::number('budget', key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size', 'placeholder' => 'Ihr max. Gesamtbudget', 'required' => 'required', 'min' => '1', 'oninput' => 'validity.valid||(value="");']) }}
-                        <i class="fal fa-euro-sign"></i>
-                        @if ($errors->any() && $errors->get('budget'))
-                            @foreach ($errors->get('budget') as $error)
-                                <span class="error-input">{{ $error }}</span>
-                                <script>
-                                    dt.Tracking.rawEvent(whitelabelPrefix+'_exitwindow', 'Error on budget', '{{ $error }}');
-                                </script>
-                            @endforeach
-                        @endif
+                <div class="kwp-col-3 catering">
+                    {{ Form::label('catering', trans('layer.general.catering'), ['class' => 'control-label required']) }}
+                    <div class="kwp-custom-select">
+                        {{ Form::select('catering', $catering_arr, key_exists('catering', $request) ? $request['catering'] : null,['class' => 'custom-select']) }}
                     </div>
+                    <i class="far fa-chevron-down"></i>
                 </div>
             </div>
 
@@ -238,7 +270,7 @@
                 <div class="kwp-col-4 email-col">
                     {{ Form::label('email', trans('layer.general.email'), ['class' => 'control-label']) }}
                     {{ Form::text('email', key_exists('email', $request) ? $request['email'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.placeholder.email'), 'required' => 'required']) }}
-                    <i class="master-icon--mail"></i>
+                    <i class="fal fa-envelope"></i>
                     <div class="kwp-form-email-hint"></div>
                     @if ($errors->any() && $errors->get('email'))
                         @foreach ($errors->get('email') as $error)
@@ -249,6 +281,7 @@
                         @endforeach
                     @endif
                 </div>
+
                 <div class="kwp-col-4 white-col submit-col">
                     <button id="submit-button" type="submit" class="submit-button primary-btn">Reisewunsch abschicken</button>
                 </div>
@@ -282,6 +315,7 @@
             </div>
         </div>
     </div>
+
     {{ Form::close() }}
 
 </div>
@@ -310,6 +344,8 @@
 
             dt.handleDestination();
 
+            dt.handleAirport();
+
             dt.handleDuration();
 
             dt.hanglePax();
@@ -317,6 +353,8 @@
             dt.handleKidsAges();
 
             dt.handleBudgetRange();
+
+            dt.handleHotelStars();
 
             dt.handleErrors();
         });

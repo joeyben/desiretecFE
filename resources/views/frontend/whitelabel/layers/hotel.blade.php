@@ -1,4 +1,8 @@
-<div id="hotel" class="tab-content">
+@php
+    $layerName = 'hotel';
+@endphp
+
+<div id="{{ $layerName }}" class="tab-content">
 
     <div class="kwp-header-dynamic">
         <div class="kwp-color-overlay"></div>
@@ -269,11 +273,13 @@
     jQuery(function($){
         $(document).ready(function () {
 
-            var layer = layers.find(l => l.layer_id === 4);
+            var layerName = @json($layerName);
+
+            var layer = layers.find(l => l.layer.path === layerName);
 
             dt.showTabs(layers);
 
-            dt.showCurrentTab(layer);
+            dt.showCurrentTab(layerName);
 
             dt.handleClickTabs();
 
