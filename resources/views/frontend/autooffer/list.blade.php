@@ -250,15 +250,11 @@
                                         $tourOperators = getWhitelabelInfo()['tourOperators'];
                                         $duration = (int)$offer['data']['travelDate']['duration'] - 1;
                                     @endphp
-                                    @if (getWhitelabelInfo()['id'] === 159)
-                                        <a class="btn btn-primary" target="_blank" href="https://ibe.traffics.de/1100000160000000/pauschalreise/angebote?giataIdList={{ $offer['hotel_data']['hotel']['giata']['hotelId'] }}&tourOperator={{ $offer['hotel_data']['hotel']['tourOperator']['code'] }}&roomTypeList=&minPricePerPerson={{ $offer['data']['personPrice']['value'] }}&searchDate={{ $hin }}%2C{{ $zu }}%2C{{ $duration }}&minBoardType={{ $offer['data']['hotelOffer']['boardType']['code'] }}&inclusiveList=&adults={{ $wish->adults }}{{ $kids }}&departureAirportList={{ $offer['data']['flightOffer']['flight']['departureAirport']['code'] }}&destinationName={{ $wish->destination }}&regionList={{ $offer['data']['hotelOffer']['hotel']['location']['region']['code'] }}&ref=desiretec">
-                                            <i class="fas fa-chevron-right"></i>
-                                        </a>
-                                    @else
-                                    <a class="btn btn-primary" target="_blank" href="https://reisen.bild.de/buchen/?hotellist={{ $offer['hotel_data']['hotel']['giata']['hotelId'] }}&tourOperator={{ $offer['hotel_data']['hotel']['tourOperator']['code'] }}&productType=pauschal&searchDate={{ $hin }}%2C{{ $zu }}%2C{{ $offer['data']['travelDate']['duration'] }}&hotellist=&regionlist={{ $offer['data']['hotelOffer']['hotel']['location']['region']['code'] }}&departureairportlist={{ $offer['data']['flightOffer']['flight']['departureAirport']['code'] }}&inclusiveList=&keywordList=&tourOperatorList={{ $tourOperators }}&sortBy=price&sortDir=up&navigationStart=1%2C10&navigationOffer=1%2C10&navigationHotel=1%2C10&partnerIdent=bildreisen%2F&action=hoteldetail&filterdest=hotel&maxPricePerPerson={{ $offer['data']['personPrice']['value'] }}&destinationName={{ $wish->destination }}&departureName={{ $wish->airport }}&adults={{ $wish->adults }}{{ $kids }}&minCategory={{ $wish->category }}&recommendation=&roomTypeList=&boardTypeList={{ $offer['data']['hotelOffer']['boardType']['code'] }}&inclusiveListSel=&ref=desiretec">
+
+                                    <a class="btn btn-primary" target="_blank" href="https://ibe.traffics.de/1100001250000000/pauschalreise/angebote?giataIdList={{ $offer['hotel_data']['hotel']['giata']['hotelId'] }}&tourOperator={{ $offer['hotel_data']['hotel']['tourOperator']['code'] }}&roomTypeList=&minPricePerPerson={{ $offer['data']['personPrice']['value'] }}&searchDate={{ $hin }}%2C{{ $zu }}%2C{{ $duration }}&minBoardType={{ $offer['data']['hotelOffer']['boardType']['code'] }}&inclusiveList=&adults={{ $wish->adults }}{{ $kids }}&departureAirportList={{ $offer['data']['flightOffer']['flight']['departureAirport']['code'] }}&destinationName={{ $wish->destination }}&regionList={{ $offer['data']['hotelOffer']['hotel']['location']['region']['code'] }}&ref=desiretec">
                                         <i class="fas fa-chevron-right"></i>
                                     </a>
-                                    @endif
+
                                 </div>
 
                             </div>
