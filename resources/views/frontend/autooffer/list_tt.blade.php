@@ -284,43 +284,37 @@
 @endsection
 
 @section('after-scripts')
-
-    <!-- jquery -->
-    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAE60OtWg7HL-wqOpGHcRGAD6HpYzAh6t4"></script>
-
-    <!-- sllick slider -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.slick/1.5.5/slick.min.js"></script>
-
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAE60OtWg7HL-wqOpGHcRGAD6HpYzAh6t4"></script>
 
     <script type="application/javascript">
 
         $(document).ready(function(){
-
-            $('.btn-primary').css({
-                'background': brandColor,
-                'border': '1px solid ' + brandColor,
-                'color': '#fff',
-            });
-            $('.btn-secondary').css({
-                'background': '#fff',
-                'border': '1px solid ' + brandColor,
-                'color': brandColor,
-            });
             $('.about-section h3 a').css({'color': brandColor});
             $('.listed-offers-section .vertical-line').css({'background-color': brandColor});
-            $('.fas.fa-heart, .fal.fa-check, .offers .fulfill span, .fas.fa-map-marker-alt, .offers .slick-slider i').css({'color': brandColor});
+            $('.fas.fa-heart, .fal.fa-check, .offers .fulfill span, .fas.fa-map-marker-alt').css({'color': brandColor});
             $('.offers .recommandations .average').css({'border-color': brandColor});
             $('.offers .label').css({'color': brandColor});
-            $('head').append('<style> progress::-webkit-progress-value { background: ' + brandColor + ' !important; } </style>');
+            $('head').append('<style>' +
+                'progress::-webkit-progress-value { background: ' + brandColor + ' !important; } ' +
+                '.offers .slick-slider i { color: ' + brandColor + '; }' +
+                '</style>');
 
             if($('.offers .info-icons').length === 0) {
                 $('.offers .highlights').css({'padding-bottom': '15px'});
             }
-        });
 
-        $(function() {
+            $('.slick-slider').slick({
+                dots: false,
+                infinite: true,
+                speed: 300,
+                slidesToShow: 1,
+                prevArrow: '<div class="btn arrow-left"><i class="fa fa-chevron-left"></i></div>',
+                nextArrow: '<div class="btn arrow-right"><i class="fa fa-chevron-right"></i></div>'
+            });
+
+            $('[data-toggle="tooltip"]').tooltip();
+
             $('.ellipsised').each(function() {
                 var isEllipsisActive = $(this)[0].offsetWidth < $(this)[0].scrollWidth;
                 if(!isEllipsisActive) {
@@ -339,21 +333,7 @@
             $('#offer-highlights').detach().appendTo('#main-offer-section-shell');
             $('#offer-highlights').css('height', '210px');
             $('#offer-highlights').toggle();
-
-            // TODO: Fix animation
-            // $('#offer-highlights').animate({
-            //     height: '180px'
-            // }, 500);
         }
-
-        $('.slick-slider').slick({
-            dots: false,
-            infinite: true,
-            speed: 300,
-            slidesToShow: 1,
-            prevArrow: '<div class="btn arrow-left"><i class="fa fa-chevron-left"></i></div>',
-            nextArrow: '<div class="btn arrow-right"><i class="fa fa-chevron-right"></i></div>'
-        });
 
     </script>
 
