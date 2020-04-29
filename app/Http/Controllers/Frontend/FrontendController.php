@@ -230,7 +230,14 @@ class FrontendController extends Controller
 
     public function getAllDestinations()
     {
-        $response = $this->apiService->get('/destinations');
+        $whitelabel = current_whitelabel();
+
+        if ($whitelabel->traffics)
+            $response = $this->apiService->get('/destinations');
+        elseif ($whitelabel->tt)
+            $response = $this->apiService->get('/ttdestinations');
+        else
+            $response = $this->apiService->get('/destinations');
 
         $destinations = $response->formatResponse('array');
 
@@ -239,7 +246,14 @@ class FrontendController extends Controller
 
     public function getAllAirports(Request $request)
     {
-        $response = $this->apiService->get('/airports');
+        $whitelabel = current_whitelabel();
+
+        if ($whitelabel->traffics)
+            $response = $this->apiService->get('/airports');
+        elseif ($whitelabel->tt)
+            $response = $this->apiService->get('/ttairports');
+        else
+            $response = $this->apiService->get('/airports');
 
         $airports = $response->formatResponse('array');
 
