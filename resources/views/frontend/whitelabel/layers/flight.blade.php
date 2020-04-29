@@ -1,12 +1,16 @@
-<?php $kids_arr = [
-    '0' => '0 Kinder (0-11 Jahre)',
-    '1' => '1 Kind',
-    '2' => '2 Kinder',
-    '3' => '3 Kinder',
-    '4' => '4 Kinder',
-]; ?>
+@php
+    $layerName = 'flight';
 
-<div id="flight" class="tab-content">
+    $kids_arr = [
+        '0' => '0 Kinder (0-11 Jahre)',
+        '1' => '1 Kind',
+        '2' => '2 Kinder',
+        '3' => '3 Kinder',
+        '4' => '4 Kinder',
+    ];
+@endphp
+
+<div id="{{ $layerName }}" class="tab-content">
 
     <div class="kwp-header-dynamic">
         <div class="kwp-color-overlay"></div>
@@ -289,11 +293,13 @@
     jQuery(function($){
         $(document).ready(function () {
 
-            var layer = layers.find(l => l.layer_id === 2);
+            var layerName = @json($layerName);
+
+            var layer = layers.find(l => l.layer.path === layerName);
 
             dt.showTabs(layers);
 
-            dt.showCurrentTab(layer);
+            dt.showCurrentTab(layerName);
 
             dt.handleClickTabs();
 

@@ -449,12 +449,12 @@ jQuery(function($){
                 if(layer.layer_url.replace(/\/$/, '') == currentLocation.replace(/\/$/, '')) {
                     dt.PopupManager.version = layer.layer.path;
                     matchDomains = true;
-                    return;
+                    return false;
                 }
             });
 
             if(!matchDomains) {
-                dt.PopupManager.version = 'package';
+                dt.PopupManager.version = layers[0].layer.path;
             }
 
             dt.PopupManager.show();
@@ -474,12 +474,11 @@ jQuery(function($){
             }
         };
 
-        dt.showCurrentTab = function(layer) {
+        dt.showCurrentTab = function(layerName) {
             $('.kwp-tabs li').removeClass('current');
             $('.tab-content').removeClass('current');
-            var version = layer.layer.path;
-            $('[data-tab=' + version + ']').addClass('current');
-            $("#" + version).addClass('current');
+            $('[data-tab=' + layerName + ']').addClass('current');
+            $("#" + layerName).addClass('current');
         };
 
         dt.handleClickTabs = function() {
