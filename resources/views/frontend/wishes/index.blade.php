@@ -42,7 +42,6 @@
                     <div class="main-info">
                         <ul class="info">
                             <li><i class="icon_pin"></i><span class="value">@{{ wish.destination }}</span></li>
-                            <?php dd($wish); ?>
                             @if($wish['airport'] !== '-')
                                 <li><i class="fa fa-plane"></i><span class="value">@{{ wish.airport }}</span></li>
                             @endif
