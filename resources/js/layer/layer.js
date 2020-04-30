@@ -388,10 +388,25 @@ jQuery(function($){
         }
 
         dt.applyBrandColor = function () {
-            $('.kwp .primary-btn, .kwp .pax-more .button a, .kwp .duration-more .button a').css({
+            var buttons = $('.kwp .primary-btn, .kwp .pax-more .button a, .kwp .duration-more .button a');
+            buttons.css({
                 'background': brandColor,
                 'border': '1px solid ' + brandColor,
                 'color': '#fff',
+            });
+            buttons.hover(function(){
+                $(this).css({
+                    'background': '#fff',
+                    'border': '1px solid ' + brandColor,
+                    'color': brandColor,
+                    'transition': 'all 0.3s',
+                });
+            }, function() {
+                $(this).css({
+                    'background': brandColor,
+                    'border': '1px solid ' + brandColor,
+                    'color': '#fff',
+                });
             });
 
             $(".kwp-color-overlay").css('background-color', brandColor);

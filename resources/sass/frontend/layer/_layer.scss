@@ -143,7 +143,7 @@ $gutter: 30px;
     border-radius: 3px;
     text-align: center;
     color: #fff;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: normal;
     display: block;
     width: 100%;
@@ -346,7 +346,7 @@ $gutter: 30px;
         a {
           width: 100%;
           padding: 10px;
-          font-size: 18px;
+          font-size: 16px;
           display: block;
           border-radius: 3px;
           text-align: center;
@@ -422,9 +422,6 @@ $gutter: 30px;
             &:last-child {
               margin-right: 0px;
             }
-            select {
-              // text-indent: 10px;
-            }
           }
         }
       }
@@ -434,7 +431,7 @@ $gutter: 30px;
         a {
           width: 100%;
           padding: 10px;
-          font-size: 18px;
+          font-size: 16px;
           display: block;
           border-radius: 3px;
           text-align: center;
