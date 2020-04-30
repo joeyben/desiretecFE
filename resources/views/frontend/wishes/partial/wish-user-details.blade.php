@@ -14,15 +14,19 @@
         </div>
     </div>
     @endif
+    @if($wish->wishDetails->earliest_start !== '-' && $wish->wishDetails->latest_return !== '-')
     <div class="col-md-3">
         <i class="fal fa-calendar-alt"></i>
         <input class="data-content" value="{{ \Carbon\Carbon::parse($wish->wishDetails->earliest_start)->format('d.m.Y') }} - {{ \Carbon\Carbon::parse($wish->wishDetails->latest_return)->format('d.m.Y') }}">
     </div>
+    @endif
+    @if($wish->wishDetails->budget !== 0)
     <div class="col-md-3">
         <i class="fal fa-usd-circle"></i>
         <input class="data-content" value="{{  number_format($wish->wishDetails->budget, 0, ',', '.') }}€">
     </div>
-    @if($wish->wishDetails->category)
+    @endif
+    @if($wish->wishDetails->category !== 0)
     <div class="col-md-3">
         <i class="fal fa-star"></i>
         <input class="data-content" value="{{ $wish->wishDetails->category }} {{ trans_choice('labels.frontend.wishes.stars', $wish->wishDetails->category) }}">
