@@ -42,10 +42,11 @@
                     <div class="main-info">
                         <ul class="info">
                             <li><i class="icon_pin"></i><span class="value">@{{ wish.destination }}</span></li>
-                            @if($wish->wishDetails->airport !== '-')
+                            <?php dd($wish); ?>
+                            @if($wish['airport'] !== '-')
                                 <li><i class="fa fa-plane"></i><span class="value">@{{ wish.airport }}</span></li>
                             @endif
-                            @if($wish->wishDetails->earliest_start !== '-' && $wish->wishDetails->latest_return !== '-')
+                            @if($wish['earliest_start'] !== '-' && $wish['latest_return'] !== '-')
                                 <li><i class="icon_calendar"></i><span class="value">@{{ wish.earliest_start | moment("DD.MM.YYYY") }}</span> bis <span class="value">@{{ wish.latest_return | moment("DD.MM.YYYY") }}</span></li>
                             @endif
                             <li><i class="icon_hourglass"></i><span class="value">@{{ wish.duration }}</span></li>
