@@ -22,8 +22,8 @@
 
     {{ Form::open() }}
 
-    {{ Form::hidden('budget', 0) }}
     {{ Form::hidden('airport', '-') }}
+    {{ Form::hidden('budget', 0) }}
 
     <div class="kwp-middle"></div>
 
@@ -99,8 +99,8 @@
                         <label for="travelers" class="required">{{ trans('whitelabel.layer.general.pax') }}</label>
                         <span class="travelers dd-trigger">
                             <span class="txt">1 Erwachsener</span>
-                            <i class="master-icon--user-family not-triggered"></i>
-                            <i class="master-icon--close triggered"></i>
+                            <i class="fal fa-users not-triggered"></i>
+                            <i class="fal fa-times triggered"></i>
                         </span>
                         <div class="pax-more">
                             <div class="kwp-col-12">
@@ -108,7 +108,7 @@
                                 <div class="kwp-custom-select">
                                     {{ Form::select('adults', $adults_arr , key_exists('adults', $request) ? $request['adults'] : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
                                 </div>
-                                <i class="master-icon--user-family"></i>
+                                <i class="fal fa-users"></i>
                             </div>
                             <div class="kwp-col-12 kids" style="position: relative;">
                                 <div class="kwp-col-12">
@@ -116,7 +116,7 @@
                                     <div class="kwp-custom-select">
                                         {{ Form::select('kids', $kids_arr, key_exists('kids', $request) ? $request['kids'] : null, ['class' => 'form-control box-size']) }}
                                     </div>
-                                    <i class="master-icon--baby"></i>
+                                    <i class="fal fa-child"></i>
                                 </div>
                                 <div class="kwp-col-ages">
                                     <div class="kwp-form-group">
@@ -151,11 +151,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="kwp-col-4 destination">
-                        {{ Form::label('klasse', trans('layer.general.klasse'), ['class' => 'control-label required']) }}
+                <div class="kwp-col-4 category">
+                    {{ Form::label('klasse', trans('layer.general.klasse'), ['class' => 'control-label required']) }}
                     <div class="kwp-custom-select">
                         {{ Form::select('category', $class_arr, key_exists('category', $request) ? $request['category'] : null, ['class' => 'form-control box-size']) }}
                     </div>
+                    <i class="far fa-chevron-down"></i>
                 </div>
             </div>
 

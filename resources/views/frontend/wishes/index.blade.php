@@ -42,10 +42,12 @@
                     <div class="main-info">
                         <ul class="info">
                             <li><i class="icon_pin"></i><span class="value">@{{ wish.destination }}</span></li>
-                            @isset($wish['airport'])
+                            @if($wish->wishDetails->airport !== '-')
                                 <li><i class="fa fa-plane"></i><span class="value">@{{ wish.airport }}</span></li>
-                            @endisset
-                            <li><i class="icon_calendar"></i><span class="value">@{{ wish.earliest_start | moment("DD.MM.YYYY") }}</span> bis <span class="value">@{{ wish.latest_return | moment("DD.MM.YYYY") }}</span></li>
+                            @endif
+                            @if($wish->wishDetails->earliest_start !== '-' && $wish->wishDetails->latest_return !== '-')
+                                <li><i class="icon_calendar"></i><span class="value">@{{ wish.earliest_start | moment("DD.MM.YYYY") }}</span> bis <span class="value">@{{ wish.latest_return | moment("DD.MM.YYYY") }}</span></li>
+                            @endif
                             <li><i class="icon_hourglass"></i><span class="value">@{{ wish.duration }}</span></li>
                             <li><i class="icon_group"></i><span class="value">@{{ wish.adults }}</span></li>
                             @isset($wish['rooms'])
@@ -74,7 +76,9 @@
                                 </span>
                             @endif
                         </div>
-                        <div class="budget">@{{ formatPrice(wish.budget) }}{{ trans('general.currency') }}</div>
+                        @if($wish->wishDetails->budget !== 0)
+                            <div class="budget">@{{ formatPrice(wish.budget) }}{{ trans('general.currency') }}</div>
+                        @endif
                         <a v-if="wish.manuelFlag" class="primary-btn" :href="'/wishes/'+wish.id">{{ trans('labels.frontend.wishes.goto') }}</a>
                         <a v-if="!wish.manuelFlag" class="primary-btn" :href="'/offer/list/'+wish.id">{{ trans('labels.frontend.wishes.goto') }}</a>
                         @if($logged_in_user['role'] === "Seller")

@@ -252,7 +252,7 @@
                 <div class="kwp-col-3 catering">
                     {{ Form::label('catering', trans('layer.general.catering'), ['class' => 'control-label required']) }}
                     <div class="kwp-custom-select">
-                        {{ Form::select('catering', $catering_arr, key_exists('catering', $request) ? $request['catering'] : null,['class' => 'custom-select']) }}
+                        {{ Form::select('catering', $catering_arr, key_exists('catering', $request) ? $request['catering'] : null) }}
                     </div>
                     <i class="far fa-chevron-down"></i>
                 </div>
