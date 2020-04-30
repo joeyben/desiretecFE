@@ -12,9 +12,9 @@
 
     {{ Form::open() }}
 
-    {{ Form::hidden('budget', 0) }}
     {{ Form::hidden('airport', '-') }}
     {{ Form::hidden('category', 0) }}
+    {{ Form::hidden('budget', 0) }}
 
     <div class="kwp-middle"></div>
 
@@ -201,7 +201,7 @@
                 <div class="kwp-col-4 rooms">
                     {{ Form::label('rooms', trans('layer.general.rooms'), ['class' => 'control-label required']) }}
                     <div class="kwp-custom-select">
-                        {{ Form::select('rooms', $rooms_arr, key_exists('rooms', $request) ? $request['rooms'] : null,['class' => 'custom-select']) }}
+                        {{ Form::select('rooms', $rooms_arr, key_exists('rooms', $request) ? $request['rooms'] : null) }}
                     </div>
                     <i class="fal fa-door-closed"></i>
                 </div>

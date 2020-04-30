@@ -449,6 +449,12 @@ $gutter: 30px;
   }
 }
 
+.dd-trigger {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
 
 ul.kwp-form-errors {
   list-style: none;

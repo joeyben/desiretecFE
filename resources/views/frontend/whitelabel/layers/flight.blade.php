@@ -20,7 +20,7 @@
 
     {{ Form::open() }}
 
-    {{ Form::hidden('budget', '-') }}
+    {{ Form::hidden('budget', 0) }}
 
     <div class="kwp-middle"></div>
 
@@ -58,7 +58,7 @@
                 <div class="kwp-col-3 category">
                     {{ Form::label('klasse', trans('layer.general.klasse'), ['class' => 'control-label required']) }}
                     <div class="kwp-custom-select">
-                        {{ Form::select('category', $class_arr, key_exists('category', $request) ? $request['category'] : null,['class' => 'custom-select']) }}
+                        {{ Form::select('category', $class_arr, key_exists('category', $request) ? $request['category'] : null) }}
                     </div>
                     <i class="far fa-chevron-down"></i>
                 </div>
@@ -141,7 +141,6 @@
                                         <label class="main-label">Alter der Kinder bei Rückreise</label>
                                         <input name="ages" type="hidden">
                                         <div id="age_1" class="kwp-col-3">
-                                            <i class="master-icon--aircraft-down"></i>
                                             <div class="kwp-custom-select" style="display: none">
                                                 {{ Form::select('ages1', $ages_arr,key_exists('ages1', $request) ? $request['ages1'] : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
                                             </div>
@@ -155,7 +154,6 @@
                                             @endif
                                         </div>
                                         <div id="age_2" class="kwp-col-3">
-                                            <i class="master-icon--aircraft-down"></i>
                                             <div class="kwp-custom-select" style="display: none">
                                                 {{ Form::select('ages2', $ages_arr,key_exists('ages2', $request) ? $request['ages2'] : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
                                             </div>
@@ -169,7 +167,6 @@
                                             @endif
                                         </div>
                                         <div id="age_3" class="kwp-col-3">
-                                            <i class="master-icon--aircraft-down"></i>
                                             <div class="kwp-custom-select" style="display: none">
                                                 {{ Form::select('ages3', $ages_arr,key_exists('ages3', $request) ? $request['ages3'] : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
                                             </div>
@@ -183,7 +180,6 @@
                                             @endif
                                         </div>
                                         <div id="age_4" class="kwp-col-3">
-                                            <i class="master-icon--aircraft-down"></i>
                                             <div class="kwp-custom-select" style="display: none">
                                                 {{ Form::select('ages4', $ages_arr,key_exists('ages4', $request) ? $request['ages4'] : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
                                             </div>
