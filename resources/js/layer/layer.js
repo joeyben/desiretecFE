@@ -476,10 +476,10 @@ jQuery(function($){
         };
 
         dt.showTabs = function(layers) {
-            var hasTabs = layers.length > 1;
-            var hasErrors = $('.hasError').length > 0 || $('.error-input').length > 0;
+            var hasTabs = layers.length > 0;
+            var alreadyShown = $('.kwp-tabs .tab-link').length > 0;
 
-            if(hasTabs && !hasErrors) {
+            if(hasTabs && !alreadyShown) {
                 $.each(layers, function(index, layer) {
                     var version = layer.layer.path;
                     var li = '<li class="tab-link" data-tab="' + version + '">' + version + '</li>';
@@ -497,7 +497,11 @@ jQuery(function($){
         };
 
         dt.handleClickTabs = function() {
-            $('.kwp-tabs li').click(function(){
+            $('.kwp-tabs li').click(function(event) {
+                event.stopPropagation();
+                event.preventDefault();
+                event.stopImmediatePropagation();
+
                 $(this).addClass('current');
                 dt.PopupManager.version = $(this).attr('data-tab');
                 dt.PopupManager.shown = false;

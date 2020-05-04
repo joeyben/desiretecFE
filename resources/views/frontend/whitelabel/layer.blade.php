@@ -12,7 +12,6 @@
     jQuery(function($){
         $(document).ready(function () {
             dt.initLayerVersion();
-            dt.handleClickTabs();
         });
     });
 </script>
