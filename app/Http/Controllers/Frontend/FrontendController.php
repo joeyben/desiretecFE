@@ -246,7 +246,7 @@ class FrontendController extends Controller
     public function getAllAirports(Request $request)
     {
         $whitelabel = current_whitelabel();
-
+ 
         if ($whitelabel['traffics'])
             $response = $this->apiService->get('/airports');
         elseif ($whitelabel['tt'])
