@@ -12,12 +12,19 @@
 <script>
     jQuery(function($){
         $(document).ready(function () {
-            var layerName = $('.tab-link.current').data('tab');
 
             var layers = @json($layers);
-            var layer = layers.find(l => l.layer.path === layerName);
 
-            dt.fillContent(layer, layers.length > 1);
+            var hasTabs = layers.length > 1;
+
+            if(hasTabs) {
+                var layerName = $('.tab-link.current').data('tab');
+                var layer = layers.find(l => l.layer.path === layerName);
+            } else {
+                var layer = layers[0];
+            }
+
+            dt.fillContent(layer, hasTabs);
         });
     });
 
