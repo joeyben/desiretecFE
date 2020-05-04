@@ -41,23 +41,30 @@
                     </div>
                     <div class="main-info">
                         <ul class="info">
-                            <li><i class="icon_pin"></i><span class="value">@{{ wish.destination }}</span></li>
-                            @if($wish->wishDetails->airport !== '-')
-                                <li><i class="fa fa-plane"></i><span class="value">@{{ wish.airport }}</span></li>
-                            @endif
-                            @if($wish->wishDetails->earliest_start !== '-' && $wish->wishDetails->latest_return !== '-')
-                                <li><i class="icon_calendar"></i><span class="value">@{{ wish.earliest_start | moment("DD.MM.YYYY") }}</span> bis <span class="value">@{{ wish.latest_return | moment("DD.MM.YYYY") }}</span></li>
-                            @endif
-                            <li><i class="icon_hourglass"></i><span class="value">@{{ wish.duration }}</span></li>
-                            <li><i class="icon_group"></i><span class="value">@{{ wish.adults }}</span></li>
-                            @isset($wish['rooms'])
-                                <li><i class="fal fa-door-closed"></i><span class="value">@{{ wish.rooms }}</span></li>
-                            @endisset
-                            @isset($wish['pets'])
-                                <li><i class="fal fa-dog-leashed"></i><span class="value">@{{ wish.pets }}</span></li>
-                            @endisset
-                            <li v-if="wish.senderEmail"><i class="fal fa-at"></i><span class="value">@{{ wish.senderEmail }}</span></li>
-                            <li>{{ trans('labels.frontend.wishes.created_at') }} <span class="value">@{{ wish['created_at'] | moment("DD.MM.YYYY") }}</span></li>
+                            <li>
+                                <i class="icon_pin"></i><span class="value">@{{ wish.destination }}</span>
+                            </li>
+                            <li v-if="wish.airport !== '-'">
+                                <i class="fa fa-plane"></i><span class="value">@{{ wish.airport }}</span>
+                            </li>
+                            <li v-if="wish.earliest_start !== '0000-00-00' && wish.latest_return !== '0000-00-00'">
+                                <i class="icon_calendar"></i><span class="value">@{{ wish.earliest_start | moment("DD.MM.YYYY") }}</span> bis <span class="value">@{{ wish.latest_return | moment("DD.MM.YYYY") }}</span>
+                            </li>
+                            <li>
+                                <i class="icon_hourglass"></i><span class="value">@{{ wish.duration }}</span>
+                            </li>
+                            <li>
+                                <i class="icon_group"></i><span class="value">@{{ wish.adults }}</span>
+                            </li>
+                            <li v-if="wish.rooms">
+                                <i class="fal fa-door-closed"></i><span class="value">@{{ wish.rooms }}</span></li>
+                            <li v-if="wish.pets">
+                                <i class="fal fa-dog-leashed"></i><span class="value">@{{ wish.pets }}</span></li>
+                            <li v-if="wish.senderEmail">
+                                <i class="fal fa-at"></i><span class="value">@{{ wish.senderEmail }}</span></li>
+                            <li>
+                                {{ trans('labels.frontend.wishes.created_at') }} <span class="value">@{{ wish['created_at'] | moment("DD.MM.YYYY") }}</span>
+                            </li>
                         </ul>
                     </div>
                     <div class="action">
@@ -76,9 +83,7 @@
                                 </span>
                             @endif
                         </div>
-                        @if($wish->wishDetails->budget !== 0)
-                            <div class="budget">@{{ formatPrice(wish.budget) }}{{ trans('general.currency') }}</div>
-                        @endif
+                        <div v-if="wish.budget !== 0" class="budget">@{{ formatPrice(wish.budget) }}{{ trans('general.currency') }}</div>
                         <a v-if="wish.manuelFlag" class="primary-btn" :href="'/wishes/'+wish.id">{{ trans('labels.frontend.wishes.goto') }}</a>
                         <a v-if="!wish.manuelFlag" class="primary-btn" :href="'/offer/list/'+wish.id">{{ trans('labels.frontend.wishes.goto') }}</a>
                         @if($logged_in_user['role'] === "Seller")

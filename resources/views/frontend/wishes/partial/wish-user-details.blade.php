@@ -14,7 +14,7 @@
         </div>
     </div>
     @endif
-    @if($wish->wishDetails->earliest_start !== '-' && $wish->wishDetails->latest_return !== '-')
+    @if($wish->wishDetails->earliest_start !== '0000-00-00' && $wish->wishDetails->latest_return !== '0000-00-00')
     <div class="col-md-3">
         <i class="fal fa-calendar-alt"></i>
         <input class="data-content" value="{{ \Carbon\Carbon::parse($wish->wishDetails->earliest_start)->format('d.m.Y') }} - {{ \Carbon\Carbon::parse($wish->wishDetails->latest_return)->format('d.m.Y') }}">
@@ -60,7 +60,7 @@
     @if($wish->wishDetails->rooms)
     <div class="col-md-3">
         <i class="fal fa-door-closed"></i>
-        <input class="data-content" value="{{ $wish->wishDetails->rooms }}">
+        <input class="data-content" value="{{ $wish->wishDetails->rooms }} {{ trans_choice('labels.frontend.wishes.rooms', $wish->wishDetails->rooms) }}">
     </div>
     @endif
     @if($wish->wishDetails->pets)
