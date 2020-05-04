@@ -58,6 +58,7 @@ return [
             'adults'        => 'Erwachsener|Erwachsene',
             'kids'          => 'Kind|Kinder',
             'pets'          => '{0}Ohne Haustier|{1}Mit Haustier',
+            'rooms'         => 'Zimmer|Zimmer',
         ],
         'offers' => [
             'create'          => 'Neues Angebot erstellen',
