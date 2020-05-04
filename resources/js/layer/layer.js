@@ -476,7 +476,7 @@ jQuery(function($){
         };
 
         dt.showTabs = function(layers) {
-            var hasTabs = layers.length > 0;
+            var hasTabs = layers.length > 1;
             var alreadyShown = $('.kwp-tabs .tab-link').length > 0;
 
             if(hasTabs && !alreadyShown) {
