@@ -195,12 +195,14 @@
                         @endphp
 
                         @if ($errors->any() && $errors->get('terms'))
-                            @php
-                                $terms_class = 'dt_terms hasError'
-                            @endphp
-                            <script>
-                                dt.Tracking.rawEvent(whitelabelPrefix+'_exitwindow', 'Error on terms', '{{ $error }}');
-                            </script>
+                            @foreach ($errors->get('terms') as $error)
+                                @php
+                                    $terms_class = 'dt_terms hasError'
+                                @endphp
+                                <script>
+                                    dt.Tracking.rawEvent(whitelabelPrefix+'_exitwindow', 'Error on terms', '{{ $error }}');
+                                </script>
+                            @endforeach
                         @endif
 
                         {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
