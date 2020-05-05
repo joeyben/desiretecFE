@@ -414,12 +414,12 @@ jQuery(function($){
             $('<style>.kwp input[type="checkbox"]:checked:after { background-color: ' + brandColor + '; border: 1px solid ' + brandColor + '; }</style>').appendTo('head');
         };
 
-        dt.handleDestination = function() {
+        dt.handleDestination = function(freeInput) {
             $('#destination').tagsinput({
                 maxTags: 3,
                 maxChars: 20,
                 allowDuplicates: false,
-                freeInput: true,
+                freeInput: freeInput,
                 typeahead: {
                     autoSelect: false,
                     minLength: 3,
@@ -436,12 +436,12 @@ jQuery(function($){
             });
         };
 
-        dt.handleAirport = function() {
+        dt.handleAirport = function(freeInput) {
             $('#airport').tagsinput({
                 maxTags: 3,
                 maxChars: 20,
                 allowDuplicates: false,
-                freeInput: true,
+                freeInput: freeInput,
                 typeahead: {
                     autoSelect: false,
                     minLength: 3,
@@ -457,6 +457,10 @@ jQuery(function($){
                 }, 1);
             });
         };
+
+        $('body').on('blur', '#destination', function() {
+            $(this).trigger(jQuery.Event('keypress', {which: 13}));
+        });
 
         dt.initLayerVersion = function() {
             var matchDomains = false;

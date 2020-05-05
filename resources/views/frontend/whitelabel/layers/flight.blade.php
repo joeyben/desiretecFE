@@ -295,6 +295,8 @@
 
             var layer = layers.find(l => l.layer.path === layerName);
 
+            var is_pure_autooffers = @json($whitelabel['is_pure_autooffers']);
+
             dt.showTabs(layers);
 
             dt.showCurrentTab(layerName);
@@ -309,9 +311,9 @@
 
             dt.handleTriggers();
 
-            dt.handleDestination();
+            dt.handleDestination(is_pure_autooffers);
 
-            dt.handleAirport();
+            dt.handleAirport(is_pure_autooffers);
 
             dt.handleDuration();
 
