@@ -414,12 +414,12 @@ jQuery(function($){
             $('<style>.kwp input[type="checkbox"]:checked:after { background-color: ' + brandColor + '; border: 1px solid ' + brandColor + '; }</style>').appendTo('head');
         };
 
-        dt.handleDestination = function(freeInput) {
+        dt.handleDestination = function(is_pure_autooffer) {
             $('#destination').tagsinput({
                 maxTags: 3,
                 maxChars: 20,
                 allowDuplicates: false,
-                freeInput: freeInput,
+                freeInput: !is_pure_autooffer,
                 typeahead: {
                     autoSelect: false,
                     minLength: 3,
@@ -436,12 +436,12 @@ jQuery(function($){
             });
         };
 
-        dt.handleAirport = function(freeInput) {
+        dt.handleAirport = function(is_pure_autooffer) {
             $('#airport').tagsinput({
                 maxTags: 3,
                 maxChars: 20,
                 allowDuplicates: false,
-                freeInput: freeInput,
+                freeInput: !is_pure_autooffer,
                 typeahead: {
                     autoSelect: false,
                     minLength: 3,
