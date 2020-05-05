@@ -71,7 +71,7 @@
                         <div class="wish-top-infos">
                             <span class="wish-id">@{{ wish.id }}</span>
                             @if($logged_in_user['role'] === "Seller")
-                                <span v-if="wish.wlRule == 'mix'" class="wish-classification btn-secondary">
+                                <span class="wish-classification btn-secondary">
                                     <span v-if="wish.manuelFlag"><i class="fal fa-user"></i></span>
                                     <span v-else><i class="fal fa-robot"></i></span>
                                 </span>
