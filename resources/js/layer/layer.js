@@ -419,6 +419,7 @@ jQuery(function($){
                 maxTags: 3,
                 maxChars: 20,
                 allowDuplicates: false,
+                freeInput: true,
                 typeahead: {
                     autoSelect: false,
                     minLength: 3,
@@ -440,6 +441,7 @@ jQuery(function($){
                 maxTags: 3,
                 maxChars: 20,
                 allowDuplicates: false,
+                freeInput: true,
                 typeahead: {
                     autoSelect: false,
                     minLength: 3,
@@ -477,7 +479,7 @@ jQuery(function($){
 
         dt.showTabs = function(layers) {
             var hasTabs = layers.length > 1;
-            var alreadyShown = $('.kwp-tabs .tab-link').length > 0;
+            var alreadyShown = $('.kwp-tabs .tab-link').length > 1;
 
             if(hasTabs && !alreadyShown) {
                 $.each(layers, function(index, layer) {
