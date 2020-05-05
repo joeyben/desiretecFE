@@ -862,3 +862,14 @@ if (!function_exists('baseUrlWithoutPrefix')) {
         return str_replace('https://www.','', env('APP_URL','wish-service.com'));
     }
 }
+
+
+/**
+ * Returns base ur without https://www.
+ */
+if (!function_exists('supported_languages_keys')) {
+    function supported_languages_keys()
+    {
+        return config('laravellocalization.supportedLocales');
+    }
+}

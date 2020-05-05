@@ -5,6 +5,8 @@ namespace App\Providers;
 use App\ApiUser;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
+use Modules\Languages\Providers\LanguagesServiceProvider;
+use Modules\Translations\Providers\TranslationsServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,6 +24,9 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind('token', static function (): ?string {
             return session('token');
         });
+
+        $this->app->register(TranslationsServiceProvider::class);
+        $this->app->register(LanguagesServiceProvider::class);
     }
 
     /**
