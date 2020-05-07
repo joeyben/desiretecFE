@@ -8,6 +8,13 @@
         '3' => '3 Kinder',
         '4' => '4 Kinder',
     ];
+
+    $class_arr = [
+        'Economy' => 'Economy',
+        'Premium Economy' => 'Premium Economy',
+        'Business' => 'Business',
+        'First' => 'First',
+    ];
 @endphp
 
 <div id="{{ $layerName }}" class="tab-content">
@@ -55,10 +62,11 @@
                     @endif
                 </div>
 
-                <div class="kwp-col-3 category">
+                <div class="kwp-col-3 class">
                     {{ Form::label('klasse', trans('layer.general.klasse'), ['class' => 'control-label required']) }}
                     <div class="kwp-custom-select">
-                        {{ Form::select('category', $class_arr, key_exists('category', $request) ? $request['category'] : null) }}
+
+                        {{ Form::select('class', $class_arr, key_exists('class', $request) ? $request['class'] : null) }}
                     </div>
                     <i class="far fa-chevron-down"></i>
                 </div>
