@@ -232,11 +232,11 @@
     }
 
     $(document).ready(function() {
-        if(!isEllipsisActive(document.getElementById("departure-mousehover-value"))) {
-            document.getElementById("departure-mousehover").remove();
+        if($('#departure-mousehover-value') && !isEllipsisActive(document.getElementById('departure-mousehover-value'))) {
+            document.getElementById('departure-mousehover').remove();
         }
-        if(!isEllipsisActive(document.getElementById("arrival-mousehover-value"))) {
-            document.getElementById("arrival-mousehover").remove();
+        if($('#arrival-mousehover-value').length > 0 && !isEllipsisActive(document.getElementById('arrival-mousehover-value'))) {
+            document.getElementById('arrival-mousehover').remove();
         }
     });
 </script>
