@@ -2,12 +2,12 @@
     $layerName = 'cruise';
 
     $class_arr = [
-        '0' => 'Innenkabine',
-        '1' => 'Außenkabine',
-        '2' => 'Balkonkabine',
-        '3' => 'Junior-Suite',
-        '4' => 'Suite',
-        '5' => 'beliebig',
+        'Innenkabine' => 'Innenkabine',
+        'Außenkabine' => 'Außenkabine',
+        'Balkonkabine' => 'Balkonkabine',
+        'Suite' => 'Junior-Suite',
+        'Suite' => 'Suite',
+        'beliebig' => 'beliebig',
     ];
 @endphp
 <?php  ?>
@@ -151,10 +151,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="kwp-col-4 category">
+                <div class="kwp-col-4 class">
                     {{ Form::label('klasse', trans('layer.general.klasse'), ['class' => 'control-label required']) }}
                     <div class="kwp-custom-select">
-                        {{ Form::select('category', $class_arr, key_exists('category', $request) ? $request['category'] : null, ['class' => 'form-control box-size']) }}
+                        {{ Form::select('class', $class_arr, key_exists('class', $request) ? $request['class'] : null, ['class' => 'form-control box-size']) }}
                     </div>
                     <i class="far fa-chevron-down"></i>
                 </div>

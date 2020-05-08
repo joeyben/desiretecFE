@@ -19,12 +19,6 @@ class FrontendController extends Controller
     const BODY_CLASS = 'landing';
 
     // TODO: Better solution for these arrays:
-    const CLASS_ARR = [
-        3 => "Economy",
-        2 => "Premium Economy",
-        1 => "Business",
-        4 => "First",
-    ];
     const ADULTS_ARR = [
         1 => "1",
         2 => "2",
@@ -154,7 +148,6 @@ class FrontendController extends Controller
             'kids_arr'     => $this::KIDS_ARR,
             'ages_arr'     => $this::AGES_ARR,
             'catering_arr' => $this::CATERING_ARR,
-            'class_arr'    => $this::CLASS_ARR,
             'duration_arr' => $this::DURATION_ARR,
             'pets_arr'     => $this::PETS_ARR,
             'rooms_arr'    => $this::ROOMS_ARR,
@@ -184,7 +177,6 @@ class FrontendController extends Controller
                 'kids_arr'     => $this::KIDS_ARR,
                 'ages_arr'     => $this::AGES_ARR,
                 'catering_arr' => $this::CATERING_ARR,
-                'class_arr'    => $this::CLASS_ARR,
                 'duration_arr' => $this::DURATION_ARR,
                 'pets_arr'     => $this::PETS_ARR,
                 'rooms_arr'    => $this::ROOMS_ARR,
@@ -246,7 +238,7 @@ class FrontendController extends Controller
     public function getAllAirports(Request $request)
     {
         $whitelabel = current_whitelabel();
- 
+
         if ($whitelabel['traffics'])
             $response = $this->apiService->get('/airports');
         elseif ($whitelabel['tt'])

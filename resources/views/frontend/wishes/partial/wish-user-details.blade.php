@@ -32,6 +32,12 @@
         <input class="data-content" value="{{ $wish->wishDetails->category }} {{ trans_choice('labels.frontend.wishes.stars', $wish->wishDetails->category) }}">
     </div>
     @endif
+    @if($wish->wishDetails->class)
+    <div class="col-md-3">
+        <i class="fal fa-star"></i>
+        <input class="data-content" value="{{ $wish->wishDetails->class }}">
+    </div>
+    @endif
     <div class="col-md-3">
         <i class="fal fa-plane-arrival"></i>
         <div id="arrival-mousehover-value" class="data-content ellipsised">{{ $wish->wishDetails->destination }}</div>
