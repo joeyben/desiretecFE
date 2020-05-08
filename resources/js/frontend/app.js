@@ -98,11 +98,41 @@ const app = new Vue({
                 'border': '1px solid ' + brandColor,
                 'color': '#fff',
             });
+            $('.primary-btn, .btn-primary').hover(function(){
+                $(this).css({
+                    'background': '#fff',
+                    'border': '1px solid ' + brandColor,
+                    'color': brandColor,
+                    'transition': 'all 0.3s',
+                });
+            }, function() {
+                $(this).css({
+                    'background': brandColor,
+                    'border': '1px solid ' + brandColor,
+                    'color': '#fff',
+                });
+            });
+
             $('.secondary-btn, .btn-secondary').css({
                 'background': '#fff',
                 'border': '1px solid ' + brandColor,
                 'color': brandColor,
             });
+            $('.secondary-btn:not(.wish-classification), .btn-secondary:not(.wish-classification)').hover(function(){
+                $(this).css({
+                    'background': brandColor,
+                    'border': '1px solid ' + brandColor,
+                    'color': '#fff',
+                    'transition': 'all 0.3s',
+                });
+            }, function() {
+                $(this).css({
+                    'background': '#fff',
+                    'border': '1px solid ' + brandColor,
+                    'color': brandColor,
+                });
+            });
+
             $('.link-btn-primary').css({
                 'color': brandColor,
             });
@@ -111,6 +141,7 @@ const app = new Vue({
             }).mouseout(function() {
                 $(this).css('color','inherit');
             });
+
             $("input, textarea").focus(function(){
                 $(this).css({'border-color': brandColor});
             });
