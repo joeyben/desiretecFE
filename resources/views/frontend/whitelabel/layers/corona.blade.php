@@ -190,7 +190,7 @@
                         {{ Form::label('category', trans('layer.general.category'), ['class' => 'control-label required']) }}
                         {{ Form::number('category', key_exists('category', $request) ? $request['category'] : 3, ['class' => 'form-control box-size hidden', 'placeholder' => trans('layer.placeholder.category')]) }}
 
-                        <span class="text">ab 0 Sonnen</span>
+                        <span class="text">{{ trans('layer.sun.from') }}</span>
                         <div class="kwp-star-input">
                             <span class="kwp-star" data-val="1"></span>
                             <span class="kwp-star" data-val="2"></span>
@@ -261,7 +261,7 @@
 
                         {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
 
-                        <p>{{ trans('layer.terms_tnb') }}</p>
+                        <p>{!! trans('layer.terms_tnb') !!}</p>
                     </div>
                 </div>
             </div>
