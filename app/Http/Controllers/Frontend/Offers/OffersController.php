@@ -118,7 +118,7 @@ class OffersController extends Controller
                 'title' => $data['title'],
                 'description' => $data['description'],
                 'wish_id' => $data['wish_id'],
-                'agent_id' => get_current_agent()->id,
+                'agent_id' => get_current_agent()['id'],
                 'files' => $files
             ];
 
