@@ -235,7 +235,7 @@
                 </div>
 
                 <div class="kwp-col-4 white-col submit-col">
-                    <button id="submit-button" type="submit" class="submit-button primary-btn">Reisewunsch abschicken</button>
+                    <button id="submit-button" type="submit" class="submit-button primary-btn">{{ trans('layer.submit') }}</button>
                 </div>
             </div>
         </div>
@@ -260,10 +260,8 @@
                         @endif
 
                         {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
-                        <p>Ich habe die
-                        <a href="#" id="agb_link" target="_blank">Teilnahmebedingungen</a> und
-                        <a href="#" id="datenschutz" target="_blank" rel="noopener noreferrer">Datenschutzrichtlinien</a>
-                        zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
+
+                        <p>{{ trans('layer.terms_tnb') }}</p>
                     </div>
                 </div>
             </div>
