@@ -16,11 +16,11 @@
     <!-- Left and right controls -->
     <a class="left carousel-control" href="#autoOfferCarousel-{{ $keyNumber }}" data-slide="prev">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        <span class="sr-only">Previous</span>
+        <span class="sr-only">{{ trans('autooffers.carousel.previous') }}</span>
     </a>
     <a class="right carousel-control" href="#autoOfferCarousel-{{ $keyNumber }}" data-slide="next">
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
-        <span class="sr-only">Next</span>
+        <span class="sr-only">{{ trans('autooffers.carousel.next') }}</span>
     </a>
 </div>
 

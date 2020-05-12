@@ -28,9 +28,9 @@
                 @elseif ($logged_in_user['role'] == ('User') && $wish->last_name !== trans('user.default.last_name'))
                     <h3>Hallo {{ $wish->first_name }} {{ $wish->last_name }},</h3>
                 @elseif ($logged_in_user['role'] == ('User') && $wish->first_name)
-                    <h3>Hallo lieber Kunde,</h3>
+                    <h3>{{ trans('wishes.details.hello_user') }},</h3>
                 @else
-                    <h3>Hallo,</h3>
+                    <h3>{{ trans('wishes.details.hello') }},</h3>
                 @endif
 
                 @if ($logged_in_user['role'] == ('Seller'))

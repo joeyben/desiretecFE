@@ -33,7 +33,7 @@
                     </span><!-- btn-orange -->
                 </div><!-- btn -->
             </div><!-- group -->
-            <p class="info_upload">*Nur PNG und PDF Dateien</p>
+            <p class="info_upload">{{ trans('offers.upload.image_types') }}</p>
         @endif
     </div><!--form control-->
 
