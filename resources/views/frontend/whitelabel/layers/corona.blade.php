@@ -235,7 +235,7 @@
                 </div>
 
                 <div class="kwp-col-4 white-col submit-col">
-                    <button id="submit-button" type="submit" class="submit-button primary-btn">{{ trans('layer.submit') }}</button>
+                    <button id="submit-button" type="submit" class="submit-button primary-btn">{{ trans('popup.submit') }}</button>
                 </div>
             </div>
         </div>
@@ -261,7 +261,7 @@
 
                         {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
 
-                        <p>{!! Lang::get('layer.terms_tnb') !!}</p>
+                        <p>{!! Lang::get('popup.terms_tnb') !!}</p>
                     </div>
                 </div>
             </div>
