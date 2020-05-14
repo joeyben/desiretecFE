@@ -49,7 +49,7 @@ class OffersController extends Controller
     {
         $this->apiService = $apiService;
         $this->offer = $offer;
-        $this->upload_path = 'img' . \DIRECTORY_SEPARATOR . 'agent' . \DIRECTORY_SEPARATOR ?? '';
+        $this->upload_path = 'img' . \DIRECTORY_SEPARATOR . 'offer' . \DIRECTORY_SEPARATOR ?? '';
         $this->storage = Storage::disk('s3');
     }
 
@@ -205,14 +205,14 @@ class OffersController extends Controller
     public function uploadImage($files)
     {
         if (isset($files) && !empty($files)) {
-            $files = [];
+            $files_arr = [];
             foreach ($files as $file) {
                 $fileName = time() . $file->getClientOriginalName();
                 $this->storage->put($this->upload_path . $fileName, file_get_contents($file->getRealPath()), 'public');
-                array_push($files, $fileName);
+                array_push($files_arr, $fileName);
             }
 
-            return $files;
+            return $files_arr;
         }
 
         return false;
