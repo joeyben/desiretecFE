@@ -261,7 +261,7 @@
 
                         {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
 
-                        <p>{!! __('layer.terms_tnb') !!}</p>
+                        <p>{!! Lang::get('layer.terms_tnb') !!}</p>
                     </div>
                 </div>
             </div>

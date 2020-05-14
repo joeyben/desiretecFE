@@ -111,7 +111,7 @@ class OffersController extends Controller
             $data = $request->all();
             $files = [];
             if($request->hasfile('file')){
-                array_push($files, $this->uploadImage($data['file']));
+                $files = $this->uploadImage($data['file']);
             }
 
             $body = [
@@ -205,13 +205,14 @@ class OffersController extends Controller
     public function uploadImage($files)
     {
         if (isset($files) && !empty($files)) {
+            $files = [];
             foreach ($files as $file) {
                 $fileName = time() . $file->getClientOriginalName();
                 $this->storage->put($this->upload_path . $fileName, file_get_contents($file->getRealPath()), 'public');
-
+                array_push($files, $fileName);
             }
 
-            return true;
+            return $files;
         }
 
         return false;
