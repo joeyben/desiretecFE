@@ -239,5 +239,37 @@
             document.getElementById('arrival-mousehover').remove();
         }
     });
+
+    $(document).on('submit', 'form.contact_form', function (event) {
+        event.preventDefault();
+        var form = $(this);
+        var data = form.serializeArray();
+        var url = form.attr("action");
+        var this_modal = form.parents('.modal');
+        $.ajax({
+            type: form.attr('method'),
+            url: url,
+            data: data,
+            success: function(data){
+                if(data.success){
+                    $('#first_name').val('');
+                    $('#last_name').val('');
+                    $('#email').val('');
+                    $('#telephone').val('');
+                    $('#subject').val('');
+                    $('#message').val('');
+                    this_modal.find('.alert-success').removeClass('fade').find('.text').text(data.message);
+                    window.setTimeout(function(){
+                            this_modal.modal('toggle');
+                            this_modal.find('.alert-success').addClass('fade');
+                    }, 3000);
+                }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                alert("Error: " + errorThrown);
+            }
+        });
+        return false;
+    });
 </script>
 @endsection
