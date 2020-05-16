@@ -53,6 +53,9 @@ body.wishlist{
         &::-ms-input-placeholder { /* Microsoft Edge */
           color: #839192;
         }
+        &:focus {
+            border-bottom-color: #ccc !important;
+        }
         @media screen and (max-width: $break-iPad) {
           width: 190px;
         }

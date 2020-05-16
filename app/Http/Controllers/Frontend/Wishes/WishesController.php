@@ -82,7 +82,6 @@ class WishesController extends Controller
             'status'     => $this->status,
             'category'   => $this->category,
             'catering'   => $this->catering,
-            'count'      => 59,
             'body_class' => $this::BODY_CLASS_LIST,
         ]);
     }
