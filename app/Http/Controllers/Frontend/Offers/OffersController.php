@@ -12,6 +12,8 @@ use App\Repositories\Frontend\Offers\OffersRepository;
 use App\Services\Api\ApiService;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Class OffersController.
@@ -28,6 +30,8 @@ class OffersController extends Controller
         'Deleted'      => 'Deleted',
     ];
 
+    protected $upload_path;
+    protected $storage;
     /**
      * @var OffersRepository
      */
@@ -45,6 +49,8 @@ class OffersController extends Controller
     {
         $this->apiService = $apiService;
         $this->offer = $offer;
+        $this->upload_path = 'img' . \DIRECTORY_SEPARATOR . 'offer' . \DIRECTORY_SEPARATOR ?? '';
+        $this->storage = Storage::disk('s3');
     }
 
     /**
@@ -103,17 +109,20 @@ class OffersController extends Controller
     {
         try {
             $data = $request->all();
-
+            $files = [];
             if($request->hasfile('file')){
-                foreach ($data['file'] as &$file){
-                    $temp_variable = base64_encode(file_get_contents($file->getRealPath()));
-                    $fileData['content'] = json_encode($temp_variable);
-                    $fileData['name'] = $file->getClientOriginalName();
-                    $file = $fileData;
-                }
+                $files = $this->uploadImage($data['file']);
             }
 
-            $response = $this->apiService->post('/offers/store', $data);
+            $body = [
+                'title' => $data['title'],
+                'description' => $data['description'],
+                'wish_id' => $data['wish_id'],
+                'agent_id' => get_current_agent()['id'],
+                'files' => $files
+            ];
+
+            $response = $this->apiService->post('/offers/store', $body);
 
             return redirect()
                 ->route('frontend.offers.index', $subdomain)
@@ -183,5 +192,29 @@ class OffersController extends Controller
             'wish'       => $wish,
             'body_class' => $this::BODY_CLASS,
         ]);
+    }
+
+    /**
+     * Upload Image.
+     *
+     * @param array $files
+     * @param int   $id
+     *
+     * @return bool
+     */
+    public function uploadImage($files)
+    {
+        if (isset($files) && !empty($files)) {
+            $files_arr = [];
+            foreach ($files as $file) {
+                $fileName = time() . $file->getClientOriginalName();
+                $this->storage->put($this->upload_path . $fileName, file_get_contents($file->getRealPath()), 'public');
+                array_push($files_arr, $fileName);
+            }
+
+            return $files_arr;
+        }
+
+        return false;
     }
 }

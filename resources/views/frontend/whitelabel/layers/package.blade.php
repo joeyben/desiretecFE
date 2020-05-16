@@ -230,7 +230,7 @@
                         {{ Form::label('category', trans('layer.general.category'), ['class' => 'control-label required']) }}
                         {{ Form::number('category', key_exists('category', $request) ? $request['category'] : 3, ['class' => 'form-control box-size hidden', 'placeholder' => trans('layer.placeholder.category')]) }}
 
-                        <span class="text">ab 0 Sonnen</span>
+                        <span class="text">{{ trans('layer.sun.from') }}</span>
                         <div class="kwp-star-input">
                             @if($whitelabel['name'] !== 'Lastminute')
                                 <span class="kwp-star" data-val="1"></span>
@@ -283,7 +283,7 @@
                 </div>
 
                 <div class="kwp-col-4 white-col submit-col">
-                    <button id="submit-button" type="submit" class="submit-button primary-btn">Reisewunsch abschicken</button>
+                    <button id="submit-button" type="submit" class="submit-button primary-btn">{{ trans('layer.submit') }}</button>
                 </div>
             </div>
         </div>
@@ -308,10 +308,7 @@
                         @endif
 
                         {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
-                        <p>Ich habe die
-                        <a href="#" id="agb_link" target="_blank">Teilnahmebedingungen</a> und
-                        <a href="#" id="datenschutz" target="_blank" rel="noopener noreferrer">Datenschutzrichtlinien</a>
-                        zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
+                        <p>{!! trans('layer.terms_tnb') !!}</p>
                     </div>
                 </div>
             </div>

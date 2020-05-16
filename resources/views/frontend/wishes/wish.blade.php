@@ -28,9 +28,9 @@
                 @elseif ($logged_in_user['role'] == ('User') && $wish->last_name !== trans('user.default.last_name'))
                     <h3>Hallo {{ $wish->first_name }} {{ $wish->last_name }},</h3>
                 @elseif ($logged_in_user['role'] == ('User') && $wish->first_name)
-                    <h3>Hallo lieber Kunde,</h3>
+                    <h3>{{ trans('wishes.details.hello_user') }},</h3>
                 @else
-                    <h3>Hallo,</h3>
+                    <h3>{{ trans('wishes.details.hello') }},</h3>
                 @endif
 
                 @if ($logged_in_user['role'] == ('Seller'))
@@ -78,9 +78,9 @@
                 <h4>{{ trans('wish.view.new_offers') }}</h4>
                 <p class="sa2-p1">{{ trans_choice('wish.view.offers_title_count', count($wish->wishDetails->offers), ['count' => count($wish->wishDetails->offers)]) }}
                     @if ($logged_in_user['role'] === "Seller")
-                        erstellt
+                        {{ trans('wish.view.offer_created') }}
                     @else
-                        erhalten
+                        {{ trans('wish.view.offer_received') }}
                     @endif
                 </p>
             </div>
@@ -110,7 +110,7 @@
                         {!! nl2br(e($offer->description)) !!}
                         @if ($offer->link)
                             <br><br>
-                            <b>Hier geht es zu unserer Angebotsseite:</b> <a href="{{ (strpos($offer->link,'https://') === false && strpos($offer->link,'http://') === false) ? 'https://'.$offer->link : $offer->link }}" target="_blank" rel="noopener noreferrer">{{ $offer->link }}</a>
+                            <b>{{ trans('wish.link.offer_site') }}</b> <a href="{{ (strpos($offer->link,'https://') === false && strpos($offer->link,'http://') === false) ? 'https://'.$offer->link : $offer->link }}" target="_blank" rel="noopener noreferrer">{{ $offer->link }}</a>
                         @endif
                     </p>
                 </div>
