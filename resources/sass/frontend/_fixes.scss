@@ -95,3 +95,19 @@
   }
 }
 
+// bootstrap-select
+.bootstrap-select {
+  .btn:focus, .btn:active {
+    outline: none !important;
+  }
+  .dropdown-toggle {
+    background-color: #f8f9fa;
+    border-color: #ccc;
+  }
+  &.show {
+    .dropdown-toggle {
+      background-color: #f8f9fa;
+      border-color: #ccc;
+    }
+  }
+}
