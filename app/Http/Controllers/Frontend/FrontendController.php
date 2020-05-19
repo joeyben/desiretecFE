@@ -248,19 +248,19 @@ class FrontendController extends Controller
     public function initDurationArr(){
         $this::DURATION_ARR = [
             "exact" => trans('labels.frontend.wishes.exact'),
-            "7-" => trans_choice('labels.frontend.wishes.weeks', 1, ['value' => 1]),
-            "14-" => trans_choice('labels.frontend.wishes.weeks', 2, ['value' => 2]),
-            "21-" => trans_choice('labels.frontend.wishes.weeks', 3, ['value' => 3]),
-            "28-" => trans_choice('labels.frontend.wishes.weeks', 4, ['value' => 4]),
-            "1-4" => "1-4 ".trans('labels.frontend.wishes.days'),
-            "5-8" => "5-8 ".trans('labels.frontend.wishes.days'),
-            "9-12" => "9-12 ".trans('labels.frontend.wishes.days'),
-            "13-15" => "13-15 ".trans('labels.frontend.wishes.days'),
-            "16-22" => "16-22 ".trans('labels.frontend.wishes.days'),
-            "22-" => ">22 ".trans('labels.frontend.wishes.days'),
+            "7-" => trans_choice('labels.frontend.wishes.week', 1, ['value' => 1]),
+            "14-" => trans_choice('labels.frontend.wishes.week', 2, ['value' => 2]),
+            "21-" => trans_choice('labels.frontend.wishes.week', 3, ['value' => 3]),
+            "28-" => trans_choice('labels.frontend.wishes.week', 4, ['value' => 4]),
+            "1-4" => "1-4 ".trans('labels.frontend.wishes.nights'),
+            "5-8" => "5-8 ".trans('labels.frontend.wishes.nights'),
+            "9-12" => "9-12 ".trans('labels.frontend.wishes.nights'),
+            "13-15" => "13-15 ".trans('labels.frontend.wishes.nights'),
+            "16-22" => "16-22 ".trans('labels.frontend.wishes.nights'),
+            "22-" => ">22 ".trans('labels.frontend.wishes.nights'),
         ];
         for($i = 1; $i<29;$i++){
-            $this::DURATION_ARR[$i] = trans_choice('labels.frontend.wishes.days_count', $i, ['value' => $i]);
+            $this::DURATION_ARR[$i] = trans_choice('labels.frontend.wishes.night', $i, ['value' => $i]);
         }
     }
 }
