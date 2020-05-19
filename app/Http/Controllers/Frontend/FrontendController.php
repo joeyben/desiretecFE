@@ -79,7 +79,7 @@ class FrontendController extends Controller
     public function __construct(ApiService $apiService)
     {
         $this->apiService = $apiService;
-        //$this->initDurationArr();
+        $this->initDurationArr();
     }
 
     /**
