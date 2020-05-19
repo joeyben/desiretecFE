@@ -4,7 +4,7 @@ window.exitIntent = {
     delay: 5,
     showOnDelay: false,
     cookieExp: 0,
-    sessionOnly: false,
+    sessionOnly: true,
     inactivitySeconds: 5,
     showPerSessionNumber: 1,
 
@@ -164,7 +164,7 @@ window.exitIntent = {
         // Once the DOM has fully loaded
         this.domReady(function () {
             // Delete existing cookies
-            if (exitIntent.sessionOnly) {
+            if (false && exitIntent.sessionOnly) {
                 exitIntent.cookieManager.erase("exitintent");
                 exitIntent.cookieManager.erase("exit_intent_number");
             }

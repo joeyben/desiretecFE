@@ -48,7 +48,7 @@ window.exitIntent = {
 
 	// Handle exit intent cookie
 	checkCookie: function () {
-		return this.cookieManager.get("exit_intent") == "true" && this.cookieManager.get("exit_intent_number") >= exitIntent.showPerSessionNumber;
+		return this.cookieManager.get("exit_intent") == "yes" && this.cookieManager.get("exit_intent_number") >= exitIntent.showPerSessionNumber;
 	},
 
 	createEvent: function (type, bubbles, cancelable) {
