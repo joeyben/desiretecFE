@@ -53,7 +53,7 @@ return [
             'edit'          => 'Reisewunsch bearbeiten',
             'add-comment'   => 'Kommentar hinzufügen',
             'week'          => ':value Woche|:value Wochen',
-            'night'         => ':value Nacht|:value Nächte',
+            'night'         => ':value Night|:value Nights',
             'stars'         => 'Stern|Sterne',
             'adults'        => 'Erwachsener|Erwachsene',
             'kids'          => 'Kind|Kinder',
