@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
+        "fzaninotto/faker": "^1.4",
         "arcanedev/log-viewer": "^5.2",
         "barryvdh/laravel-debugbar": "^3.2",
         "fideloper/proxy": "^4.0",
@@ -21,8 +22,7 @@
         "mcamara/laravel-localization": "^1.5",
         "nwidart/laravel-modules": "^6.2",
         "spatie/laravel-cors": "^1.6",
-        "spatie/laravel-translation-loader": "^2.4",
-        "fzaninotto/faker": "^1.4"
+        "spatie/laravel-translation-loader": "^2.4"
     },
     "require-dev": {
         "facade/ignition": "^1.4",
