@@ -24,9 +24,9 @@
         <div class="container">
             <div class="col-md-8 bg-left-content">
                 @if ($logged_in_user && ($logged_in_user['role'] === "Seller" || $logged_in_user['role'] === "Executive"))
-                    <h3>Hallo {{ $currentAgent['name'] }}</h3>
+                    <h3>{{ trans('wishes.details.hello') }} {{ $currentAgent['name'] }}</h3>
                 @elseif ($logged_in_user['role'] == ('User') && $wish->last_name !== trans('user.default.last_name'))
-                    <h3>Hallo {{ $wish->first_name }} {{ $wish->last_name }},</h3>
+                    <h3>{{ trans('wishes.details.hello') }} {{ $wish->first_name }} {{ $wish->last_name }},</h3>
                 @elseif ($logged_in_user['role'] == ('User') && $wish->first_name)
                     <h3>{{ trans('wishes.details.hello_user') }},</h3>
                 @else

@@ -72,53 +72,14 @@ class FrontendController extends Controller
         3 => "3",
         4 => "4",
     ];
-    const DURATION_ARR = [
-        "exact" => "Exakt wie angegeben",
-        "7-" => "1 Woche",
-        "14-" => "2 Wochen",
-        "21-" => "3 Wochen",
-        "28-" => "4 Wochen",
-        "1-4" => "1-4 Tage",
-        "5-8" => "5-8 Tage",
-        "9-12" => "9-12 Tage",
-        "13-15" => "13-15 Tage",
-        "16-22" => "16-22 Tage",
-        "22-" => ">22 Tage",
-        1 => "1 Nacht",
-        2 => "2 Nächte",
-        3 => "3 Nächte",
-        4 => "4 Nächte",
-        5 => "5 Nächte",
-        6 => "6 Nächte",
-        7 => "7 Nächte",
-        8 => "8 Nächte",
-        9 => "9 Nächte",
-        10 => "10 Nächte",
-        11 => "11 Nächte",
-        12 => "12 Nächte",
-        13 => "13 Nächte",
-        14 => "14 Nächte",
-        15 => "15 Nächte",
-        16 => "16 Nächte",
-        17 => "17 Nächte",
-        18 => "18 Nächte",
-        19 => "19 Nächte",
-        20 => "20 Nächte",
-        21 => "21 Nächte",
-        22 => "22 Nächte",
-        23 => "23 Nächte",
-        24 => "24 Nächte",
-        25 => "25 Nächte",
-        26 => "26 Nächte",
-        27 => "27 Nächte",
-        28 => "28 Nächte",
-    ];
+    const DURATION_ARR = [];
 
     protected $apiService;
 
     public function __construct(ApiService $apiService)
     {
         $this->apiService = $apiService;
+        $this->initDurationArr();
     }
 
     /**
@@ -282,5 +243,24 @@ class FrontendController extends Controller
         $host = preg_replace('#^https?://#', '', rtrim($origin,'/'));
         $host = preg_replace('#^http?://#', '', rtrim($host,'/'));
         return $host ? $host : $request->header('Host');
+    }
+
+    public function initDurationArr(){
+        $this::DURATION_ARR = [
+            "exact" => trans('labels.frontend.wishes.exact'),
+            "7-" => trans_choice('labels.frontend.wishes.weeks', 1, ['value' => 1]),
+            "14-" => trans_choice('labels.frontend.wishes.weeks', 2, ['value' => 2]),
+            "21-" => trans_choice('labels.frontend.wishes.weeks', 3, ['value' => 3]),
+            "28-" => trans_choice('labels.frontend.wishes.weeks', 4, ['value' => 4]),
+            "1-4" => "1-4 ".trans('labels.frontend.wishes.days'),
+            "5-8" => "5-8 ".trans('labels.frontend.wishes.days'),
+            "9-12" => "9-12 ".trans('labels.frontend.wishes.days'),
+            "13-15" => "13-15 ".trans('labels.frontend.wishes.days'),
+            "16-22" => "16-22 ".trans('labels.frontend.wishes.days'),
+            "22-" => ">22 ".trans('labels.frontend.wishes.days'),
+        ];
+        for($i = 1; $i<29;$i++){
+            $this::DURATION_ARR[$i] = trans_choice('labels.frontend.wishes.days_count', $i, ['value' => $i]);
+        }
     }
 }
