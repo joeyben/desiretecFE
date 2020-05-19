@@ -575,8 +575,10 @@ footer{
 }
 .mousehover:hover + .tooltip {
   visibility: visible;
-  transition: opacity 0.3s ease;
   opacity: 1;
+}
+.mousehover:hover + .tooltip {
+  transition: opacity 0.3s ease;
 }
 .ellipsised{
   display: inline-block;

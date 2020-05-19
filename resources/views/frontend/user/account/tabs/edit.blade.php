@@ -26,12 +26,12 @@
     </div>
 
     <div class="form-group float-label">
-        {{ Form::input('text', 'city', null, ['id' => 'city', 'class' => 'form-control select2', 'placeholder' => 'transparent']) }}
+        {{ Form::input('text', 'city', null, ['id' => 'city', 'class' => 'form-control', 'placeholder' => 'transparent']) }}
         {{ Form::label('city', trans('validation.attributes.frontend.register-user.city')) }}
     </div>
 
     <div class="form-group float-label">
-        {{ Form::input('text', 'country' , null, ['id' => 'country', 'class' => 'form-control select2', 'placeholder' => 'transparent']) }}
+        {{ Form::input('text', 'country' , null, ['id' => 'country', 'class' => 'form-control', 'placeholder' => 'transparent']) }}
         {{ Form::label('country', trans('validation.attributes.frontend.register-user.country')) }}
     </div>
 
