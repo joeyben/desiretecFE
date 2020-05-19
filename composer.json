@@ -21,11 +21,11 @@
         "mcamara/laravel-localization": "^1.5",
         "nwidart/laravel-modules": "^6.2",
         "spatie/laravel-cors": "^1.6",
-        "spatie/laravel-translation-loader": "^2.4"
+        "spatie/laravel-translation-loader": "^2.4",
+        "fzaninotto/faker": "^1.4"
     },
     "require-dev": {
         "facade/ignition": "^1.4",
-        "fzaninotto/faker": "^1.4",
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^3.0",
         "phpunit/phpunit": "^8.0"

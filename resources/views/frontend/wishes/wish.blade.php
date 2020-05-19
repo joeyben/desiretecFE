@@ -189,12 +189,12 @@
 <section class="section-contact">
     <div class="container d-flex flex-wrap">
         <div class="col-md-6 s2-first">
-            @if ($logged_in_user['role'] == 'Seller')
+            @if ($logged_in_user['role'] == 'Seller' && $wish->description)
                 <h4>{{ trans('wish.details.subheadline.customer_wish') }}</h4>
                 <p>{{ trans('wish.details.subheadline.customer_wish_sub') }}</p>
                 <p><strong>{{ trans('wish.details.subheadline.customer_wish_description') }}</strong></p>
                 <p>{{ $wish->description }}</p>
-            @else
+            @elseif ($wish->description)
                 <h4>{{ trans('wish.details.subheadline.your_wish') }}</h4>
                 <p>{{ trans('wish.details.subheadline.your_wish_sub') }}</p>
                 <p><strong>{{ trans('wish.details.subheadline.your_wish_description') }}</strong></p>
