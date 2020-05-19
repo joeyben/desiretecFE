@@ -964,10 +964,12 @@ p.kwp-info {
 	  margin: 0;
 	}
 	input[type="checkbox"]{
-		position: static;
+	  position: static;
 	  display: block;
 	  margin-top: 5px;
-	  margin-left: 5px;
+      margin-left: 5px;
+      background: none;
+      border: none;
 	  &:after{
 		content: "";
 		display: inline-block;
