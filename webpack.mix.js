@@ -40,7 +40,7 @@ mix.setPublicPath('public')
     //Layer js
     .scripts([
         'node_modules/jquery/dist/jquery.js',
-        'resources/js/layer/exitintent.js',
+        'resources/js/layer/exitintent-new.js',
         // 'node_modules/js-cookie/src/js.cookie.js',
         'resources/js/layer/base.js',
         'resources/js/layer/rangeslider.js',
