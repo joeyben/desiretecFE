@@ -72,14 +72,14 @@ class FrontendController extends Controller
         3 => "3",
         4 => "4",
     ];
-    const DURATION_ARR = [];
+    private $duration_arr;
 
     protected $apiService;
 
     public function __construct(ApiService $apiService)
     {
         $this->apiService = $apiService;
-        //$this->initDurationArr(); 
+        $this->initDurationArr(); 
     }
 
     /**
@@ -109,7 +109,7 @@ class FrontendController extends Controller
             'kids_arr'     => $this::KIDS_ARR,
             'ages_arr'     => $this::AGES_ARR,
             'catering_arr' => $this::CATERING_ARR,
-            'duration_arr' => $this::DURATION_ARR,
+            'duration_arr' => $this->duration_arr,
             'pets_arr'     => $this::PETS_ARR,
             'rooms_arr'    => $this::ROOMS_ARR,
             'request'      => $request,
@@ -138,7 +138,7 @@ class FrontendController extends Controller
                 'kids_arr'     => $this::KIDS_ARR,
                 'ages_arr'     => $this::AGES_ARR,
                 'catering_arr' => $this::CATERING_ARR,
-                'duration_arr' => $this::DURATION_ARR,
+                'duration_arr' => $this->duration_arr,
                 'pets_arr'     => $this::PETS_ARR,
                 'rooms_arr'    => $this::ROOMS_ARR,
                 'request'      => $request->all(),
@@ -246,7 +246,7 @@ class FrontendController extends Controller
     }
 
     public function initDurationArr(){
-        $this::DURATION_ARR = [
+        $this->duration_arr = [
             "exact" => trans('labels.frontend.wishes.exact'),
             "7-" => trans_choice('labels.frontend.wishes.week', 1, ['value' => 1]),
             "14-" => trans_choice('labels.frontend.wishes.week', 2, ['value' => 2]),
@@ -260,7 +260,7 @@ class FrontendController extends Controller
             "22-" => ">22 ".trans('labels.frontend.wishes.nights'),
         ];
         for($i = 1; $i<29;$i++){
-            $this::DURATION_ARR[$i] = trans_choice('labels.frontend.wishes.night', $i, ['value' => $i]);
+            $this->duration_arr[$i] = trans_choice('labels.frontend.wishes.night', $i, ['value' => $i]);
         }
     }
 }
