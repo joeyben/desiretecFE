@@ -61,7 +61,7 @@
     </div>
     <div class="col-md-3">
         <i class="fal fa-stopwatch"></i>
-        <input class="data-content" value="{{ $wish->wishDetails->duration }}">
+        <input class="data-content" value="{{ transformDuration($wish->wishDetails->duration) }}">
     </div>
     @if($wish->wishDetails->rooms)
     <div class="col-md-3">
