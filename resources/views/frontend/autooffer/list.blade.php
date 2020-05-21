@@ -326,7 +326,7 @@
 
         function showMenu() {
             $('#offer-highlights').detach().appendTo('#main-offer-section-shell');
-            $('#offer-highlights').css('height', '210px');
+            $('#offer-highlights').css('height', '275px');
             $('#offer-highlights').toggle();
         }
 
