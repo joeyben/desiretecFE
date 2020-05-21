@@ -16,11 +16,13 @@
     $actionButtonsSet = false;
     $hasOffers = count($wish->wishDetails->offers) > 0;
     $hasNewMessage = isset($wish->wishDetails->messages) && count($wish->wishDetails->messages) > 0 && $wish->wishDetails->messages[count($wish->wishDetails->messages)-1]->user_id !== $logged_in_user['id'];
+    $wish->layer_image = $wish->layer_image ?? 'https://i.imgur.com/lJInLa9.png';
 @endphp
 
 @section('content')
 <section class="section-top">
-    <div class="img-background">
+    <div class="img-background" style="background-image: url('<?php echo $wish->layer_image; ?>')">
+        <div class="overlay"></div>
         <div class="container">
             <div class="col-md-8 bg-left-content">
                 @if ($logged_in_user && ($logged_in_user['role'] === "Seller" || $logged_in_user['role'] === "Executive"))

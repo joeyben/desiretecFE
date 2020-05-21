@@ -40,15 +40,7 @@ body.wish {
         .img-background {
           height: 400px;
           display: flex;
-          background-image: linear-gradient(
-              to left,
-              rgba(250, 250, 250, 0) 0%,
-              rgba(250, 250, 250, 0.4) 35%,
-              rgba(250, 250, 250, 0.6) 45%,
-              rgba(250, 250, 250, 0.9) 60%,
-              rgba(250, 250, 250, 1) 70%
-            ),
-            url(https://www.matthewwilliams-ellis.com/wp-content/uploads/2014/02/Italy-panoramic-landscape-photography-showing-Isola-Bella-Beach-in-Taormina-Sicily-Italy-panoramic-landscape-photography-by-landscape-photographer-Matthew-Williams-Ellis.jpg);
+          position: relative;
           background-size: cover;
           background-position: center right;
           flex-direction: column;
@@ -57,6 +49,19 @@ body.wish {
             background-position: center;
             height: auto;
             padding: 20px 0;
+          }
+          .overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(
+                to left,
+                rgba(250, 250, 250, 0) 0%,
+                rgba(250, 250, 250, 0.4) 35%,
+                rgba(250, 250, 250, 0.6) 45%,
+                rgba(250, 250, 250, 0.9) 60%,
+                rgba(250, 250, 250, 1) 70%
+              );
           }
           .bg-left-content {
             display: flex;
