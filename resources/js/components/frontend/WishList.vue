@@ -16,9 +16,8 @@
             <div class="list wishlist" v-cloak>
                 <div class="list-element" v-for="wish in wishes" :key="wish.id">
                     <div class="image">
-                        <a :href="getWishLink(wish.id, wish.manuelFlag)" class="img" :style="{ 'background-image': 'url(' + wish.layer_image + ')' }">
-                            <span class="caption"></span>
-                        </a>
+                        <a v-if="wish.layer_image" :href="getWishLink(wish.id, wish.manuelFlag)" class="img" :style="{ 'background-image': 'url(' + wish.layer_image + ')' }"></a>
+                        <a v-else :href="getWishLink(wish.id, wish.manuelFlag)" class="img" :style="{ 'background-image': 'url(https://i.imgur.com/lJInLa9.png)' }"></a>
                     </div>
                     <div class="main-info">
                         <ul class="info">
