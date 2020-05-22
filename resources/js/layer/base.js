@@ -346,7 +346,7 @@ jQuery(function($) {
             this.popup.find('#back-button').click($.proxy(this.setBack, this));
             this.popup.find('#submit-button').click($.proxy(this.onFormSubmit, this));
             this.popup.find('#next-button').click($.proxy(this.setNext, this));
-            this.popup.find('.kwp-close-btn').click($.proxy(this.closePopup, this));
+            //this.popup.find('.kwp-close-btn').click($.proxy(this.closePopup, this));
         },
         showPopup: function() {
             var self = this;
