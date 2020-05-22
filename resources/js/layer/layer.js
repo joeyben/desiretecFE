@@ -198,7 +198,7 @@ jQuery(function($){
             $("body").removeClass('mobile-layer');
             $("body, html").css({'overflow':'auto'});
 
-            dt.Tracking.event('close', this.trackingLabel);
+            dt.Tracking.event('close-mobile', this.trackingLabel);
 
         };
 

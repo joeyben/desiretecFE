@@ -392,7 +392,7 @@ jQuery(function($) {
             this.modal.css('display', 'none');
             this.shown = false;
 
-            //dt.Tracking.event('close', this.trackingLabel);
+            dt.Tracking.event('close', this.trackingLabel);
             // mixpanel.track(
             //     "Close Layer"
             // );
