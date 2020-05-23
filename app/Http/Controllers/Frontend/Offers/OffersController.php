@@ -12,6 +12,8 @@ use App\Repositories\Frontend\Offers\OffersRepository;
 use App\Services\Api\ApiService;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Class OffersController.
@@ -28,6 +30,8 @@ class OffersController extends Controller
         'Deleted'      => 'Deleted',
     ];
 
+    protected $upload_path;
+    protected $storage;
     /**
      * @var OffersRepository
      */
