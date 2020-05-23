@@ -862,3 +862,32 @@ if (!function_exists('baseUrlWithoutPrefix')) {
         return str_replace('https://www.','', env('APP_URL','wish-service.com'));
     }
 }
+
+
+/**
+ * Returns base ur without https://www.
+ */
+if (!function_exists('supported_languages_keys')) {
+    function supported_languages_keys()
+    {
+        return config('laravellocalization.supportedLocales');
+    }
+}
+
+/**
+ * Returns current Agent.
+ */
+if (!function_exists('get_current_agent')) {
+    function get_current_agent()
+    {
+        $currentAgent = session()->get('currentAgent');
+
+        $user = \Illuminate\Support\Facades\Auth::guard('web')->user() ? \Illuminate\Support\Facades\Auth::guard('web')->user()->user : null;
+
+        if ($user && $user['isSeller'] && !session()->has('currentAgent')) {
+            $currentAgent = $user['currentAgent'];
+        }
+        return $currentAgent;
+
+    }
+}
