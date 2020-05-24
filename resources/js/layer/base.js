@@ -554,6 +554,7 @@ jQuery(function($) {
             ga('DesireTec.send', 'event', category, action, label);
         },
         event: function(action, label) {
+            console.log(this.isInitialized)
             if(!this.isInitialized) {
                 return;
             }
