@@ -294,9 +294,7 @@ jQuery(function($) {
             if (typeof window.dt.triggerCallback === 'function') {
                 window.dt.triggerCallback();
             }
-            console.log(this.trackingLabel)
             if(!this.shown){
-                console.log("shown")
                 dt.Tracking.event('shown', this.trackingLabel);
                 this.shown = true;
             }
@@ -554,7 +552,6 @@ jQuery(function($) {
             ga('DesireTec.send', 'event', category, action, label);
         },
         event: function(action, label) {
-            console.log(this.isInitialized)
             if(!this.isInitialized) {
                 return;
             }
