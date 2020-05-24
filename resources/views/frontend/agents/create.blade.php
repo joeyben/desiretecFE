@@ -14,7 +14,7 @@
     {{ Form::open(['route' => ['frontend.agents.store', $subdomain], 'class' => 'form-horizontal p-3', 'role' => 'form', 'method' => 'post', 'id' => 'create-permission', 'files' => true]) }}
 
         <div class="modal-header">
-            <h5 class="modal-title">{{isset($customer)?'Edit':'New'}} Customer</h5>
+            <h5 class="modal-title">{{isset($customer)?'Edit':'New'}} {{ trans('seller.agent.customer') }}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -24,7 +24,7 @@
             @include("frontend.agents.form")
         </div>
         <div class="modal-footer">
-            <a class="btn btn-danger btn-md" href="{{ route('frontend.agents.index', [$subdomain]) }}">Cancel</a>
+            <a class="btn btn-danger btn-md" href="{{ route('frontend.agents.index', [$subdomain]) }}">{{ trans('seller.agent.cancel_button') }}</a>
 
             {{ Form::submit('Create', ['class' => 'btn btn-primary btn-md']) }}
         </div>

@@ -55,7 +55,7 @@
         <script src="{{ mix('js/frontend.js') }}"></script>
 
         @yield('after-scripts')
-        <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.js"></script>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.js"></script> -->
         <script type="text/javascript">
             if("{{Route::currentRouteName()}}" !== "frontend.user.account")
             {

@@ -16,21 +16,23 @@
     $actionButtonsSet = false;
     $hasOffers = count($wish->wishDetails->offers) > 0;
     $hasNewMessage = isset($wish->wishDetails->messages) && count($wish->wishDetails->messages) > 0 && $wish->wishDetails->messages[count($wish->wishDetails->messages)-1]->user_id !== $logged_in_user['id'];
+    $wish->layer_image = $wish->layer_image ?? 'https://i.imgur.com/lJInLa9.png';
 @endphp
 
 @section('content')
 <section class="section-top">
-    <div class="img-background">
+    <div class="img-background" style="background-image: url('<?php echo $wish->layer_image; ?>')">
+        <div class="overlay"></div>
         <div class="container">
             <div class="col-md-8 bg-left-content">
                 @if ($logged_in_user && ($logged_in_user['role'] === "Seller" || $logged_in_user['role'] === "Executive"))
-                    <h3>Hallo {{ $currentAgent['name'] }}</h3>
+                    <h3>{{ trans('wishes.details.hello') }} {{ $currentAgent['name'] }}</h3>
                 @elseif ($logged_in_user['role'] == ('User') && $wish->last_name !== trans('user.default.last_name'))
-                    <h3>Hallo {{ $wish->first_name }} {{ $wish->last_name }},</h3>
+                    <h3>{{ trans('wishes.details.hello') }} {{ $wish->first_name }} {{ $wish->last_name }},</h3>
                 @elseif ($logged_in_user['role'] == ('User') && $wish->first_name)
-                    <h3>Hallo lieber Kunde,</h3>
+                    <h3>{{ trans('wishes.details.hello_user') }},</h3>
                 @else
-                    <h3>Hallo,</h3>
+                    <h3>{{ trans('wishes.details.hello') }},</h3>
                 @endif
 
                 @if ($logged_in_user['role'] == ('Seller'))
@@ -78,9 +80,9 @@
                 <h4>{{ trans('wish.view.new_offers') }}</h4>
                 <p class="sa2-p1">{{ trans_choice('wish.view.offers_title_count', count($wish->wishDetails->offers), ['count' => count($wish->wishDetails->offers)]) }}
                     @if ($logged_in_user['role'] === "Seller")
-                        erstellt
+                        {{ trans('wish.view.offer_created') }}
                     @else
-                        erhalten
+                        {{ trans('wish.view.offer_received') }}
                     @endif
                 </p>
             </div>
@@ -110,7 +112,7 @@
                         {!! nl2br(e($offer->description)) !!}
                         @if ($offer->link)
                             <br><br>
-                            <b>Hier geht es zu unserer Angebotsseite:</b> <a href="{{ (strpos($offer->link,'https://') === false && strpos($offer->link,'http://') === false) ? 'https://'.$offer->link : $offer->link }}" target="_blank" rel="noopener noreferrer">{{ $offer->link }}</a>
+                            <b>{{ trans('wish.link.offer_site') }}</b> <a href="{{ (strpos($offer->link,'https://') === false && strpos($offer->link,'http://') === false) ? 'https://'.$offer->link : $offer->link }}" target="_blank" rel="noopener noreferrer">{{ $offer->link }}</a>
                         @endif
                     </p>
                 </div>
@@ -189,12 +191,12 @@
 <section class="section-contact">
     <div class="container d-flex flex-wrap">
         <div class="col-md-6 s2-first">
-            @if ($logged_in_user['role'] == 'Seller')
+            @if ($logged_in_user['role'] == 'Seller' && $wish->description)
                 <h4>{{ trans('wish.details.subheadline.customer_wish') }}</h4>
                 <p>{{ trans('wish.details.subheadline.customer_wish_sub') }}</p>
                 <p><strong>{{ trans('wish.details.subheadline.customer_wish_description') }}</strong></p>
                 <p>{{ $wish->description }}</p>
-            @else
+            @elseif ($wish->description)
                 <h4>{{ trans('wish.details.subheadline.your_wish') }}</h4>
                 <p>{{ trans('wish.details.subheadline.your_wish_sub') }}</p>
                 <p><strong>{{ trans('wish.details.subheadline.your_wish_description') }}</strong></p>
@@ -232,12 +234,44 @@
     }
 
     $(document).ready(function() {
-        if(!isEllipsisActive(document.getElementById("departure-mousehover-value"))) {
-            document.getElementById("departure-mousehover").remove();
+        if($('#departure-mousehover-value') && !isEllipsisActive(document.getElementById('departure-mousehover-value'))) {
+            document.getElementById('departure-mousehover').remove();
         }
-        if(!isEllipsisActive(document.getElementById("arrival-mousehover-value"))) {
-            document.getElementById("arrival-mousehover").remove();
+        if($('#arrival-mousehover-value').length > 0 && !isEllipsisActive(document.getElementById('arrival-mousehover-value'))) {
+            document.getElementById('arrival-mousehover').remove();
         }
+    });
+
+    $(document).on('submit', 'form.contact_form', function (event) {
+        event.preventDefault();
+        var form = $(this);
+        var data = form.serializeArray();
+        var url = form.attr("action");
+        var this_modal = form.parents('.modal');
+        $.ajax({
+            type: form.attr('method'),
+            url: url,
+            data: data,
+            success: function(data){
+                if(data.success){
+                    $('#first_name').val('');
+                    $('#last_name').val('');
+                    $('#email').val('');
+                    $('#telephone').val('');
+                    $('#subject').val('');
+                    $('#message').val('');
+                    this_modal.find('.alert-success').removeClass('fade').find('.text').text(data.message);
+                    window.setTimeout(function(){
+                            this_modal.modal('toggle');
+                            this_modal.find('.alert-success').addClass('fade');
+                    }, 3000);
+                }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                alert("Error: " + errorThrown);
+            }
+        });
+        return false;
     });
 </script>
 @endsection

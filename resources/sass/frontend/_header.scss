@@ -5,7 +5,7 @@
   .navbar-brand {
     padding: 10px 0;
     img {
-      height: 2rem;
+      height: 35px;
     }
   }
   .navbar-collapse {
@@ -78,6 +78,7 @@
   .dropdown-menu-agent {
     .nav-item {
       border-right: none;
+      padding-right: 15px !important;
       a {
         display: flex;
         align-items: center;

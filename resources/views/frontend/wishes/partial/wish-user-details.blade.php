@@ -4,7 +4,7 @@
 
 <div class="col-md-12 s2-second">
 
-    @if(getWhitelabelInfo()['id'] != 77)
+    @if($wish->wishDetails->airport !== '-')
     <div class="col-md-3">
         <i class="fal fa-plane-departure"></i>
         <div id="departure-mousehover-value" class="data-content ellipsised">{{ $wish->wishDetails->airport }}</div>
@@ -14,18 +14,28 @@
         </div>
     </div>
     @endif
+    @if($wish->wishDetails->earliest_start !== '0000-00-00' && $wish->wishDetails->latest_return !== '0000-00-00')
     <div class="col-md-3">
         <i class="fal fa-calendar-alt"></i>
         <input class="data-content" value="{{ \Carbon\Carbon::parse($wish->wishDetails->earliest_start)->format('d.m.Y') }} - {{ \Carbon\Carbon::parse($wish->wishDetails->latest_return)->format('d.m.Y') }}">
     </div>
+    @endif
+    @if($wish->wishDetails->budget !== 0)
     <div class="col-md-3">
         <i class="fal fa-usd-circle"></i>
         <input class="data-content" value="{{  number_format($wish->wishDetails->budget, 0, ',', '.') }}€">
     </div>
-    @if(getWhitelabelInfo()['id'] != 77)
+    @endif
+    @if($wish->wishDetails->category !== 0)
     <div class="col-md-3">
         <i class="fal fa-star"></i>
         <input class="data-content" value="{{ $wish->wishDetails->category }} {{ trans_choice('labels.frontend.wishes.stars', $wish->wishDetails->category) }}">
+    </div>
+    @endif
+    @if($wish->wishDetails->class)
+    <div class="col-md-3">
+        <i class="fal fa-star"></i>
+        <input class="data-content" value="{{ $wish->wishDetails->class }}">
     </div>
     @endif
     <div class="col-md-3">
@@ -51,15 +61,21 @@
     </div>
     <div class="col-md-3">
         <i class="fal fa-stopwatch"></i>
-        <input class="data-content" value="{{ $wish->wishDetails->duration }}">
+        <input class="data-content" value="{{ transformDuration($wish->wishDetails->duration) }}">
     </div>
-    @if(getWhitelabelInfo()['id'] == 77)
+    @if($wish->wishDetails->rooms)
+    <div class="col-md-3">
+        <i class="fal fa-door-closed"></i>
+        <input class="data-content" value="{{ $wish->wishDetails->rooms }} {{ trans_choice('labels.frontend.wishes.rooms', $wish->wishDetails->rooms) }}">
+    </div>
+    @endif
+    @if($wish->wishDetails->pets)
     <div class="col-md-3">
         <i class="fal fa-dog-leashed"></i>
         <input class="data-content" value="{{ trans_choice('labels.frontend.wishes.pets', $wish->wishDetails->pets) }}">
     </div>
     @endif
-    @if(getWhitelabelInfo()['id'] != 77)
+    @if($wish->wishDetails->catering)
     <div class="col-md-3">
         <i class="fal fa-utensils"></i>
         <input class="data-content" value="{{ $wish->wishDetails->catering }}">

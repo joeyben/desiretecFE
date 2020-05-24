@@ -321,16 +321,16 @@ if (!function_exists('transformDuration')) {
     function transformDuration($duration)
     {
         switch ($duration) {
-            case '7':
+            case '7-':
                 return trans_choice('labels.frontend.wishes.week', 1, ['value' => 1]);
 
                 break;
 
-            case '14':
+            case '14-':
                 return trans_choice('labels.frontend.wishes.week', 2, ['value' => 2]);
                 break;
 
-            case '21':
+            case '21-':
                 return trans_choice('labels.frontend.wishes.week', 3, ['value' => 3]);
                 break;
 

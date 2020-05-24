@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\URL;
 
 Route::get('/', 'FrontendController@index')->name('index');
 
-
+Route::get('/gwl', 'FrontendController@getWhitelabelByHostname');
 Route::get('/destinations', 'FrontendController@getAllDestinations');
 Route::get('/airports', 'FrontendController@getAllAirports');
 Route::get('/get-tt-airports', 'RegionsController@getTTAirports');
@@ -43,7 +43,7 @@ Route::group(['namespace' => 'Wishes', 'as' => 'wish.'], function ($subdomain) {
 });
 
 Route::group(['namespace' => 'Autooffers', 'as' => 'autooffer.'], function ($subdomain) {
-    Route::get('offer/ttlist/{id}/{token}', 'AutooffersController@autooferToken')->name('listTt.token');
+    Route::get('offer/list/{id}/{token}', 'AutooffersController@autooferToken')->name('list.token');
 
 });
 

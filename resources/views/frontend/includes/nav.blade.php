@@ -42,6 +42,19 @@
             @else
                 <li class="dropdown nav-item dropdown-user">
                     <a class="dropdown-toggle link-btn-secondary" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="">
+                        {{ supported_languages_keys()[session()->get('desiretec.locale', 'de')]['native'] }}
+                        <span class="caret"></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink-4">
+                        @foreach(supported_languages_keys() as  $localeCode => $properties)
+                            <a rel="alternate" hreflang="{{ $localeCode }}"  href="{{ route('languages.switch', ['locale' => $localeCode]) }}" class="dropdown-item link-btn-secondary">
+                                {{ $properties['native'] }}
+                            </a>
+                        @endforeach
+                    </div>
+                </li>
+                <li class="dropdown nav-item dropdown-user">
+                    <a class="dropdown-toggle link-btn-secondary" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="">
                         @if ($logged_in_user['name'] == "Muster Name")
                             {{ trans('navs.frontend.user.name') }}
                         @else

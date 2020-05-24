@@ -121,6 +121,7 @@ class OffersController extends Controller
                 'agent_id' => get_current_agent()['id'],
                 'files' => $files
             ];
+
             $response = $this->apiService->post('/offers/store', $body);
 
             return redirect()

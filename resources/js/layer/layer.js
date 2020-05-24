@@ -3,10 +3,10 @@ var exitIntent = window.exitIntent || {};
 
 jQuery(function($){
     var scriptSrc = $('script#dt-layer').attr('src');
-    var host = scriptSrc.replace('/js/layer.js','').replace('/js/layer-v2.js','');
+    var domain = scriptSrc.replace('/js/layer.js','');
 
     dt.defaultConfig = {
-        baseUrl: host,
+        baseUrl: domain,
         popupPath: '/show',
         popupStore:'/wish/store',
         cssPath: '/css/layer.css',
@@ -24,15 +24,10 @@ jQuery(function($){
     dt.popupTemplate = function (variant) {
 
         return '' +
-            '<div class="kwp-header kwp-variant-n1' + variant + '">' +
-            '<div class="kwp-color-overlay"></div>' +
-            '<div class="kwp-close-button kwp-close"></div>' +
-            '<div class="kwp-logo"></div>' +
-            '<div class="kwp-header-content">' +
-            '<h1 id="heading">Dürfen wir Sie beraten?</h1>' +
-            '</div>' +
-            '</div>' +
-            '<div class="kwp-body '+variant+'-body">' +
+            '<ul class="kwp-tabs" style="display: none;"></ul>' +
+            '<div class="kwp-header"></div>' +
+            '<div class="kwp-close-btn"><span></span><span></span></div>' +
+            '<div class="kwp-body">' +
             '</div><div style="clear:both;"></div>';
     };
 
@@ -165,7 +160,7 @@ jQuery(function($){
         dt.initCallbacks.push(function (popup) {
             exitIntent.init();
             document.addEventListener('exit-intent', function (e) {
-                if(!exitIntent.checkCookie()) {
+                if(!exitIntent.checkCookie() && !popup.shown) {
                     popup.show();
                     // set cookies
                     exitIntent.cookieManager.create("exit_intent", "yes", exitIntent.cookieExp, exitIntent.sessionOnly);
@@ -179,7 +174,7 @@ jQuery(function($){
         dt.PopupManager.closePopup = function(event) {
             event.preventDefault();
 
-            var formSent = $('.kwp-content').hasClass('kwp-completed-master');
+            var formSent = $('.kwp-content').hasClass('kwp-completed');
 
             this.modal.addClass('tmp-hidden');
             if(!formSent && $('.trigger-modal').length === 0) {
@@ -198,7 +193,7 @@ jQuery(function($){
             $("body").removeClass('mobile-layer');
             $("body, html").css({'overflow':'auto'});
 
-            dt.Tracking.event('close-mobile', this.trackingLabel);
+            dt.Tracking.event('close', dt.Tracking.category);
 
         };
 
@@ -223,7 +218,7 @@ jQuery(function($){
                 }
                 dt.PopupManager.modal.removeClass('tmp-hidden');
                 $(this).remove();
-                dt.Tracking.event('Trigger button click', this.trackingLabel);
+                dt.Tracking.event('Trigger button click', dt.Tracking.category);
             });
         }
 
@@ -234,7 +229,8 @@ jQuery(function($){
             $(".dt-modal").removeClass('teaser-on');
             $("body, html").css({'overflow':'hidden'});
             //$.cookie(dt.PopupManager.mobileCookieId,'true',dt.PopupManager.cookieOptions);
-            ga('dt.send', 'event', 'Mobile Layer', 'Teaser shown', 'Mobile');
+            //ga('dt.send', 'event', 'Mobile Layer', 'Teaser shown', 'Mobile');
+            dt.Tracking.event('Mobile layer shown', dt.Tracking.category);
         };
 
         dt.showTeaser = function (e) {
@@ -255,6 +251,7 @@ jQuery(function($){
             if (typeof brandColor !== 'undefined') {
                 $(".dt-modal .teaser").css('background-color', brandColor);
             }
+            dt.Tracking.event('Mobile Teaser shown', dt.Tracking.category);
         };
 
         dt.hideTeaser = function (e) {
@@ -268,13 +265,12 @@ jQuery(function($){
             if(deviceDetector.device === "phone") {
                 dt.PopupManager.teaser = true;
                 dt.PopupManager.teaserText = "Dürfen wir Sie beraten?";
-                $(".dt-modal .kwp-close").on('touchend',function () {
+                $(".dt-modal .kwp-close-btn").on('touchend',function () {
                     dt.PopupManager.closePopup(e);
                 });
             }
+
             dt.PopupManager.init();
-
-
 
             dt.triggerButton($event);
             if(deviceDetector.device === "phone" && dt.PopupManager.decoder){
@@ -311,110 +307,12 @@ jQuery(function($){
                 var dtModal = $('.dt-modal-visible');
                 var datePicker = $('.pika-single');
 
-                /*if ((!dtModal.is(e.target) && dtModal.has(e.target).length === 0) &&
-                    teaserBgColor(!datePicker.is(e.target) && datePicker.has(e.target).length === 0)) {
-                    //dt.PopupManager.closePopup(e);
-                }*/
+                if ((!dtModal.is(e.target) && dtModal.has(e.target).length === 0) &&
+                    (!datePicker.is(e.target) && datePicker.has(e.target).length === 0)) {
+                    dt.PopupManager.closePopup(e);
+                }
             }
         });
-
-
-    dt.childrenAges = function () {
-        (function ($, children, age) {
-            function update() {
-                var val = $(children).val();
-
-                if (val>0) {
-                    $('.kwp-col-ages').addClass('kwp-show-ages');
-                } else {
-                    $('.kwp-col-ages').removeClass('kwp-show-ages');
-                }
-
-                var i;
-
-                for (i = 1; i <= 4; ++i) {
-
-                    if (i <= val) {
-                        $(age + i).find('.kwp-custom-select').show();
-                    } else {
-                        $(age + i +' select').val('').find('.kwp-custom-select').hide();
-                        $(age + i).find('.kwp-custom-select').hide();
-                    }
-
-                    if(i == val){
-                        $(age + i).closest('.kwp-col-3').addClass('last');
-                    }else{
-                        $(age + i).closest('.kwp-col-3').removeClass('last');
-                    }
-                }
-                $( "select[name='ages1']" ).change(function() {
-                    $("input[name='ages']").val($("select[name='ages1'] option:selected").text() + '/' + $("select[name='ages2'] option:selected").text() + '/' + $("select[name='ages3'] option:selected").text() + '/' + $("select[name='ages4'] option:selected").text() + '/')
-                });
-                $( "select[name='ages2']" ).change(function() {
-                    $("input[name='ages']").val($("select[name='ages1'] option:selected").text() + '/' + $("select[name='ages2'] option:selected").text() + '/' + $("select[name='ages3'] option:selected").text() + '/' + $("select[name='ages4'] option:selected").text() + '/')
-                });
-                $( "select[name='ages3']" ).change(function() {
-                    $("input[name='ages']").val($("select[name='ages1'] option:selected").text() + '/' + $("select[name='ages2'] option:selected").text() + '/' + $("select[name='ages3'] option:selected").text() + '/' + $("select[name='ages4'] option:selected").text() + '/')
-                });
-                $( "select[name='ages4']" ).change(function() {
-                    $("input[name='ages']").val($("select[name='ages1'] option:selected").text() + '/' + $("select[name='ages2'] option:selected").text() + '/' + $("select[name='ages3'] option:selected").text() + '/' + $("select[name='ages4'] option:selected").text() + '/')
-                });
-            }
-            $(children).on('change keydown blur', update);
-            update();
-        })(jQuery, '#kids', '#age_');
-    };
-
-        dt.hotelStars = function () {
-            function restoreValue() {
-                var val = $('#category').val();
-
-                if (!val) {
-                    val = 0;
-                }
-
-                highlight(parseInt(val));
-            }
-
-            function setValue(val) {
-                $('#category').val(val);
-                restoreValue(val);
-            }
-
-            function setText(cnt){
-                var sonnen = cnt === 1 ? "Sonne" : "Sonnen";
-                $('.kwp-star-input').parents('.kwp-form-group').find('.text').text("ab "+cnt+" "+sonnen);
-            }
-
-            function highlight(cnt) {
-                $('.kwp-star-input .kwp-star').each(function () {
-                    var val = parseInt($(this).attr('data-val'));
-
-                    if (val <= cnt) {
-                        $(this).addClass('kwp-star-full');
-                    } else {
-                        $(this).removeClass('kwp-star-full');
-                    }
-                });
-                setText(cnt);
-            }
-
-            $('.kwp-star-input .kwp-star').hover(function () {
-                highlight(parseInt($(this).attr('data-val')));
-            }).click(function () {
-                setValue(parseInt($(this).attr('data-val')));
-                var sonnen = parseInt($(this).attr('data-val')) === 1 ? "Sonne" : "Sonnen";
-                $('.kwp-star-input').parents('.kwp-form-group').find('.text').text("ab "+$(this).attr('data-val')+" "+sonnen);
-            });
-
-            $('.kwp-star-input').mouseout(function () {
-                restoreValue();
-            });
-
-            restoreValue();
-        };
-
-
 
         function isMobile(){
             if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
@@ -489,13 +387,26 @@ jQuery(function($){
                 });
         }
 
-
         dt.applyBrandColor = function () {
-
-            $('.kwp .primary-btn, .kwp .pax-more .button a, .kwp .duration-more .button a').css({
+            var buttons = $('.kwp .primary-btn, .kwp .pax-more .button a, .kwp .duration-more .button a');
+            buttons.css({
                 'background': brandColor,
                 'border': '1px solid ' + brandColor,
                 'color': '#fff',
+            });
+            buttons.hover(function(){
+                $(this).css({
+                    'background': '#fff',
+                    'border': '1px solid ' + brandColor,
+                    'color': brandColor,
+                    'transition': 'all 0.3s',
+                });
+            }, function() {
+                $(this).css({
+                    'background': brandColor,
+                    'border': '1px solid ' + brandColor,
+                    'color': '#fff',
+                });
             });
 
             $(".kwp-color-overlay").css('background-color', brandColor);
@@ -503,30 +414,147 @@ jQuery(function($){
             $('<style>.kwp input[type="checkbox"]:checked:after { background-color: ' + brandColor + '; border: 1px solid ' + brandColor + '; }</style>').appendTo('head');
         };
 
-        dt.applyLayerContent = function () {
-            if (layerContent.attachments !== undefined && layerContent.attachments.length != 0) {
-                $('.kwp-header').css({
-                    'background-image': "url("+layerContent.attachments[0].url+")"
+        dt.handleDestination = function(is_pure_autooffer) {
+            $('#destination').tagsinput({
+                maxTags: 3,
+                maxChars: 20,
+                allowDuplicates: false,
+                freeInput: !is_pure_autooffer,
+                typeahead: {
+                    autoSelect: false,
+                    minLength: 3,
+                    highlight: true,
+                    source: function(query) {
+                        return $.get(domain + '/destinations', {query: query});
+                    }
+                }
+            });
+            $("#destination").on('itemAdded', function(event) {
+                setTimeout(function(){
+                $("input[type=text]",".bootstrap-tagsinput").val("");
+                }, 1);
+            });
+        };
+
+        dt.handleAirport = function(is_pure_autooffer) {
+            $('#airport').tagsinput({
+                maxTags: 3,
+                maxChars: 20,
+                allowDuplicates: false,
+                freeInput: !is_pure_autooffer,
+                typeahead: {
+                    autoSelect: false,
+                    minLength: 3,
+                    highlight: true,
+                    source: function(query) {
+                        return $.get(domain + '/airports', {query: query});
+                    }
+                }
+            });
+            $("#airport").on('itemAdded', function(event) {
+                setTimeout(function(){
+                $("input[type=text]",".bootstrap-tagsinput").val("");
+                }, 1);
+            });
+        };
+
+        $('body').on('blur', '#destination', function() {
+            $(this).trigger(jQuery.Event('keypress', {which: 13}));
+        });
+
+        dt.initLayerVersion = function() {
+            var matchDomains = false;
+            var currentLocation = window.location.href;
+
+            $.each(layers, function(index, layer) {
+                if(layer.layer_url.replace(/\/$/, '') == currentLocation.replace(/\/$/, '')) {
+                    dt.PopupManager.version = layer.layer.path;
+                    matchDomains = true;
+                    return false;
+                }
+            });
+
+            if(!matchDomains) {
+                dt.PopupManager.version = layers[0].layer.path;
+            }
+
+            dt.PopupManager.show();
+        };
+
+        dt.showTabs = function(layers) {
+            var hasTabs = layers.length > 1;
+            var alreadyShown = $('.kwp-tabs .tab-link').length > 1;
+
+            if(hasTabs && !alreadyShown) {
+                $.each(layers, function(index, layer) {
+                    var version = layer.layer.path;
+                    var li = '<li class="tab-link" data-tab="' + version + '">' + version + '</li>';
+                    $(".kwp-tabs").append(li);
+                });
+                $('.kwp-tabs').show();
+            }
+        };
+
+        dt.showCurrentTab = function(layerName) {
+            $('.kwp-tabs li').removeClass('current');
+            $('.tab-content').removeClass('current');
+            $('[data-tab=' + layerName + ']').addClass('current');
+            $("#" + layerName).addClass('current');
+        };
+
+        dt.handleClickTabs = function() {
+            $('.kwp-tabs li').click(function(event) {
+                event.stopPropagation();
+                event.preventDefault();
+                event.stopImmediatePropagation();
+
+                $(this).addClass('current');
+                dt.PopupManager.version = $(this).attr('data-tab');
+                dt.PopupManager.shown = false;
+                dt.PopupManager.show();
+            });
+        }
+
+        dt.fillContent = function(layer, hasTabs) {
+            $('.kwp-logo').css({
+                'background-image': "url(" + whitelabel.attachments.logo + ")"
+            });
+
+            if (layer.headline_color == 'dark') {
+                $('.kwp-header-dynamic h1').css({'color': '#454545'});
+            } else if (layer.headline_color == 'light') {
+                $('.kwp-header-dynamic h1').css({'color': '#fff', 'text-shadow': '0 1px 0 #000'});
+            }
+
+            if(!hasTabs) {
+                $('.kwp-close-btn').css({'top': '15px'});
+                if (layer.headline_color == 'dark') {
+                    $('.kwp-close-btn span').css({'background': '#454545', 'height': '1.5px'});
+                } else if (layer.headline_color == 'light') {
+                    $('.kwp-close-btn span').css({'background': '#fff', 'height': '1.5px'});
+                }
+            } else {
+                $('.kwp-close-btn span').css({'background': '#454545'});
+            }
+
+            if (layer.attachments !== undefined && layer.attachments.length != 0) {
+                $('.kwp-header-dynamic').css({
+                    'background-image': "url(" + layer.attachments[0].url + ")"
                 });
             } else {
-                $('.kwp-header').css({
-                    'background-image': "url(https://i.imgur.com/lJInLa9.png)",
-                    'background-position': "100% 80%"
+                $('.kwp-header-dynamic').css({
+                    'background': "url(https://i.imgur.com/lJInLa9.png) 48% 68%"
                 });
             }
 
-            dt.applyLayerHeadline();
-        };
-
-        dt.applyLayerHeadline = function () {
-            $('#heading').text(layerContent.headline);
-
-            if (layerContent.headline_color == 'dark') {
-                $('.kwp-header h1').css({'color': '#454545'});
-                $('.kwp-header .kwp-close-button i').css({'color': '#454545'});
-            } else if (layerContent.headline_color == 'light') {
-                $('.kwp-header h1').css({'color': '#fff', 'text-shadow': '0 1px 0 #000'});
-                $('.kwp-header .kwp-close-button i').css({'color': '#fff'});
+            if(!$(".kwp-content").hasClass('kwp-completed')) {
+                $('.kwp-header-text h1').text(layer.headline);
+                $('.kwp-middle').text(layer.subheadline);
+                $('#datenschutz').attr('href', layer.privacy);
+                $('#agb_link').attr('href', whitelabel.domain + '/tnb');
+            } else {
+                $('.kwp-completed h1').text(layer.headline_success);
+                $('.kwp-completed p').text(layer.subheadline_success);
             }
         };
 
@@ -534,7 +562,7 @@ jQuery(function($){
             if( $(window).outerWidth() <= 768 ) {
                 dt.PopupManager.isMobile = true;
 
-                $('#heading').text('Dürfen wir Sie beraten?');
+                $('.kwp-header-text h1').text('Dürfen wir Sie beraten?');
 
                 $("body").addClass('mobile-layer');
                 $(".dt-modal").addClass('m-open');
@@ -547,8 +575,6 @@ jQuery(function($){
             } else {
                 dt.PopupManager.isMobile = false;
 
-                dt.applyLayerHeadline();
-
                 $("body").removeClass('mobile-layer');
                 $(".dt-modal").removeClass('m-open');
 
@@ -558,38 +584,358 @@ jQuery(function($){
             }
         };
 
-        dt.autocomplete = function(){
-            $('#destination').tagsinput({
-                maxTags: 3,
-                maxChars: 20,
-                allowDuplicates: false,
-                typeahead: {
-                    autoSelect: false,
-                    minLength: 3,
-                    highlight: true,
-                    source: function(query) {
-                        return $.get(domain + '/destinations', {query: query});
+        dt.handleDuration = function() {
+            $("#earliest_start, #latest_return").on('change paste keyup input', function(){
+                var earliest_start_arr = $("#earliest_start").val().split('.');
+                var latest_return_arr = $("#latest_return").val().split('.');
+                var earliest_start = new Date(earliest_start_arr[2], earliest_start_arr[1]-1, earliest_start_arr[0]);
+                var latest_return = new Date(latest_return_arr[2], latest_return_arr[1]-1, latest_return_arr[0]);
+                var diff_nights = Math.round((latest_return-earliest_start)/(1000*60*60*24));
+                var diff_days =  diff_nights + 1;
+                var options = document.getElementById("duration").getElementsByTagName("option");
+                for (var i = 0; i < options.length; i++) {
+                    if(options[i].value.includes('-')){
+                        var days = options[i].value.split('-');
+                        if(days[1].length){
+                            (parseInt(days[0]) <= parseInt(diff_days))
+                                ? options[i].disabled = false
+                                : options[i].disabled = true;
+                        } else {
+                            (parseInt(days[0]) <= parseInt(diff_days))
+                                ? options[i].disabled = false
+                                : options[i].disabled = true;
+                        }
+                    } else if (options[i].value == "exact" || options[i].value == "" || !options[i].value.length) {
+                        options[i].disabled = false;
+                    } else {
+                        (parseInt(options[i].value) <= parseInt(diff_nights))
+                            ? options[i].disabled = false
+                            : options[i].disabled = true;
                     }
                 }
+
+                return true;
             });
-            $('#airport').tagsinput({
-                maxTags: 3,
-                maxChars: 20,
-                allowDuplicates: false,
-                typeahead: {
-                    autoSelect: false,
-                    minLength: 3,
-                    highlight: true,
-                    source: function(query) {
-                        return $.get(domain + '/airports', {query: query});
+
+            $(".duration-more .button a").click(function(e) {
+                e.preventDefault();
+                $(this).parents('.duration-col').removeClass('open');
+                var from = $("#earliest_start").val();
+                var back = $("#latest_return").val();
+                var duration = $("#duration option:selected").text();
+
+                $(".duration-time .txt").text(from+" - "+back+", "+duration);
+                return false;
+            });
+
+            dt.startDate = new Pikaday({
+                field: document.getElementById('earliest_start'),
+                format: 'dd.mm.YYYY',
+                defaultDate: '01.01.2019',
+                firstDay: 1,
+                minDate: new Date(),
+                toString: function(date, format) {
+                    // you should do formatting based on the passed format,
+                    // but we will just return 'D/M/YYYY' for simplicity
+                    const day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+                    const month = (date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
+                    const year = date.getFullYear();
+                    return day+"."+month+"."+year;
+                },
+                i18n: {
+                    previousMonth: 'Vormonat',
+                    nextMonth: 'Nächsten Monat',
+                    months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+                    weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+                    weekdaysShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa']
+                },
+                onSelect: function(date) {
+                    var dateFrom = this.getDate();
+                    var dateTo = dt.endDate.getDate();
+                    if(dateFrom >= dateTo){
+                        var d = date.getDate();
+                        var m = date.getMonth();
+                        var y = date.getFullYear();
+                        var updatedDate = new Date(y, m, d);
+                        dt.endDate.setMinDate(updatedDate);
+                        updatedDate = new Date(y, m, d+7);
+                        dt.endDate.setDate(updatedDate);
                     }
+                },
+                onOpen: function() {
+
+                },
+            });
+            dt.endDate = new Pikaday({
+                field: document.getElementById('latest_return'),
+                format: 'dd.mm.YYYY',
+                defaultDate: '01.01.2019',
+                firstDay: 1,
+                toString: function(date, format) {
+                    // you should do formatting based on the passed format,
+                    // but we will just return 'D/M/YYYY' for simplicity
+                    const day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+                    const month = (date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
+                    const year = date.getFullYear();
+                    return day+"."+month+"."+year;
+                },
+                i18n: {
+                    previousMonth: 'Vormonat',
+                    nextMonth: 'Nächsten Monat',
+                    months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+                    weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+                    weekdaysShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa']
                 }
             });
-            $("#destination, #airport").on('itemAdded', function(event) {
-                setTimeout(function(){
-                $("input[type=text]",".bootstrap-tagsinput").val("");
-                }, 1);
+
+            if(!$("#earliest_start").val()){
+                var date = new Date();
+                date.setDate(date.getDate() + 3);
+                var d = date.getDate();
+                var m = date.getMonth()+1;
+                var y = date.getFullYear();
+                if (d < 10) {
+                    d = "0" + d;
+                }
+                if (m < 10) {
+                    m = "0" + m;
+                }
+                $("#earliest_start").val(d+"."+m+"."+y);
+            }
+
+            if(!$("#latest_return").val()){
+                var date = new Date();
+                date.setDate(date.getDate() + 10);
+                var d = date.getDate();
+                var m = date.getMonth()+1;
+                var y = date.getFullYear();
+                if (d < 10) {
+                    d = "0" + d;
+                }
+                if (m < 10) {
+                    m = "0" + m;
+                }
+                $("#latest_return").val(d+"."+m+"."+y);
+            }
+
+            $(".duration-time .txt").text($("#earliest_start").val()+" - "+$("#latest_return").val()+", "+$("#duration option:selected").text());
+
+            $("#latest_return").trigger("change");
+        };
+
+        dt.handleTriggers = function() {
+            $(".dd-trigger").click(function(e) {
+                if(!$(this).parents('.main-col').hasClass('open')){
+                    $('.main-col').removeClass('open')
+                    $(this).parents('.main-col').addClass('open');
+                }else
+                    $(this).parents('.main-col').removeClass('open');
+
+                $('.kwp-content').animate({ scrollTop: $(this).offset().top}, 500);
             });
         };
 
-    });
+        dt.hanglePax = function() {
+            $(".pax-more .button a").click(function(e) {
+                e.preventDefault();
+                $(this).parents('.pax-col').removeClass('open');
+                var pax = $("#adults").val();
+                var children_count = parseInt($("#kids").val());
+                var children = children_count > 0 ? (children_count == 1 ? ", "+children_count+" Kind" : ", "+children_count+" Kinder")  : "" ;
+
+                var erwachsene = parseInt(pax) > 1 ? "Erwachsene" : "Erwachsener";
+                $(".travelers .txt").text(pax+" "+erwachsene+" "+children);
+                return false;
+            });
+
+            var pax = $("#adults").val();
+            var children_count = parseInt($("#kids").val());
+            var children = children_count > 0 ? (children_count == 1 ? ", "+children_count+" Kind" : ", "+children_count+" Kinder")  : "" ;
+            var erwachsene = parseInt(pax) > 1 ? "Erwachsene" : "Erwachsener";
+            $(".travelers .txt").text(pax+" "+erwachsene+" "+children);
+        };
+
+        dt.handleKidsAges = function () {
+            (function ($, children, age) {
+                function update() {
+                    var val = $(children).val();
+
+                    if (val>0) {
+                        $('.kwp-col-ages').addClass('kwp-show-ages');
+                    } else {
+                        $('.kwp-col-ages').removeClass('kwp-show-ages');
+                    }
+
+                    var i;
+
+                    for (i = 1; i <= 4; ++i) {
+
+                        if (i <= val) {
+                            $(age + i).find('.kwp-custom-select').show();
+                        } else {
+                            $(age + i +' select').val('').find('.kwp-custom-select').hide();
+                            $(age + i).find('.kwp-custom-select').hide();
+                        }
+
+                        if(i == val){
+                            $(age + i).closest('.kwp-col-3').addClass('last');
+                        }else{
+                            $(age + i).closest('.kwp-col-3').removeClass('last');
+                        }
+                    }
+                    $( "select[name='ages1']" ).change(function() {
+                        $("input[name='ages']").val($("select[name='ages1'] option:selected").text() + '/' + $("select[name='ages2'] option:selected").text() + '/' + $("select[name='ages3'] option:selected").text() + '/' + $("select[name='ages4'] option:selected").text() + '/')
+                    });
+                    $( "select[name='ages2']" ).change(function() {
+                        $("input[name='ages']").val($("select[name='ages1'] option:selected").text() + '/' + $("select[name='ages2'] option:selected").text() + '/' + $("select[name='ages3'] option:selected").text() + '/' + $("select[name='ages4'] option:selected").text() + '/')
+                    });
+                    $( "select[name='ages3']" ).change(function() {
+                        $("input[name='ages']").val($("select[name='ages1'] option:selected").text() + '/' + $("select[name='ages2'] option:selected").text() + '/' + $("select[name='ages3'] option:selected").text() + '/' + $("select[name='ages4'] option:selected").text() + '/')
+                    });
+                    $( "select[name='ages4']" ).change(function() {
+                        $("input[name='ages']").val($("select[name='ages1'] option:selected").text() + '/' + $("select[name='ages2'] option:selected").text() + '/' + $("select[name='ages3'] option:selected").text() + '/' + $("select[name='ages4'] option:selected").text() + '/')
+                    });
+                }
+                $(children).on('change keydown blur', update);
+                update();
+            })(jQuery, '#kids', '#age_');
+        };
+
+        dt.handleBudgetRange = function() {
+            $('#budgetRange').rangeslider({
+                polyfill: false,
+                onInit: function() {
+                    $('.rangeslider__handle').on('mousedown touchstart mousemove touchmove', function(e) {
+                        e.preventDefault();
+                    })
+                },
+                fillClass: 'rangeslider__fill',
+                onSlide: function(position, value) {
+                    if($(".rangeslider-wrapper .haserrors").length)
+                        $(".rangeslider-wrapper .haserrors").removeClass('haserrors');
+
+                    if(value === 10000){
+                        $(".rangeslider-wrapper .text").text("beliebig");
+                        $("#budget").val("beliebig");
+                    }else if(value === 100){
+                        $(".rangeslider-wrapper .text").html("&nbsp;");
+                        $("#budget").val("");
+                    }else{
+                        var currency = wl_name !== 'Lastminute' ? ' €' : ' CHF';
+                        $(".rangeslider-wrapper .text").text("bis "+value+currency);
+                        $("#budget").val(""+value);
+                    }
+                    if(!$(".dt-modal .haserrors").length){
+                        $('.dt-modal #submit-button').removeClass('error-button');
+                    }
+                },
+            });
+
+            var range = parseInt($("#budget").val().replace('.',''));
+            if(range) {
+                $('input[type="range"]').val(range).change();
+            }
+        };
+
+        dt.handleHotelStars = function () {
+            var isLastminute = wl_name === 'Lastminute';
+
+            function restoreValue() {
+                var val = $('#category').val();
+                if (!val) {
+                    val = 0;
+                }
+
+                highlight(parseInt(val));
+            }
+
+            function setValue(val) {
+                $('#category').val(val);
+                restoreValue(val);
+            }
+
+            function setText(cnt){
+                if(!isLastminute) {
+                    var sonnen = cnt === 1 ? "Sonne" : "Sonnen";
+                } else {
+                    var sonnen = cnt === 1 ? "Stern" : "Sterne";
+                }
+                $('.kwp-star-input').parents('.kwp-form-group').find('.text').text("ab "+cnt+" "+sonnen);
+            }
+
+            function highlight(cnt) {
+                if(!isLastminute) {
+                    $('.kwp-star-input .kwp-star').each(function () {
+                        var val = parseInt($(this).attr('data-val'));
+
+                        if (val <= cnt) {
+                            $(this).addClass('kwp-star-full');
+                        } else {
+                            $(this).removeClass('kwp-star-full');
+                        }
+                    });
+                } else {
+                    $('.kwp-star-input .fa-star').each(function () {
+                        var val = parseInt($(this).attr('data-val'));
+
+                        if (val <= cnt) {
+                            $(this).addClass('fas');
+                            $(this).removeClass('fal');
+                        } else {
+                            $(this).removeClass('fas');
+                            $(this).addClass('fal');
+                        }
+                    });
+                }
+                setText(cnt);
+            }
+
+            if(!isLastminute) {
+                $('.kwp-star-input .kwp-star').hover(function () {
+                    highlight(parseInt($(this).attr('data-val')));
+                }).click(function () {
+                    setValue(parseInt($(this).attr('data-val')));
+                    var sonnen = parseInt($(this).attr('data-val')) === 1 ? "Sonne" : "Sonnen";
+                    $('.kwp-star-input').parents('.kwp-form-group').find('.text').text("ab "+$(this).attr('data-val')+" "+sonnen);
+                });
+            } else {
+                $('.kwp-star-input .fa-star').hover(function () {
+                    highlight(parseInt($(this).attr('data-val')));
+                }).click(function () {
+                    setValue(parseInt($(this).attr('data-val')));
+                    var sonnen = parseInt($(this).attr('data-val')) === 1 ? "Stern" : "Sterne";
+                    $('.kwp-star-input').parents('.kwp-form-group').find('.text').text("ab "+$(this).attr('data-val')+" "+sonnen);
+                });
+            }
+
+            $('.kwp-star-input').mouseout(function () {
+                restoreValue();
+            });
+
+            restoreValue();
+        };
+
+        dt.handleErrors = function() {
+            if($(".dt-modal .haserrors").length){
+                $('.dt-modal #submit-button').addClass('error-button');
+            }
+            if($(".duration-more .haserrors").length){
+                $('.duration-group').addClass('haserrors');
+            }
+
+            function check_button(){
+                if(!$(".dt-modal .haserrors").length){
+                    $('.dt-modal #submit-button').removeClass('error-button');
+                }
+            };
+            $( ".haserrors input" ).keydown(function( event ) {
+                $(this).parents('.haserrors').removeClass('haserrors');
+                check_button();
+            });
+            $('.haserrors input[type="checkbox"]').change(function () {
+                $(this).parents('.haserrors').removeClass('haserrors');
+                check_button();
+            });
+        }
+
+});

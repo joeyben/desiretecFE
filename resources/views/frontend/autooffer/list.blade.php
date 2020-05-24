@@ -98,7 +98,7 @@
                                     <div class="icon-background">
                                         <i class="fas fa-users" aria-hidden="true"></i>
                                     </div>
-                                    <h4>{{ $wish->adults }} Erwachsene, {{ $wish->kids }} {{ $wish->kids == 1 ? "Kind" : "Kinder" }}</h4>
+                                    <h4>{{ $wish->adults }} {{ trans('autooffers.wish.adults') }}, {{ $wish->kids }} {{ $wish->kids == 1 ? "Kind" : "Kinder" }}</h4>
                                 </li>
                                 <li>
                                     <div class="icon-background">
@@ -143,7 +143,7 @@
                     @if (count($offers) > 0)
                         <div id="top-map" class="map"></div>
                     @endif
-                    <a class="btn btn-secondary" onclick="showMenu()">Reisewunsch ansehen</a>
+                    <a class="btn btn-secondary" onclick="showMenu()">{{ trans('autooffers.wish.view') }}</a>
                 </div>
 
             </section>
@@ -151,7 +151,7 @@
             <section class="listed-offers-section" id="listed-offers-section">
                 <div class="shell">
                     <div class="vertical-line"></div>
-                    <h1>Meine Angebote</h1>
+                    <h1>{{ trans('autooffers.offers.headline') }}</h1>
 
                     <ul class="offers">
                         @php
@@ -173,10 +173,10 @@
                                 $locations[] = $hotelData;
                             @endphp
                             <li class="offer box-shadow" id="hotel-{{ $key }}">
-                                <span class="wish_offer_id">Angebotsnummer: {{ $wish->id }}/{{ $count + 1 }}</span>
+                                <span class="wish_offer_id">{{ trans('autooffers.offers.offer_number') }}: {{ $wish->id }}/{{ $count + 1 }}</span>
                             <div class="left-side">
                                 @if ($count === 1)
-                                    <div class="label">Unser Tipp</div>
+                                    <div class="label">{{ trans('autooffers.offers.tip') }}</div>
                                 @endif
                                 <div class="slick-slider">
                                     @if (isset($offer['hotel_data']['hotel']['catalogData']['imageList']))
@@ -212,13 +212,13 @@
                                 <div class="recommandations">
                                     <div class="average"><?= number_format((int) ($offer['data']['hotelOffer']['hotel']['rating']['overall']) / 10, 1, ',', '.'); ?></div>
                                     <div class="text">
-                                        <h4 class="dark-grey-2">Empfehlenswert</h4>
-                                        <h4>{{ $offer['data']['hotelOffer']['hotel']['rating']['count'] }} Bewertungen</h4>
+                                        <h4 class="dark-grey-2">{{ trans('autooffers.offers.recommended') }}</h4>
+                                        <h4>{{ $offer['data']['hotelOffer']['hotel']['rating']['count'] }} {{ trans('autooffers.offers.ratings') }}</h4>
                                     </div>
                                 </div>
 
                                 <div class="highlights">
-                                    <h4 class="dark-grey-2">Highlights der Unterkunft:</h4>
+                                    <h4 class="dark-grey-2">{{ trans('autooffers.offers.highlights') }}:</h4>
                                     <ul>
                                         @for ($i = 0; $i < 3; $i++)
                                         <li>
@@ -250,15 +250,11 @@
                                         $tourOperators = getWhitelabelInfo()['tourOperators'];
                                         $duration = (int)$offer['data']['travelDate']['duration'] - 1;
                                     @endphp
-                                    @if (getWhitelabelInfo()['id'] === 159)
-                                        <a class="btn btn-primary" target="_blank" href="https://ibe.traffics.de/1100000160000000/pauschalreise/angebote?giataIdList={{ $offer['hotel_data']['hotel']['giata']['hotelId'] }}&tourOperator={{ $offer['hotel_data']['hotel']['tourOperator']['code'] }}&roomTypeList=&minPricePerPerson={{ $offer['data']['personPrice']['value'] }}&searchDate={{ $hin }}%2C{{ $zu }}%2C{{ $duration }}&minBoardType={{ $offer['data']['hotelOffer']['boardType']['code'] }}&inclusiveList=&adults={{ $wish->adults }}{{ $kids }}&departureAirportList={{ $offer['data']['flightOffer']['flight']['departureAirport']['code'] }}&destinationName={{ $wish->destination }}&regionList={{ $offer['data']['hotelOffer']['hotel']['location']['region']['code'] }}&ref=desiretec">
-                                            <i class="fas fa-chevron-right"></i>
-                                        </a>
-                                    @else
-                                    <a class="btn btn-primary" target="_blank" href="https://reisen.bild.de/buchen/?hotellist={{ $offer['hotel_data']['hotel']['giata']['hotelId'] }}&tourOperator={{ $offer['hotel_data']['hotel']['tourOperator']['code'] }}&productType=pauschal&searchDate={{ $hin }}%2C{{ $zu }}%2C{{ $offer['data']['travelDate']['duration'] }}&hotellist=&regionlist={{ $offer['data']['hotelOffer']['hotel']['location']['region']['code'] }}&departureairportlist={{ $offer['data']['flightOffer']['flight']['departureAirport']['code'] }}&inclusiveList=&keywordList=&tourOperatorList={{ $tourOperators }}&sortBy=price&sortDir=up&navigationStart=1%2C10&navigationOffer=1%2C10&navigationHotel=1%2C10&partnerIdent=bildreisen%2F&action=hoteldetail&filterdest=hotel&maxPricePerPerson={{ $offer['data']['personPrice']['value'] }}&destinationName={{ $wish->destination }}&departureName={{ $wish->airport }}&adults={{ $wish->adults }}{{ $kids }}&minCategory={{ $wish->category }}&recommendation=&roomTypeList=&boardTypeList={{ $offer['data']['hotelOffer']['boardType']['code'] }}&inclusiveListSel=&ref=desiretec">
+
+                                    <a class="btn btn-primary" target="_blank" href="https://ibe.traffics.de/1100001250000000/pauschalreise/angebote?giataIdList={{ $offer['hotel_data']['hotel']['giata']['hotelId'] }}&tourOperator={{ $offer['hotel_data']['hotel']['tourOperator']['code'] }}&roomTypeList=&minPricePerPerson={{ $offer['data']['personPrice']['value'] }}&searchDate={{ $hin }}%2C{{ $zu }}%2C{{ $duration }}&minBoardType={{ $offer['data']['hotelOffer']['boardType']['code'] }}&inclusiveList=&adults={{ $wish->adults }}{{ $kids }}&departureAirportList={{ $offer['data']['flightOffer']['flight']['departureAirport']['code'] }}&destinationName={{ $wish->destination }}&regionList={{ $offer['data']['hotelOffer']['hotel']['location']['region']['code'] }}&ref=desiretec">
                                         <i class="fas fa-chevron-right"></i>
                                     </a>
-                                    @endif
+
                                 </div>
 
                             </div>
@@ -291,10 +287,13 @@
         $(document).ready(function(){
             $('.about-section h3 a').css({'color': brandColor});
             $('.listed-offers-section .vertical-line').css({'background-color': brandColor});
-            $('.fas.fa-heart, .fal.fa-check, .offers .fulfill span, .fas.fa-map-marker-alt, .offers .slick-slider i').css({'color': brandColor});
+            $('.fas.fa-heart, .fal.fa-check, .offers .fulfill span, .fas.fa-map-marker-alt').css({'color': brandColor});
             $('.offers .recommandations .average').css({'border-color': brandColor});
             $('.offers .label').css({'color': brandColor});
-            $('head').append('<style> progress::-webkit-progress-value { background: ' + brandColor + ' !important; } </style>');
+            $('head').append('<style>' +
+                'progress::-webkit-progress-value { background: ' + brandColor + ' !important; } ' +
+                '.offers .slick-slider i { color: ' + brandColor + '; }' +
+                '</style>');
 
             if($('.offers .info-icons').length === 0) {
                 $('.offers .highlights').css({'padding-bottom': '15px'});
@@ -327,7 +326,7 @@
 
         function showMenu() {
             $('#offer-highlights').detach().appendTo('#main-offer-section-shell');
-            $('#offer-highlights').css('height', '210px');
+            $('#offer-highlights').css('height', '275px');
             $('#offer-highlights').toggle();
         }
 
