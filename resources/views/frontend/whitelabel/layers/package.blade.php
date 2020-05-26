@@ -1,5 +1,10 @@
 @php
     $layerName = 'package';
+
+    if($whitelabel['name'] === 'regiomaris') {
+        unset($catering_arr[1]);
+        unset($catering_arr[4]);
+    }
 @endphp
 
 <div id="{{ $layerName }}" class="tab-content">
