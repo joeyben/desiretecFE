@@ -152,7 +152,7 @@
                     </div>
                 </div>
                 <div class="kwp-col-4 class">
-                    {{ Form::label('klasse', trans('layer.cruise.klasse'), ['class' => 'control-label required']) }}
+                    {{ Form::label('klasse', trans('layer.cruise.class'), ['class' => 'control-label required']) }}
                     <div class="kwp-custom-select">
                         {{ Form::select('class', $class_arr, key_exists('class', $request) ? $request['class'] : null, ['class' => 'form-control box-size']) }}
                     </div>
