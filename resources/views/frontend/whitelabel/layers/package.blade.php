@@ -4,6 +4,7 @@
     if($whitelabel['name'] === 'regiomaris') {
         unset($catering_arr[1]);
         unset($catering_arr[4]);
+        unset($catering_arr[5]);
     }
 @endphp
 
