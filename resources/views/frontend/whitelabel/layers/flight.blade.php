@@ -63,7 +63,7 @@
                 </div>
 
                 <div class="kwp-col-3 class">
-                    {{ Form::label('klasse', trans('layer.general.klasse'), ['class' => 'control-label required']) }}
+                    {{ Form::label('klasse', trans('layer.flight.klasse'), ['class' => 'control-label required']) }}
                     <div class="kwp-custom-select">
 
                         {{ Form::select('class', $class_arr, key_exists('class', $request) ? $request['class'] : null) }}
