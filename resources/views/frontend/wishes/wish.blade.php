@@ -184,7 +184,7 @@
                 <h4>
                     {{ trans('wish.details.message.new_message') }} <i class="fal fa-bell ml-5"></i>
                 </h4>
-                <chat-messages words-trans="{{ json_encode($translations) }}" :wishid="{{ $wish->wish_id }}" :userid="{{ $logged_in_user['id'] }}" :groupid="{{ $wish->group_id }}">
+                <chat-messages :words-trans="{{ json_encode($translations) }}" :wishid="{{ $wish->wish_id }}" :userid="{{ $logged_in_user['id'] }}" :groupid="{{ $wish->group_id }}">
                 </chat-messages>
             </div>
         </div>
