@@ -23,7 +23,7 @@
             csrfToken() { window.Laravel.csrfToken; }
         },
 
-        props: ['messages', 'userid', 'wishid', 'groupid', 'username', 'fetch'],
+        props: ['messages', 'userid', 'wishid', 'groupid', 'username', 'fetch', 'wordsTrans'],
 
         methods: {
             sendMessage() {
