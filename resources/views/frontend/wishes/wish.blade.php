@@ -170,11 +170,13 @@
     </div>
 @endif
 
+
+
 <section class="section-comments" id="messages">
     <div class="container">
         <div class="col-md-12">
             <h4>
-                Neue Nachrichten <i class="fal fa-bell ml-5"></i>
+                {{ trans('wish.details.message.new_message') }} <i class="fal fa-bell ml-5"></i>
             </h4>
             <chat-messages :wishid="{{ $wish->wish_id }}" :userid="{{ $logged_in_user['id'] }}" :groupid="{{ $wish->group_id }}">
             </chat-messages>
