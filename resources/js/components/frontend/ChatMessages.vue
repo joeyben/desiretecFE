@@ -10,7 +10,7 @@
             <div v-bind:class="[userid == message.user_id ?  'cu-comment cu-comment-right' : 'cu-comment cu-comment-left']">
                 <p>
                      <span class="username">
-                    {{ userid == message.user_id ? "Me" : message.name  }}
+                    {{ userid == message.user_id ? "Ich" : message.name  }}
                     </span>
 
                     <span v-if="userid == message.user_id" class="action_buttons">
@@ -30,67 +30,67 @@
 
 <script>
 
-  import MessageForm from './MessageForm.vue'
-  import ConfirmationModal from './ConfirmationModal.vue'
-  import moment from 'moment'
-  moment.locale('de');
-Vue.prototype.moment = moment
+    import MessageForm from './MessageForm.vue'
+    import ConfirmationModal from './ConfirmationModal.vue'
+    import moment from 'moment'
+    moment.locale('de');
+    Vue.prototype.moment = moment
 
-export default {
-    data () {
-        return {
-            messages: [],
-            user: '',
-            avatar: []
-        }
-    },
-
-    props: ['userid', 'wishid', 'groupid'],
-
-    mounted() {
-        this.fetchMessages();
-    },
-
-    methods: {
-
-        fetchMessages() {
-            axios.get('/messages/'+this.wishid+'/'+this.groupid).then(response => {
-                this.messages = response.data.data;
-                this.user = response.data.user;
-                this.avatar = response.data.avatar;
-            }).catch(function (error) {
-                console.log(error);
-            });
+    export default {
+        data () {
+            return {
+                messages: [],
+                user: '',
+                avatar: []
+            }
         },
 
-        editMessage(messageid, message) {
+        props: ['userid', 'wishid', 'groupid'],
 
-            $('#antworten').slideDown()
-
-            $('#antworten').val('');
-            $('#antworten').val(jQuery('#'+messageid+" .message-holder").text());
-            $('#edit-val').val(messageid);
-
-            $('.button-show').css('display','none')
-            $('.button-hide').css('display','inline-block')
-
-        },
-
-        showModal(id) {
-            $('.hidden-popup-val').val(id)
-            $('.confirm-popup').show();
-            $('body').css('overflow', 'hidden');
-        },
-
-        updateMessages () {
+        mounted() {
             this.fetchMessages();
         },
 
-        timestamp(date) {
-            return moment(date).fromNow();
+        methods: {
+
+            fetchMessages() {
+                axios.get('/messages/'+this.wishid+'/'+this.groupid).then(response => {
+                    this.messages = response.data.data;
+                    this.user = response.data.user;
+                    this.avatar = response.data.avatar;
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            },
+
+            editMessage(messageid, message) {
+
+                $('#antworten').slideDown()
+
+                $('#antworten').val('');
+                $('#antworten').val(jQuery('#'+messageid+" .message-holder").text());
+                $('#edit-val').val(messageid);
+
+                $('.button-show').css('display','none')
+                $('.button-hide').css('display','inline-block')
+
+            },
+
+            showModal(id) {
+                $('.hidden-popup-val').val(id)
+                $('.confirm-popup').show();
+                $('body').css('overflow', 'hidden');
+            },
+
+            updateMessages () {
+                this.fetchMessages();
+            },
+
+            timestamp(date) {
+                return moment(date).fromNow();
+            }
         }
-    }
-};
+    };
 </script>
 
 <style scoped>
@@ -101,14 +101,14 @@ export default {
     }
 
     .user{
-            display: block;
-            font-weight: 700;
+        display: block;
+        font-weight: 700;
     }
 
     .date-created{
-            display: block;
-            color: #ccc;
-            font-size: 12px;
+        display: block;
+        color: #ccc;
+        font-size: 12px;
     }
 
     .close_button i{
