@@ -10,7 +10,7 @@
             <div v-bind:class="[userid == message.user_id ?  'cu-comment cu-comment-right' : 'cu-comment cu-comment-left']">
                 <p>
                      <span class="username">
-                    {{ userid == message.user_id ? wordsTrans['me'] : message.name  }}
+                    {{ userid == message.user_id ? 'ich' : message.name  }}
                     </span>
 
                     <span v-if="userid == message.user_id" class="action_buttons">

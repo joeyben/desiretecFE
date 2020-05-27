@@ -170,13 +170,7 @@
     </div>
 @endif
 
-@php
-    $translations = [
-        "new_message" => trans('wish.details.message.new_message'),
-        "me" => trans('wish.details.message.me')
-    ];
-    $statusesTrans = array();
-@endphp
+
 
 <section class="section-comments" id="messages">
     <div class="container">
@@ -184,7 +178,7 @@
             <h4>
                 {{ trans('wish.details.message.new_message') }} <i class="fal fa-bell ml-5"></i>
             </h4>
-            <chat-messages words-trans="{{ json_encode($translations) }}" :wishid="{{ $wish->wish_id }}" :userid="{{ $logged_in_user['id'] }}" :groupid="{{ $wish->group_id }}">
+            <chat-messages :wishid="{{ $wish->wish_id }}" :userid="{{ $logged_in_user['id'] }}" :groupid="{{ $wish->group_id }}">
             </chat-messages>
         </div>
     </div>
