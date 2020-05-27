@@ -173,7 +173,9 @@
     @php
         $translations = [
             "new_message" => trans('wish.details.message.new_message'),
-            "me" => trans('wish.details.message.me')
+            "me" => trans('wish.details.message.me'),
+            "write_message" => trans('wish.details.message.write_message'),
+            "save" => trans('wish.details.message.save'),
         ];
         $statusesTrans = array();
     @endphp

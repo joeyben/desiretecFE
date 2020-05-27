@@ -3,8 +3,8 @@
         <textarea name="antworten" id="antworten" v-model="newMessage"></textarea>
         <input id="edit-val" style="display: none;">
         <div class="cu-cl-buttons">
-            <button class="primary-btn antworten-btn button-show btn-chat" id="send-button" @click="sendMessage">Nachricht schreiben</button>
-            <button class="primary-btn antworten-btn  button-hide btn-chat" @click="updateMessage">Speichern</button>
+            <button class="primary-btn antworten-btn button-show btn-chat" id="send-button" @click="sendMessage">{{ wordsTrans['write_message'] }}</button>
+            <button class="primary-btn antworten-btn  button-hide btn-chat" @click="updateMessage">{{ wordsTrans['save'] }}</button>
             <input type="hidden" name="_token" :value="csrfToken">
         </div>
     </div>

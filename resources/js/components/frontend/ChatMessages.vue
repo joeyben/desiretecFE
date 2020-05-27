@@ -24,7 +24,7 @@
                 <b style="font-weight:100; display: none;" class="message-holder">{{ message.message }}</b>
             </div>
         </div>
-        <message-form v-on:messaged="updateMessages" :username="this.user" :userid="userid" :wishid="wishid" :groupid="groupid"></message-form>
+        <message-form v-on:messaged="updateMessages" :words-trans="wordsTrans" :username="this.user" :userid="userid" :wishid="wishid" :groupid="groupid"></message-form>
     </div>
 </template>
 
