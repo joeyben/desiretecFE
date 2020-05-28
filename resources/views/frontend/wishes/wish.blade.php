@@ -40,7 +40,7 @@
                         <a href="{{route('frontend.offers.create', ['id' => $wish->wish_id, 'subdomain' => $subdomain])}}" class="primary-btn">{{ trans('buttons.wishes.frontend.create_offer')}}</a>
                     @elseif ($hasOffers)
                         <p class="header-p">{!! trans('wish.view.stage.user_offer',['date' => \Carbon\Carbon::parse($wish->wishDetails->created_at)->format('d.m.Y'), 'seller' => (isset($wish->wishDetails->group) ? $wish->wishDetails->group->users[0]->name : '' )]) !!} </p>
-                        <button class="primary-btn{{ $contactInactivClass }}" onclick="scrollToAnchor('angebote')">{{ trans_choice('wish.details.view-offers-button', count($wish->wishDetails->offers), ['count' => count($wish->wishDetails->offers)]) }}</button>
+                        <button clasheader-ps="primary-btn{{ $contactInactivClass }}" onclick="scrollToAnchor('angebote')">{{ trans_choice('wish.details.view-offers-button', count($wish->wishDetails->offers), ['count' => count($wish->wishDetails->offers)]) }}</button>
                     @elseif ($hasNewMessage)
                         <p class="header-p">{!! trans('wish.view.stage.user_message',['date' => \Carbon\Carbon::parse($wish->wishDetails->created_at)->format('d.m.Y'), 'seller' => $wish->wishDetails->group->users[0]->name]) !!} </p>
                         <button class="primary-btn{{ $contactInactivClass }}" onclick="scrollToAnchor('messages')">{{ trans('wish.details.view-messages-button') }}</button>
@@ -176,7 +176,7 @@
             "me" => trans('wish.details.message.me'),
             "write_message" => trans('wish.details.message.write_message'),
             "save" => trans('wish.details.message.save'),
-            "local" => "en"
+            "local" => session()->get('local')
         ];
         $statusesTrans = array();
     @endphp
