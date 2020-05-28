@@ -34,7 +34,6 @@
             array_push($statusesTrans, trans('menus.list.status.'.strtolower($st)));
         @endphp
     @endforeach
-
     <wish-list
         user-role="{{ json_encode($logged_in_user['role']) }}"
         statuses-trans="{{ json_encode($statusesTrans) }}"

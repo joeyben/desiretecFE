@@ -176,6 +176,7 @@
             "me" => trans('wish.details.message.me'),
             "write_message" => trans('wish.details.message.write_message'),
             "save" => trans('wish.details.message.save'),
+            "local" => "en"
         ];
         $statusesTrans = array();
     @endphp

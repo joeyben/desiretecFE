@@ -33,7 +33,7 @@
     import MessageForm from './MessageForm.vue'
     import ConfirmationModal from './ConfirmationModal.vue'
     import moment from 'moment'
-    moment.locale('de');
+    moment.locale(this.wordsTrans['local']);
     Vue.prototype.moment = moment
 
     export default {
