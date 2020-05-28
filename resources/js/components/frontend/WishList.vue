@@ -21,7 +21,7 @@
                     </div>
                     <div class="main-info">
                         <ul class="info">
-                            <li>
+                            <li v-if="wish.destination !== '-'">
                                 <i class="icon_pin"></i><span class="value">{{ wish.destination }}</span>
                             </li>
                             <li v-if="wish.airport !== '-'">
@@ -45,8 +45,8 @@
                                 <i class="fal fa-dog-leashed"></i><span class="value">{{ wish.pets }} {{ translateWord('pets', wish.pets) }}</span></li>
                             <li v-if="wish.senderEmail">
                                 <i class="fal fa-at"></i><span class="value">{{ wish.senderEmail }}</span></li>
-                            <li>
-
+                            <li v-if="wish.created_at">
+                                {{ translations.created_at }} <span class="value">{{ wish.created_at | moment("DD.MM.YYYY") }}</span>
                             </li>
                         </ul>
                     </div>
@@ -64,7 +64,6 @@
                                 <span v-if="wish.offers > 0" :id="translateWord('offer_ex')" class="offer-count btn-secondary">
                                     {{ wish.offers }}
                                 </span>
-
                             </template>
                         </div>
                         <div v-if="wish.budget !== 0" class="budget">{{ formatPrice(wish.budget) }}€</div>
