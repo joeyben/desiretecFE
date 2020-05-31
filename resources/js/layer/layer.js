@@ -312,7 +312,7 @@ jQuery(function($){
 
                 if ((!dtModal.is(e.target) && dtModal.has(e.target).length === 0) &&
                     (!datePicker.is(e.target) && datePicker.has(e.target).length === 0)) {
-                    dt.PopupManager.closePopup(e);
+                    //dt.PopupManager.closePopup(e);
                 }
             }
         });
