@@ -210,11 +210,13 @@ jQuery(function($){
 
         dt.triggerButton = function(e){
             $("body").on('click tap','.trigger-modal',function () {
-                $("body").addClass('mobile-layer');
-                if(dt.PopupManager.teaserSwiped){
-                    dt.showMobileLayer();
-                }else{
-                    dt.PopupManager.shown = true;
+                if(deviceDetector.device === "phone") {
+                    $("body").addClass('mobile-layer');
+                    if (dt.PopupManager.teaserSwiped) {
+                        dt.showMobileLayer();
+                    } else {
+                        dt.PopupManager.shown = true;
+                    }
                 }
                 dt.PopupManager.modal.removeClass('tmp-hidden');
                 $(this).remove();
