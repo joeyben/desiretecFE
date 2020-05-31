@@ -265,9 +265,6 @@ jQuery(function($){
             if(deviceDetector.device === "phone") {
                 dt.PopupManager.teaser = true;
                 dt.PopupManager.teaserText = "Dürfen wir Sie beraten?";
-                $(".dt-modal .kwp-close-btn").on('touchend',function () {
-                    dt.PopupManager.closePopup(e);
-                });
             }
 
             dt.PopupManager.init();
@@ -291,6 +288,10 @@ jQuery(function($){
             if(getUrlParams('autoShow') && !isMobile()){
                 dt.PopupManager.show();
             }
+
+            $(".dt-modal .kwp-close-btn").on('click touchend',function () {
+                dt.PopupManager.closePopup(e);
+            });
         });
 
         $(window).on( "orientationchange", function( event ) {
