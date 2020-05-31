@@ -98,7 +98,7 @@
                     <div class="kwp-form-group pax-group">
                         <label for="travelers" class="required">{{ trans('whitelabel.layer.general.pax') }}</label>
                         <span class="travelers dd-trigger">
-                            <span class="txt">1 Erwachsener</span>
+                            <span class="txt">{{ trans_choice('layer_cruise.adult_count', 1) }}</span>
                             <i class="fal fa-users not-triggered"></i>
                             <i class="fal fa-times triggered"></i>
                         </span>
@@ -120,7 +120,7 @@
                                 </div>
                                 <div class="kwp-col-ages">
                                     <div class="kwp-form-group">
-                                        <label class="main-label">Alter der Kinder bei Rückreise</label>
+                                        <label class="main-label">{{ trans('layer_cruise.kids.travel_age') }}</label>
                                         <input name="ages" type="hidden">
                                         <div id="age_1" class="kwp-col-3">
                                             <i class="master-icon--aircraft-down"></i>
