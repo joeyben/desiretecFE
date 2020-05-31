@@ -15,6 +15,7 @@
     {{ Form::hidden('airport', '-') }}
     {{ Form::hidden('destination', '-') }}
     {{ Form::hidden('budget', 0) }}
+    {{ Form::hidden('adults', 0) }}
 
     <div class="kwp-middle"></div>
 
@@ -96,7 +97,7 @@
 
                 <div class="kwp-col-4 grey events-interested">
                     <div class="checkbox-wrapper">
-                        {{ Form::checkbox('direkt_flug', null, key_exists('direkt_flug', $request) ? 'true' : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
+                        {{ Form::checkbox('events_interested', null, key_exists('events_interested', $request) ? 'true' : null, ['class' => 'form-control box-size']) }}
                         <span class="checkbox-text">{{ trans('layer.general.events_interested') }}</span>
                     </div>
                 </div>
@@ -188,10 +189,6 @@
             dt.handleTriggers();
 
             dt.handleDuration();
-
-            dt.hanglePax();
-
-            dt.handleKidsAges();
 
             dt.handleHotelStars();
 
