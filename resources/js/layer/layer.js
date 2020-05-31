@@ -176,7 +176,7 @@ jQuery(function($){
 
             var formSent = $('.kwp-content').hasClass('kwp-completed');
 
-            this.modal.addClass('tmp-hidden');
+            dt.PopupManager.modal.addClass('tmp-hidden');
             if(!formSent && $('.trigger-modal').length === 0) {
                 this.trigger =
                     $('<span/>', {'class': 'trigger-modal'});
@@ -189,7 +189,7 @@ jQuery(function($){
                 }
             }
 
-            this.shown = false;
+            dt.PopupManager.modal.shown = false;
             $("body").removeClass('mobile-layer');
             $("body, html").css({'overflow':'auto'});
 
