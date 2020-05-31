@@ -171,7 +171,7 @@ jQuery(function($){
         });
 
 
-        dt.PopupManager.closePopup = function(event) {
+        dt.closePopup = function(event) {
             event.preventDefault();
 
             var formSent = $('.kwp-content').hasClass('kwp-completed');
@@ -289,8 +289,8 @@ jQuery(function($){
                 dt.PopupManager.show();
             }
 
-            $(".dt-modal .kwp-close-btn").on('click touchend',function () {
-                dt.PopupManager.closePopup(e);
+            $(".dt-modal .kwp-close-btn").on('click touchend',function (e) {
+                dt.closePopup(e);
             });
         });
 
