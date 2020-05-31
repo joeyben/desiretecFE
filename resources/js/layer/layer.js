@@ -289,7 +289,7 @@ jQuery(function($){
                 dt.PopupManager.show();
             }
 
-            $(".dt-modal .kwp-close-btn").on('click touchend',function (e) {
+            $("body").on('click touchend','.dt-modal .kwp-close-btn',function (e) {
                 dt.closePopup(e);
             });
         });
