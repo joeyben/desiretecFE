@@ -491,6 +491,9 @@ jQuery(function($){
                     var li = '<li class="tab-link" data-tab="' + version + '">' + version + '</li>';
                     $(".kwp-tabs").append(li);
                 });
+                if(layers.length > 6) {
+                    $('.kwp-tabs').css('height', '80px');
+                }
                 $('.kwp-tabs').show();
             }
         };

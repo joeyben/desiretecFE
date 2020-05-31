@@ -72,6 +72,17 @@ class FrontendController extends Controller
         3 => "3",
         4 => "4",
     ];
+    const PURPOSE_ARR = [
+        'Familienurlaub',
+        'Wellness -oder Gesundheitsreise',
+        'Aktivurlaub',
+        'Fahrradurlaub',
+        'Naturkundliche Reise',
+        'Studienreise',
+        'Kulturreise',
+        'Geschäftsreise'
+    ];
+
     private $duration_arr;
 
     protected $apiService;
@@ -79,7 +90,7 @@ class FrontendController extends Controller
     public function __construct(ApiService $apiService)
     {
         $this->apiService = $apiService;
-        $this->initDurationArr(); 
+        $this->initDurationArr();
     }
 
     /**
@@ -112,6 +123,7 @@ class FrontendController extends Controller
             'duration_arr' => $this->duration_arr,
             'pets_arr'     => $this::PETS_ARR,
             'rooms_arr'    => $this::ROOMS_ARR,
+            'purpose_arr'  => $this::PURPOSE_ARR,
             'request'      => $request,
             'whitelabel'   => $whitelabel,
         ])->render();
@@ -141,6 +153,7 @@ class FrontendController extends Controller
                 'duration_arr' => $this->duration_arr,
                 'pets_arr'     => $this::PETS_ARR,
                 'rooms_arr'    => $this::ROOMS_ARR,
+                'purpose_arr'  => $this::PURPOSE_ARR,
                 'request'      => $request->all(),
                 'errors'       => $request->errors(),
                 'whitelabel'   => $whitelabel,
