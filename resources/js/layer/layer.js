@@ -171,12 +171,12 @@ jQuery(function($){
         });
 
 
-        dt.PopupManager.closePopup = function(event) {
+        dt.closePopup = function(event) {
             event.preventDefault();
 
             var formSent = $('.kwp-content').hasClass('kwp-completed');
 
-            this.modal.addClass('tmp-hidden');
+            dt.PopupManager.modal.addClass('tmp-hidden');
             if(!formSent && $('.trigger-modal').length === 0) {
                 this.trigger =
                     $('<span/>', {'class': 'trigger-modal'});
@@ -189,7 +189,7 @@ jQuery(function($){
                 }
             }
 
-            this.shown = false;
+            dt.PopupManager.modal.shown = false;
             $("body").removeClass('mobile-layer');
             $("body, html").css({'overflow':'auto'});
 
@@ -210,11 +210,13 @@ jQuery(function($){
 
         dt.triggerButton = function(e){
             $("body").on('click tap','.trigger-modal',function () {
-                $("body").addClass('mobile-layer');
-                if(dt.PopupManager.teaserSwiped){
-                    dt.showMobileLayer();
-                }else{
-                    dt.PopupManager.shown = true;
+                if(deviceDetector.device === "phone") {
+                    $("body").addClass('mobile-layer');
+                    if (dt.PopupManager.teaserSwiped) {
+                        dt.showMobileLayer();
+                    } else {
+                        dt.PopupManager.shown = true;
+                    }
                 }
                 dt.PopupManager.modal.removeClass('tmp-hidden');
                 $(this).remove();
@@ -265,9 +267,6 @@ jQuery(function($){
             if(deviceDetector.device === "phone") {
                 dt.PopupManager.teaser = true;
                 dt.PopupManager.teaserText = "Dürfen wir Sie beraten?";
-                $(".dt-modal .kwp-close-btn").on('touchend',function () {
-                    dt.PopupManager.closePopup(e);
-                });
             }
 
             dt.PopupManager.init();
@@ -291,6 +290,10 @@ jQuery(function($){
             if(getUrlParams('autoShow') && !isMobile()){
                 dt.PopupManager.show();
             }
+
+            $("body").on('click touchend','.dt-modal .kwp-close-btn',function (e) {
+                dt.closePopup(e);
+            });
         });
 
         $(window).on( "orientationchange", function( event ) {
@@ -309,7 +312,7 @@ jQuery(function($){
 
                 if ((!dtModal.is(e.target) && dtModal.has(e.target).length === 0) &&
                     (!datePicker.is(e.target) && datePicker.has(e.target).length === 0)) {
-                    dt.PopupManager.closePopup(e);
+                    //dt.PopupManager.closePopup(e);
                 }
             }
         });
@@ -491,6 +494,9 @@ jQuery(function($){
                     var li = '<li class="tab-link" data-tab="' + version + '">' + version + '</li>';
                     $(".kwp-tabs").append(li);
                 });
+                if(layers.length > 6) {
+                    $('.kwp-tabs').css('height', '80px');
+                }
                 $('.kwp-tabs').show();
             }
         };

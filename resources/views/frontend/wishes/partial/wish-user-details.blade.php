@@ -38,6 +38,7 @@
         <input class="data-content" value="{{ $wish->wishDetails->class }}">
     </div>
     @endif
+    @if($wish->wishDetails->destination !== '-')
     <div class="col-md-3">
         <i class="fal fa-plane-arrival"></i>
         <div id="arrival-mousehover-value" class="data-content ellipsised">{{ $wish->wishDetails->destination }}</div>
@@ -46,22 +47,27 @@
             {{ $wish->wishDetails->destination }}
         </div>
     </div>
+    @endif
+    @if($wish->wishDetails->adults > 0)
     <div class="col-md-3">
         <i class="fal fa-users"></i>
         <input class="data-content" value="{{ $wish->wishDetails->adults }} {{ trans_choice('labels.frontend.wishes.adults', $wish->wishDetails->adults) }}">
     </div>
+    @endif
+    @if($wish->wishDetails->kids > 0)
     <div class="col-md-3 kids">
         <i class="fal fa-child"></i>
         <input class="data-content" value="{{ $wish->wishDetails->kids }} {{ trans_choice('labels.frontend.wishes.kids', $wish->wishDetails->kids) }}" >
-        @if($wish->wishDetails->kids > 0 && $wish->wishDetails->ages)
+        @if($wish->wishDetails->ages)
             <span>(</span>
             <span>{{ rtrim($wish->wishDetails->ages,",") }}</span>
             <span>)</span>
         @endif
     </div>
+    @endif
     <div class="col-md-3">
         <i class="fal fa-stopwatch"></i>
-        <input class="data-content" value="{{ transformDuration($wish->wishDetails->duration) }}">
+        <input class="data-content" value="{{ $wish->wishDetails->duration }}">
     </div>
     @if($wish->wishDetails->rooms)
     <div class="col-md-3">

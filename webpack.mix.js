@@ -1,6 +1,6 @@
 const mix = require('laravel-mix');
 const WebpackRTLPlugin = require('webpack-rtl-plugin');
-
+const webpack = require('webpack');
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -69,7 +69,8 @@ mix.setPublicPath('public')
     .copyDirectory('resources/images', 'public/images')
     .webpackConfig({
         plugins: [
-            new WebpackRTLPlugin('/css/[name].rtl.css')
+            new WebpackRTLPlugin('/css/[name].rtl.css'),
+            new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
         ]
     });
 

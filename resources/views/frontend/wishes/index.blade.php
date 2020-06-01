@@ -23,6 +23,7 @@
             "rooms_plural" => trans_choice('labels.frontend.wishes.rooms', 999),
             "pets" => trans_choice('labels.frontend.wishes.pets', 1),
             "pets_plural" => trans_choice('labels.frontend.wishes.pets', 999),
+            "created_at" => trans('labels.frontend.wishes.created_at'),
             "search_placeholder" => trans('strings.wishlist.search'),
             "goto_btn" => trans('labels.frontend.wishes.goto'),
             "offer_ex" => trans('strings.wishlist.offer_ex')
@@ -34,7 +35,6 @@
             array_push($statusesTrans, trans('menus.list.status.'.strtolower($st)));
         @endphp
     @endforeach
-
     <wish-list
         user-role="{{ json_encode($logged_in_user['role']) }}"
         statuses-trans="{{ json_encode($statusesTrans) }}"

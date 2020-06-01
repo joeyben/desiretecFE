@@ -770,7 +770,7 @@ p.kwp-info {
   padding: 0;
   position: relative;
   &.grey{
-	background: #dedede;
+	background: #f3f0ec;
   }
   &:last-child{
     margin-right: 0;
@@ -887,7 +887,15 @@ p.kwp-info {
 	  &:after{
 		background-image: url(../../../img/check-white.svg);
 	  }
-	}
+    }
+    .checkbox-wrapper {
+      padding-top: 5px;
+    }
+    .checkbox-text {
+      position: absolute;
+      top: 5px;
+      left: 35px;
+    }
   }
   .kwp-body{
 	h1{
@@ -1112,6 +1120,13 @@ p.kwp-info {
       color: #454545;
     }
   }
+  #destination {
+    .stars {
+      .kwp-form-group {
+        padding-left: 10px;
+      }
+    }
+  }
   .catering {
     position: relative;
     background: transparent;
@@ -1291,7 +1306,7 @@ select option:disabled {
   }
 }
 
-//ages
+// ages
 .kwp-col-ages {
   @extend  .kwp-col-4;
   display: none;
@@ -1301,6 +1316,8 @@ select option:disabled {
     display: block;
   }
 }
+
+
 
 // tags input
 .dt-modal {
@@ -1371,7 +1388,10 @@ select option:disabled {
   height: 38px;
   margin: 0px;
   padding: 0px;
+  padding-right: 30px;
   list-style: none;
+  display: flex;
+  flex-wrap: wrap;
   li {
     display: inline-block;
     padding: 10px 15px;
