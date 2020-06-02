@@ -241,7 +241,7 @@
         }
 
         function isEllipsisActive(element) {
-            return 'offsetWidth' in element ? (element.offsetWidth < element.scrollWidth) : false;
+            return element ? (element.offsetWidth < element.scrollWidth) : false;
         }
 
         $(document).ready(function() {
