@@ -246,10 +246,10 @@
 
         $(document).ready(function() {
             if($('#departure-mousehover-value') && !isEllipsisActive(document.getElementById('departure-mousehover-value'))) {
-                document.getElementById('departure-mousehover').remove();
+                document.getElementById('departure-mousehover') ? document.getElementById('departure-mousehover').remove() : null ;
             }
             if($('#arrival-mousehover-value').length > 0 && !isEllipsisActive(document.getElementById('arrival-mousehover-value'))) {
-                document.getElementById('arrival-mousehover').remove();
+                document.getElementById('arrival-mousehover') ? document.getElementById('arrival-mousehover').remove() : null;
             }
         });
 
