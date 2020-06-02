@@ -127,7 +127,7 @@ export default {
     methods: {
         translateWord(word, count) {
             let wordPlural = word + '_plural';
-            return count > 1 ? this.translations[wordPlural] : this.translations[word];
+            return count > 1 || count === 0  ? this.translations[wordPlural] : this.translations[word];
         },
         fetchWishes() {
             this.setStatusName();
