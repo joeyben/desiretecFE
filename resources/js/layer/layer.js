@@ -10,7 +10,7 @@ jQuery(function($){
         popupPath: '/show',
         popupStore:'/wish/store',
         cssPath: '/css/layer.css',
-        teaserBgColor: ''
+        teaserBgColor: brandColor
     };
 
     var fontAwesomeIcons = jQuery("<link>");
