@@ -168,7 +168,7 @@ jQuery(function($) {
         next: false,
         blocked: false,
         isMobile: false,
-        mobileCookieId: 'm_kiwzzme',
+        mobileCookieId: 'm_desiretec',
         regionCodes:{},
         testCookieId: 'desiretec',
         shown: false,
