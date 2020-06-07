@@ -231,6 +231,7 @@ jQuery(function($){
             $(".dt-modal").removeClass('teaser-on');
             $("body, html").css({'overflow':'hidden'});
             //$.cookie(dt.PopupManager.mobileCookieId,'true',dt.PopupManager.cookieOptions);
+            setCookie(dt.PopupManager.mobileCookieId, 'true');
             //ga('dt.send', 'event', 'Mobile Layer', 'Teaser shown', 'Mobile');
             dt.Tracking.event('Mobile layer shown', dt.Tracking.category);
         };
@@ -272,7 +273,7 @@ jQuery(function($){
             dt.PopupManager.init();
 
             dt.triggerButton($event);
-            if(deviceDetector.device === "phone" && dt.PopupManager.decoder){
+            if(deviceDetector.device === "phone" && dt.PopupManager.decoder && !getCookie(dt.PopupManager.mobileCookieId)){
                 dt.scrollUpDetect();
                 dt.PopupManager.isMobile = true;
                 $(".dt-modal").css({'top':(document.documentElement.clientHeight - 100)+"px"});
