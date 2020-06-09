@@ -131,6 +131,24 @@ class FrontendController extends Controller
         return response()->json(['success' => true, 'html'=>$html]);
     }
 
+
+    /**
+     * Return whitelabel info as json.
+     *
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getWhitelabelData(Request $request)
+    {
+        $host = $this->getHost($request, request()->headers->get('origin'));
+        $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
+        $data = [
+            'color' => $whitelabel['color']
+        ];
+
+        return response()->json(['success' => true, 'data' => $data]);
+    }
+
     /**
      * @param \App\Http\Requests\Wishes\StoreWishesRequest $request
      *
