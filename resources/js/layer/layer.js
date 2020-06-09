@@ -9,8 +9,9 @@ jQuery(function($){
         baseUrl: domain,
         popupPath: '/show',
         popupStore:'/wish/store',
+        wlDataPath: '/wlData',
         cssPath: '/css/layer.css',
-        teaserBgColor: ''
+        wlBrandColor: ''
     };
 
     var fontAwesomeIcons = jQuery("<link>");
@@ -194,9 +195,7 @@ jQuery(function($){
             $("body, html").css({'overflow':'auto'});
 
             dt.Tracking.event('close', dt.Tracking.category);
-
         };
-
 
         dt.scrollUpDetect = function (e) {
             dt.PopupManager.layerShown = false;
@@ -251,9 +250,6 @@ jQuery(function($){
                     removeLayer(event);
                 }
             });
-            if (typeof brandColor !== 'undefined') {
-                $(".dt-modal .teaser").css('background-color', brandColor);
-            }
             dt.Tracking.event('Mobile Teaser shown', dt.Tracking.category);
         };
 
@@ -263,6 +259,18 @@ jQuery(function($){
         };
 
         $(document).ready(function (e) {
+
+            jQuery.ajax(dt.defaultConfig.baseUrl + dt.defaultConfig.wlDataPath, {
+                type: 'GET',
+                contentType: 'application/x-www-form-urlencoded',
+                xhrFields: {
+                    withCredentials: false
+                },
+                success: function(response){
+                    dt.defaultConfig.wlBrandColor = response.data.color;
+                    $(".dt-modal .teaser").css('background-color', dt.defaultConfig.wlBrandColor);
+                }
+            });
 
             var $event = e;
             if(deviceDetector.device === "phone") {
