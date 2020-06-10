@@ -87,6 +87,22 @@
         <input class="data-content" value="{{ $wish->wishDetails->catering }}">
     </div>
     @endif
+    @if($wish->wishDetails->purpose)
+    <div class="col-md-3">
+        <i class="fal fa-suitcase"></i>
+        <input class="data-content" value="{{ $wish->wishDetails->purpose }}">
+    </div>
+    @endif
+    @if($wish->wishDetails->version === 'destination')
+    <div class="col-md-3">
+        <i class="fal fa-theater-masks"></i>
+        @if($wish->wishDetails->events_interested === 0)
+            <input class="data-content" value="{{ trans('events_interested_unchecked') }}">
+        @else
+            <input class="data-content" value="{{ trans('events_interested_checked') }}">
+        @endif
+    </div>
+    @endif
 </div>
 @if ($logged_in_user['role'] = 'Seller' and $wish->wishDetails->extra_params)
 <div class="col-md-12 s2-second">

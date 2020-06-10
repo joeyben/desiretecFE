@@ -40,11 +40,20 @@
                                 <i class="fal fa-child"></i><span class="value">{{ wish.kids }} {{ translateWord('kids', wish.kids) }}</span>
                             </li>
                             <li v-if="wish.rooms">
-                                <i class="fal fa-door-closed"></i><span class="value">{{ wish.rooms }} {{ translateWord('rooms', wish.rooms) }}</span></li>
+                                <i class="fal fa-door-closed"></i><span class="value">{{ wish.rooms }} {{ translateWord('rooms', wish.rooms) }}</span>
+                            </li>
                             <li v-if="wish.pets">
-                                <i class="fal fa-dog-leashed"></i><span class="value">{{ wish.pets }} {{ translateWord('pets', wish.pets) }}</span></li>
+                                <i class="fal fa-dog-leashed"></i><span class="value">{{ wish.pets }} {{ translateWord('pets', wish.pets) }}</span>
+                            </li>
+                            <li v-if="wish.purpose">
+                                <i class="fal fa-suitcase"></i><span class="value">{{ wish.purpose }}</span>
+                            </li>
+                            <li v-if="wish.version === 'destination'">
+                                <i class="fal fa-theater-masks"></i><span class="value">{{  wish.events_interested === 0 ? translateWord('not_interested_events') : translateWord('is_interested_events') }}</span>
+                            </li>
                             <li v-if="wish.senderEmail">
-                                <i class="fal fa-at"></i><span class="value">{{ wish.senderEmail }}</span></li>
+                                <i class="fal fa-at"></i><span class="value">{{ wish.senderEmail }}</span>
+                            </li>
                             <li v-if="wish.created_at">
                                 {{ translations.created_at }} <span class="value">{{ wish.created_at | moment("DD.MM.YYYY") }}</span>
                             </li>
@@ -193,13 +202,7 @@ export default {
             $('.btn-secondary').css({
                 'background': '#fff', 'color': brandColor, 'border': '1px solid ' + brandColor, 'transition': 'all 0.3s',
             });
-
         }
     }
 }
-
-// window.addEventListener("load", function(event) {
-//             $('.selectpicker').selectpicker();
-
-// });
 </script>

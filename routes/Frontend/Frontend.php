@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\URL;
 Route::get('/', 'FrontendController@index')->name('index');
 
 Route::get('/gwl', 'FrontendController@getWhitelabelByHostname');
+Route::get('/wlData', 'FrontendController@getWhitelabelData');
 Route::get('/destinations', 'FrontendController@getAllDestinations');
 Route::get('/airports', 'FrontendController@getAllAirports');
 Route::get('/get-tt-airports', 'RegionsController@getTTAirports');

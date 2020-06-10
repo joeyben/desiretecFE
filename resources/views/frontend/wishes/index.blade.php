@@ -26,7 +26,9 @@
             "created_at" => trans('labels.frontend.wishes.created_at'),
             "search_placeholder" => trans('strings.wishlist.search'),
             "goto_btn" => trans('labels.frontend.wishes.goto'),
-            "offer_ex" => trans('strings.wishlist.offer_ex')
+            "offer_ex" => trans('strings.wishlist.offer_ex'),
+            "is_interested_events" => trans('labels.frontend.wishes.events_interested_checked'),
+            "not_interested_events" => trans('labels.frontend.wishes.events_interested_unchecked'),
         ];
         $statusesTrans = array();
     @endphp
