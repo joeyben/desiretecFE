@@ -58,6 +58,7 @@
                     this.messages = response.data.data;
                     this.user = response.data.user;
                     this.avatar = response.data.avatar;
+                    this.addHrefs();
                 }).catch(function (error) {
                     console.log(error);
                 });
@@ -89,6 +90,18 @@
             timestamp(date) {
                 moment.locale(this.wordsTrans['local']);
                 return moment(date).fromNow();
+            },
+
+            addHrefs() {
+                this.messages.forEach((value, index) => {
+                    const URLMatcher = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/igm
+
+                    if(value.message.match(URLMatcher)) {
+                        const withLinks = value.message.replace(URLMatcher, match => `<a href="${match}" target="_blank" style="color:#6897b1;">${match}</a>`)
+
+                        this.messages[index].message = withLinks;
+                    }
+                });
             }
         }
     };
