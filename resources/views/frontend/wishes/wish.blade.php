@@ -97,19 +97,24 @@
                         <p class="sa2-p2">
                             @if (count($wish->agent_name) > 0)
                                 <span class="offer-avatar-cnt">
-                                <img class="avatar" title="{{ $wish->agent_name[0]->name }}" alt="{{ $wish->agent_name[0]->name }}" src="{{ Storage::disk('s3')->url('img/agent/') }}{{ $wish->agent_name[0]->avatar }}" />
-                                <span class="agent-name">{{ $wish->agent_name[0]->name }}</span>
-                            </span>
+                                    <img class="avatar" title="{{ $wish->agent_name[0]->name }}" alt="{{ $wish->agent_name[0]->name }}" src="{{ Storage::disk('s3')->url('img/agent/') }}{{ $wish->agent_name[0]->avatar }}" />
+                                    <span class="agent-name">{{ $wish->agent_name[0]->name }}</span>
+                                </span>
                             @else
                                 @if($wish->agent)
                                     <span class="offer-avatar-cnt">
-                                    <img class="avatar" title="{{ $wish->agent->name }}" alt="{{ $wish->agent->name }}" src="{{ Storage::disk('s3')->url('img/agent/') }}{{ $wish->agent->avatar }}" />
-                                    <span class="agent-name">{{ $wish->agent->name }}</span>
-                                </span>
+                                        <img class="avatar" title="{{ $wish->agent->name }}" alt="{{ $wish->agent->name }}" src="{{ Storage::disk('s3')->url('img/agent/') }}{{ $wish->agent->avatar }}" />
+                                        <span class="agent-name">{{ $wish->agent->name }}</span>
+                                    </span>
                                 @endif
                             @endif
                             <b>{{ $offer->title }}</b><br>
-                            {!! nl2br(e($offer->description)) !!}
+                            @php
+                                $urlMatcher = '@(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})@';
+                                $offer->description = preg_replace($urlMatcher, '<a href="$0" target="_blank">$0</a>', $offer->description);
+
+                                echo str_replace( "\n", '<br />', $offer->description );
+                            @endphp
                             @if ($offer->link)
                                 <br><br>
                                 <b>{{ trans('wish.link.offer_site') }}</b> <a href="{{ (strpos($offer->link,'https://') === false && strpos($offer->link,'http://') === false) ? 'https://'.$offer->link : $offer->link }}" target="_blank" rel="noopener noreferrer">{{ $offer->link }}</a>
