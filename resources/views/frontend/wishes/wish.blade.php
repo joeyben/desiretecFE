@@ -115,7 +115,6 @@
 
                                 echo str_replace( "\n", '<br />', $offer->description );
                             @endphp
-                            <?php var_dump($offer->link); ?>
                             @if ($offer->link)
                                 <br><br>
                                 <b>{{ trans('wish.link.offer_site') }}</b>
