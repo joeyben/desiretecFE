@@ -106,6 +106,7 @@ export default {
             filter: '',
             total: '',
             wishes: {},
+            whitelabel_name: '',
             loading: true,
             pagination: {
                 'current_page': 1
@@ -124,7 +125,7 @@ export default {
         },
     },
     beforeMount() {
-        if(localStorage.getItem('wishesSelectState') === null) {
+        if(localStorage.getItem('wishesSelectState') === null || this.whitelabel_name === 'dk ferien') {
             this.status = this.translatedStatuses[0];
         } else {
             this.status = localStorage.getItem('wishesSelectState');
@@ -146,6 +147,7 @@ export default {
                     this.wishes = response.data.data.data;
                     this.pagination = response.data.pagination;
                     this.total = response.data.pagination.total;
+                    this.whitelabel_name = this.wishes[0].whitelabel_name;
                     this.$nextTick(function () {
                         this.loading = false;
                         $('.selectpicker').selectpicker('refresh');
