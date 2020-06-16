@@ -115,9 +115,11 @@
 
                                 echo str_replace( "\n", '<br />', $offer->description );
                             @endphp
+                            <?php var_dump($offer->link); ?>
                             @if ($offer->link)
                                 <br><br>
-                                <b>{{ trans('wish.link.offer_site') }}</b> <a href="{{ (strpos($offer->link,'https://') === false && strpos($offer->link,'http://') === false) ? 'https://'.$offer->link : $offer->link }}" target="_blank" rel="noopener noreferrer">{{ $offer->link }}</a>
+                                <b>{{ trans('wish.link.offer_site') }}</b>
+                                <a href="{{ (strpos($offer->link,'https://') === false && strpos($offer->link,'http://') === false) ? 'https://'.$offer->link : $offer->link }}" target="_blank" rel="noopener noreferrer">{{ $offer->link }}</a>
                             @endif
                         </p>
                     </div>
