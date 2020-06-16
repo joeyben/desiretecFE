@@ -51,6 +51,10 @@
             this.fetchMessages();
         },
 
+        updated() {
+            this.handleWWW();
+        },
+
         methods: {
 
             fetchMessages() {
@@ -94,12 +98,22 @@
 
             addHrefs() {
                 this.messages.forEach((value, index) => {
-                    const URLMatcher = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/igm
+                    var urlRegex = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/igm
 
-                    if(value.message.match(URLMatcher)) {
-                        const withLinks = value.message.replace(URLMatcher, match => `<a href="${match}" target="_blank" style="color:#6897b1;">${match}</a>`)
-
+                    if(value.message.match(urlRegex)) {
+                        var withLinks = value.message.replace(urlRegex, match => `<a href="${match}" target="_blank" style="color:#6897b1;">${match}</a>`);
                         this.messages[index].message = withLinks;
+                    }
+                });
+            },
+
+            handleWWW() {
+                $('.chat-messages .pre-formatted a, #angebote a').each(function() {
+                    var href = $(this).attr('href');
+
+                    if(href.startsWith('www.')) {
+                        var correctHref = href.replace('www.', 'http://');
+                        $(this).attr('href', correctHref);
                     }
                 });
             }
