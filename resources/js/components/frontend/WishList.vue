@@ -147,7 +147,8 @@ export default {
                     this.wishes = response.data.data.data;
                     this.pagination = response.data.pagination;
                     this.total = response.data.pagination.total;
-                    this.whitelabel_name = this.wishes[0].whitelabel_name;
+                    this.whitelabel_name = this.wishes.length > 0 ? this.wishes[0].whitelabel_name : '';
+
                     this.$nextTick(function () {
                         this.loading = false;
                         $('.selectpicker').selectpicker('refresh');
