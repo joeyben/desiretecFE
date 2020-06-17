@@ -13,6 +13,8 @@
     {{ Form::open() }}
 
     {{ Form::hidden('airport', '-') }}
+    {{ Form::hidden('earliest_start', '-') }}
+    {{ Form::hidden('latest_return', '-') }}
     {{ Form::hidden('category', 0) }}
     {{ Form::hidden('budget', 0) }}
 
