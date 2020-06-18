@@ -97,9 +97,9 @@
     <div class="col-md-3">
         <i class="fal fa-theater-masks"></i>
         @if($wish->wishDetails->events_interested === 0)
-            <input class="data-content" value="{{ trans('events_interested_unchecked') }}">
+            <input class="data-content" value="{{ trans('labels.frontend.wishes.events_interested_unchecked') }}">
         @else
-            <input class="data-content" value="{{ trans('events_interested_checked') }}">
+            <input class="data-content" value="{{ trans('labels.frontend.wishes.events_interested_checked') }}">
         @endif
     </div>
     @endif

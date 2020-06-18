@@ -500,7 +500,8 @@ jQuery(function($){
             if(hasTabs && !alreadyShown) {
                 $.each(layers, function(index, layer) {
                     var version = layer.layer.path;
-                    var li = '<li class="tab-link" data-tab="' + version + '">' + version + '</li>';
+                    var name = layer.layer.name;
+                    var li = '<li class="tab-link" data-tab="' + version + '">' + name + '</li>';
                     $(".kwp-tabs").append(li);
                 });
                 if(layers.length > 6) {

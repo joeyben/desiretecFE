@@ -184,6 +184,10 @@ class FrontendController extends Controller
         $data['whitelabel_id'] = $whitelabel['id'];
         $data['title'] = "&nbsp;";
 
+        if(isset($data['events_interested'])) {
+            $data['events_interested'] = $data['events_interested'] === 'on' ? 1 : 0;
+        }
+
         try {
             $response = $this->apiService->get('/wish/store', $data);
 
