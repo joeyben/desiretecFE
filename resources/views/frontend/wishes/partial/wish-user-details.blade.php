@@ -90,16 +90,28 @@
     @if($wish->wishDetails->purpose)
     <div class="col-md-3">
         <i class="fal fa-suitcase"></i>
-        <input class="data-content" value="{{ $wish->wishDetails->purpose }}">
+        <div id="purpose-mousehover-value" class="data-content ellipsised">{{ $wish->wishDetails->purpose }}</div>
+        <span id="purpose-mousehover" class="mousehover"></span>
+        <div class="purpose-tooltip tooltip">
+            {{ $wish->wishDetails->purpose }}
+        </div>
     </div>
     @endif
     @if($wish->wishDetails->version === 'destination')
     <div class="col-md-3">
         <i class="fal fa-theater-masks"></i>
         @if($wish->wishDetails->events_interested === 0)
-            <input class="data-content" value="{{ trans('labels.frontend.wishes.events_interested_unchecked') }}">
+            <div id="events-interested-mousehover-value" class="data-content ellipsised">{{ trans('labels.frontend.wishes.events_interested_unchecked') }}</div>
+            <span id="events-interested-mousehover" class="mousehover"></span>
+            <div class="events-interested-tooltip tooltip">
+                {{ trans('labels.frontend.wishes.events_interested_unchecked') }}
+            </div>
         @else
-            <input class="data-content" value="{{ trans('labels.frontend.wishes.events_interested_checked') }}">
+            <div id="events-interested-mousehover-value" class="data-content ellipsised">{{ trans('labels.frontend.wishes.events_interested_checked') }}</div>
+            <span id="events-interested-mousehover" class="mousehover"></span>
+            <div class="events-interested-tooltip tooltip">
+                {{ trans('labels.frontend.wishes.events_interested_checked') }}
+            </div>
         @endif
     </div>
     @endif
