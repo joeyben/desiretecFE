@@ -261,6 +261,12 @@
             if($('#arrival-mousehover-value').length > 0 && !isEllipsisActive(document.getElementById('arrival-mousehover-value'))) {
                 document.getElementById('arrival-mousehover').remove();
             }
+            if($('#purpose-mousehover-value').length > 0 && !isEllipsisActive(document.getElementById('purpose-mousehover-value'))) {
+                document.getElementById('purpose-mousehover').remove();
+            }
+            if($('#events-interested-mousehover-value').length > 0 && !isEllipsisActive(document.getElementById('events-interested-mousehover-value'))) {
+                document.getElementById('events-interested-mousehover').remove();
+            }
         });
 
         $(document).on('submit', 'form.contact_form', function (event) {
