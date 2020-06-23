@@ -2,6 +2,10 @@
     $layerName = 'corona';
 
     $duration_arr_corona = array_diff($duration_arr, array('exact' => 'Exakt wie angegeben'));
+
+    $translation = [
+
+    ];
 @endphp
 
 <div id="{{ $layerName }}" class="tab-content">
@@ -309,6 +313,8 @@
             dt.handleHotelStars();
 
             dt.handleErrors();
+
+            dt.translateWordings();
         });
     });
 </script>
