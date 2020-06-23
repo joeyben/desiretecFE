@@ -13,8 +13,7 @@
     {{ Form::open() }}
 
     {{ Form::hidden('airport', '-') }}
-    {{ Form::hidden('earliest_start', '-') }}
-    {{ Form::hidden('latest_return', '-') }}
+    {{ Form::hidden('destination', '-') }}
     {{ Form::hidden('category', 0) }}
     {{ Form::hidden('budget', 0) }}
 
@@ -23,18 +22,51 @@
     <div class="kwp-minimal">
         <div class="kwp-content kwp-with-expansion">
             <div class="kwp-row">
-                <div class="kwp-col-4 destination">
-                    {{ Form::label('destination', trans('layer.general.destination'), ['class' => 'control-label required']) }}
-                    {{ Form::text('destination', key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('layer.placeholder.destination'), 'required' => 'required']) }}
-                    <i class="fal fa-globe-europe"></i>
-                    @if ($errors->any() && $errors->get('destination'))
-                        @foreach ($errors->get('destination') as $error)
-                            <span class="error-input">{{ $error }}</span>
-                            <script>
-                                dt.Tracking.rawEvent(whitelabelPrefix+'_exitwindow', 'Error on destination', '{{ $error }}');
-                            </script>
-                        @endforeach
-                    @endif
+                <div class="kwp-col-4 duration-col main-col">
+                    <div class="kwp-form-group duration-group duration-group">
+                        <label for="duration-time" class="required">{{ trans('layer.general.duration') }}</label>
+                        <span class="duration-time duration-time dd-trigger">
+                            <span class="txt">15.11.2018 - 17.06.2019, 1 Woche</span>
+                            <i class="fal fa-calendar-alt not-triggered"></i>
+                            <i class="fal fa-times triggered"></i>
+                        </span>
+                        <div class="duration-more duration-more">
+                            <div class="kwp-col-4">
+                                {{ Form::label('earliest_start', trans('layer.general.earliest_start'), ['class' => 'control-label required']) }}
+                                {{ Form::text('earliest_start', key_exists('earliest_start', $request) ? $request['earliest_start'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.general.earliest_start'), 'required' => 'required', 'readonly']) }}
+                                @if ($errors->any() && $errors->get('earliest_start'))
+                                    @foreach ($errors->get('earliest_start') as $error)
+                                        <span class="error-input">{{ $error }}</span>
+                                        <script>
+                                            dt.Tracking.rawEvent(whitelabelPrefix+'_exitwindow', 'Error on earliest_start', '{{ $error }}');
+                                        </script>
+                                    @endforeach
+                                @endif
+                            </div>
+                            <div class="kwp-col-4">
+                                {{ Form::label('latest_return', trans('layer.general.latest_return'), ['class' => 'control-label required']) }}
+                                {{ Form::text('latest_return', key_exists('latest_return', $request) ? $request['latest_return'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.general.latest_return'), 'required' => 'required', 'readonly']) }}
+                                @if ($errors->any() && $errors->get('latest_return'))
+                                    @foreach ($errors->get('latest_return') as $error)
+                                        <span class="error-input">{{ $error }}</span>
+                                        <script>
+                                            dt.Tracking.rawEvent(whitelabelPrefix+'_exitwindow', 'Error on latest_return', '{{ $error }}');
+                                        </script>
+                                    @endforeach
+                                @endif
+                            </div>
+                            <div class="kwp-col-12">
+                                {{ Form::label('duration', trans('layer.general.duration'), ['class' => 'control-label required']) }}
+                                <div class="kwp-custom-select">
+                                    {{ Form::select('duration', array_merge(['0' => trans('layer.general.duration_init')], $duration_arr), key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="kwp-col-12 button">
+                                <a href="#">OK</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="kwp-col-4 purpose">
@@ -255,7 +287,7 @@
 
             dt.handleTriggers();
 
-            dt.handleDestination(is_pure_autooffers);
+            dt.handleDuration();
 
             dt.hanglePax();
 
