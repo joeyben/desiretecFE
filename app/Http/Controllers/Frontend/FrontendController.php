@@ -116,7 +116,7 @@ class FrontendController extends Controller
         $layer = $request->query->has('version') ? 'layers.' . $request->input('version') : 'layer';
 
         $translation = [
-            "title" => trans('layer.general.title'),
+            "title" => trans('layer.general.layer_title'),
             "sub_title" => trans('layer.general.sub_title'),
             "sonnen" => trans('layer.general.suns'),
             "sonne" => trans('layer.general.sun'),
