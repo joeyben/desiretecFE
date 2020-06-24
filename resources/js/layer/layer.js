@@ -577,8 +577,8 @@ jQuery(function($){
         dt.adjustResponsive = function(){
             if( $(window).outerWidth() <= 768 ) {
                 dt.PopupManager.isMobile = true;
-
-                $('.kwp-header-text h1').text('Dürfen wir Sie beraten?');
+                var text = dt.translation ? dt.translation.title : "Dürfen wir Sie beraten?";
+                $('.kwp-header-text h1').text(text);
 
                 $("body").addClass('mobile-layer');
                 $(".dt-modal").addClass('m-open');
