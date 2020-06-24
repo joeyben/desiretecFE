@@ -288,6 +288,7 @@
 <script>
     jQuery(function($){
         $(document).ready(function () {
+            var translation = @json($translation);
 
             var layerName = @json($layerName);
 

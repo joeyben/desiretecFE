@@ -296,6 +296,8 @@
     jQuery(function($){
         $(document).ready(function () {
 
+            var translation = @json($translation);
+
             var layerName = @json($layerName);
 
             var layer = layers.find(l => l.layer.path === layerName);
