@@ -871,10 +871,17 @@ jQuery(function($){
             }
 
             function setText(cnt){
+
+                var sonne = dt.translation ? dt.translation.sonne : "Sonne";
+                var sonnen = dt.translation ? dt.translation.sonnen : "Sonnen";
+
+                var stern = dt.translation ? dt.translation.stern : "Stern";
+                var sterne = dt.translation ? dt.translation.sterne : "Sterne";
+
                 if(!isLastminute) {
-                    var sonnen = cnt === 1 ? "Sonne" : "Sonnen";
+                    var sonnen = cnt === 1 ? sonne : sonnen;
                 } else {
-                    var sonnen = cnt === 1 ? "Stern" : "Sterne";
+                    var sonnen = cnt === 1 ? stern : sterne;
                 }
                 $('.kwp-star-input').parents('.kwp-form-group').find('.text').text("ab "+cnt+" "+sonnen);
             }
@@ -954,4 +961,7 @@ jQuery(function($){
             });
         }
 
+        dt.translateWordings = function (translation) {
+            dt.translation = translation;
+        }
 });

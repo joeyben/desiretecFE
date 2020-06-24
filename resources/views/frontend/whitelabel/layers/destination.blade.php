@@ -174,6 +174,8 @@
 
             var is_pure_autooffers = @json($whitelabel['is_pure_autooffers']);
 
+            dt.translateWordings(translation);
+
             dt.showTabs(layers);
 
             dt.showCurrentTab(layerName);

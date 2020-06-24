@@ -115,6 +115,15 @@ class FrontendController extends Controller
 
         $layer = $request->query->has('version') ? 'layers.' . $request->input('version') : 'layer';
 
+        $translation = [
+            "title" => trans('layer.general.title'),
+            "sub_title" => trans('layer.general.sub_title'),
+            "sonnen" => trans('layer.general.suns'),
+            "sonne" => trans('layer.general.sun'),
+            "stern" => trans('layer.general.star'),
+            "sterne" => trans('layer.general.stars')
+        ];
+
         $html = view('frontend.whitelabel.' . $layer)->with([
             'adults_arr'   => $this::ADULTS_ARR,
             'kids_arr'     => $this::KIDS_ARR,
@@ -126,6 +135,7 @@ class FrontendController extends Controller
             'purpose_arr'  => $this::PURPOSE_ARR,
             'request'      => $request,
             'whitelabel'   => $whitelabel,
+            'translation'  => $translation
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);
