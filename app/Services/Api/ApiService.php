@@ -27,6 +27,7 @@ class ApiService implements ApiServiceInterface
         $this->setAuthorization(resolve('token'));
         $this->setHeader('c-agent', session()->get('c-agent', null));
         $this->setHeader('wl-id', session()->get('wl-id', null));
+        $this->setHeader('wl-locale', session()->get('locale', 'de'));
     }
 
     public function setHeader(string $key, string $value = null): self
