@@ -67,7 +67,6 @@ class ApiService implements ApiServiceInterface
         $this->setAuthorization(resolve('token'));
         $this->setHeader('c-agent', session()->get('c-agent', null));
         $this->setHeader('wl-id', session()->get('wl-id', null));
-
         $this->response = $this->client->get($this->apiUrl . $endpoint . '?' . http_build_query($data),
             [
                 'headers' => $this->headers
@@ -81,7 +80,6 @@ class ApiService implements ApiServiceInterface
     {
         $this->setAuthorization(resolve('token'));
         $this->setHeader('c-agent', session()->get('c-agent', null));
-        dd($this->headers);
         $this->response = $this->client->post($this->apiUrl . $endpoint,
             [
                 'headers' => $this->headers,
