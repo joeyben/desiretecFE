@@ -32,6 +32,375 @@ jQuery(function($){
             '</div><div style="clear:both;"></div>';
     };
 
+    var MasterIBETripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
+        decodeDate: function (raw) {
+            var r = /\w+\.\s+(\d+\.\d+.\d+)/.exec(raw);
+
+            if (r === null || r.length !== 2) {
+                return null;
+            }
+
+            return r[1];
+        },
+        name: 'TUI IBE',
+        matchesUrl: 'www.tui.com/(hotel|pauschalreisen|last-minute)(/[a-z-]+)*/suchen|tuicom-itest.tui-interactive.com/(hotel|pauschalreisen|last-minute)(/[a-z-]+)*/suchen|www.tui.com/de/(hotel|pauschalreisen|last-minute)(/[a-z-]+)*/suchen|airtours.de',
+        filterFormSelector: '#ibeContainer',
+        dictionaries: {
+            'catering': {
+                'AI': '5',
+                'AP': '5',
+                'FB': '4',
+                'FP': '4',
+                'HB': '3',
+                'HP': '3',
+                'BB': '2',
+                'AO': '1',
+                'XX': null
+            },
+            'cateringWeight': {
+                'AI': 5,
+                'AP': 5,
+                'FB': 4,
+                'FP': 4,
+                'HB': 3,
+                'HP': 3,
+                'BB': 2,
+                'AO': 1,
+                'XX': null
+            },
+            'allowedDestinations': {
+                1340: 'Seychellen',
+                1196: 'Malediven',
+                1333: 'Kapverdische Inseln'
+            }
+        },
+        filterDataDecoders: {
+            'catering': function (form, formData) {
+                var lowestBoardWeigth = 100,
+                    lowestBoard = null,
+                    boardTypes = formData.boardTypes
+                ;
+
+                if (!boardTypes || !boardTypes.length) {
+                    return null;
+                }
+
+                for (var i = 0; i < boardTypes.length; ++i) {
+                    var board = boardTypes[i],
+                        weight = this.dictionaries.cateringWeight[board]
+                    ;
+
+                    if (!weight) {
+                        continue;
+                    }
+
+                    if (weight < lowestBoardWeigth) {
+                        lowestBoard = board;
+                        lowestBoardWeigth = weight;
+                    }
+                }
+                return this.dictionaryTransformValue(this.dictionaries.catering, lowestBoard);
+            },
+            'category': function (form, formData) {
+                return formData.category;
+            },
+            'destination': function (form, formData) {
+                var dest = null;
+
+                if (utag_data.destination_country_searched && this.getScope().IbeApi.state.stepNr == 4) {
+                    dest = utag_data.destination_country_searched;
+
+                    if (dest === 'Vereinigte Arabische Emirate') {
+                        dest = decodeURIComponent(utag_data.destination_city_searched);
+                    }
+
+                    if(dest === 'Thailand') {
+                        dest = decodeURIComponent(utag_data.search_destination);
+
+                        if(dest == 'undefined') {
+                            dest = 'Thailand';
+                        }
+                    }
+
+                } else if (formData.destination) {
+                    dest = formData.destination.name;
+                }
+
+                if (dest && dest.trim() == 'Portugal') {
+                    return 'Algarve';
+                }
+
+                return dest;
+            },
+            'adults': function (form, formData) {
+                var adults = 0;
+                $.each(formData.travellers,function(key,value){
+                    adults += parseInt(value.adults);
+                });
+                return adults;
+            },
+            'budget': function (form, formData) {
+                return formData.maxPrice;
+            },
+            'kids': function (form, formData) {
+                var childs = 0;
+                $.each(formData.travellers,function(key,value){
+                    childs += parseInt(value.children.length);
+                });
+                childs = childs > 3 ? 3 : childs;
+                return childs;
+            },
+            'ages1': function (form, formData) {
+                var ages = [];
+                $.each(angular.element('#ibeContainer').scope().filters.state.travellers,function(key,value){
+
+                    $.each(value.children,function(key_,children){
+                        ages.push(children);
+                    });
+
+                });
+                return ages.length > 0 ? ages[0] : 0;
+            },
+            'ages2': function (form, formData) {
+                var ages = [];
+                $.each(angular.element('#ibeContainer').scope().filters.state.travellers,function(key,value){
+
+                    $.each(value.children,function(key_,children){
+                        ages.push(children);
+                    });
+
+                });
+                return ages.length > 1 ? ages[1] : 0;
+            },
+            'ages3': function (form, formData) {
+                var ages = [];
+                $.each(angular.element('#ibeContainer').scope().filters.state.travellers,function(key,value){
+
+                    $.each(value.children,function(key_,children){
+                        ages.push(children);
+                    });
+
+                });
+                return ages.length > 2 ? ages[2] : 0;
+            },
+            'earliest_start': function (form, formData) {
+                return this.formatDate(formData.startDate);
+            },
+            'latest_return': function (form, formData) {
+                return this.formatDate(formData.endDate);
+            },
+            'duration': function (form, formData) {
+                if (formData.duration.trim() === 'default') {
+                    return null;
+                }
+
+                return formData.duration;
+            },
+            'extra': function (form, formData) {
+                if("environmentAttributes" in formData)
+                    return formData.environmentAttributes.concat(formData.familyAttributes).concat(formData.sportAttributes).join(',');
+                else
+                    return '';
+            },
+            'room_type': function (form, formData) {
+                return formData.roomTypes.join(',');
+            },
+            'airport': function (form, formData) {
+                var self = this;
+                return formData.departureAirports.map(function (airport) {
+                    return self.getAirportName(airport);
+                }).join(', ');
+            },
+            /* Extra Variabels ****************************************************************************************/
+            /* Lage */
+            'locationAttributes': function (form, formData) {
+                var locationAttributes = getUrlParams('locationAttributes') ? getUrlParams('locationAttributes') : '';
+                return this.getExtraVariable(locationAttributes, 'locationAttributes');
+            },
+            /* Ausstattung und Service */
+            'facilityAttributes': function (form, formData) {
+                var facilityAttributes = getUrlParams('facilityAttributes') ? getUrlParams('facilityAttributes') : '';
+                return this.getExtraVariable(facilityAttributes, 'facilityAttributes');
+            },
+            /* Reisethemen */
+            'travelAttributes': function (form, formData) {
+                var travelAttributes = getUrlParams('travelAttributes') ? getUrlParams('travelAttributes') : '';
+                return this.getExtraVariable(travelAttributes, 'travelAttributes');
+            },
+            /* Reisethemen */
+            'maxStopOver': function (form, formData) {
+                var maxStopOver = getUrlParams('maxStopOver') ? getUrlParams('maxStopOver') : '';
+                return this.getExtraVariable(maxStopOver, 'maxStopOver');
+            },
+            /* Orte */
+            'cities': function (form, formData) {
+                var cities = getUrlParams('cities') ? getUrlParams('cities') : '';
+                return this.getExtraVariable(cities, 'cities');
+            },
+            /* Gästebewertungen */
+            'ratings': function (form, formData) {
+                var ratings = getUrlParams('ratings') ? getUrlParams('ratings') : '';
+                return this.getExtraVariable(ratings, 'ratings');
+            },
+            /* Weiterempfehlung */
+            'recommendationRate': function (form, formData) {
+                var recommendationRate = getUrlParams('recommendationRate') ? getUrlParams('recommendationRate') : '';
+                return this.getExtraVariable(recommendationRate, 'recommendationRate');
+            },
+            /* Gesamtpreis */
+            'minPrice': function (form, formData) {
+                var minPrice = getUrlParams('minPrice') ? getUrlParams('minPrice') : '';
+                return this.getExtraVariable(minPrice, 'minPrice');
+            },
+            /* Zimmertyp */
+            'roomType': function (form, formData) {
+                var roomType = getUrlParams('roomType') ? getUrlParams('roomType') : '';
+                return this.getExtraVariable(roomType, 'roomType');
+            },
+            /* Angebote */
+            'earlyBird': function (form, formData) {
+                var earlyBird = getUrlParams('earlyBird') ? getUrlParams('earlyBird') : '';
+                return this.getExtraVariable(earlyBird, 'earlyBird');
+            },
+            /* Angebote */
+            'familyAttributes': function (form, formData) {
+                var familyAttributes = getUrlParams('familyAttributes') ? getUrlParams('familyAttributes') : '';
+                return this.getExtraVariable(familyAttributes, 'familyAttributes');
+            },
+            /* Angebote */
+            'wellnessAttributes': function (form, formData) {
+                var wellnessAttributes = getUrlParams('wellnessAttributes') ? getUrlParams('wellnessAttributes') : '';
+                return this.getExtraVariable(wellnessAttributes, 'wellnessAttributes');
+            },
+            /* Angebote */
+            'sportAttributes': function (form, formData) {
+                var sportAttributes = getUrlParams('sportAttributes') ? getUrlParams('sportAttributes') : '';
+                return this.getExtraVariable(sportAttributes, 'sportAttributes');
+            },
+            /* Angebote */
+            'airlines': function (form, formData) {
+                var airlines = getUrlParams('airlines') ? getUrlParams('airlines') : '';
+                return this.getExtraVariable(airlines, 'airlines');
+            },
+            /* Angebote */
+            'hotelChains': function (form, formData) {
+                var hotelChains = getUrlParams('hotelChains') ? getUrlParams('hotelChains') : '';
+                return this.getExtraVariable(hotelChains, 'hotelChains');
+            },
+            /* Angebote */
+            'operators': function (form, formData) {
+                var operators = getUrlParams('operators') ? getUrlParams('operators') : '';
+                return this.getExtraVariable(operators, 'operators');
+            },
+            /* END Extra Variabels ************************************************************************************/
+            'is_popup_allowed': function (form, formData) {
+                //var step = this.getScope().IbeApi.state.stepNr;
+                return true;
+            }
+        },
+        getCountryId: function () {
+            var destination = this.getScope().filters.state.destination,
+                countryId;
+
+            if (!destination) {
+                return null;
+            }
+
+            if (destination.regionId) {
+                countryId = this.getCountryIdFromRegionId(destination.regionId);
+            } else {
+                countryId = destination.countryId || this.getScope().IbeApi.state.data.country.countryId;
+            }
+
+            return countryId;
+        },
+        formatDate: function (d) {
+            if (!d) {
+                return null;
+            }
+
+            function pad(val, len) {
+                val = String(val);
+                len = len || 2;
+                while (val.length < len) val = "0" + val;
+                return val;
+            }
+
+            return pad(d.getDate(), 2) + '.' + pad(d.getMonth() + 1) + '.' + d.getFullYear();
+        },
+        getScope: function () {
+            if (!this.scope) {
+                this.scope = angular.element(this.filterFormSelector).scope();
+            }
+
+            return this.scope;
+        },
+        getAirportName: function (code) {
+            if (!this.airports) {
+                this.airports = {};
+
+                var data = this.getScope().IbeApi.state.referenceData.airports.slice();
+
+                data = data.concat([
+                    {code: 'WEST', name: 'Deutschland West'},
+                    {code: 'EAST', name: 'Deutschland Ost'},
+                    {code: 'NORTH', name: 'Deutschland Nord'},
+                    {code: 'SOUTH', name: 'Deutschland Süd'}
+                ]);
+
+                for (var i = 0; i < data.length; ++i) {
+                    this.airports[data[i].code] = data[i].name;
+                }
+            }
+            return this.airports[code];
+        },
+        getCountryIdFromRegionId: function (code) {
+            if (!this.regions) {
+                this.regions = {};
+
+                var data = this.getScope().IbeApi.state.referenceData.destinations;
+
+                for (var i = 0; i < data.length; ++i) {
+                    this.regions[data[i].regionId || data[i].countryId] = data[i].countryId;
+                }
+            }
+
+            return this.regions[code];
+        },
+        getTripData: function () {
+            var form = $(this.filterFormSelector),
+                formData = this.getScope().filters.state;
+
+            return this.decodeFilterData(form, formData);
+        },
+        getRandomElement: function (arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        },
+        getVariant: function () {
+            return this.getRandomElement([
+                'eil-'+deviceDetector.device,
+            ]);
+        },
+        getTrackingLabel: function (tripData, variant) {
+            return variant;
+        },
+        getExtraVariable: function(extraVar, attrName, splitChar){
+            splitChar = (splitChar === undefined) ? ';' : splitChar;
+            var attributesArr = [];
+            if(extraVar != ''){
+                var attributes = extraVar.split(splitChar);
+                $.each(attributes, function(i, e){
+                    var item = attrName+'_'+e;
+                    attributesArr.push($('label[for='+item+']').attr('title'));
+                });
+            }
+            if(attributesArr.length == 0){
+                return '';
+            }
+            return attributesArr.join(', ');
+        }
+    });
+
     var DTTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'Master WL',
         matchesUrl: '',
@@ -153,8 +522,12 @@ jQuery(function($){
             return 'eil-'+deviceDetector.device;
         }
     });
-    dt.decoders.push(DTTripDataDecoder);
 
+    if(domain.includes('tui')){
+        dt.decoders.push(MasterIBETripDataDecoder);
+    }else{
+        dt.decoders.push(DTTripDataDecoder);
+    }
 
     dt.initCallbacks = dt.initCallbacks || [];
 
