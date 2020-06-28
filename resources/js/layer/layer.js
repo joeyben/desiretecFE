@@ -130,7 +130,7 @@ jQuery(function($){
                     return 'Algarve';
                 }
 
-                return dest;
+                return "Madrid";
             },
             'adults': function (form, formData) {
                 var adults = 0;
