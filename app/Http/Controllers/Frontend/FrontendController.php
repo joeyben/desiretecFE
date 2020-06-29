@@ -133,7 +133,7 @@ class FrontendController extends Controller
             'pets_arr'     => $this::PETS_ARR,
             'rooms_arr'    => $this::ROOMS_ARR,
             'purpose_arr'  => $this::PURPOSE_ARR,
-            'request'      => $request,
+            'request'      => $request->all(),
             'whitelabel'   => $whitelabel,
             'translation'  => $translation
         ])->render();
