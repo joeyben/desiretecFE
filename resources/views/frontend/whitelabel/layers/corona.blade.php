@@ -2,6 +2,7 @@
     $layerName = 'corona';
 
     $duration_arr_corona = array_diff($duration_arr, array('exact' => 'Exakt wie angegeben'));
+
 @endphp
 
 <div id="{{ $layerName }}" class="tab-content">
@@ -276,11 +277,16 @@
     jQuery(function($){
         $(document).ready(function () {
 
+            var translation = @json($translation);
+
             var layerName = @json($layerName);
+
 
             var is_pure_autooffers = @json($whitelabel['is_pure_autooffers']);
 
             var layer = layers.find(l => l.layer.path === layerName);
+
+            dt.translateWordings(translation);
 
             dt.showTabs(layers);
 
@@ -309,6 +315,7 @@
             dt.handleHotelStars();
 
             dt.handleErrors();
+
         });
     });
 </script>

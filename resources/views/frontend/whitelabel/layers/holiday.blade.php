@@ -288,12 +288,15 @@
 <script>
     jQuery(function($){
         $(document).ready(function () {
+            var translation = @json($translation);
 
             var layerName = @json($layerName);
 
             var layer = layers.find(l => l.layer.path === layerName);
 
             var is_pure_autooffers = @json($whitelabel['is_pure_autooffers']);
+
+            dt.translateWordings(translation);
 
             dt.showTabs(layers);
 

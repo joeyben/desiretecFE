@@ -22,12 +22,13 @@ class WhitelabelMiddleware
         $subDomain = self::getSubDomain();
 
         try {
-            Cache::rememberForever(static::getCacheKey($subDomain), function () use ($subDomain) {
+            $whitelabel = Cache::rememberForever(static::getCacheKey($subDomain), function () use ($subDomain) {
                 $api = resolve(ApiService::class);
                 $whitelabel = $api->getWlInfo($subDomain);
-                session()->put('wl-id', $whitelabel->id);
-                return $api->getWlInfo($subDomain);
+                return $whitelabel;
             });
+
+            session()->put('wl-id', $whitelabel->id);
         } catch (\Exception $e) {
             echo json_decode($e->getResponse()->getBody(true)->getContents())->error->message . ' ' . URL::current() . '<br/><br/>';
             echo 'If not contact your support info@desiretec.com';
