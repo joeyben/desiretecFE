@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Frontend\Admin\CacheController;
 use App\Repositories\Frontend\Pages\PagesRepository;
 use App\Services\Api\ApiService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Modules\Translations\Entities\Translation;
 use Spatie\TranslationLoader\LanguageLine;
 use App\Http\Requests\Wishes\StoreWishesRequest;
+use Illuminate\Support\Facades\Lang;
 
 /**
  * Class FrontendController.
@@ -314,12 +317,12 @@ class FrontendController extends Controller
             "14-" => trans_choice('labels.frontend.wishes.week', 2, ['value' => 2]),
             "21-" => trans_choice('labels.frontend.wishes.week', 3, ['value' => 3]),
             "28-" => trans_choice('labels.frontend.wishes.week', 4, ['value' => 4]),
-            "1-4" => "1-4 ".trans('labels.frontend.wishes.nights'),
-            "5-8" => "5-8 ".trans('labels.frontend.wishes.nights'),
-            "9-12" => "9-12 ".trans('labels.frontend.wishes.nights'),
-            "13-15" => "13-15 ".trans('labels.frontend.wishes.nights'),
-            "16-22" => "16-22 ".trans('labels.frontend.wishes.nights'),
-            "22-" => ">22 ".trans('labels.frontend.wishes.nights'),
+            "1-4" => "1-4 ". Lang::get('labels.frontend.wishes.nights'),
+            "5-8" => "5-8 ". Lang::get('labels.frontend.wishes.nights'),
+            "9-12" => "9-12 ". Lang::get('labels.frontend.wishes.nights'),
+            "13-15" => "13-15 ". Lang::get('labels.frontend.wishes.nights'),
+            "16-22" => "16-22 ". Lang::get('labels.frontend.wishes.nights'),
+            "22-" => ">22 ". Lang::get('labels.frontend.wishes.nights'),
         ];
         for($i = 1; $i<29;$i++){
             $this->duration_arr[$i] = trans_choice('labels.frontend.wishes.night', $i, ['value' => $i]);

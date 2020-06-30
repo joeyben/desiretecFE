@@ -52,7 +52,6 @@ return [
             'created_at'    => 'erstellt am',
             'edit'          => 'Reisewunsch bearbeiten',
             'add-comment'   => 'Kommentar hinzufügen',
-            'week'          => ':value Woche|:value Wochen',
             'night'         => ':value Night|:value Nights',
             'stars'         => 'Stern|Sterne',
             'adults'        => 'Erwachsener|Erwachsene',
