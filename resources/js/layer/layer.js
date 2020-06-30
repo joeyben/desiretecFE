@@ -910,7 +910,7 @@ jQuery(function($){
 
         dt.fillContent = function(layer, hasTabs) {
             $('.kwp-logo').css({
-                'background-image': "url(" + whitelabel.attachments.logo + ")"
+                'background-image': "url(" + layer.logo + ")"
             });
 
             if (layer.headline_color == 'dark') {
@@ -930,9 +930,9 @@ jQuery(function($){
                 $('.kwp-close-btn span').css({'background': '#454545'});
             }
 
-            if (layer.attachments !== undefined && layer.attachments.length != 0) {
+            if (layer.visual !== undefined) {
                 $('.kwp-header-dynamic').css({
-                    'background-image': "url(" + layer.attachments[0].url + ")"
+                    'background-image': "url(" + layer.visual + ")"
                 });
             } else {
                 $('.kwp-header-dynamic').css({
