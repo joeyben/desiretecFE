@@ -130,7 +130,7 @@ jQuery(function($){
                     return 'Algarve';
                 }
 
-                return "Madrid";
+                return dest;
             },
             'adults': function (form, formData) {
                 var adults = 0;
@@ -523,7 +523,7 @@ jQuery(function($){
         }
     });
 
-    if(domain.includes('tui')){
+    if(domain.includes('tui') && !window.location.hostname.includes('wish-service')){
         dt.decoders.push(MasterIBETripDataDecoder);
     }else{
         dt.decoders.push(DTTripDataDecoder);
@@ -632,6 +632,10 @@ jQuery(function($){
         };
 
         $(document).ready(function (e) {
+
+            if(domain.includes('tui') && deviceDetector.device === "phone"){
+                return false;
+            }
 
             jQuery.ajax(dt.defaultConfig.baseUrl + dt.defaultConfig.wlDataPath, {
                 type: 'GET',
