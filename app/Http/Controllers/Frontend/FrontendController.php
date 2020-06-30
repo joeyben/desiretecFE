@@ -114,6 +114,7 @@ class FrontendController extends Controller
     public function show(Request $request)
     {
         $this->initCatering();
+        $this->initDurationArr();
         $host = $this->getHost($request, request()->headers->get('origin'));
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
 
@@ -171,6 +172,8 @@ class FrontendController extends Controller
 
     public function store(StoreWishesRequest $request)
     {
+        $this->initCatering();
+        $this->initDurationArr();
         $host = $this->getHost($request, request()->headers->get('origin'));
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
 
