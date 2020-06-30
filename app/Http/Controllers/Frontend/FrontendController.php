@@ -85,12 +85,15 @@ class FrontendController extends Controller
 
     private $duration_arr;
 
+    private $catering;
+
     protected $apiService;
 
     public function __construct(ApiService $apiService)
     {
         $this->apiService = $apiService;
         $this->initDurationArr();
+        $this->initCatering();
     }
 
     /**
@@ -110,6 +113,7 @@ class FrontendController extends Controller
      */
     public function show(Request $request)
     {
+        $this->initCatering();
         $host = $this->getHost($request, request()->headers->get('origin'));
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
 
@@ -128,7 +132,7 @@ class FrontendController extends Controller
             'adults_arr'   => $this::ADULTS_ARR,
             'kids_arr'     => $this::KIDS_ARR,
             'ages_arr'     => $this::AGES_ARR,
-            'catering_arr' => $this::CATERING_ARR,
+            'catering_arr' => $this->catering,
             'duration_arr' => $this->duration_arr,
             'pets_arr'     => $this::PETS_ARR,
             'rooms_arr'    => $this::ROOMS_ARR,
@@ -186,7 +190,7 @@ class FrontendController extends Controller
                 'adults_arr'   => $this::ADULTS_ARR,
                 'kids_arr'     => $this::KIDS_ARR,
                 'ages_arr'     => $this::AGES_ARR,
-                'catering_arr' => $this::CATERING_ARR,
+                'catering_arr' => $this->catering,
                 'duration_arr' => $this->duration_arr,
                 'pets_arr'     => $this::PETS_ARR,
                 'rooms_arr'    => $this::ROOMS_ARR,
@@ -317,5 +321,15 @@ class FrontendController extends Controller
         for($i = 1; $i<29;$i++){
             $this->duration_arr[$i] = trans_choice('labels.frontend.wishes.night', $i, ['value' => $i]);
         }
+    }
+
+    public function initCatering(){
+        $this->catering = [
+            1 => trans('labels.frontend.wishes.catering.ov'),
+            2 => trans('labels.frontend.wishes.catering.bf'),
+            3 => trans('labels.frontend.wishes.catering.hp'),
+            4 => trans('labels.frontend.wishes.catering.vp'),
+            5 => trans('labels.frontend.wishes.catering.ai'),
+        ];
     }
 }
