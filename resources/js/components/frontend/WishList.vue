@@ -17,6 +17,7 @@
                 <div class="list-element" v-for="wish in wishes" :key="wish.id">
                     <div class="image">
                         <a v-if="wish.layer_image" :href="getWishLink(wish.id, wish.manuelFlag)" class="img" :style="{ 'background-image': 'url(' + wish.layer_image + ')' }"></a>
+                        <a v-else-if="isTuiWhitelabel" :href="getWishLink(wish.id, wish.manuelFlag)" class="img" :style="{ 'background-image': 'url(https://i.imgur.com/lJInLa9.png)' }"></a>
                         <a v-else :href="getWishLink(wish.id, wish.manuelFlag)" class="img" :style="{ 'background-image': 'url(https://i.imgur.com/lJInLa9.png)' }"></a>
                     </div>
                     <div class="main-info">
@@ -98,7 +99,7 @@ export default {
     components: {
         Pagination
     },
-    props: ['userRole', 'statusesTrans', 'wordsTrans'],
+    props: ['wlName', 'userRole', 'statusesTrans', 'wordsTrans'],
     data() {
         return {
             status: '',
@@ -123,9 +124,15 @@ export default {
         translations() {
             return JSON.parse(this.wordsTrans);
         },
+        isTuiWhitelabel() {
+            return JSON.parse(this.wlName).toLowerCase() === 'tui';
+        },
+        isDkFereinWhitelabel() {
+            return JSON.parse(this.wlName).toLowerCase() === 'dk ferien';
+        },
     },
     beforeMount() {
-        if(localStorage.getItem('wishesSelectState') === null || this.whitelabel_name === 'dk ferien') {
+        if(localStorage.getItem('wishesSelectState') === null || this.isDkFereinWhitelabel) {
             this.status = this.translatedStatuses[0];
         } else {
             this.status = localStorage.getItem('wishesSelectState');
