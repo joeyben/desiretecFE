@@ -551,7 +551,7 @@ jQuery(function($){
             var formSent = $('.kwp-content').hasClass('kwp-completed');
 
             dt.PopupManager.modal.addClass('tmp-hidden');
-            if(!formSent && $('.trigger-modal').length === 0) {
+            if(!formSent && $('.trigger-modal').length === 0 && !domain.includes('tui')) {
                 this.trigger =
                     $('<span/>', {'class': 'trigger-modal'});
                 $('body').prepend(this.trigger);
