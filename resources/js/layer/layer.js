@@ -657,7 +657,10 @@ jQuery(function($){
 
             dt.PopupManager.init();
 
-            dt.triggerButton($event);
+            if(!domain.includes('tui')) {
+                dt.triggerButton($event);
+            }
+
             if(deviceDetector.device === "phone" && dt.PopupManager.decoder && !getCookie(dt.PopupManager.mobileCookieId)){
                 dt.scrollUpDetect();
                 dt.PopupManager.isMobile = true;
@@ -753,7 +756,9 @@ jQuery(function($){
         function removeLayer(e){
             var $event = e;
             setTimeout(function(){
-                dt.triggerButton($event);
+                if(!domain.includes('tui')) {
+                    dt.triggerButton($event);
+                }
                 dt.PopupManager.closePopup($event);
                 dt.PopupManager.teaserSwiped = true;
             }, 500);
