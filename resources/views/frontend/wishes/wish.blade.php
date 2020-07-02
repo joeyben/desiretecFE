@@ -17,11 +17,13 @@
     $hasOffers = count($wish->wishDetails->offers) > 0;
     $hasNewMessage = isset($wish->wishDetails->messages) && count($wish->wishDetails->messages) > 0 && $wish->wishDetails->messages[count($wish->wishDetails->messages)-1]->user_id !== $logged_in_user['id'];
     $wish->layer_image = $wish->layer_image ?? 'https://i.imgur.com/lJInLa9.png';
+    $isTuiWhitelabel = strcasecmp(getWhitelabelInfo()['name'], 'tui') === 0;
+    $layerImage = $wish->layer_image || !$isTuiWhitelabel ? $wish->layer_image : 'https://i.imgur.com/lJInLa9.png';
 @endphp
 
 @section('content')
     <section class="section-top">
-        <div class="img-background" style="background-image: url('<?php echo $wish->layer_image; ?>')">
+        <div class="img-background" style="background-image: url('<?php echo $layerImage; ?>')">
             <div class="overlay"></div>
             <div class="container">
                 <div class="col-md-8 bg-left-content">
