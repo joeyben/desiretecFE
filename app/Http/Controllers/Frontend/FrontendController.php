@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Frontend\Admin\CacheController;
 use App\Repositories\Frontend\Pages\PagesRepository;
 use App\Services\Api\ApiService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Modules\Translations\Entities\Translation;
 use Spatie\TranslationLoader\LanguageLine;
 use App\Http\Requests\Wishes\StoreWishesRequest;
+use Illuminate\Support\Facades\Lang;
 
 /**
  * Class FrontendController.
@@ -85,12 +88,15 @@ class FrontendController extends Controller
 
     private $duration_arr;
 
+    private $catering;
+
     protected $apiService;
 
     public function __construct(ApiService $apiService)
     {
         $this->apiService = $apiService;
         $this->initDurationArr();
+        $this->initCatering();
     }
 
     /**
@@ -110,6 +116,8 @@ class FrontendController extends Controller
      */
     public function show(Request $request)
     {
+        $this->initCatering();
+        $this->initDurationArr();
         $host = $this->getHost($request, request()->headers->get('origin'));
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
 
@@ -128,7 +136,7 @@ class FrontendController extends Controller
             'adults_arr'   => $this::ADULTS_ARR,
             'kids_arr'     => $this::KIDS_ARR,
             'ages_arr'     => $this::AGES_ARR,
-            'catering_arr' => $this::CATERING_ARR,
+            'catering_arr' => $this->catering,
             'duration_arr' => $this->duration_arr,
             'pets_arr'     => $this::PETS_ARR,
             'rooms_arr'    => $this::ROOMS_ARR,
@@ -167,6 +175,8 @@ class FrontendController extends Controller
 
     public function store(StoreWishesRequest $request)
     {
+        $this->initCatering();
+        $this->initDurationArr();
         $host = $this->getHost($request, request()->headers->get('origin'));
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
 
@@ -186,7 +196,7 @@ class FrontendController extends Controller
                 'adults_arr'   => $this::ADULTS_ARR,
                 'kids_arr'     => $this::KIDS_ARR,
                 'ages_arr'     => $this::AGES_ARR,
-                'catering_arr' => $this::CATERING_ARR,
+                'catering_arr' => $this->catering,
                 'duration_arr' => $this->duration_arr,
                 'pets_arr'     => $this::PETS_ARR,
                 'rooms_arr'    => $this::ROOMS_ARR,
@@ -307,15 +317,25 @@ class FrontendController extends Controller
             "14-" => trans_choice('labels.frontend.wishes.week', 2, ['value' => 2]),
             "21-" => trans_choice('labels.frontend.wishes.week', 3, ['value' => 3]),
             "28-" => trans_choice('labels.frontend.wishes.week', 4, ['value' => 4]),
-            "1-4" => "1-4 ".trans('labels.frontend.wishes.nights'),
-            "5-8" => "5-8 ".trans('labels.frontend.wishes.nights'),
-            "9-12" => "9-12 ".trans('labels.frontend.wishes.nights'),
-            "13-15" => "13-15 ".trans('labels.frontend.wishes.nights'),
-            "16-22" => "16-22 ".trans('labels.frontend.wishes.nights'),
-            "22-" => ">22 ".trans('labels.frontend.wishes.nights'),
+            "1-4" => "1-4 ". Lang::get('labels.frontend.wishes.nights'),
+            "5-8" => "5-8 ". Lang::get('labels.frontend.wishes.nights'),
+            "9-12" => "9-12 ". Lang::get('labels.frontend.wishes.nights'),
+            "13-15" => "13-15 ". Lang::get('labels.frontend.wishes.nights'),
+            "16-22" => "16-22 ". Lang::get('labels.frontend.wishes.nights'),
+            "22-" => ">22 ". Lang::get('labels.frontend.wishes.nights'),
         ];
         for($i = 1; $i<29;$i++){
             $this->duration_arr[$i] = trans_choice('labels.frontend.wishes.night', $i, ['value' => $i]);
         }
+    }
+
+    public function initCatering(){
+        $this->catering = [
+            1 => trans('labels.frontend.wishes.catering.ov'),
+            2 => trans('labels.frontend.wishes.catering.bf'),
+            3 => trans('labels.frontend.wishes.catering.hp'),
+            4 => trans('labels.frontend.wishes.catering.vp'),
+            5 => trans('labels.frontend.wishes.catering.ai'),
+        ];
     }
 }

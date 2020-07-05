@@ -695,13 +695,16 @@ jQuery(function($){
 
         // close if click outside the modal
         $(document).mouseup(function(e) {
+            if(!domain.includes('tui')) {
+                return false;
+            }
             if($('.dt-modal-visible').length > 0) {
                 var dtModal = $('.dt-modal-visible');
                 var datePicker = $('.pika-single');
 
                 if ((!dtModal.is(e.target) && dtModal.has(e.target).length === 0) &&
                     (!datePicker.is(e.target) && datePicker.has(e.target).length === 0)) {
-                    //dt.PopupManager.closePopup(e);
+                        dt.closePopup(e);
                 }
             }
         });
@@ -915,7 +918,7 @@ jQuery(function($){
 
         dt.fillContent = function(layer, hasTabs) {
             $('.kwp-logo').css({
-                'background-image': "url(" + whitelabel.attachments.logo + ")"
+                'background-image': "url(" + layer.logo + ")"
             });
 
             if (layer.headline_color == 'dark') {
@@ -935,9 +938,9 @@ jQuery(function($){
                 $('.kwp-close-btn span').css({'background': '#454545'});
             }
 
-            if (layer.attachments !== undefined && layer.attachments.length != 0) {
+            if (layer.visual !== undefined) {
                 $('.kwp-header-dynamic').css({
-                    'background-image': "url(" + layer.attachments[0].url + ")"
+                    'background-image': "url(" + layer.visual + ")"
                 });
             } else {
                 $('.kwp-header-dynamic').css({
