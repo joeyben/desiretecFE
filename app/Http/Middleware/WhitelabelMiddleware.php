@@ -30,6 +30,7 @@ class WhitelabelMiddleware
 
             session()->put('wl-id', $whitelabel->id);
         } catch (\Exception $e) {
+            dd($e->getResponse()->getBody(true)->getContents());
             echo json_decode($e->getResponse()->getBody(true)->getContents())->error->message . ' ' . URL::current() . '<br/><br/>';
             echo 'If not contact your support info@desiretec.com';
             die();

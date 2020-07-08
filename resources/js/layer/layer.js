@@ -523,7 +523,11 @@ jQuery(function($){
         }
     });
 
-    if(domain.includes('tui') && !window.location.hostname.includes('wish-service')){
+    if(domain.includes('tui')
+        && !window.location.hostname.includes('wish-service')
+        && !window.location.hostname.includes('travelwishservice.com')
+        && !window.location.hostname.includes('reise-wunsh.com')
+    ){
         dt.decoders.push(MasterIBETripDataDecoder);
     }else{
         dt.decoders.push(DTTripDataDecoder);
