@@ -83,6 +83,7 @@ class ApiService implements ApiServiceInterface
         $this->setAuthorization(resolve('token'));
         $this->setHeader('c-agent', session()->get('c-agent', null));
         $this->setHeader('wl-locale', session()->get('wl-locale', 'de'));
+        $this->setHeader('wl-id', session()->get('wl-id', null));
         $this->response = $this->client->post($this->apiUrl . $endpoint,
             [
                 'headers' => $this->headers,
@@ -97,6 +98,8 @@ class ApiService implements ApiServiceInterface
     {
         $this->setAuthorization(resolve('token'));
         $this->setHeader('c-agent', session()->get('c-agent', null));
+        $this->setHeader('wl-locale', session()->get('wl-locale', 'de'));
+        $this->setHeader('wl-id', session()->get('wl-id', null));
 
         $this->response = $this->client->put($this->apiUrl . $endpoint,
             [
@@ -112,6 +115,8 @@ class ApiService implements ApiServiceInterface
     {
         $this->setAuthorization(resolve('token'));
         $this->setHeader('c-agent', session()->get('c-agent', null));
+        $this->setHeader('wl-locale', session()->get('wl-locale', 'de'));
+        $this->setHeader('wl-id', session()->get('wl-id', null));
 
         $this->response = $this->client->delete($this->apiUrl . $endpoint,
             [

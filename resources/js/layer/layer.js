@@ -695,13 +695,16 @@ jQuery(function($){
 
         // close if click outside the modal
         $(document).mouseup(function(e) {
+            if(!domain.includes('tui')) {
+                return false;
+            }
             if($('.dt-modal-visible').length > 0) {
                 var dtModal = $('.dt-modal-visible');
                 var datePicker = $('.pika-single');
 
                 if ((!dtModal.is(e.target) && dtModal.has(e.target).length === 0) &&
                     (!datePicker.is(e.target) && datePicker.has(e.target).length === 0)) {
-                    //dt.PopupManager.closePopup(e);
+                        dt.closePopup(e);
                 }
             }
         });
