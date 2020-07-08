@@ -43,7 +43,7 @@ jQuery(function($){
             return r[1];
         },
         name: 'TUI IBE',
-        matchesUrl: 'www.tui.com/(hotel|pauschalreisen|last-minute)(/[a-z-]+)*/suchen|tuicom-itest.tui-interactive.com/(hotel|pauschalreisen|last-minute)(/[a-z-]+)*/suchen|www.tui.com/de/(hotel|pauschalreisen|last-minute)(/[a-z-]+)*/suchen|airtours.de',
+        matchesUrl: 'www.tui.com/(hotel|pauschalreisen|last-minute)(/[a-z-]+)*/suchen|tuicom-itest.tui-interactive.com/(hotel|pauschalreisen|last-minute)(/[a-z-]+)*/suchen|www.tui.com/de/(hotel|pauschalreisen|last-minute)(/[a-z-]+)*/suchen|airtours.de' + '|https://tui.reise-wunsch.de|https://tui.travelwishservice.com|https://tui.wish-service.com',
         filterFormSelector: '#ibeContainer',
         dictionaries: {
             'catering': {
