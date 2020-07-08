@@ -526,7 +526,7 @@ jQuery(function($){
     if(domain.includes('tui')
         && !window.location.hostname.includes('wish-service')
         && !window.location.hostname.includes('travelwishservice.com')
-        && !window.location.hostname.includes('reise-wunsh.de')
+        && !window.location.hostname.includes('reise-wunsch.de')
     ){
         dt.decoders.push(MasterIBETripDataDecoder);
     }else{
