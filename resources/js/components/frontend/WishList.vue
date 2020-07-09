@@ -99,7 +99,7 @@ export default {
     components: {
         Pagination
     },
-    props: ['wlName', 'userRole', 'statusesTrans', 'wordsTrans'],
+    props: ['userRole', 'statusesTrans', 'wordsTrans'],
     data() {
         return {
             status: '',
@@ -125,10 +125,10 @@ export default {
             return JSON.parse(this.wordsTrans);
         },
         isTuiWhitelabel() {
-            return JSON.parse(this.wlName).toLowerCase() === 'tui';
+            return JSON.parse(this.whitelabel_name).toLowerCase() === 'tui';
         },
         isDkFereinWhitelabel() {
-            return JSON.parse(this.wlName).toLowerCase() === 'dk ferien';
+            return JSON.parse(this.whitelabel_name).toLowerCase() === 'dk ferien';
         },
     },
     beforeMount() {

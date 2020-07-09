@@ -12,7 +12,6 @@
 
 @section('content')
     @php
-        $whitelabelName = getWhitelabelInfo()['name'];
         $translations = [
             "count" => trans_choice('labels.frontend.wishes.wishes', 1 ),
             "count_plural" => trans_choice('labels.frontend.wishes.wishes', 999 ),
@@ -39,7 +38,6 @@
         @endphp
     @endforeach
     <wish-list
-        wl-name="{{ json_encode($whitelabelName) }}"
         user-role="{{ json_encode($logged_in_user['role']) }}"
         statuses-trans="{{ json_encode($statusesTrans) }}"
         words-trans="{{ json_encode($translations) }}" >
