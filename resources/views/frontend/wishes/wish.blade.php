@@ -18,7 +18,7 @@
     $hasNewMessage = isset($wish->wishDetails->messages) && count($wish->wishDetails->messages) > 0 && $wish->wishDetails->messages[count($wish->wishDetails->messages)-1]->user_id !== $logged_in_user['id'];
     $wish->layer_image = $wish->layer_image ?? 'https://i.imgur.com/lJInLa9.png';
     $isTuiWhitelabel = strcasecmp(getWhitelabelInfo()['name'], 'tui') === 0;
-    $layerImage = $wish->layer_image || !$isTuiWhitelabel ? $wish->layer_image : 'https://i.imgur.com/lJInLa9.png';
+    $layerImage = $wish->layer_image && !$isTuiWhitelabel ? $wish->layer_image : 'https://i.imgur.com/lJInLa9.png';
 @endphp
 
 @section('content')
