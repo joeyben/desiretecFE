@@ -98,7 +98,7 @@ export default {
     components: {
         Pagination
     },
-    props: ['userRole', 'statusesTrans', 'wordsTrans'],
+    props: ['wlName', 'userRole', 'statusesTrans', 'wordsTrans'],
     data() {
         return {
             status: '',
@@ -106,7 +106,6 @@ export default {
             filter: '',
             total: '',
             wishes: {},
-            whitelabel_name: '',
             loading: true,
             pagination: {
                 'current_page': 1
@@ -124,10 +123,10 @@ export default {
             return JSON.parse(this.wordsTrans);
         },
         isTuiWhitelabel() {
-            return JSON.parse(this.whitelabel_name).toLowerCase() === 'tui';
+            return JSON.parse(this.wlName).toLowerCase() === 'tui';
         },
         isDkFereinWhitelabel() {
-            return JSON.parse(this.whitelabel_name).toLowerCase() === 'dk ferien';
+            return JSON.parse(this.wlName).toLowerCase() === 'dk ferien';
         },
     },
     beforeMount() {
@@ -153,7 +152,6 @@ export default {
                     this.wishes = response.data.data.data;
                     this.pagination = response.data.pagination;
                     this.total = response.data.pagination.total;
-                    this.whitelabel_name = this.wishes.length > 0 ? this.wishes[0].whitelabel_name : '';
 
                     this.$nextTick(function () {
                         this.loading = false;
