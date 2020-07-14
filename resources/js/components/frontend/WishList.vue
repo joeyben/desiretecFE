@@ -16,9 +16,8 @@
             <div class="list wishlist" v-cloak>
                 <div class="list-element" v-for="wish in wishes" :key="wish.id">
                     <div class="image">
-                        <a v-if="wish.layer_image" :href="getWishLink(wish.id, wish.manuelFlag)" class="img" :style="{ 'background-image': 'url(' + wish.layer_image + ')' }"></a>
-                        <a v-else-if="isTuiWhitelabel" :href="getWishLink(wish.id, wish.manuelFlag)" class="img" :style="{ 'background-image': 'url(https://i.imgur.com/lJInLa9.png)' }"></a>
-                        <a v-else :href="getWishLink(wish.id, wish.manuelFlag)" class="img" :style="{ 'background-image': 'url(https://i.imgur.com/lJInLa9.png)' }"></a>
+                        <a v-if="!wish.layer_image || isTuiWhitelabel" :href="getWishLink(wish.id, wish.manuelFlag)" class="img" :style="{ 'background-image': 'url(https://i.imgur.com/lJInLa9.png)' }"></a>
+                        <a v-else :href="getWishLink(wish.id, wish.manuelFlag)" class="img" :style="{ 'background-image': 'url(' + wish.layer_image + ')' }"></a>
                     </div>
                     <div class="main-info">
                         <ul class="info">
@@ -99,7 +98,7 @@ export default {
     components: {
         Pagination
     },
-    props: ['wlName', 'userRole', 'statusesTrans', 'wordsTrans'],
+    props: ['userRole', 'statusesTrans', 'wordsTrans'],
     data() {
         return {
             status: '',
@@ -125,10 +124,10 @@ export default {
             return JSON.parse(this.wordsTrans);
         },
         isTuiWhitelabel() {
-            return JSON.parse(this.wlName).toLowerCase() === 'tui';
+            return JSON.parse(this.whitelabel_name).toLowerCase() === 'tui';
         },
         isDkFereinWhitelabel() {
-            return JSON.parse(this.wlName).toLowerCase() === 'dk ferien';
+            return JSON.parse(this.whitelabel_name).toLowerCase() === 'dk ferien';
         },
     },
     beforeMount() {
