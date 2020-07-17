@@ -121,7 +121,7 @@
     <b>Weitere vom Kunden ausgewählte Parameter: </b>
 
     <?php $count = 0; ?>
-    @foreach($wish->wishDetails->extra_params as $key => $params)
+    @foreach(json_decode($wish->wishDetails->extra_params, true) as $key => $params)
 
         @if ($params && $count > 0)
            ,
