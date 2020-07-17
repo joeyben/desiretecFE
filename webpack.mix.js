@@ -39,7 +39,7 @@ mix.setPublicPath('public')
     ], 'public/js/dataTable.js')
     //Layer js
     .scripts([
-        'node_modules/jquery/dist/jquery.js',
+        'resources/js/layer/jquery.js',
         'resources/js/layer/exitintent-new.js',
         'resources/js/layer/base.js',
         'resources/js/layer/rangeslider.js',
