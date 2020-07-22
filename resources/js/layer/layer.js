@@ -576,12 +576,12 @@ jQuery(function($){
 
         dt.scrollUpDetect = function () {
             dt.PopupManager.layerShown = false;
-            $('body').swipe( { swipeStatus:function(event, phase, direction, distance){
+            /*$('body').swipe( { swipeStatus:function(event, phase, direction, distance){
                 if(parseInt(distance) > 50 && !dt.PopupManager.layerShown){
                     dt.showTeaser(event);
                     dt.PopupManager.layerShown = true;
                 }
-            }, allowPageScroll:"vertical"} );
+            }, allowPageScroll:"vertical"} );*/
         };
 
         dt.triggerButton = function(e){
