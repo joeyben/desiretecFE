@@ -574,7 +574,7 @@ jQuery(function($){
             dt.Tracking.event('close', dt.Tracking.category);
         };
 
-        dt.scrollUpDetect = function (e) {
+        dt.scrollUpDetect = function () {
             dt.PopupManager.layerShown = false;
             $('body').swipe( { swipeStatus:function(event, phase, direction, distance){
                 if(parseInt(distance) > 50 && !dt.PopupManager.layerShown){
