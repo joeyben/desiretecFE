@@ -171,8 +171,6 @@ export default {
             this.statusName = statusNames[index];
         },
         changeStatus(id) {
-            this.setStatusName();
-
             axios.post('/wishes/changeWishStatus', {
                 status: this.statusName,
                 id: id,
