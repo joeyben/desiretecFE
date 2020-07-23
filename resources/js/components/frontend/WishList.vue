@@ -137,6 +137,7 @@ export default {
         }
     },
     mounted() {
+        this.setStatusName();
         this.fetchWishes();
     },
     methods: {
@@ -145,8 +146,6 @@ export default {
             return count > 1 ? this.translations[wordPlural] : this.translations[word];
         },
         fetchWishes() {
-            this.setStatusName();
-
             axios.get('/wishes/getlist?page=' + this.pagination.current_page + '&status=' + this.statusName + '&filter=' + this.filter)
                 .then(response => {
                     this.wishes = response.data.data.data;
@@ -171,6 +170,8 @@ export default {
             this.statusName = statusNames[index];
         },
         changeStatus(id) {
+            this.setStatusName();
+
             axios.post('/wishes/changeWishStatus', {
                 status: this.statusName,
                 id: id,
