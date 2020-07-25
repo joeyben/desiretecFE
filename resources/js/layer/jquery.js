@@ -11,7 +11,7 @@
  *
  * Date: 2020-05-04T22:49Z
  */
-//if (typeof jQuery == 'undefined') {
+if (!window.jQuery) {
 
     (function (global, factory) {
 
@@ -10837,4 +10837,4 @@
         return jQuery;
     });
 
-//}
+}
