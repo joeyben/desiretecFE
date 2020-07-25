@@ -50,6 +50,17 @@ mix.setPublicPath('public')
         'resources/js/layer/tagsinput.min.js',
         'resources/js/layer/layer.js',
     ], 'public/js/layer.js')
+    .scripts([
+        'resources/js/layer/exitintent-new.js',
+        'resources/js/layer/base.js',
+        'resources/js/layer/rangeslider.js',
+        'resources/js/layer/datepicker.js',
+        'resources/js/layer/devicedetector.min.js',
+        'resources/js/layer/touchswipe.js',
+        'resources/js/layer/bootstrap3-typeahead.min.js',
+        'resources/js/layer/tagsinput.min.js',
+        'resources/js/layer/layer.js',
+    ], 'public/js/layer-njq.js')
     //Frontend css
     .sass('resources/sass/frontend/app.scss', 'public/css/frontend.css')
     //Layer css
