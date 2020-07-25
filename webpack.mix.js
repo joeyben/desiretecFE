@@ -39,7 +39,6 @@ mix.setPublicPath('public')
     ], 'public/js/dataTable.js')
     //Layer js
     .scripts([
-        'resources/js/layer/jquery.js',
         'resources/js/layer/exitintent-new.js',
         'resources/js/layer/base.js',
         'resources/js/layer/rangeslider.js',
@@ -50,6 +49,9 @@ mix.setPublicPath('public')
         'resources/js/layer/tagsinput.min.js',
         'resources/js/layer/layer.js',
     ], 'public/js/layer.js')
+    .scripts([
+        'resources/js/layer/jquery.js',
+    ], 'public/js/jquery.js')
     //Frontend css
     .sass('resources/sass/frontend/app.scss', 'public/css/frontend.css')
     //Layer css

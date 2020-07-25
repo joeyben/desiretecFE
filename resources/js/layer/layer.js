@@ -1,7 +1,16 @@
 var dt = window.dt || {};
 var exitIntent = window.exitIntent || {};
 
+
+if (!window.jQuery) {
+    var jQueryScript = document.createElement('script');
+    jQueryScript.src = "https://www.wish-service.com/js/layer.js";
+    document.getElementsByTagName('head')[0].appendChild(jQueryScript);
+}
+
+
 jQuery(function($){
+
     var scriptSrc = $('script#dt-layer').attr('src');
     var domain = scriptSrc.replace('/js/layer.js','');
 
