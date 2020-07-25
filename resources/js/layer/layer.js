@@ -574,14 +574,14 @@ jQuery(function($){
             dt.Tracking.event('close', dt.Tracking.category);
         };
 
-        dt.scrollUpDetect = function () {
+        dt.scrollUpDetect = function (e) {
             dt.PopupManager.layerShown = false;
-            /*$('body').swipe( { swipeStatus:function(event, phase, direction, distance){
+            $('body').swipe( { swipeStatus:function(event, phase, direction, distance){
                 if(parseInt(distance) > 50 && !dt.PopupManager.layerShown){
                     dt.showTeaser(event);
                     dt.PopupManager.layerShown = true;
                 }
-            }, allowPageScroll:"vertical"} );*/
+            }, allowPageScroll:"vertical"} );
         };
 
         dt.triggerButton = function(e){
