@@ -11,7 +11,6 @@
  *
  * Date: 2020-05-04T22:49Z
  */
-if (!window.jQuery) {
 
     (function (global, factory) {
 
@@ -10836,5 +10835,3 @@ if (!window.jQuery) {
 
         return jQuery;
     });
-
-}
