@@ -48,7 +48,7 @@ mix.setPublicPath('public')
         'resources/js/layer/touchswipe.js',
         'resources/js/layer/bootstrap3-typeahead.min.js',
         'resources/js/layer/tagsinput.min.js',
-        'resources/js/layer/layer.js',
+        'resources/js/layer/layer-njq.js',
     ], 'public/js/layer.js')
     .scripts([
         'resources/js/layer/exitintent-new.js',
@@ -60,7 +60,7 @@ mix.setPublicPath('public')
         'resources/js/layer/bootstrap3-typeahead.min.js',
         'resources/js/layer/tagsinput.min.js',
         'resources/js/layer/layer.js',
-    ], 'public/js/layer-njq.js')
+    ], 'public/js/layer.js')
     //Frontend css
     .sass('resources/sass/frontend/app.scss', 'public/css/frontend.css')
     //Layer css
