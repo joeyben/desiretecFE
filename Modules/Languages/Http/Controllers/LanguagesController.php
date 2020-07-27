@@ -16,6 +16,9 @@ class LanguagesController extends Controller
         CacheController::empty();
         app()->setLocale($locale);
 
+        session()->put('wl-locale', $locale);
+        session()->put('locale', $locale);
+
         return redirect()->back();
     }
 }

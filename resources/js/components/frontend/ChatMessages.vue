@@ -10,7 +10,7 @@
             <div v-bind:class="[userid == message.user_id ?  'cu-comment cu-comment-right' : 'cu-comment cu-comment-left']">
                 <p>
                      <span class="username">
-                    {{ userid == message.user_id ? 'Ich' : message.name  }}
+                    {{ userid == message.user_id ? wordsTrans['me'] : message.name  }}
                     </span>
 
                     <span v-if="userid == message.user_id" class="action_buttons">
@@ -24,73 +24,101 @@
                 <b style="font-weight:100; display: none;" class="message-holder">{{ message.message }}</b>
             </div>
         </div>
-        <message-form v-on:messaged="updateMessages" :username="this.user" :userid="userid" :wishid="wishid" :groupid="groupid"></message-form>
+        <message-form v-on:messaged="updateMessages" :wordsTrans="wordsTrans" :username="this.user" :userid="userid" :wishid="wishid" :groupid="groupid"></message-form>
     </div>
 </template>
 
 <script>
 
-  import MessageForm from './MessageForm.vue'
-  import ConfirmationModal from './ConfirmationModal.vue'
-  import moment from 'moment'
-  moment.locale('de');
-Vue.prototype.moment = moment
+    import MessageForm from './MessageForm.vue'
+    import ConfirmationModal from './ConfirmationModal.vue'
+    import moment from 'moment'
 
-export default {
-    data () {
-        return {
-            messages: [],
-            user: '',
-            avatar: []
-        }
-    },
+    Vue.prototype.moment = moment
 
-    props: ['userid', 'wishid', 'groupid'],
-
-    mounted() {
-        this.fetchMessages();
-    },
-
-    methods: {
-
-        fetchMessages() {
-            axios.get('/messages/'+this.wishid+'/'+this.groupid).then(response => {
-                this.messages = response.data.data;
-                this.user = response.data.user;
-                this.avatar = response.data.avatar;
-            }).catch(function (error) {
-                console.log(error);
-            });
+    export default {
+        data () {
+            return {
+                messages: [],
+                user: '',
+                avatar: []
+            }
         },
 
-        editMessage(messageid, message) {
+        props: ['userid', 'wishid', 'groupid', 'wordsTrans'],
 
-            $('#antworten').slideDown()
-
-            $('#antworten').val('');
-            $('#antworten').val(jQuery('#'+messageid+" .message-holder").text());
-            $('#edit-val').val(messageid);
-
-            $('.button-show').css('display','none')
-            $('.button-hide').css('display','inline-block')
-
-        },
-
-        showModal(id) {
-            $('.hidden-popup-val').val(id)
-            $('.confirm-popup').show();
-            $('body').css('overflow', 'hidden');
-        },
-
-        updateMessages () {
+        mounted() {
             this.fetchMessages();
         },
 
-        timestamp(date) {
-            return moment(date).fromNow();
+        updated() {
+            this.handleWWW();
+        },
+
+        methods: {
+
+            fetchMessages() {
+                axios.get('/messages/'+this.wishid+'/'+this.groupid).then(response => {
+                    this.messages = response.data.data;
+                    this.user = response.data.user;
+                    this.avatar = response.data.avatar;
+                    this.addHrefs();
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            },
+
+            editMessage(messageid, message) {
+
+                $('#antworten').slideDown()
+
+                $('#antworten').val('');
+                $('#antworten').val(jQuery('#'+messageid+" .message-holder").text());
+                $('#edit-val').val(messageid);
+
+                $('.button-show').css('display','none')
+                $('.button-hide').css('display','inline-block')
+
+            },
+
+            showModal(id) {
+                $('.hidden-popup-val').val(id)
+                $('.confirm-popup').show();
+                $('body').css('overflow', 'hidden');
+            },
+
+            updateMessages () {
+                this.fetchMessages();
+            },
+
+            timestamp(date) {
+                moment.locale(this.wordsTrans['local']);
+                return moment(date).fromNow();
+            },
+
+            addHrefs() {
+                this.messages.forEach((value, index) => {
+                    var urlRegex = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/igm
+
+                    if(value.message.match(urlRegex)) {
+                        var withLinks = value.message.replace(urlRegex, match => `<a href="${match}" target="_blank" style="color:#6897b1;">${match}</a>`);
+                        this.messages[index].message = withLinks;
+                    }
+                });
+            },
+
+            handleWWW() {
+                $('.chat-messages .pre-formatted a, #angebote a').each(function() {
+                    var href = $(this).attr('href');
+
+                    if(href.startsWith('www.')) {
+                        var correctHref = href.replace('www.', 'http://');
+                        $(this).attr('href', correctHref);
+                    }
+                });
+            }
         }
-    }
-};
+    };
 </script>
 
 <style scoped>
@@ -101,14 +129,14 @@ export default {
     }
 
     .user{
-            display: block;
-            font-weight: 700;
+        display: block;
+        font-weight: 700;
     }
 
     .date-created{
-            display: block;
-            color: #ccc;
-            font-size: 12px;
+        display: block;
+        color: #ccc;
+        font-size: 12px;
     }
 
     .close_button i{

@@ -1,6 +1,6 @@
 const mix = require('laravel-mix');
 const WebpackRTLPlugin = require('webpack-rtl-plugin');
-
+const webpack = require('webpack');
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -39,8 +39,7 @@ mix.setPublicPath('public')
     ], 'public/js/dataTable.js')
     //Layer js
     .scripts([
-        'node_modules/jquery/dist/jquery.js',
-        'resources/js/layer/exitintent.js',
+        'resources/js/layer/jquery.js',
         'resources/js/layer/exitintent-new.js',
         'resources/js/layer/base.js',
         'resources/js/layer/rangeslider.js',
@@ -51,6 +50,17 @@ mix.setPublicPath('public')
         'resources/js/layer/tagsinput.min.js',
         'resources/js/layer/layer.js',
     ], 'public/js/layer.js')
+    .scripts([
+        'resources/js/layer/exitintent-new.js',
+        'resources/js/layer/base.js',
+        'resources/js/layer/rangeslider.js',
+        'resources/js/layer/datepicker.js',
+        'resources/js/layer/devicedetector.min.js',
+        'resources/js/layer/touchswipe.js',
+        'resources/js/layer/bootstrap3-typeahead.min.js',
+        'resources/js/layer/tagsinput.min.js',
+        'resources/js/layer/layer.js',
+    ], 'public/js/layer-njq.js')
     //Frontend css
     .sass('resources/sass/frontend/app.scss', 'public/css/frontend.css')
     //Layer css
@@ -70,7 +80,8 @@ mix.setPublicPath('public')
     .copyDirectory('resources/images', 'public/images')
     .webpackConfig({
         plugins: [
-            new WebpackRTLPlugin('/css/[name].rtl.css')
+            new WebpackRTLPlugin('/css/[name].rtl.css'),
+            new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
         ]
     });
 

@@ -11,98 +11,39 @@
 @endsection
 
 @section('content')
-    <div class="list-container row">
-        <div class="col col-lg-12">
-            <div class="filter">
-                <div class="count">
-                    <span v-if="total === 1" v-cloak>@{{ total }} {{ trans_choice('labels.frontend.wishes.wishes', 1 ) }}</span>
-                    <span v-else v-cloak>@{{ total }} {{ trans_choice('labels.frontend.wishes.wishes', 999 ) }}</span>
-                </div>
-                @if($logged_in_user['role'] === "Seller")
-                    <div class="filter-action">
-                        <select class="selectpicker" id="filter-status" v-model="status" @change="fetchWishes()">
-                            @foreach ($status as $st)
-                                <option value="{{ $st }}">
-                                    {{ trans('menus.list.status.'.strtolower($st)) }}
-                                </option>
-                            @endforeach
-                        </select>
-                        <input type="search" class="id-filter" placeholder="{{ trans('strings.wishlist.search') }}" v-model="filter" @input="fetchWishes()">
-                    </div>
-                @endif
-            </div>
-            <div class="skeleton" v-if="loading"></div>
-            <div class="list wishlist" v-cloak>
-                <div class="list-element" v-for="wish in data">
-                    <div class="image">
-                        <a href="#" class="img" :style="{ 'background-image' : 'url(https://www.matthewwilliams-ellis.com/wp-content/uploads/2014/02/Italy-panoramic-landscape-photography-showing-Isola-Bella-Beach-in-Taormina-Sicily-Italy-panoramic-landscape-photography-by-landscape-photographer-Matthew-Williams-Ellis.jpg)' }">
-                            <span class="caption"></span>
-                        </a>
-                    </div>
-                    <div class="main-info">
-                        <ul class="info">
-                            <li>
-                                <i class="icon_pin"></i><span class="value">@{{ wish.destination }}</span>
-                            </li>
-                            <li v-if="wish.airport !== '-'">
-                                <i class="fa fa-plane"></i><span class="value">@{{ wish.airport }}</span>
-                            </li>
-                            <li v-if="wish.earliest_start !== '0000-00-00' && wish.latest_return !== '0000-00-00'">
-                                <i class="icon_calendar"></i><span class="value">@{{ wish.earliest_start | moment("DD.MM.YYYY") }}</span> bis <span class="value">@{{ wish.latest_return | moment("DD.MM.YYYY") }}</span>
-                            </li>
-                            <li>
-                                <i class="icon_hourglass"></i><span class="value">@{{ wish.duration }}</span>
-                            </li>
-                            <li>
-                                <i class="icon_group"></i><span class="value">@{{ wish.adults }}</span>
-                            </li>
-                            <li v-if="wish.rooms">
-                                <i class="fal fa-door-closed"></i><span class="value">@{{ wish.rooms }}</span></li>
-                            <li v-if="wish.pets">
-                                <i class="fal fa-dog-leashed"></i><span class="value">@{{ wish.pets }}</span></li>
-                            <li v-if="wish.senderEmail">
-                                <i class="fal fa-at"></i><span class="value">@{{ wish.senderEmail }}</span></li>
-                            <li>
-                                {{ trans('labels.frontend.wishes.created_at') }} <span class="value">@{{ wish['created_at'] | moment("DD.MM.YYYY") }}</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="action">
-                        <div class="wish-top-infos">
-                            <span class="wish-id">@{{ wish.id }}</span>
-                            @if($logged_in_user['role'] === "Seller")
-                                <span class="wish-classification btn-secondary">
-                                    <span v-if="wish.manuelFlag"><i class="fal fa-user"></i></span>
-                                    <span v-else><i class="fal fa-robot"></i></span>
-                                </span>
-                                <span v-if="wish.messageSentFlag" class="message-sent btn-secondary">
-                                    <i class="fal fa-envelope"></i>
-                                </span>
-                                <span id="{{ trans('strings.wishlist.offer_ex') }}" v-if="wish.offers > 0" class="offer-count btn-secondary">
-                                    @{{ wish.offers }}
-                                </span>
-                            @endif
-                        </div>
-                        <div v-if="wish.budget !== 0" class="budget">@{{ formatPrice(wish.budget) }}{{ trans('general.currency') }}</div>
-                        <a v-if="wish.manuelFlag" class="primary-btn" :href="'/wishes/'+wish.id">{{ trans('labels.frontend.wishes.goto') }}</a>
-                        <a v-if="!wish.manuelFlag" class="primary-btn" :href="'/offer/list/'+wish.id">{{ trans('labels.frontend.wishes.goto') }}</a>
-                        @if($logged_in_user['role'] === "Seller")
-                            <div class="status-change-action">
-                                <select class="selectpicker" id="change-status" v-bind:value="wish.status" v-model="status" @change="changeStatus(wish.id)">
-                                    @foreach ($status as $st)
-                                        <option value="{{ $st }}">
-                                            {{ trans('menus.list.status.'.strtolower($st)) }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        @endif
-                    </div>
-                </div>
-            </div>
-            <pagination v-if="pagination.last_page > 1" :pagination="pagination" :offset="10" @paginate="fetchWishes()"></pagination>
-        </div>
-    </div>
+    @php
+        $whitelabelName = getWhitelabelInfo()['name'];
+        $translations = [
+            "count" => trans_choice('labels.frontend.wishes.wishes', 1 ),
+            "count_plural" => trans_choice('labels.frontend.wishes.wishes', 999 ),
+            "adults" => trans_choice('labels.frontend.wishes.adults', 1),
+            "adults_plural" => trans_choice('labels.frontend.wishes.adults', 999),
+            "kids" => trans_choice('labels.frontend.wishes.kids', 1),
+            "kids_plural" => trans_choice('labels.frontend.wishes.kids', 999),
+            "rooms" => trans_choice('labels.frontend.wishes.rooms', 1),
+            "rooms_plural" => trans_choice('labels.frontend.wishes.rooms', 999),
+            "pets" => trans_choice('labels.frontend.wishes.pets', 1),
+            "pets_plural" => trans_choice('labels.frontend.wishes.pets', 999),
+            "created_at" => trans('labels.frontend.wishes.created_at'),
+            "search_placeholder" => trans('strings.wishlist.search'),
+            "goto_btn" => trans('labels.frontend.wishes.goto'),
+            "offer_ex" => trans('strings.wishlist.offer_ex'),
+            "is_interested_events" => trans('labels.frontend.wishes.events_interested_checked'),
+            "not_interested_events" => trans('labels.frontend.wishes.events_interested_unchecked'),
+        ];
+        $statusesTrans = array();
+    @endphp
+    @foreach ($status as $st)
+        @php
+            array_push($statusesTrans, trans('menus.list.status.'.strtolower($st)));
+        @endphp
+    @endforeach
+    <wish-list
+        wl-name="{{ json_encode($whitelabelName) }}"
+        user-role="{{ json_encode($logged_in_user['role']) }}"
+        statuses-trans="{{ json_encode($statusesTrans) }}"
+        words-trans="{{ json_encode($translations) }}" >
+    </wish-list>
 @endsection
 
 @section('footer')

@@ -8,6 +8,13 @@
         '3' => '3 Kinder',
         '4' => '4 Kinder',
     ];
+
+    $class_arr = [
+        'Economy' => 'Economy',
+        'Premium Economy' => 'Premium Economy',
+        'Business' => 'Business',
+        'First' => 'First',
+    ];
 @endphp
 
 <div id="{{ $layerName }}" class="tab-content">
@@ -55,10 +62,11 @@
                     @endif
                 </div>
 
-                <div class="kwp-col-3 category">
-                    {{ Form::label('klasse', trans('layer.general.klasse'), ['class' => 'control-label required']) }}
+                <div class="kwp-col-3 class">
+                    {{ Form::label('klasse', trans('layer.flight.class'), ['class' => 'control-label required']) }}
                     <div class="kwp-custom-select">
-                        {{ Form::select('category', $class_arr, key_exists('category', $request) ? $request['category'] : null) }}
+
+                        {{ Form::select('class', $class_arr, key_exists('class', $request) ? $request['class'] : null) }}
                     </div>
                     <i class="far fa-chevron-down"></i>
                 </div>
@@ -116,7 +124,7 @@
                     <div class="kwp-form-group pax-group">
                         <label for="travelers" class="required">{{ trans('whitelabel.layer.general.pax') }}</label>
                         <span class="travelers dd-trigger">
-                            <span class="txt">2 Erwachsener</span>
+                            <span class="txt">{{ trans_choice('layer_flight.adult_count', 2) }}</span>
                             <i class="fal fa-users not-triggered"></i>
                             <i class="fal fa-times triggered"></i>
                         </span>
@@ -138,7 +146,7 @@
                                 </div>
                                 <div class="kwp-col-ages">
                                     <div class="kwp-form-group">
-                                        <label class="main-label">Alter der Kinder bei Rückreise</label>
+                                        <label class="main-label">{{ trans('layer_flight.kids.travel_age') }}</label>
                                         <input name="ages" type="hidden">
                                         <div id="age_1" class="kwp-col-3">
                                             <div class="kwp-custom-select" style="display: none">
@@ -248,7 +256,7 @@
                 </div>
 
                 <div class="kwp-col-4 white-col submit-col">
-                    <button id="submit-button" type="submit" class="submit-button primary-btn">Reisewunsch abschicken</button>
+                    <button id="submit-button" type="submit" class="submit-button primary-btn">{{ trans('layer.submit') }}</button>
                 </div>
             </div>
         </div>
@@ -273,10 +281,7 @@
                         @endif
 
                         {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
-                        <p>Ich habe die
-                        <a href="#" id="agb_link" target="_blank">Teilnahmebedingungen</a> und
-                        <a href="#" id="datenschutz" target="_blank" rel="noopener noreferrer">Datenschutzrichtlinien</a>
-                        zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
+                        <p>{!! trans('layer.terms_tnb') !!}</p>
                     </div>
                 </div>
             </div>
@@ -291,9 +296,15 @@
     jQuery(function($){
         $(document).ready(function () {
 
+            var translation = @json($translation);
+
             var layerName = @json($layerName);
 
             var layer = layers.find(l => l.layer.path === layerName);
+
+            var is_pure_autooffers = @json($whitelabel['is_pure_autooffers']);
+
+            dt.translateWordings(translation);
 
             dt.showTabs(layers);
 
@@ -309,9 +320,9 @@
 
             dt.handleTriggers();
 
-            dt.handleDestination();
+            dt.handleDestination(is_pure_autooffers);
 
-            dt.handleAirport();
+            dt.handleAirport(is_pure_autooffers);
 
             dt.handleDuration();
 

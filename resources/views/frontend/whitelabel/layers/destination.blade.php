@@ -1,16 +1,6 @@
 @php
-    $layerName = 'cruise';
-
-    $class_arr = [
-        'Innenkabine' => 'Innenkabine',
-        'Außenkabine' => 'Außenkabine',
-        'Balkonkabine' => 'Balkonkabine',
-        'Suite' => 'Junior-Suite',
-        'Suite' => 'Suite',
-        'beliebig' => 'beliebig',
-    ];
+    $layerName = 'destination';
 @endphp
-<?php  ?>
 
 <div id="{{ $layerName }}" class="tab-content">
 
@@ -23,27 +13,15 @@
     {{ Form::open() }}
 
     {{ Form::hidden('airport', '-') }}
+    {{ Form::hidden('destination', '-') }}
     {{ Form::hidden('budget', 0) }}
+    {{ Form::hidden('adults', 0) }}
 
     <div class="kwp-middle"></div>
 
     <div class="kwp-minimal">
         <div class="kwp-content kwp-with-expansion">
             <div class="kwp-row">
-                <div class="kwp-col-4 destination">
-                    {{ Form::label('destination', trans('layer.general.destination'), ['class' => 'control-label required']) }}
-                    {{ Form::text('destination', key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('layer.placeholder.destination'), 'required' => 'required']) }}
-                    <i class="fal fa-globe-europe"></i>
-                    @if ($errors->any() && $errors->get('destination'))
-                        @foreach ($errors->get('destination') as $error)
-                            <span class="error-input">{{ $error }}</span>
-                            <script>
-                                dt.Tracking.rawEvent(whitelabelPrefix+'_exitwindow', 'Error on destination', '{{ $error }}');
-                            </script>
-                        @endforeach
-                    @endif
-                </div>
-
                 <div class="kwp-col-4 duration-col main-col">
                     <div class="kwp-form-group duration-group duration-group">
                         <label for="duration-time" class="required">{{ trans('layer.general.duration') }}</label>
@@ -91,72 +69,37 @@
                     </div>
                 </div>
 
+                <div class="kwp-col-4 purpose">
+                    {{ Form::label('purpose', trans('layer.general.purpose'), ['class' => 'control-label required']) }}
+                    <div class="kwp-custom-select">
+                        {{ Form::select('purpose', $purpose_arr, key_exists('purpose', $request) ? $request['purpose'] : null, ['class' => 'form-control box-size']) }}
+                    </div>
+                    <i class="far fa-chevron-down"></i>
+                </div>
             </div>
+
             <div class="kwp-row">
+                <div class="kwp-col-4 stars">
+                    <div class="kwp-form-group">
+                        {{ Form::label('category', trans('layer.general.category'), ['class' => 'control-label required']) }}
+                        {{ Form::number('category', key_exists('category', $request) ? $request['category'] : 3, ['class' => 'form-control box-size hidden', 'placeholder' => trans('layer.placeholder.category')]) }}
 
-                <div class="kwp-col-4 pax-col main-col">
-                    <div class="kwp-form-group pax-group">
-                        <label for="travelers" class="required">{{ trans('whitelabel.layer.general.pax') }}</label>
-                        <span class="travelers dd-trigger">
-                            <span class="txt">{{ trans_choice('layer_cruise.adult_count', 1) }}</span>
-                            <i class="fal fa-users not-triggered"></i>
-                            <i class="fal fa-times triggered"></i>
-                        </span>
-                        <div class="pax-more">
-                            <div class="kwp-col-12">
-                                {{ Form::label('adults', trans('layer.general.adults'), ['class' => 'control-label required']) }}
-                                <div class="kwp-custom-select">
-                                    {{ Form::select('adults', $adults_arr , key_exists('adults', $request) ? $request['adults'] : null, ['class' => 'form-control box-size', 'required' => 'required']) }}
-                                </div>
-                                <i class="fal fa-users"></i>
-                            </div>
-                            <div class="kwp-col-12 kids" style="position: relative;">
-                                <div class="kwp-col-12">
-                                    {{ Form::label('kids', trans('layer.general.kids'), ['class' => 'control-label required']) }}
-                                    <div class="kwp-custom-select">
-                                        {{ Form::select('kids', $kids_arr, key_exists('kids', $request) ? $request['kids'] : null, ['class' => 'form-control box-size']) }}
-                                    </div>
-                                    <i class="fal fa-child"></i>
-                                </div>
-                                <div class="kwp-col-ages">
-                                    <div class="kwp-form-group">
-                                        <label class="main-label">{{ trans('layer_cruise.kids.travel_age') }}</label>
-                                        <input name="ages" type="hidden">
-                                        <div id="age_1" class="kwp-col-3">
-                                            <i class="master-icon--aircraft-down"></i>
-                                            <div class="kwp-custom-select" style="display: none">
-                                                {{ Form::select('ages1', $ages_arr,key_exists('ages1', $request) ? $request['ages1'] : null, ['class' => 'form-control box-size']) }}
-                                            </div>
-                                        </div>
-                                        <div id="age_2" class="kwp-col-3">
-                                            <i class="master-icon--aircraft-down"></i>
-                                            <div class="kwp-custom-select" style="display: none">
-                                                {{ Form::select('ages2', $ages_arr,key_exists('ages2', $request) ? $request['ages2'] : null, ['class' => 'form-control box-size']) }}
-                                            </div>
-                                        </div>
-                                        <div id="age_3" class="kwp-col-3">
-                                            <i class="master-icon--aircraft-down"></i>
-                                            <div class="kwp-custom-select" style="display: none">
-                                                {{ Form::select('ages3', $ages_arr,key_exists('ages3', $request) ? $request['ages3'] : null, ['class' => 'form-control box-size']) }}
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="kwp-col-12 button">
-                                <a href="#">OK</a>
-                            </div>
+                        <span class="text">{{ trans('layer.sun.from') }}</span>
+                        <div class="kwp-star-input">
+                            <span class="kwp-star" data-val="1"></span>
+                            <span class="kwp-star" data-val="2"></span>
+                            <span class="kwp-star" data-val="3"></span>
+                            <span class="kwp-star" data-val="4"></span>
+                            <span class="kwp-star" data-val="5"></span>
                         </div>
                     </div>
                 </div>
-                <div class="kwp-col-4 class">
-                    {{ Form::label('klasse', trans('layer.cruise.class'), ['class' => 'control-label required']) }}
-                    <div class="kwp-custom-select">
-                        {{ Form::select('class', $class_arr, key_exists('class', $request) ? $request['class'] : null, ['class' => 'form-control box-size']) }}
+
+                <div class="kwp-col-4 grey events-interested">
+                    <div class="checkbox-wrapper">
+                        {{ Form::checkbox('events_interested', null, key_exists('events_interested', $request) ? 'true' : null, ['class' => 'form-control box-size']) }}
+                        <span class="checkbox-text">{{ trans('layer.general.events_interested') }}</span>
                     </div>
-                    <i class="far fa-chevron-down"></i>
                 </div>
             </div>
 
@@ -172,16 +115,20 @@
                 <div class="kwp-col-4 email-col">
                     {{ Form::label('email', trans('layer.general.email'), ['class' => 'control-label']) }}
                     {{ Form::text('email', key_exists('email', $request) ? $request['email'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.placeholder.email'), 'required' => 'required']) }}
-                    <i class="master-icon--mail"></i>
+                    <i class="fal fa-envelope"></i>
                     <div class="kwp-form-email-hint"></div>
                     @if ($errors->any() && $errors->get('email'))
-                            @foreach ($errors->get('email') as $error)
-                                    <span class="error-input">{{ $error }}</span>
-                            @endforeach
+                        @foreach ($errors->get('email') as $error)
+                            <span class="error-input">{{ $error }}</span>
+                            <script>
+                                dt.Tracking.rawEvent(whitelabelPrefix+'_exitwindow', 'Error on email', '{{ $error }}');
+                            </script>
+                        @endforeach
                     @endif
                 </div>
-                <div class="kwp-col-4 white-col">
-                    <button id="submit-button" type="submit" class="primary-btn">{{ trans('layer.submit') }}</button>
+
+                <div class="kwp-col-4 white-col submit-col">
+                    <button id="submit-button" type="submit" class="submit-button primary-btn">{{ trans('layer.submit') }}</button>
                 </div>
             </div>
         </div>
@@ -245,13 +192,9 @@
 
             dt.handleTriggers();
 
-            dt.handleDestination(is_pure_autooffers);
-
             dt.handleDuration();
 
-            dt.hanglePax();
-
-            dt.handleKidsAges();
+            dt.handleHotelStars();
 
             dt.handleErrors();
         });

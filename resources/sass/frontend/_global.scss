@@ -52,7 +52,8 @@ html, body {
 	background: transparent;
 	border: 1px solid transparent;
 	color: #fff;
-	text-decoration: none;
+    text-decoration: none;
+    box-shadow: none !important;
   }
   &.inactiv{
 	background: #000;
@@ -78,7 +79,8 @@ html, body {
 	border: 1px solid transparent;
 	color: transparent;
 	background: transparent;
-	text-decoration: none;
+    text-decoration: none;
+    box-shadow: none !important;
   }
   &.inactiv{
 	background: #fff;
@@ -573,8 +575,10 @@ footer{
 }
 .mousehover:hover + .tooltip {
   visibility: visible;
-  transition: opacity 0.3s ease;
   opacity: 1;
+}
+.mousehover:hover + .tooltip {
+  transition: opacity 0.3s ease;
 }
 .ellipsised{
   display: inline-block;

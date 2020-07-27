@@ -168,7 +168,7 @@ jQuery(function($) {
         next: false,
         blocked: false,
         isMobile: false,
-        mobileCookieId: 'm_kiwzzme',
+        mobileCookieId: 'm_desiretec',
         regionCodes:{},
         testCookieId: 'desiretec',
         shown: false,
@@ -346,7 +346,7 @@ jQuery(function($) {
             this.popup.find('#back-button').click($.proxy(this.setBack, this));
             this.popup.find('#submit-button').click($.proxy(this.onFormSubmit, this));
             this.popup.find('#next-button').click($.proxy(this.setNext, this));
-            this.popup.find('.kwp-close-btn').click($.proxy(this.closePopup, this));
+            //this.popup.find('.kwp-close-btn').click($.proxy(this.closePopup, this));
         },
         showPopup: function() {
             var self = this;
@@ -388,7 +388,7 @@ jQuery(function($) {
                 //.click(jQuery.proxy(this.onBackdropClick, this))
                 ;
                 if(dt.PopupManager.teaser){
-                    this.teaser = jQuery('<div/>', {'class': 'teaser'}).append('<h1>'+this.teaserText+'</h1><i class="fal fa-times"></i>').css('background-color', dt.config.teaserBgColor);
+                    this.teaser = jQuery('<div/>', {'class': 'teaser'}).append('<h1>'+this.teaserText+'</h1><i class="fal fa-times"></i>');
                     this.modal.append(this.teaser);
                 }
                 jQuery('body').prepend(this.modal);

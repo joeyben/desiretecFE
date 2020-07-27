@@ -321,16 +321,16 @@ if (!function_exists('transformDuration')) {
     function transformDuration($duration)
     {
         switch ($duration) {
-            case '7':
+            case '7-':
                 return trans_choice('labels.frontend.wishes.week', 1, ['value' => 1]);
 
                 break;
 
-            case '14':
+            case '14-':
                 return trans_choice('labels.frontend.wishes.week', 2, ['value' => 2]);
                 break;
 
-            case '21':
+            case '21-':
                 return trans_choice('labels.frontend.wishes.week', 3, ['value' => 3]);
                 break;
 
@@ -871,5 +871,23 @@ if (!function_exists('supported_languages_keys')) {
     function supported_languages_keys()
     {
         return config('laravellocalization.supportedLocales');
+    }
+}
+
+/**
+ * Returns current Agent.
+ */
+if (!function_exists('get_current_agent')) {
+    function get_current_agent()
+    {
+        $currentAgent = session()->get('currentAgent');
+
+        $user = \Illuminate\Support\Facades\Auth::guard('web')->user() ? \Illuminate\Support\Facades\Auth::guard('web')->user()->user : null;
+
+        if ($user && $user['isSeller'] && !session()->has('currentAgent')) {
+            $currentAgent = $user['currentAgent'];
+        }
+        return $currentAgent;
+
     }
 }

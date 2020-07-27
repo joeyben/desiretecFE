@@ -1,5 +1,11 @@
 @php
     $layerName = 'package';
+
+    if($whitelabel['name'] === 'regiomaris') {
+        unset($catering_arr[1]);
+        unset($catering_arr[4]);
+        unset($catering_arr[5]);
+    }
 @endphp
 
 <div id="{{ $layerName }}" class="tab-content">
@@ -104,7 +110,7 @@
                     <div class="kwp-form-group pax-group">
                         <label for="travelers" class="required">{{ trans('whitelabel.layer.general.pax') }}</label>
                         <span class="travelers dd-trigger">
-                            <span class="txt">2 Erwachsener</span>
+                            <span class="txt">{{ trans_choice('layer_package.adult_count', 2) }}</span>
                             <i class="fal fa-users not-triggered"></i>
                             <i class="fal fa-times triggered"></i>
                         </span>
@@ -126,7 +132,7 @@
                                 </div>
                                 <div class="kwp-col-ages">
                                     <div class="kwp-form-group">
-                                        <label class="main-label">Alter der Kinder bei Rückreise</label>
+                                        <label class="main-label">{{ trans('layer_package.kids.travel_age') }}</label>
                                         <input name="ages" type="hidden">
                                         <div id="age_1" class="kwp-col-3">
                                             <i class="master-icon--aircraft-down"></i>
@@ -230,7 +236,7 @@
                         {{ Form::label('category', trans('layer.general.category'), ['class' => 'control-label required']) }}
                         {{ Form::number('category', key_exists('category', $request) ? $request['category'] : 3, ['class' => 'form-control box-size hidden', 'placeholder' => trans('layer.placeholder.category')]) }}
 
-                        <span class="text">ab 0 Sonnen</span>
+                        <span class="text">{{ trans('layer.sun.from') }}</span>
                         <div class="kwp-star-input">
                             @if($whitelabel['name'] !== 'Lastminute')
                                 <span class="kwp-star" data-val="1"></span>
@@ -283,7 +289,7 @@
                 </div>
 
                 <div class="kwp-col-4 white-col submit-col">
-                    <button id="submit-button" type="submit" class="submit-button primary-btn">Reisewunsch abschicken</button>
+                    <button id="submit-button" type="submit" class="submit-button primary-btn">{{ trans('layer.submit') }}</button>
                 </div>
             </div>
         </div>
@@ -308,10 +314,7 @@
                         @endif
 
                         {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
-                        <p>Ich habe die
-                        <a href="#" id="agb_link" target="_blank">Teilnahmebedingungen</a> und
-                        <a href="#" id="datenschutz" target="_blank" rel="noopener noreferrer">Datenschutzrichtlinien</a>
-                        zur Kenntnis genommen und möchte meinen Reisewunsch absenden.</p>
+                        <p>{!! trans('layer.terms_tnb') !!}</p>
                     </div>
                 </div>
             </div>
@@ -326,9 +329,15 @@
     jQuery(function($){
         $(document).ready(function () {
 
+            var translation = @json($translation);
+
             var layerName = @json($layerName);
 
             var layer = layers.find(l => l.layer.path === layerName);
+
+            var is_pure_autooffers = @json($whitelabel['is_pure_autooffers']);
+
+            dt.translateWordings(translation);
 
             dt.showTabs(layers);
 
@@ -344,9 +353,9 @@
 
             dt.handleTriggers();
 
-            dt.handleDestination();
+            dt.handleDestination(is_pure_autooffers);
 
-            dt.handleAirport();
+            dt.handleAirport(is_pure_autooffers);
 
             dt.handleDuration();
 

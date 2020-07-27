@@ -60,6 +60,7 @@ class WishesController extends Controller
         try {
             $response = $this->apiService->get('/wishes' . '/' . $id);
             $wish = $response->formatResponse('object')->data;
+
             return view('frontend.wishes.wish')->with([
                 'body_class' => $this::BODY_CLASS,
                 'wish'       => $wish
@@ -82,7 +83,6 @@ class WishesController extends Controller
             'status'     => $this->status,
             'category'   => $this->category,
             'catering'   => $this->catering,
-            'count'      => 59,
             'body_class' => $this::BODY_CLASS_LIST,
         ]);
     }

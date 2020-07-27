@@ -1,5 +1,5 @@
 @php
-    $layerName = 'hotel';
+    $layerName = 'hotel_website';
 @endphp
 
 <div id="{{ $layerName }}" class="tab-content">
@@ -13,6 +13,7 @@
     {{ Form::open() }}
 
     {{ Form::hidden('airport', '-') }}
+    {{ Form::hidden('destination', '-') }}
     {{ Form::hidden('category', 0) }}
     {{ Form::hidden('budget', 0) }}
 
@@ -21,20 +22,6 @@
     <div class="kwp-minimal">
         <div class="kwp-content kwp-with-expansion">
             <div class="kwp-row">
-                <div class="kwp-col-4 destination">
-                    {{ Form::label('destination', trans('layer.general.destination'), ['class' => 'control-label required']) }}
-                    {{ Form::text('destination', key_exists('destination', $request) ? $request['destination'] : null, ['class' => 'form-control box-size','autocomplete' => "off", 'placeholder' => trans('layer.placeholder.destination'), 'required' => 'required']) }}
-                    <i class="fal fa-globe-europe"></i>
-                    @if ($errors->any() && $errors->get('destination'))
-                        @foreach ($errors->get('destination') as $error)
-                            <span class="error-input">{{ $error }}</span>
-                            <script>
-                                dt.Tracking.rawEvent(whitelabelPrefix+'_exitwindow', 'Error on destination', '{{ $error }}');
-                            </script>
-                        @endforeach
-                    @endif
-                </div>
-
                 <div class="kwp-col-4 duration-col main-col">
                     <div class="kwp-form-group duration-group duration-group">
                         <label for="duration-time" class="required">{{ trans('layer.general.duration') }}</label>
@@ -80,6 +67,14 @@
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <div class="kwp-col-4 purpose">
+                    {{ Form::label('purpose', trans('layer.general.purpose'), ['class' => 'control-label required']) }}
+                    <div class="kwp-custom-select">
+                        {{ Form::select('purpose', $purpose_arr, key_exists('purpose', $request) ? $request['purpose'] : null, ['class' => 'form-control box-size']) }}
+                    </div>
+                    <i class="far fa-chevron-down"></i>
                 </div>
             </div>
 
@@ -295,8 +290,6 @@
             dt.adjustResponsive();
 
             dt.handleTriggers();
-
-            dt.handleDestination(is_pure_autooffers);
 
             dt.handleDuration();
 

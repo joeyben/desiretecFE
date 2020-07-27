@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Frontend\Admin\CacheController;
 use App\Repositories\Frontend\Pages\PagesRepository;
 use App\Services\Api\ApiService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Modules\Translations\Entities\Translation;
 use Spatie\TranslationLoader\LanguageLine;
 use App\Http\Requests\Wishes\StoreWishesRequest;
+use Illuminate\Support\Facades\Lang;
 
 /**
  * Class FrontendController.
@@ -19,12 +22,6 @@ class FrontendController extends Controller
     const BODY_CLASS = 'landing';
 
     // TODO: Better solution for these arrays:
-    const CLASS_ARR = [
-        3 => "Economy",
-        2 => "Premium Economy",
-        1 => "Business",
-        4 => "First",
-    ];
     const ADULTS_ARR = [
         1 => "1",
         2 => "2",
@@ -78,53 +75,28 @@ class FrontendController extends Controller
         3 => "3",
         4 => "4",
     ];
-    const DURATION_ARR = [
-        "exact" => "Exakt wie angegeben",
-        "7-" => "1 Woche",
-        "14-" => "2 Wochen",
-        "21-" => "3 Wochen",
-        "28-" => "4 Wochen",
-        "1-4" => "1-4 Tage",
-        "5-8" => "5-8 Tage",
-        "9-12" => "9-12 Tage",
-        "13-15" => "13-15 Tage",
-        "16-22" => "16-22 Tage",
-        "22-" => ">22 Tage",
-        1 => "1 Nacht",
-        2 => "2 Nächte",
-        3 => "3 Nächte",
-        4 => "4 Nächte",
-        5 => "5 Nächte",
-        6 => "6 Nächte",
-        7 => "7 Nächte",
-        8 => "8 Nächte",
-        9 => "9 Nächte",
-        10 => "10 Nächte",
-        11 => "11 Nächte",
-        12 => "12 Nächte",
-        13 => "13 Nächte",
-        14 => "14 Nächte",
-        15 => "15 Nächte",
-        16 => "16 Nächte",
-        17 => "17 Nächte",
-        18 => "18 Nächte",
-        19 => "19 Nächte",
-        20 => "20 Nächte",
-        21 => "21 Nächte",
-        22 => "22 Nächte",
-        23 => "23 Nächte",
-        24 => "24 Nächte",
-        25 => "25 Nächte",
-        26 => "26 Nächte",
-        27 => "27 Nächte",
-        28 => "28 Nächte",
+    const PURPOSE_ARR = [
+        'Familienurlaub',
+        'Wellness -oder Gesundheitsreise',
+        'Aktivurlaub',
+        'Fahrradurlaub',
+        'Naturkundliche Reise',
+        'Studienreise',
+        'Kulturreise',
+        'Geschäftsreise'
     ];
+
+    private $duration_arr;
+
+    private $catering;
 
     protected $apiService;
 
     public function __construct(ApiService $apiService)
     {
         $this->apiService = $apiService;
+        $this->initDurationArr();
+        $this->initCatering();
     }
 
     /**
@@ -144,25 +116,55 @@ class FrontendController extends Controller
      */
     public function show(Request $request)
     {
+        $this->initCatering();
+        $this->initDurationArr();
         $host = $this->getHost($request, request()->headers->get('origin'));
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
 
         $layer = $request->query->has('version') ? 'layers.' . $request->input('version') : 'layer';
 
+        $translation = [
+            "title" => trans('layer.general.layer_title'),
+            "sub_title" => trans('layer.general.sub_title'),
+            "sonnen" => trans('layer.general.suns'),
+            "sonne" => trans('layer.general.sun'),
+            "stern" => trans('layer.general.star'),
+            "sterne" => trans('layer.general.stars')
+        ];
+
         $html = view('frontend.whitelabel.' . $layer)->with([
             'adults_arr'   => $this::ADULTS_ARR,
             'kids_arr'     => $this::KIDS_ARR,
             'ages_arr'     => $this::AGES_ARR,
-            'catering_arr' => $this::CATERING_ARR,
-            'class_arr'    => $this::CLASS_ARR,
-            'duration_arr' => $this::DURATION_ARR,
+            'catering_arr' => $this->catering,
+            'duration_arr' => $this->duration_arr,
             'pets_arr'     => $this::PETS_ARR,
             'rooms_arr'    => $this::ROOMS_ARR,
-            'request'      => $request,
+            'purpose_arr'  => $this::PURPOSE_ARR,
+            'request'      => $request->all(),
             'whitelabel'   => $whitelabel,
+            'translation'  => $translation
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);
+    }
+
+
+    /**
+     * Return whitelabel info as json.
+     *
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getWhitelabelData(Request $request)
+    {
+        $host = $this->getHost($request, request()->headers->get('origin'));
+        $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
+        $data = [
+            'color' => $whitelabel['color']
+        ];
+
+        return response()->json(['success' => true, 'data' => $data]);
     }
 
     /**
@@ -173,24 +175,36 @@ class FrontendController extends Controller
 
     public function store(StoreWishesRequest $request)
     {
+        $this->initCatering();
+        $this->initDurationArr();
         $host = $this->getHost($request, request()->headers->get('origin'));
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
 
         if ($request->failed()) {
             $layer = $request->query->has('version') ? 'layers.' . $request->input('version') : 'layer';
 
+            $translation = [
+                "title" => trans('layer.general.layer_title'),
+                "sub_title" => trans('layer.general.sub_title'),
+                "sonnen" => trans('layer.general.suns'),
+                "sonne" => trans('layer.general.sun'),
+                "stern" => trans('layer.general.star'),
+                "sterne" => trans('layer.general.stars')
+            ];
+
             $html = view('frontend.whitelabel.' . $layer)->with([
                 'adults_arr'   => $this::ADULTS_ARR,
                 'kids_arr'     => $this::KIDS_ARR,
                 'ages_arr'     => $this::AGES_ARR,
-                'catering_arr' => $this::CATERING_ARR,
-                'class_arr'    => $this::CLASS_ARR,
-                'duration_arr' => $this::DURATION_ARR,
+                'catering_arr' => $this->catering,
+                'duration_arr' => $this->duration_arr,
                 'pets_arr'     => $this::PETS_ARR,
                 'rooms_arr'    => $this::ROOMS_ARR,
+                'purpose_arr'  => $this::PURPOSE_ARR,
                 'request'      => $request->all(),
                 'errors'       => $request->errors(),
                 'whitelabel'   => $whitelabel,
+                'translation'  => $translation
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);
@@ -199,6 +213,10 @@ class FrontendController extends Controller
         $data = $request->all();
         $data['whitelabel_id'] = $whitelabel['id'];
         $data['title'] = "&nbsp;";
+
+        if(isset($data['events_interested'])) {
+            $data['events_interested'] = $data['events_interested'] === 'on' ? 1 : 0;
+        }
 
         try {
             $response = $this->apiService->get('/wish/store', $data);
@@ -246,7 +264,7 @@ class FrontendController extends Controller
     public function getAllAirports(Request $request)
     {
         $whitelabel = current_whitelabel();
- 
+
         if ($whitelabel['traffics'])
             $response = $this->apiService->get('/airports');
         elseif ($whitelabel['tt'])
@@ -290,5 +308,34 @@ class FrontendController extends Controller
         $host = preg_replace('#^https?://#', '', rtrim($origin,'/'));
         $host = preg_replace('#^http?://#', '', rtrim($host,'/'));
         return $host ? $host : $request->header('Host');
+    }
+
+    public function initDurationArr(){
+        $this->duration_arr = [
+            "exact" => trans('labels.frontend.wishes.exact'),
+            "7-" => trans_choice('labels.frontend.wishes.week', 1, ['value' => 1]),
+            "14-" => trans_choice('labels.frontend.wishes.week', 2, ['value' => 2]),
+            "21-" => trans_choice('labels.frontend.wishes.week', 3, ['value' => 3]),
+            "28-" => trans_choice('labels.frontend.wishes.week', 4, ['value' => 4]),
+            "1-4" => "1-4 ". Lang::get('labels.frontend.wishes.nights'),
+            "5-8" => "5-8 ". Lang::get('labels.frontend.wishes.nights'),
+            "9-12" => "9-12 ". Lang::get('labels.frontend.wishes.nights'),
+            "13-15" => "13-15 ". Lang::get('labels.frontend.wishes.nights'),
+            "16-22" => "16-22 ". Lang::get('labels.frontend.wishes.nights'),
+            "22-" => ">22 ". Lang::get('labels.frontend.wishes.nights'),
+        ];
+        for($i = 1; $i<29;$i++){
+            $this->duration_arr[$i] = trans_choice('labels.frontend.wishes.night', $i, ['value' => $i]);
+        }
+    }
+
+    public function initCatering(){
+        $this->catering = [
+            1 => trans('labels.frontend.wishes.catering.ov'),
+            2 => trans('labels.frontend.wishes.catering.bf'),
+            3 => trans('labels.frontend.wishes.catering.hp'),
+            4 => trans('labels.frontend.wishes.catering.vp'),
+            5 => trans('labels.frontend.wishes.catering.ai'),
+        ];
     }
 }

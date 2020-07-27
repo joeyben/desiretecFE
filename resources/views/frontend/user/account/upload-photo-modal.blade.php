@@ -6,7 +6,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Select from Avtars or upload your photo</h4>
+        <h4 class="modal-title">{{ trans('user.account.upload_avatar') }}</h4>
       </div>
       <div class="modal-body">
         {{ Form::open(['route' => [ 'frontend.user.profile-picture', $subdomain, 'files' => true]]) }}
@@ -40,7 +40,7 @@
         {!! Form::close() !!}
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('user.account.close_button') }}</button>
       </div>
     </div>
 

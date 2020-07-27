@@ -9,8 +9,9 @@ jQuery(function($){
         baseUrl: domain,
         popupPath: '/show',
         popupStore:'/wish/store',
+        wlDataPath: '/wlData',
         cssPath: '/css/layer.css',
-        teaserBgColor: ''
+        wlBrandColor: ''
     };
 
     var fontAwesomeIcons = jQuery("<link>");
@@ -30,6 +31,375 @@ jQuery(function($){
             '<div class="kwp-body">' +
             '</div><div style="clear:both;"></div>';
     };
+
+    var MasterIBETripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
+        decodeDate: function (raw) {
+            var r = /\w+\.\s+(\d+\.\d+.\d+)/.exec(raw);
+
+            if (r === null || r.length !== 2) {
+                return null;
+            }
+
+            return r[1];
+        },
+        name: 'TUI IBE',
+        matchesUrl: 'www.tui.com/(hotel|pauschalreisen|last-minute)(/[a-z-]+)*/suchen|tuicom-itest.tui-interactive.com/(hotel|pauschalreisen|last-minute)(/[a-z-]+)*/suchen|www.tui.com/de/(hotel|pauschalreisen|last-minute)(/[a-z-]+)*/suchen|airtours.de|https://tui.reise-wunsch.de|https://tui.travelwishservice.com|https://tui.wish-service.com',
+        filterFormSelector: '#ibeContainer',
+        dictionaries: {
+            'catering': {
+                'AI': '5',
+                'AP': '5',
+                'FB': '4',
+                'FP': '4',
+                'HB': '3',
+                'HP': '3',
+                'BB': '2',
+                'AO': '1',
+                'XX': null
+            },
+            'cateringWeight': {
+                'AI': 5,
+                'AP': 5,
+                'FB': 4,
+                'FP': 4,
+                'HB': 3,
+                'HP': 3,
+                'BB': 2,
+                'AO': 1,
+                'XX': null
+            },
+            'allowedDestinations': {
+                1340: 'Seychellen',
+                1196: 'Malediven',
+                1333: 'Kapverdische Inseln'
+            }
+        },
+        filterDataDecoders: {
+            'catering': function (form, formData) {
+                var lowestBoardWeigth = 100,
+                    lowestBoard = null,
+                    boardTypes = formData.boardTypes
+                ;
+
+                if (!boardTypes || !boardTypes.length) {
+                    return null;
+                }
+
+                for (var i = 0; i < boardTypes.length; ++i) {
+                    var board = boardTypes[i],
+                        weight = this.dictionaries.cateringWeight[board]
+                    ;
+
+                    if (!weight) {
+                        continue;
+                    }
+
+                    if (weight < lowestBoardWeigth) {
+                        lowestBoard = board;
+                        lowestBoardWeigth = weight;
+                    }
+                }
+                return this.dictionaryTransformValue(this.dictionaries.catering, lowestBoard);
+            },
+            'category': function (form, formData) {
+                return formData.category;
+            },
+            'destination': function (form, formData) {
+                var dest = null;
+
+                if (utag_data.destination_country_searched && this.getScope().IbeApi.state.stepNr == 4) {
+                    dest = utag_data.destination_country_searched;
+
+                    if (dest === 'Vereinigte Arabische Emirate') {
+                        dest = decodeURIComponent(utag_data.destination_city_searched);
+                    }
+
+                    if(dest === 'Thailand') {
+                        dest = decodeURIComponent(utag_data.search_destination);
+
+                        if(dest == 'undefined') {
+                            dest = 'Thailand';
+                        }
+                    }
+
+                } else if (formData.destination) {
+                    dest = formData.destination.name;
+                }
+
+                if (dest && dest.trim() == 'Portugal') {
+                    return 'Algarve';
+                }
+
+                return dest;
+            },
+            'adults': function (form, formData) {
+                var adults = 0;
+                $.each(formData.travellers,function(key,value){
+                    adults += parseInt(value.adults);
+                });
+                return adults;
+            },
+            'budget': function (form, formData) {
+                return formData.maxPrice;
+            },
+            'kids': function (form, formData) {
+                var childs = 0;
+                $.each(formData.travellers,function(key,value){
+                    childs += parseInt(value.children.length);
+                });
+                childs = childs > 3 ? 3 : childs;
+                return childs;
+            },
+            'ages1': function (form, formData) {
+                var ages = [];
+                $.each(angular.element('#ibeContainer').scope().filters.state.travellers,function(key,value){
+
+                    $.each(value.children,function(key_,children){
+                        ages.push(children);
+                    });
+
+                });
+                return ages.length > 0 ? ages[0] : 0;
+            },
+            'ages2': function (form, formData) {
+                var ages = [];
+                $.each(angular.element('#ibeContainer').scope().filters.state.travellers,function(key,value){
+
+                    $.each(value.children,function(key_,children){
+                        ages.push(children);
+                    });
+
+                });
+                return ages.length > 1 ? ages[1] : 0;
+            },
+            'ages3': function (form, formData) {
+                var ages = [];
+                $.each(angular.element('#ibeContainer').scope().filters.state.travellers,function(key,value){
+
+                    $.each(value.children,function(key_,children){
+                        ages.push(children);
+                    });
+
+                });
+                return ages.length > 2 ? ages[2] : 0;
+            },
+            'earliest_start': function (form, formData) {
+                return this.formatDate(formData.startDate);
+            },
+            'latest_return': function (form, formData) {
+                return this.formatDate(formData.endDate);
+            },
+            'duration': function (form, formData) {
+                if (formData.duration.trim() === 'default') {
+                    return null;
+                }
+
+                return formData.duration;
+            },
+            'extra': function (form, formData) {
+                if("environmentAttributes" in formData)
+                    return formData.environmentAttributes.concat(formData.familyAttributes).concat(formData.sportAttributes).join(',');
+                else
+                    return '';
+            },
+            'room_type': function (form, formData) {
+                return formData.roomTypes.join(',');
+            },
+            'airport': function (form, formData) {
+                var self = this;
+                return formData.departureAirports.map(function (airport) {
+                    return self.getAirportName(airport);
+                }).join(', ');
+            },
+            /* Extra Variabels ****************************************************************************************/
+            /* Lage */
+            'locationAttributes': function (form, formData) {
+                var locationAttributes = getUrlParams('locationAttributes') ? getUrlParams('locationAttributes') : '';
+                return this.getExtraVariable(locationAttributes, 'locationAttributes');
+            },
+            /* Ausstattung und Service */
+            'facilityAttributes': function (form, formData) {
+                var facilityAttributes = getUrlParams('facilityAttributes') ? getUrlParams('facilityAttributes') : '';
+                return this.getExtraVariable(facilityAttributes, 'facilityAttributes');
+            },
+            /* Reisethemen */
+            'travelAttributes': function (form, formData) {
+                var travelAttributes = getUrlParams('travelAttributes') ? getUrlParams('travelAttributes') : '';
+                return this.getExtraVariable(travelAttributes, 'travelAttributes');
+            },
+            /* Reisethemen */
+            'maxStopOver': function (form, formData) {
+                var maxStopOver = getUrlParams('maxStopOver') ? getUrlParams('maxStopOver') : '';
+                return this.getExtraVariable(maxStopOver, 'maxStopOver');
+            },
+            /* Orte */
+            'cities': function (form, formData) {
+                var cities = getUrlParams('cities') ? getUrlParams('cities') : '';
+                return this.getExtraVariable(cities, 'cities');
+            },
+            /* Gästebewertungen */
+            'ratings': function (form, formData) {
+                var ratings = getUrlParams('ratings') ? getUrlParams('ratings') : '';
+                return this.getExtraVariable(ratings, 'ratings');
+            },
+            /* Weiterempfehlung */
+            'recommendationRate': function (form, formData) {
+                var recommendationRate = getUrlParams('recommendationRate') ? getUrlParams('recommendationRate') : '';
+                return this.getExtraVariable(recommendationRate, 'recommendationRate');
+            },
+            /* Gesamtpreis */
+            'minPrice': function (form, formData) {
+                var minPrice = getUrlParams('minPrice') ? getUrlParams('minPrice') : '';
+                return this.getExtraVariable(minPrice, 'minPrice');
+            },
+            /* Zimmertyp */
+            'roomType': function (form, formData) {
+                var roomType = getUrlParams('roomType') ? getUrlParams('roomType') : '';
+                return this.getExtraVariable(roomType, 'roomType');
+            },
+            /* Angebote */
+            'earlyBird': function (form, formData) {
+                var earlyBird = getUrlParams('earlyBird') ? getUrlParams('earlyBird') : '';
+                return this.getExtraVariable(earlyBird, 'earlyBird');
+            },
+            /* Angebote */
+            'familyAttributes': function (form, formData) {
+                var familyAttributes = getUrlParams('familyAttributes') ? getUrlParams('familyAttributes') : '';
+                return this.getExtraVariable(familyAttributes, 'familyAttributes');
+            },
+            /* Angebote */
+            'wellnessAttributes': function (form, formData) {
+                var wellnessAttributes = getUrlParams('wellnessAttributes') ? getUrlParams('wellnessAttributes') : '';
+                return this.getExtraVariable(wellnessAttributes, 'wellnessAttributes');
+            },
+            /* Angebote */
+            'sportAttributes': function (form, formData) {
+                var sportAttributes = getUrlParams('sportAttributes') ? getUrlParams('sportAttributes') : '';
+                return this.getExtraVariable(sportAttributes, 'sportAttributes');
+            },
+            /* Angebote */
+            'airlines': function (form, formData) {
+                var airlines = getUrlParams('airlines') ? getUrlParams('airlines') : '';
+                return this.getExtraVariable(airlines, 'airlines');
+            },
+            /* Angebote */
+            'hotelChains': function (form, formData) {
+                var hotelChains = getUrlParams('hotelChains') ? getUrlParams('hotelChains') : '';
+                return this.getExtraVariable(hotelChains, 'hotelChains');
+            },
+            /* Angebote */
+            'operators': function (form, formData) {
+                var operators = getUrlParams('operators') ? getUrlParams('operators') : '';
+                return this.getExtraVariable(operators, 'operators');
+            },
+            /* END Extra Variabels ************************************************************************************/
+            'is_popup_allowed': function (form, formData) {
+                //var step = this.getScope().IbeApi.state.stepNr;
+                return true;
+            }
+        },
+        getCountryId: function () {
+            var destination = this.getScope().filters.state.destination,
+                countryId;
+
+            if (!destination) {
+                return null;
+            }
+
+            if (destination.regionId) {
+                countryId = this.getCountryIdFromRegionId(destination.regionId);
+            } else {
+                countryId = destination.countryId || this.getScope().IbeApi.state.data.country.countryId;
+            }
+
+            return countryId;
+        },
+        formatDate: function (d) {
+            if (!d) {
+                return null;
+            }
+
+            function pad(val, len) {
+                val = String(val);
+                len = len || 2;
+                while (val.length < len) val = "0" + val;
+                return val;
+            }
+
+            return pad(d.getDate(), 2) + '.' + pad(d.getMonth() + 1) + '.' + d.getFullYear();
+        },
+        getScope: function () {
+            if (!this.scope) {
+                this.scope = angular.element(this.filterFormSelector).scope();
+            }
+
+            return this.scope;
+        },
+        getAirportName: function (code) {
+            if (!this.airports) {
+                this.airports = {};
+
+                var data = this.getScope().IbeApi.state.referenceData.airports.slice();
+
+                data = data.concat([
+                    {code: 'WEST', name: 'Deutschland West'},
+                    {code: 'EAST', name: 'Deutschland Ost'},
+                    {code: 'NORTH', name: 'Deutschland Nord'},
+                    {code: 'SOUTH', name: 'Deutschland Süd'}
+                ]);
+
+                for (var i = 0; i < data.length; ++i) {
+                    this.airports[data[i].code] = data[i].name;
+                }
+            }
+            return this.airports[code];
+        },
+        getCountryIdFromRegionId: function (code) {
+            if (!this.regions) {
+                this.regions = {};
+
+                var data = this.getScope().IbeApi.state.referenceData.destinations;
+
+                for (var i = 0; i < data.length; ++i) {
+                    this.regions[data[i].regionId || data[i].countryId] = data[i].countryId;
+                }
+            }
+
+            return this.regions[code];
+        },
+        getTripData: function () {
+            var form = $(this.filterFormSelector),
+                formData = this.getScope().filters.state;
+
+            return this.decodeFilterData(form, formData);
+        },
+        getRandomElement: function (arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        },
+        getVariant: function () {
+            return this.getRandomElement([
+                'eil-'+deviceDetector.device,
+            ]);
+        },
+        getTrackingLabel: function (tripData, variant) {
+            return variant;
+        },
+        getExtraVariable: function(extraVar, attrName, splitChar){
+            splitChar = (splitChar === undefined) ? ';' : splitChar;
+            var attributesArr = [];
+            if(extraVar != ''){
+                var attributes = extraVar.split(splitChar);
+                $.each(attributes, function(i, e){
+                    var item = attrName+'_'+e;
+                    attributesArr.push($('label[for='+item+']').attr('title'));
+                });
+            }
+            if(attributesArr.length == 0){
+                return '';
+            }
+            return attributesArr.join(', ');
+        }
+    });
 
     var DTTripDataDecoder = $.extend({}, dt.AbstractTripDataDecoder, {
         name: 'Master WL',
@@ -152,8 +522,16 @@ jQuery(function($){
             return 'eil-'+deviceDetector.device;
         }
     });
-    dt.decoders.push(DTTripDataDecoder);
 
+    if(domain.includes('tui')
+        && !window.location.hostname.includes('wish-service')
+        && !window.location.hostname.includes('travelwishservice.com')
+        && !window.location.hostname.includes('reise-wunsch.de')
+    ){
+        dt.decoders.push(MasterIBETripDataDecoder);
+    }else{
+        dt.decoders.push(DTTripDataDecoder);
+    }
 
     dt.initCallbacks = dt.initCallbacks || [];
 
@@ -171,12 +549,12 @@ jQuery(function($){
         });
 
 
-        dt.PopupManager.closePopup = function(event) {
+        dt.closePopup = function(event) {
             event.preventDefault();
 
             var formSent = $('.kwp-content').hasClass('kwp-completed');
 
-            this.modal.addClass('tmp-hidden');
+            dt.PopupManager.modal.addClass('tmp-hidden');
             if(!formSent && $('.trigger-modal').length === 0) {
                 this.trigger =
                     $('<span/>', {'class': 'trigger-modal'});
@@ -189,14 +567,12 @@ jQuery(function($){
                 }
             }
 
-            this.shown = false;
+            dt.PopupManager.modal.shown = false;
             $("body").removeClass('mobile-layer');
             $("body, html").css({'overflow':'auto'});
 
             dt.Tracking.event('close', dt.Tracking.category);
-
         };
-
 
         dt.scrollUpDetect = function (e) {
             dt.PopupManager.layerShown = false;
@@ -210,11 +586,13 @@ jQuery(function($){
 
         dt.triggerButton = function(e){
             $("body").on('click tap','.trigger-modal',function () {
-                $("body").addClass('mobile-layer');
-                if(dt.PopupManager.teaserSwiped){
-                    dt.showMobileLayer();
-                }else{
-                    dt.PopupManager.shown = true;
+                if(deviceDetector.device === "phone") {
+                    $("body").addClass('mobile-layer');
+                    if (dt.PopupManager.teaserSwiped) {
+                        dt.showMobileLayer();
+                    } else {
+                        dt.PopupManager.shown = true;
+                    }
                 }
                 dt.PopupManager.modal.removeClass('tmp-hidden');
                 $(this).remove();
@@ -229,6 +607,7 @@ jQuery(function($){
             $(".dt-modal").removeClass('teaser-on');
             $("body, html").css({'overflow':'hidden'});
             //$.cookie(dt.PopupManager.mobileCookieId,'true',dt.PopupManager.cookieOptions);
+            setCookie(dt.PopupManager.mobileCookieId, 'true');
             //ga('dt.send', 'event', 'Mobile Layer', 'Teaser shown', 'Mobile');
             dt.Tracking.event('Mobile layer shown', dt.Tracking.category);
         };
@@ -248,9 +627,6 @@ jQuery(function($){
                     removeLayer(event);
                 }
             });
-            if (typeof brandColor !== 'undefined') {
-                $(".dt-modal .teaser").css('background-color', brandColor);
-            }
             dt.Tracking.event('Mobile Teaser shown', dt.Tracking.category);
         };
 
@@ -261,19 +637,35 @@ jQuery(function($){
 
         $(document).ready(function (e) {
 
+            if(domain.includes('tui') && deviceDetector.device === "phone"){
+                return false;
+            }
+
+            jQuery.ajax(dt.defaultConfig.baseUrl + dt.defaultConfig.wlDataPath, {
+                type: 'GET',
+                contentType: 'application/x-www-form-urlencoded',
+                xhrFields: {
+                    withCredentials: false
+                },
+                success: function(response){
+                    dt.defaultConfig.wlBrandColor = response.data.color;
+                    $(".dt-modal .teaser").css('background-color', dt.defaultConfig.wlBrandColor);
+                }
+            });
+
             var $event = e;
             if(deviceDetector.device === "phone") {
                 dt.PopupManager.teaser = true;
                 dt.PopupManager.teaserText = "Dürfen wir Sie beraten?";
-                $(".dt-modal .kwp-close-btn").on('touchend',function () {
-                    dt.PopupManager.closePopup(e);
-                });
             }
 
             dt.PopupManager.init();
 
-            dt.triggerButton($event);
-            if(deviceDetector.device === "phone" && dt.PopupManager.decoder){
+            if(!domain.includes('tui')) {
+                dt.triggerButton($event);
+            }
+
+            if(deviceDetector.device === "phone" && dt.PopupManager.decoder && !getCookie(dt.PopupManager.mobileCookieId)){
                 dt.scrollUpDetect();
                 dt.PopupManager.isMobile = true;
                 $(".dt-modal").css({'top':(document.documentElement.clientHeight - 100)+"px"});
@@ -291,6 +683,10 @@ jQuery(function($){
             if(getUrlParams('autoShow') && !isMobile()){
                 dt.PopupManager.show();
             }
+
+            $("body").on('click touchend','.dt-modal .kwp-close-btn',function (e) {
+                dt.closePopup(e);
+            });
         });
 
         $(window).on( "orientationchange", function( event ) {
@@ -303,15 +699,18 @@ jQuery(function($){
 
         // close if click outside the modal
         $(document).mouseup(function(e) {
-            if($('.dt-modal-visible').length > 0) {
-                var dtModal = $('.dt-modal-visible');
-                var datePicker = $('.pika-single');
+            // if(!domain.includes('tui')) {
+            //     return false;
+            // }
+            // if($('.dt-modal-visible').length > 0) {
+            //     var dtModal = $('.dt-modal-visible');
+            //     var datePicker = $('.pika-single');
 
-                if ((!dtModal.is(e.target) && dtModal.has(e.target).length === 0) &&
-                    (!datePicker.is(e.target) && datePicker.has(e.target).length === 0)) {
-                    dt.PopupManager.closePopup(e);
-                }
-            }
+            //     if ((!dtModal.is(e.target) && dtModal.has(e.target).length === 0) &&
+            //         (!datePicker.is(e.target) && datePicker.has(e.target).length === 0)) {
+            //             dt.closePopup(e);
+            //     }
+            // }
         });
 
         function isMobile(){
@@ -364,7 +763,9 @@ jQuery(function($){
         function removeLayer(e){
             var $event = e;
             setTimeout(function(){
-                dt.triggerButton($event);
+                if(!domain.includes('tui')) {
+                    dt.triggerButton($event);
+                }
                 dt.PopupManager.closePopup($event);
                 dt.PopupManager.teaserSwiped = true;
             }, 500);
@@ -414,11 +815,12 @@ jQuery(function($){
             $('<style>.kwp input[type="checkbox"]:checked:after { background-color: ' + brandColor + '; border: 1px solid ' + brandColor + '; }</style>').appendTo('head');
         };
 
-        dt.handleDestination = function() {
+        dt.handleDestination = function(is_pure_autooffer) {
             $('#destination').tagsinput({
                 maxTags: 3,
                 maxChars: 20,
                 allowDuplicates: false,
+                freeInput: !is_pure_autooffer,
                 typeahead: {
                     autoSelect: false,
                     minLength: 3,
@@ -435,11 +837,12 @@ jQuery(function($){
             });
         };
 
-        dt.handleAirport = function() {
+        dt.handleAirport = function(is_pure_autooffer) {
             $('#airport').tagsinput({
                 maxTags: 3,
                 maxChars: 20,
                 allowDuplicates: false,
+                freeInput: !is_pure_autooffer,
                 typeahead: {
                     autoSelect: false,
                     minLength: 3,
@@ -455,6 +858,10 @@ jQuery(function($){
                 }, 1);
             });
         };
+
+        $('body').on('blur', '#destination', function() {
+            $(this).trigger(jQuery.Event('keypress', {which: 13}));
+        });
 
         dt.initLayerVersion = function() {
             var matchDomains = false;
@@ -477,14 +884,18 @@ jQuery(function($){
 
         dt.showTabs = function(layers) {
             var hasTabs = layers.length > 1;
-            var alreadyShown = $('.kwp-tabs .tab-link').length > 0;
+            var alreadyShown = $('.kwp-tabs .tab-link').length > 1;
 
             if(hasTabs && !alreadyShown) {
                 $.each(layers, function(index, layer) {
                     var version = layer.layer.path;
-                    var li = '<li class="tab-link" data-tab="' + version + '">' + version + '</li>';
+                    var name = layer.layer.name;
+                    var li = '<li class="tab-link" data-tab="' + version + '">' + name + '</li>';
                     $(".kwp-tabs").append(li);
                 });
+                if(layers.length > 6) {
+                    $('.kwp-tabs').css('height', '80px');
+                }
                 $('.kwp-tabs').show();
             }
         };
@@ -511,7 +922,7 @@ jQuery(function($){
 
         dt.fillContent = function(layer, hasTabs) {
             $('.kwp-logo').css({
-                'background-image': "url(" + whitelabel.attachments.logo + ")"
+                'background-image': "url(" + layer.logo + ")"
             });
 
             if (layer.headline_color == 'dark') {
@@ -531,9 +942,9 @@ jQuery(function($){
                 $('.kwp-close-btn span').css({'background': '#454545'});
             }
 
-            if (layer.attachments !== undefined && layer.attachments.length != 0) {
+            if (layer.visual !== undefined) {
                 $('.kwp-header-dynamic').css({
-                    'background-image': "url(" + layer.attachments[0].url + ")"
+                    'background-image': "url(" + layer.visual + ")"
                 });
             } else {
                 $('.kwp-header-dynamic').css({
@@ -555,8 +966,8 @@ jQuery(function($){
         dt.adjustResponsive = function(){
             if( $(window).outerWidth() <= 768 ) {
                 dt.PopupManager.isMobile = true;
-
-                $('.kwp-header-text h1').text('Dürfen wir Sie beraten?');
+                var text = dt.translation ? dt.translation.layer_title : "Dürfen wir Sie beraten?";
+                $('.kwp-header-text h1').text(text);
 
                 $("body").addClass('mobile-layer');
                 $(".dt-modal").addClass('m-open');
@@ -834,6 +1245,12 @@ jQuery(function($){
         dt.handleHotelStars = function () {
             var isLastminute = wl_name === 'Lastminute';
 
+            var sonne_txt = dt.translation ? dt.translation.sonne : "Sonne";
+            var sonnen_txt = dt.translation ? dt.translation.sonnen : "Sonnen";
+
+            var stern_txt = dt.translation ? dt.translation.stern : "Stern";
+            var sterne_txt = dt.translation ? dt.translation.sterne : "Sterne";
+
             function restoreValue() {
                 var val = $('#category').val();
                 if (!val) {
@@ -849,10 +1266,12 @@ jQuery(function($){
             }
 
             function setText(cnt){
+
+
                 if(!isLastminute) {
-                    var sonnen = cnt === 1 ? "Sonne" : "Sonnen";
+                    var sonnen = cnt === 1 ? sonne_txt : sonnen_txt;
                 } else {
-                    var sonnen = cnt === 1 ? "Stern" : "Sterne";
+                    var sonnen = cnt === 1 ? stern_txt : sterne_txt;
                 }
                 $('.kwp-star-input').parents('.kwp-form-group').find('.text').text("ab "+cnt+" "+sonnen);
             }
@@ -889,7 +1308,7 @@ jQuery(function($){
                     highlight(parseInt($(this).attr('data-val')));
                 }).click(function () {
                     setValue(parseInt($(this).attr('data-val')));
-                    var sonnen = parseInt($(this).attr('data-val')) === 1 ? "Sonne" : "Sonnen";
+                    var sonnen = parseInt($(this).attr('data-val')) === 1 ? sonne_txt : sonnen_txt;
                     $('.kwp-star-input').parents('.kwp-form-group').find('.text').text("ab "+$(this).attr('data-val')+" "+sonnen);
                 });
             } else {
@@ -897,7 +1316,7 @@ jQuery(function($){
                     highlight(parseInt($(this).attr('data-val')));
                 }).click(function () {
                     setValue(parseInt($(this).attr('data-val')));
-                    var sonnen = parseInt($(this).attr('data-val')) === 1 ? "Stern" : "Sterne";
+                    var sonnen = parseInt($(this).attr('data-val')) === 1 ? stern_txt : sterne_txt;
                     $('.kwp-star-input').parents('.kwp-form-group').find('.text').text("ab "+$(this).attr('data-val')+" "+sonnen);
                 });
             }
@@ -932,4 +1351,7 @@ jQuery(function($){
             });
         }
 
+        dt.translateWordings = function (translation) {
+            dt.translation = translation;
+        }
 });
