@@ -14,9 +14,7 @@ class Translation implements TranslationLoader
     {
         $whitelabelId = getWhitelabelInfo()['id'];
 
-        if (session()->has('desiretec.locale')) {
-            $locale = session()->get('desiretec.locale', 'de');
-        }
+        $locale = session()->get('wl-locale', 'de');
 
         return Cache::rememberForever(static::getCacheKey($group, $locale, $whitelabelId), function () use ($group, $locale, $whitelabelId) {
             $api = resolve(ApiService::class);
