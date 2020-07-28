@@ -131,7 +131,7 @@ export default {
         },
     },
     beforeMount() {
-        if(localStorage.getItem('wishesSelectState') === null || this.isDkFereinWhitelabel) {
+        if(localStorage.getItem('wishesSelectState') === null || this.isDkFereinWhitelabel || !isSeller()) {
             this.status = this.translatedStatuses[0];
         } else {
             this.status = localStorage.getItem('wishesSelectState');
