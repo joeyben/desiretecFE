@@ -51,8 +51,7 @@ mix.setPublicPath('public')
         'resources/js/layer/layer.js',
     ], 'public/js/layer.js')
     .scripts([
-        'resources/js/layer/exitintent-new.js',
-        'resources/js/layer/base.js'
+        'resources/js/layer/exitintent-new.js'
     ], 'public/js/layer-njq.js')
     //Frontend css
     .sass('resources/sass/frontend/app.scss', 'public/css/frontend.css')
