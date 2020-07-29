@@ -4,7 +4,7 @@ var exitIntent = window.exitIntent || {};
 jQuery(function($){
 
     var scriptSrc = $('script#dt-layer').attr('src');
-    var domain = scriptSrc.replace('/js/layer.js','');
+    var domain = scriptSrc.indexOf("/js/layer-njq.js") >= 0 ? scriptSrc.replace('/js/layer-njq.js','') : scriptSrc.replace('/js/layer.js','');
 
     dt.defaultConfig = {
         baseUrl: domain,
