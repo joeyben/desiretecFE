@@ -973,6 +973,11 @@ p.kwp-info {
     padding-top: 5px;
     font-weight: normal;
     margin: 0;
+    display: block;
+    &:hover {
+      cursor: default;
+      color: #a0a0a0;
+    }
   }
   input[type="checkbox"] {
     position: static;
@@ -1189,7 +1194,8 @@ p.kwp-info {
 .kwp-custom-select:after,
 .kwp input[type="text"],
 .kwp input[type="date"] {
-  height: 25px;
+  height: 25px !important;
+  min-height: auto;
   border: none;
   line-height: 1.5em;
   box-shadow: none;
