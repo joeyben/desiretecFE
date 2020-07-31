@@ -103,7 +103,8 @@ export default {
     data() {
         return {
             status: '',
-            statusName: '',
+            statusValue: '',
+            allStatusValues: ['new', 'offer_created', 'completed'],
             filter: '',
             total: '',
             wishes: {},
@@ -131,7 +132,7 @@ export default {
         },
     },
     beforeMount() {
-        if(localStorage.getItem('wishesSelectState') === null || this.isDkFereinWhitelabel) {
+        if(localStorage.getItem('wishesSelectState') === null || this.isDkFereinWhitelabel || !this.isSeller) {
             this.status = this.translatedStatuses[0];
         } else {
             this.status = localStorage.getItem('wishesSelectState');
@@ -146,9 +147,9 @@ export default {
             return count > 1 || count === 0  ? this.translations[wordPlural] : this.translations[word];
         },
         fetchWishes() {
-            this.setStatusName();
+            this.statusValue = this.getStatusValue(this.status);
 
-            axios.get('/wishes/getlist?page=' + this.pagination.current_page + '&status=' + this.statusName + '&filter=' + this.filter)
+            axios.get('/wishes/getlist?page=' + this.pagination.current_page + '&status=' + this.statusValue + '&filter=' + this.filter)
                 .then(response => {
                     this.wishes = response.data.data.data;
                     this.pagination = response.data.pagination;
@@ -166,18 +167,19 @@ export default {
                 console.log(error);
             });
         },
-        setStatusName() {
-            let index = this.translatedStatuses.indexOf(this.status);
-            let statusNames =['new', 'offer_created', 'completed'];
-            this.statusName = statusNames[index];
+        getStatusValue(value) {
+            let index = this.translatedStatuses.indexOf(value);
+            let statusValue = this.allStatusValues[index];
+            return statusValue;
         },
         changeStatus(id) {
-            this.setStatusName();
+            this.statusValue = this.getStatusValue(this.status);
 
             axios.post('/wishes/changeWishStatus', {
-                status: this.statusName,
+                status: this.statusValue,
                 id: id,
             }).then(response => {
+                this.status = localStorage.getItem('wishesSelectState');
                 this.fetchWishes();
             })
             .catch(error => {
