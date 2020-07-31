@@ -24,13 +24,15 @@ class WhitelabelMiddleware
         try {
             $whitelabel = Cache::rememberForever(static::getCacheKey($subDomain), function () use ($subDomain) {
                 $api = resolve(ApiService::class);
-                $whitelabel = $api->getWlInfo($subDomain);
-                return $whitelabel;
+                $currentWhitelabel = $api->getWlInfo($subDomain);
+                session()->put('wl-id', $currentWhitelabel->id);
+                app()->setLocale(session()->get('wl-locale', 'de'));
+
+                return $currentWhitelabel;
             });
 
             session()->put('wl-id', $whitelabel->id);
         } catch (\Exception $e) {
-            dd($e->getResponse()->getBody(true)->getContents());
             echo json_decode($e->getResponse()->getBody(true)->getContents())->error->message . ' ' . URL::current() . '<br/><br/>';
             echo 'If not contact your support info@desiretec.com';
             die();

@@ -699,18 +699,18 @@ jQuery(function($){
 
         // close if click outside the modal
         $(document).mouseup(function(e) {
-            if(!domain.includes('tui')) {
-                return false;
-            }
-            if($('.dt-modal-visible').length > 0) {
-                var dtModal = $('.dt-modal-visible');
-                var datePicker = $('.pika-single');
+            // if(!domain.includes('tui')) {
+            //     return false;
+            // }
+            // if($('.dt-modal-visible').length > 0) {
+            //     var dtModal = $('.dt-modal-visible');
+            //     var datePicker = $('.pika-single');
 
-                if ((!dtModal.is(e.target) && dtModal.has(e.target).length === 0) &&
-                    (!datePicker.is(e.target) && datePicker.has(e.target).length === 0)) {
-                        dt.closePopup(e);
-                }
-            }
+            //     if ((!dtModal.is(e.target) && dtModal.has(e.target).length === 0) &&
+            //         (!datePicker.is(e.target) && datePicker.has(e.target).length === 0)) {
+            //             dt.closePopup(e);
+            //     }
+            // }
         });
 
         function isMobile(){
@@ -1146,17 +1146,17 @@ jQuery(function($){
                 $(this).parents('.pax-col').removeClass('open');
                 var pax = $("#adults").val();
                 var children_count = parseInt($("#kids").val());
-                var children = children_count > 0 ? (children_count == 1 ? ", "+children_count+" Kind" : ", "+children_count+" Kinder")  : "" ;
+                var children = children_count > 0 ? (children_count == 1 ? ", "+children_count+" "+dt.translation.kid : ", "+children_count+" "+dt.translation.kids)  : "" ;
 
-                var erwachsene = parseInt(pax) > 1 ? "Erwachsene" : "Erwachsener";
+                var erwachsene = parseInt(pax) > 1 ? dt.translation.adult : dt.translation.adults;
                 $(".travelers .txt").text(pax+" "+erwachsene+" "+children);
                 return false;
             });
 
             var pax = $("#adults").val();
             var children_count = parseInt($("#kids").val());
-            var children = children_count > 0 ? (children_count == 1 ? ", "+children_count+" Kind" : ", "+children_count+" Kinder")  : "" ;
-            var erwachsene = parseInt(pax) > 1 ? "Erwachsene" : "Erwachsener";
+            var children = children_count > 0 ? (children_count == 1 ? ", "+children_count+" "+dt.translation.kid : ", "+children_count+" "+dt.translation.kids)  : "" ;
+            var erwachsene = parseInt(pax) > 1 ? dt.translation.adult : dt.translation.adults;
             $(".travelers .txt").text(pax+" "+erwachsene+" "+children);
         };
 

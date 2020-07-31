@@ -965,11 +965,17 @@ p.kwp-info {
   label {
     width: 100%;
     font-size: 14px;
+    line-height: 16px;
     color: #a0a0a0;
     padding-left: 10px;
     padding-top: 5px;
     font-weight: normal;
     margin: 0;
+    display: block;
+    &:hover {
+      cursor: default;
+      color: #a0a0a0;
+    }
   }
   input[type="checkbox"] {
     position: static;
@@ -1186,7 +1192,8 @@ p.kwp-info {
 .kwp-custom-select:after,
 .kwp input[type="text"],
 .kwp input[type="date"] {
-  height: 25px;
+  height: 25px !important;
+  min-height: auto;
   border: none;
   line-height: 1.5em;
   box-shadow: none;
@@ -1195,9 +1202,11 @@ p.kwp-info {
   font-weight: normal;
   border-bottom: 1px solid $medgray1;
   border-radius: 0;
-  padding: 0 10px;
   font-size: 14px;
+  line-height: 16px;
   color: $darkgrey2;
+  padding: 0 10px;
+  margin: 0;
 }
 .kwp-custom-select {
   #catering {
@@ -1218,6 +1227,7 @@ p.kwp-info {
   height: 40px;
   border-bottom-color: #b9b9b9 !important;
   padding: 0 10px;
+  margin: 0;
   line-height: 18px;
 }
 .kwp input[type="email"] {
