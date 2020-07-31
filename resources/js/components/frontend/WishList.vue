@@ -16,9 +16,8 @@
             <div class="list wishlist" v-cloak>
                 <div class="list-element" v-for="wish in wishes" :key="wish.id">
                     <div class="image">
-                        <a v-if="wish.layer_image" :href="getWishLink(wish.id, wish.manuelFlag)" class="img" :style="{ 'background-image': 'url(' + wish.layer_image + ')' }"></a>
-                        <a v-else-if="isTuiWhitelabel" :href="getWishLink(wish.id, wish.manuelFlag)" class="img" :style="{ 'background-image': 'url(https://i.imgur.com/lJInLa9.png)' }"></a>
-                        <a v-else :href="getWishLink(wish.id, wish.manuelFlag)" class="img" :style="{ 'background-image': 'url(https://i.imgur.com/lJInLa9.png)' }"></a>
+                        <a v-if="!wish.layer_image || isTuiWhitelabel" :href="getWishLink(wish.id, wish.manuelFlag)" class="img" :style="{ 'background-image': 'url(https://i.imgur.com/lJInLa9.png)' }"></a>
+                        <a v-else :href="getWishLink(wish.id, wish.manuelFlag)" class="img" :style="{ 'background-image': 'url(' + wish.layer_image + ')' }"></a>
                     </div>
                     <div class="main-info">
                         <ul class="info">
@@ -132,7 +131,7 @@ export default {
         },
     },
     beforeMount() {
-        if(localStorage.getItem('wishesSelectState') === null || this.isDkFereinWhitelabel || !this.isSeller) {
+        if(localStorage.getItem('wishesSelectState') === null || this.isDkFereinWhitelabel || !isSeller()) {
             this.status = this.translatedStatuses[0];
         } else {
             this.status = localStorage.getItem('wishesSelectState');
@@ -144,7 +143,7 @@ export default {
     methods: {
         translateWord(word, count) {
             let wordPlural = word + '_plural';
-            return count > 1 || count === 0  ? this.translations[wordPlural] : this.translations[word];
+            return count > 1 ? this.translations[wordPlural] : this.translations[word];
         },
         fetchWishes() {
             this.statusValue = this.getStatusValue(this.status);
