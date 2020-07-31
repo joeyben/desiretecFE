@@ -146,7 +146,8 @@ export default {
             return count > 1 ? this.translations[wordPlural] : this.translations[word];
         },
         fetchWishes() {
-            this.statusValue = this.getStatusValue(this.status);
+            var wStatus = this.getStatusValue(this.status);
+            this.statusValue = wStatus ? wStatus : 'new' ;
 
             axios.get('/wishes/getlist?page=' + this.pagination.current_page + '&status=' + this.statusValue + '&filter=' + this.filter)
                 .then(response => {
