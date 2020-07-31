@@ -90,6 +90,8 @@ class FrontendController extends Controller
 
     private $catering;
 
+    private $purpose_arr;
+
     protected $apiService;
 
     public function __construct(ApiService $apiService)
@@ -97,6 +99,7 @@ class FrontendController extends Controller
         $this->apiService = $apiService;
         $this->initDurationArr();
         $this->initCatering();
+        $this->initPurposeArr();
     }
 
     /**
@@ -129,7 +132,11 @@ class FrontendController extends Controller
             "sonnen" => trans('layer.general.suns'),
             "sonne" => trans('layer.general.sun'),
             "stern" => trans('layer.general.star'),
-            "sterne" => trans('layer.general.stars')
+            "sterne" => trans('layer.general.stars'),
+            "adult"  => trans('layer.general.adult_label'),
+            "adults"  => trans('layer.general.adults_label'),
+            "kid"  => trans('layer.general.kid_label'),
+            "kids"  => trans('layer.general.kids_label'),
         ];
 
         $html = view('frontend.whitelabel.' . $layer)->with([
@@ -140,7 +147,7 @@ class FrontendController extends Controller
             'duration_arr' => $this->duration_arr,
             'pets_arr'     => $this::PETS_ARR,
             'rooms_arr'    => $this::ROOMS_ARR,
-            'purpose_arr'  => $this::PURPOSE_ARR,
+            'purpose_arr'  => $this->purpose_arr,
             'request'      => $request->all(),
             'whitelabel'   => $whitelabel,
             'translation'  => $translation
@@ -189,7 +196,11 @@ class FrontendController extends Controller
                 "sonnen" => trans('layer.general.suns'),
                 "sonne" => trans('layer.general.sun'),
                 "stern" => trans('layer.general.star'),
-                "sterne" => trans('layer.general.stars')
+                "sterne" => trans('layer.general.stars'),
+                "adult"  => trans('layer.general.adult_label'),
+                "adults"  => trans('layer.general.adults_label'),
+                "kid"  => trans('layer.general.kid_label'),
+                "kids"  => trans('layer.general.kids_label'),
             ];
 
             $html = view('frontend.whitelabel.' . $layer)->with([
@@ -200,7 +211,7 @@ class FrontendController extends Controller
                 'duration_arr' => $this->duration_arr,
                 'pets_arr'     => $this::PETS_ARR,
                 'rooms_arr'    => $this::ROOMS_ARR,
-                'purpose_arr'  => $this::PURPOSE_ARR,
+                'purpose_arr'  => $this->purpose_arr,
                 'request'      => $request->all(),
                 'errors'       => $request->errors(),
                 'whitelabel'   => $whitelabel,
@@ -308,6 +319,19 @@ class FrontendController extends Controller
         $host = preg_replace('#^https?://#', '', rtrim($origin,'/'));
         $host = preg_replace('#^http?://#', '', rtrim($host,'/'));
         return $host ? $host : $request->header('Host');
+    }
+
+    public function initPurposeArr(){
+        $this->purpose_arr = [
+            trans('layer.general.purpose.family'),
+            trans('layer.general.purpose.wellness'),
+            trans('layer.general.purpose.aktivurlaub'),
+            trans('layer.general.purpose.fahrradurlaub'),
+            trans('layer.general.purpose.natur'),
+            trans('layer.general.purpose.studienreise'),
+            trans('layer.general.purpose.kulturreise'),
+            trans('layer.general.purpose.bussiness')
+        ];
     }
 
     public function initDurationArr(){
