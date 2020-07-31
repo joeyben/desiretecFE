@@ -147,7 +147,7 @@ export default {
         },
         fetchWishes() {
             var wStatus = this.getStatusValue(this.status);
-            this.statusValue = wStatus ? wStatus : 'new' ;
+            this.statusValue = wStatus && wStatus != "undefined" ? wStatus : 'new' ;
 
             axios.get('/wishes/getlist?page=' + this.pagination.current_page + '&status=' + this.statusValue + '&filter=' + this.filter)
                 .then(response => {
