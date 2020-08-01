@@ -7,7 +7,7 @@
                 </div>
                 <div v-if="isSeller" class="filter-action">
                     <select class="selectpicker" v-model="status" ref="select" @change="fetchWishes()">
-                        <option v-for="(status, index) in translatedStatuses" :key="index" :value="status">{{ status }}</option>
+                        <option v-for="(status, index) in translatedStatuses" :value="status">{{ status }}</option>
                     </select>
                     <input type="search" class="id-filter" :placeholder="translateWord('search_placeholder')" v-model="filter" @input="fetchWishes()">
                 </div>
@@ -163,6 +163,10 @@ export default {
                         //$('.selectpicker').selectpicker('refresh');
                         localStorage.setItem('wishesSelectState', this.status);
                         this.applyColors();
+                        console.log(this.statusValue)
+                        if(this.statusValue === 'new'){
+                            $('.selectpicker').val('Neu').change();
+                        }
                     });
                 }
             )
