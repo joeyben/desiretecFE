@@ -141,6 +141,9 @@ export default {
         this.fetchWishes();
     },
     methods: {
+        isSeller() {
+            return JSON.parse(this.userRole) === "Seller";
+        },
         translateWord(word, count) {
             let wordPlural = word + '_plural';
             return count > 1 ? this.translations[wordPlural] : this.translations[word];
