@@ -151,9 +151,7 @@ export default {
         fetchWishes() {
             var wStatus = this.getStatusValue(this.status);
             this.statusValue = wStatus && wStatus != "undefined" ? wStatus : 'new' ;
-            if(this.statusValue === 'new'){
-                $('.selectpicker').val('Neu').change();
-            }
+
             axios.get('/wishes/getlist?page=' + this.pagination.current_page + '&status=' + this.statusValue + '&filter=' + this.filter)
                 .then(response => {
                     this.wishes = response.data.data.data;
@@ -165,6 +163,9 @@ export default {
                         $('.selectpicker').selectpicker('refresh');
                         localStorage.setItem('wishesSelectState', this.status);
                         this.applyColors();
+                        if(this.statusValue === 'new'){
+                            $('.selectpicker').val('Neu').change();
+                        }
                     });
                 }
             )
