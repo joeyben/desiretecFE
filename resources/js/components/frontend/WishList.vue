@@ -160,12 +160,9 @@ export default {
 
                     this.$nextTick(function () {
                         this.loading = false;
-                        $('.selectpicker').selectpicker('refresh');
+                        //$('.selectpicker').selectpicker('refresh');
                         localStorage.setItem('wishesSelectState', this.status);
                         this.applyColors();
-                        if(this.statusValue === 'new'){
-                            $('.selectpicker').val('Neu').change();
-                        }
                     });
                 }
             )
