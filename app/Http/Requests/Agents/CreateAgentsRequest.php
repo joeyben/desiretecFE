@@ -26,7 +26,7 @@ class CreateAgentsRequest extends FormRequest
         return [
             'name'  => 'required|string|max:64',
             'email' => 'required|email|max:255',
-            'telephone' => 'required|regex:#^[0\+]{1}[0-9-]{6,20}#'
+            'telephone' => 'required'
         ];
     }
 

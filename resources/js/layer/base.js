@@ -5,7 +5,7 @@ var isDtDomain = window.location.href.indexOf("wish-service.com") > -1
             || window.location.href.indexOf("travelwishservice.com") > -1;
 
 if(!isDtDomain) {
-    jQuery.noConflict(); /* for websites using libraries in conflict with '$' */
+    //jQuery.noConflict(); /* for websites using libraries in conflict with '$' */
 }
 
 jQuery(function($) {

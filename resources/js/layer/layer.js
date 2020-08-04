@@ -2,8 +2,9 @@ var dt = window.dt || {};
 var exitIntent = window.exitIntent || {};
 
 jQuery(function($){
+
     var scriptSrc = $('script#dt-layer').attr('src');
-    var domain = scriptSrc.replace('/js/layer.js','');
+    var domain = scriptSrc.indexOf("/js/layer-njq.js") >= 0 ? scriptSrc.replace('/js/layer-njq.js','') : scriptSrc.replace('/js/layer.js','');
 
     dt.defaultConfig = {
         baseUrl: domain,
@@ -555,7 +556,7 @@ jQuery(function($){
             var formSent = $('.kwp-content').hasClass('kwp-completed');
 
             dt.PopupManager.modal.addClass('tmp-hidden');
-            if(!formSent && $('.trigger-modal').length === 0) {
+            if(!formSent && $('.trigger-modal').length === 0 && !domain.includes('tui')) {
                 this.trigger =
                     $('<span/>', {'class': 'trigger-modal'});
                 $('body').prepend(this.trigger);
@@ -1140,7 +1141,7 @@ jQuery(function($){
             });
         };
 
-        dt.hanglePax = function() {
+        dt.hanglePax = function(adultLabel) {
             $(".pax-more .button a").click(function(e) {
                 e.preventDefault();
                 $(this).parents('.pax-col').removeClass('open');

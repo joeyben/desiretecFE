@@ -65,6 +65,7 @@ class FrontendController extends Controller
         4 => "Vollpension",
         5 => "all inclusive",
     ];
+
     const PETS_ARR = [
         'Ohne Haustier',
         'Mit Haustier',
@@ -138,6 +139,7 @@ class FrontendController extends Controller
             "kid"  => trans('layer.general.kid_label'),
             "kids"  => trans('layer.general.kids_label'),
         ];
+
 
         $html = view('frontend.whitelabel.' . $layer)->with([
             'adults_arr'   => $this::ADULTS_ARR,
