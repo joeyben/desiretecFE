@@ -7,7 +7,7 @@
                 </div>
                 <div v-if="isSeller" class="filter-action">
                     <select class="selectpicker" v-model="status" ref="select" @change="fetchWishes()">
-                        <option v-for="(status, index) in translatedStatuses" :value="status">{{ status }}</option>
+                        <option v-for="(status, index) in translatedStatuses" :key="index" :value="status">{{ status }}</option>
                     </select>
                     <input type="search" class="id-filter" :placeholder="translateWord('search_placeholder')" v-model="filter" @input="fetchWishes()">
                 </div>
@@ -131,7 +131,7 @@ export default {
         },
     },
     beforeMount() {
-        if(localStorage.getItem('wishesSelectState') === null || this.isDkFereinWhitelabel || !isSeller()) {
+        if(localStorage.getItem('wishesSelectState') === null || localStorage.getItem('wishesSelectState') === '' || this.isDkFereinWhitelabel) {
             this.status = this.translatedStatuses[0];
         } else {
             this.status = localStorage.getItem('wishesSelectState');
@@ -141,16 +141,16 @@ export default {
         this.fetchWishes();
     },
     methods: {
-        isSeller() {
-            return JSON.parse(this.userRole) === "Seller";
-        },
         translateWord(word, count) {
             let wordPlural = word + '_plural';
             return count > 1 ? this.translations[wordPlural] : this.translations[word];
         },
         fetchWishes() {
-            var wStatus = this.getStatusValue(this.status);
-            this.statusValue = wStatus && wStatus != "undefined" ? wStatus : 'new' ;
+            if (this.status && this.isSeller) {
+                this.statusValue = this.getStatusValue(this.status);
+            } else {
+                this.statusValue = this.allStatusValues[0];
+            }
 
             axios.get('/wishes/getlist?page=' + this.pagination.current_page + '&status=' + this.statusValue + '&filter=' + this.filter)
                 .then(response => {
@@ -160,13 +160,9 @@ export default {
 
                     this.$nextTick(function () {
                         this.loading = false;
-                        //$('.selectpicker').selectpicker('refresh');
+                        $('.selectpicker').selectpicker('refresh');
                         localStorage.setItem('wishesSelectState', this.status);
                         this.applyColors();
-
-                        if(this.statusValue === 'new'){
-                            $('.selectpicker').val('Neu').change();
-                        }
                     });
                 }
             )
