@@ -103,10 +103,10 @@
                                     <span class="agent-name">{{ $wish->agent_name[0]->name }}</span>
                                 </span>
                             @else
-                                @if($wish->agent)
+                                @if($offer->agent)
                                     <span class="offer-avatar-cnt">
-                                        <img class="avatar" title="{{ $wish->agent->name }}" alt="{{ $wish->agent->name }}" src="{{ Storage::disk('s3')->url('img/agent/') }}{{ $wish->agent->avatar }}" />
-                                        <span class="agent-name">{{ $wish->agent->name }}</span>
+                                        <img class="avatar" title="{{ $offer->agent->name }}" alt="{{ $offer->agent->name }}" src="{{ Storage::disk('s3')->url('img/agent/') }}{{ $offer->agent->avatar }}" />
+                                        <span class="agent-name">{{ $offer->agent->name }}</span>
                                     </span>
                                 @endif
                             @endif
