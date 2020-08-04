@@ -163,7 +163,7 @@ export default {
                         //$('.selectpicker').selectpicker('refresh');
                         localStorage.setItem('wishesSelectState', this.status);
                         this.applyColors();
-                        console.log(this.statusValue)
+
                         if(this.statusValue === 'new'){
                             $('.selectpicker').val('Neu').change();
                         }
