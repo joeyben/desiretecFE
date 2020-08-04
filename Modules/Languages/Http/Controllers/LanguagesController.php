@@ -11,10 +11,10 @@ class LanguagesController extends Controller
 
     public function switch(string $locale)
     {
-        session()->put('desiretec.locale', $locale);
-        app()->setLocale($locale);
-        Cache::flush();
         CacheController::empty();
+
+        app()->setLocale($locale);
+        session()->put('desiretec.locale', $locale);
         session()->put('wl-locale', $locale);
 
         return redirect()->back();
