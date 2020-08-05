@@ -141,9 +141,6 @@
             this.fetchWishes();
         },
         methods: {
-            isSeller() {
-                return JSON.parse(this.userRole) === "Seller";
-            },
             translateWord(word, count) {
                 let wordPlural = word + '_plural';
                 return count > 1 ? this.translations[wordPlural] : this.translations[word];
@@ -163,13 +160,9 @@
 
                             this.$nextTick(function () {
                                 this.loading = false;
-                                //$('.selectpicker').selectpicker('refresh');
+                                $('.selectpicker').selectpicker('refresh');
                                 localStorage.setItem('wishesSelectState', this.status);
                                 this.applyColors();
-                                console.log(this.statusValue)
-                                if(this.statusValue === 'new'){
-                                    $('.selectpicker').val('Neu').change();
-                                }
                             });
                         }
                     )
