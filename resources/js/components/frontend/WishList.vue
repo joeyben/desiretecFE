@@ -92,137 +92,137 @@
 
 <script>
 
-import Pagination from './PaginationComponent.vue';
+    import Pagination from './PaginationComponent.vue';
 
-export default {
-    components: {
-        Pagination
-    },
-    props: ['wlName', 'userRole', 'statusesTrans', 'wordsTrans'],
-    data() {
-        return {
-            status: '',
-            statusValue: '',
-            allStatusValues: ['new', 'offer_created', 'completed'],
-            filter: '',
-            total: '',
-            wishes: {},
-            loading: true,
-            pagination: {
-                'current_page': 1
+    export default {
+        components: {
+            Pagination
+        },
+        props: ['wlName', 'userRole', 'statusesTrans', 'wordsTrans'],
+        data() {
+            return {
+                status: '',
+                statusValue: '',
+                allStatusValues: ['new', 'offer_created', 'completed'],
+                filter: '',
+                total: '',
+                wishes: {},
+                loading: true,
+                pagination: {
+                    'current_page': 1
+                },
+            }
+        },
+        computed: {
+            isSeller() {
+                return JSON.parse(this.userRole) === "Seller";
             },
-        }
-    },
-    computed: {
-        isSeller() {
-            return JSON.parse(this.userRole) === "Seller";
+            translatedStatuses() {
+                return JSON.parse(this.statusesTrans);
+            },
+            translations() {
+                return JSON.parse(this.wordsTrans);
+            },
+            isTuiWhitelabel() {
+                return JSON.parse(this.wlName).toLowerCase() === 'tui';
+            },
+            isDkFereinWhitelabel() {
+                return JSON.parse(this.wlName).toLowerCase() === 'dk ferien';
+            },
         },
-        translatedStatuses() {
-            return JSON.parse(this.statusesTrans);
-        },
-        translations() {
-            return JSON.parse(this.wordsTrans);
-        },
-        isTuiWhitelabel() {
-            return JSON.parse(this.wlName).toLowerCase() === 'tui';
-        },
-        isDkFereinWhitelabel() {
-            return JSON.parse(this.wlName).toLowerCase() === 'dk ferien';
-        },
-    },
-    beforeMount() {
-        if(localStorage.getItem('wishesSelectState') === null || localStorage.getItem('wishesSelectState') === '' || this.isDkFereinWhitelabel) {
-            this.status = this.translatedStatuses[0];
-        } else {
-            this.status = localStorage.getItem('wishesSelectState');
-        }
-    },
-    mounted() {
-        this.fetchWishes();
-    },
-    methods: {
-        isSeller() {
-            return JSON.parse(this.userRole) === "Seller";
-        },
-        translateWord(word, count) {
-            let wordPlural = word + '_plural';
-            return count > 1 ? this.translations[wordPlural] : this.translations[word];
-        },
-        fetchWishes() {
-            if (this.status && this.isSeller) {
-                this.statusValue = this.getStatusValue(this.status);
+        beforeMount() {
+            if(localStorage.getItem('wishesSelectState') === null || localStorage.getItem('wishesSelectState') === '' || this.isDkFereinWhitelabel) {
+                this.status = this.translatedStatuses[0];
             } else {
-                this.statusValue = this.allStatusValues[0];
-            }
-
-            axios.get('/wishes/getlist?page=' + this.pagination.current_page + '&status=' + this.statusValue + '&filter=' + this.filter)
-                .then(response => {
-                    this.wishes = response.data.data.data;
-                    this.pagination = response.data.pagination;
-                    this.total = response.data.pagination.total;
-
-                    this.$nextTick(function () {
-                        this.loading = false;
-                        //$('.selectpicker').selectpicker('refresh');
-                        localStorage.setItem('wishesSelectState', this.status);
-                        this.applyColors();
-
-                        if(this.statusValue === 'new'){
-                            $('.selectpicker').val('Neu').change();
-                        }
-                    });
-                }
-            )
-            .catch(error => {
-                console.log(error);
-            });
-        },
-        getStatusValue(value) {
-            let index = this.translatedStatuses.indexOf(value);
-            let statusValue = this.allStatusValues[index];
-            return statusValue;
-        },
-        changeStatus(id) {
-            this.statusValue = this.getStatusValue(this.status);
-
-            axios.post('/wishes/changeWishStatus', {
-                status: this.statusValue,
-                id: id,
-            }).then(response => {
                 this.status = localStorage.getItem('wishesSelectState');
-                this.fetchWishes();
-            })
-            .catch(error => {
-                console.log(error);
-            });
-        },
-        formatPrice(value) {
-            return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        },
-        getWishLink(id, isManuel) {
-            if(isManuel) {
-                return '/wishes/'+id;
-            } else {
-                return '/offer/list/'+id;
             }
         },
-        applyColors() {
-            $('.primary-btn').css({
-                'background': brandColor, 'border': '1px solid ' + brandColor, 'color': '#fff',
-            });
-            $('.primary-btn').hover(function(){
-                $(this).css({
-                    'background': '#fff', 'color': brandColor, 'border': '1px solid ' + brandColor, 'transition': 'all 0.3s',
-                });
-            }, function() {
-                $(this).css({
+        mounted() {
+            this.fetchWishes();
+        },
+        methods: {
+            isSeller() {
+                return JSON.parse(this.userRole) === "Seller";
+            },
+            translateWord(word, count) {
+                let wordPlural = word + '_plural';
+                return count > 1 ? this.translations[wordPlural] : this.translations[word];
+            },
+            fetchWishes() {
+                if (this.status && this.isSeller) {
+                    this.statusValue = this.getStatusValue(this.status);
+                } else {
+                    this.statusValue = this.allStatusValues[0];
+                }
+
+                axios.get('/wishes/getlist?page=' + this.pagination.current_page + '&status=' + this.statusValue + '&filter=' + this.filter)
+                    .then(response => {
+                            this.wishes = response.data.data.data;
+                            this.pagination = response.data.pagination;
+                            this.total = response.data.pagination.total;
+
+                            this.$nextTick(function () {
+                                this.loading = false;
+                                //$('.selectpicker').selectpicker('refresh');
+                                localStorage.setItem('wishesSelectState', this.status);
+                                this.applyColors();
+                                console.log(this.statusValue)
+                                if(this.statusValue === 'new'){
+                                    $('.selectpicker').val('Neu').change();
+                                }
+                            });
+                        }
+                    )
+                    .catch(error => {
+                        console.log(error);
+                    });
+            },
+            getStatusValue(value) {
+                let index = this.translatedStatuses.indexOf(value);
+                let statusValue = this.allStatusValues[index];
+                return statusValue;
+            },
+            changeStatus(id) {
+                this.statusValue = this.getStatusValue(this.status);
+
+                axios.post('/wishes/changeWishStatus', {
+                    status: this.statusValue,
+                    id: id,
+                }).then(response => {
+                    this.status = localStorage.getItem('wishesSelectState');
+                    this.fetchWishes();
+                })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            },
+            formatPrice(value) {
+                return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            },
+            getWishLink(id, isManuel) {
+                if(isManuel) {
+                    return '/wishes/'+id;
+                } else {
+                    return '/offer/list/'+id;
+                }
+            },
+            applyColors() {
+                $('.primary-btn').css({
                     'background': brandColor, 'border': '1px solid ' + brandColor, 'color': '#fff',
                 });
-            });
-            $('.btn-secondary').css({
-                'background': '#fff', 'color': brandColor, 'border': '1px solid ' + brandColor, 'transition': 'all 0.3s',
-            });
+                $('.primary-btn').hover(function(){
+                    $(this).css({
+                        'background': '#fff', 'color': brandColor, 'border': '1px solid ' + brandColor, 'transition': 'all 0.3s',
+                    });
+                }, function() {
+                    $(this).css({
+                        'background': brandColor, 'border': '1px solid ' + brandColor, 'color': '#fff',
+                    });
+                });
+                $('.btn-secondary').css({
+                    'background': '#fff', 'color': brandColor, 'border': '1px solid ' + brandColor, 'transition': 'all 0.3s',
+                });
+            }
         }
     }
-}
 </script>
