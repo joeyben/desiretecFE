@@ -122,7 +122,7 @@ class FrontendController extends Controller
         $this->initCatering();
         $this->initDurationArr();
         $host = $this->getHost($request, request()->headers->get('referer'));
-        $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
+        $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost(str_replace('/','_', $host))), true);
 
         $layer = $request->query->has('version') ? 'layers.' . $request->input('version') : 'layer';
 
@@ -166,7 +166,7 @@ class FrontendController extends Controller
     public function getWhitelabelData(Request $request)
     {
         $host = $this->getHost($request, request()->headers->get('referer'));
-        $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
+        $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost(str_replace('/','_', $host))), true);
         $data = [
             'color' => $whitelabel['color']
         ];
@@ -185,7 +185,7 @@ class FrontendController extends Controller
         $this->initCatering();
         $this->initDurationArr();
         $host = $this->getHost($request, request()->headers->get('referer'));
-        $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
+        $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost(str_replace('/','_', $host))), true);
 
         if ($request->failed()) {
             $layer = $request->query->has('version') ? 'layers.' . $request->input('version') : 'layer';
@@ -308,7 +308,7 @@ class FrontendController extends Controller
 
     public function getWhitelabelByHostname(Request $request){
         $host = $this->getHost($request, request()->headers->get('referer'));
-        $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost($host)), true);
+        $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost(str_replace('/','_', $host))), true);
         $fromWL = strpos($host, 'reise-wunsch.de') === false
             && strpos($host, 'travelwishservice.com') === false
             && strpos($host, 'wish-service.com') === false ? "" : "_WL";
