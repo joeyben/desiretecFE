@@ -21,12 +21,6 @@ class WishesController extends Controller
     const BODY_CLASS_LIST = 'wishlist';
     const OFFER_URL = 'img/offer/';
 
-    protected $status = [
-        'new'               => 'new',
-        'offer_created'     => 'offer_created',
-        'completed'         => 'completed',
-    ];
-
     protected $category = [
         '1'  => 1,
         '2'  => 2,
@@ -80,7 +74,6 @@ class WishesController extends Controller
     public function wishList(string $subdomain)
     {
         return view( 'frontend.wishes.index')->with([
-            'status'     => $this->status,
             'category'   => $this->category,
             'catering'   => $this->catering,
             'body_class' => $this::BODY_CLASS_LIST,
@@ -96,7 +89,7 @@ class WishesController extends Controller
     {
         try {
             $params['page'] = $request->get('page') ? $request->get('page') : '1';
-            $params['status'] = $request->get('status') ? $request->get('status') : 'new';
+            $params['status'] = $request->get('status') ? $request->get('status') : '1';
             $params['filter'] = $request->get('filter') ? $request->get('filter') : '';
 
             $response = $this->apiService->get('/wishlist', $params);
@@ -107,21 +100,6 @@ class WishesController extends Controller
         } catch (Exception $e) {
             return json_response_error($e);
         }
-    }
-
-    /**
-     * @param \App\Http\Requests\Frontend\Wishes\ManageWishesRequest $request
-     *
-     * @return mixed
-     */
-    public function create(string $subdomain, ManageWishesRequest $request)
-    {
-        return view('frontend.wishes.create')->with([
-            'status'         => $this->status,
-            'category'       => $this->category,
-            'catering'       => $this->catering,
-            'body_class'     => $this::BODY_CLASS,
-        ]);
     }
 
     /**
