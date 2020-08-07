@@ -97,19 +97,10 @@
                     <div class="col-md-12 sa2-1">
                         <h4>Angebot {{ $key+1 }}</h4>
                         <p class="sa2-p2">
-                            @if (count($wish->agent_name) > 0)
-                                <span class="offer-avatar-cnt">
-                                    <img class="avatar" title="{{ $wish->agent_name[0]->name }}" alt="{{ $wish->agent_name[0]->name }}" src="{{ Storage::disk('s3')->url('img/agent/') }}{{ $wish->agent_name[0]->avatar }}" />
-                                    <span class="agent-name">{{ $wish->agent_name[0]->name }}</span>
-                                </span>
-                            @else
-                                @if($offer->agent)
-                                    <span class="offer-avatar-cnt">
-                                        <img class="avatar" title="{{ $offer->agent->name }}" alt="{{ $offer->agent->name }}" src="{{ Storage::disk('s3')->url('img/agent/') }}{{ $offer->agent->avatar }}" />
-                                        <span class="agent-name">{{ $offer->agent->name }}</span>
-                                    </span>
-                                @endif
-                            @endif
+                            <span class="offer-avatar-cnt">
+                                <img class="avatar" title="{{ $offer->agent->name }}" alt="{{ $offer->agent->name }}" src="{{ Storage::disk('s3')->url('img/agent/') }}{{ $offer->agent->avatar }}" />
+                                <span class="agent-name">{{ $offer->agent->name }}</span>
+                            </span>
                             <b>{{ $offer->title }}</b><br>
                             @php
                                 $urlMatcher = '@(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})@';
