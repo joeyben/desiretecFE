@@ -31,13 +31,13 @@
             "is_interested_events" => trans('labels.frontend.wishes.events_interested_checked'),
             "not_interested_events" => trans('labels.frontend.wishes.events_interested_unchecked'),
         ];
-        $statusesTrans = array();
+        $statusesTrans = [
+            trans('menus.list.status.new'),
+            trans('menus.list.status.offer_created'),
+            trans('menus.list.status.completed'),
+            trans('menus.list.status.all'),
+        ];
     @endphp
-    @foreach ($status as $st)
-        @php
-            array_push($statusesTrans, trans('menus.list.status.'.strtolower($st)));
-        @endphp
-    @endforeach
     <wish-list
         wl-name="{{ json_encode($whitelabelName) }}"
         user-role="{{ json_encode($logged_in_user['role']) }}"
