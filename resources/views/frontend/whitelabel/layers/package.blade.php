@@ -8,7 +8,7 @@
     }
 @endphp
 
-<div id="{{ $layerName }}" class="tab-content">
+<div id="{{ $layerName }}" class="td-tab-content">
 
     <div class="kwp-header-dynamic">
         <div class="kwp-color-overlay"></div>
