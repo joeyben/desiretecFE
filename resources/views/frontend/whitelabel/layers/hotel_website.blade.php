@@ -83,7 +83,7 @@
                     <div class="kwp-form-group pax-group">
                         <label for="travelers" class="required">{{ trans('whitelabel.layer.general.pax') }}</label>
                         <span class="travelers dd-trigger">
-                            <span class="txt">{{ trans_choice('layer_hotel.adult_count', 2) }}</span>
+                            <span class="txt">{{ trans_choice('labels.frontend.wishes.adults', 2) }}</span>
                             <i class="fal fa-users not-triggered"></i>
                             <i class="fal fa-times triggered"></i>
                         </span>
