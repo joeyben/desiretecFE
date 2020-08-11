@@ -177,7 +177,7 @@ export default {
         },
         translateWord(word, count) {
             let wordPlural = word + '_plural';
-            return count > 1 && count == 0 ? this.translations[wordPlural] : this.translations[word];
+            return count > 1 || count == 0 ? this.translations[wordPlural] : this.translations[word];
         },
         fetchWishes() {
             axios.get('/wishes/getlist?page=' + this.pagination.current_page + '&status=' + this.status.value + '&filter=' + this.filter)
