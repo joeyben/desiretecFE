@@ -14,8 +14,8 @@
     @php
         $whitelabelName = getWhitelabelInfo()['name'];
         $translations = [
-            "count" => trans_choice('labels.frontend.wishes.wishes', 1 ),
-            "count_plural" => trans_choice('labels.frontend.wishes.wishes', 999 ),
+            "count" => trans_choice('labels.frontend.wishes.wishes', 1),
+            "count_plural" => trans_choice('labels.frontend.wishes.wishes', 999),
             "adults" => trans_choice('labels.frontend.wishes.adults', 1),
             "adults_plural" => trans_choice('labels.frontend.wishes.adults', 999),
             "kids" => trans_choice('labels.frontend.wishes.kids', 1),
