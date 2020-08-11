@@ -48,14 +48,14 @@
     @if($hasOffers || $hasNewMessage)
         <div class="col-md-3 c-info">
             <i class="fas fa-user"></i>
-            <span>{{ $wish->wishDetails->group->users[0]->agents[0]->name }}</span>
+            <span>{{ $wish->wishDetails->lastAgent->name }}</span>
         </div>
         <div class="col-md-3 c-info c-tel">
             <i class="fas fa-phone"></i>
-            <a href="tel:{{ $wish->wishDetails->group->users[0]->agents[0]->telephone }}">{{ $wish->wishDetails->group->users[0]->agents[0]->telephone }}</a>            </div>
+            <a href="tel:{{ $wish->wishDetails->lastAgent->telephone }}">{{ $wish->wishDetails->lastAgent->telephone }}</a>            </div>
         <div class="col-md-3 c-info">
             <i class="fas fa-envelope"></i>
-            <a href="mailto:{{ $wish->wishDetails->group->users[0]->agents[0]->email }}">{{ $wish->wishDetails->group->users[0]->agents[0]->email }}</a>
+            <a href="mailto:{{ $wish->wishDetails->lastAgent->email }}">{{ $wish->wishDetails->lastAgent->email }}</a>
         </div>
     @else
         <div class="col-md-3 c-info">
