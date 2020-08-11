@@ -110,7 +110,7 @@
                                 </div>
                                 <div class="kwp-col-ages">
                                     <div class="kwp-form-group">
-                                        <label class="main-label">{{ trans('layer_hotel.kids.travel_age') }}</label>
+                                        <label class="main-label">{{ trans('layer.kids.travel_age') }}</label>
                                         <input name="ages" type="hidden">
                                         <div id="age_1" class="kwp-col-3">
                                             <i class="master-icon--aircraft-down"></i>
