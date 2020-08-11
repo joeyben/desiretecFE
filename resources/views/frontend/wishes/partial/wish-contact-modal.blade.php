@@ -40,16 +40,16 @@
 
                 @if($hasOffers || $hasNewMessage)
                     <div class="col-md-4 modal-body-right">
-                        <img title="{{ $wish->wishDetails->group->users[0]->agents[0]->name }}" alt="{{ $wish->wishDetails->group->users[0]->agents[0]->name }}" src="{{ Storage::disk('s3')->url('img/agent/') }}{{ $wish->wishDetails->group->users[0]->agents[0]->avatar }}" />
-                        <h4>{{ $wish->wishDetails->group->users[0]->agents[0]->name }}</h4>
+                        <img title="{{ $wish->wishDetails->lastAgent->name }}" alt="{{ $wish->wishDetails->lastAgent->name }}" src="{{ Storage::disk('s3')->url('img/agent/') }}{{ $wish->wishDetails->lastAgent->avatar }}" />
+                        <h4>{{ $wish->wishDetails->lastAgent->name }}</h4>
                         <div class="modal-contact">
                             <div class="mc-tel">
                                 <i class="fal fa-phone"></i>
-                                <a href="tel:{{ $wish->wishDetails->group->users[0]->agents[0]->telephone }}">{{ $wish->wishDetails->group->users[0]->agents[0]->telephone }}</a>
+                                <a href="tel:{{ $wish->wishDetails->lastAgent->telephone }}">{{ $wish->wishDetails->lastAgent->telephone }}</a>
                             </div>
                             <div class="mc-mail">
                                 <i class="fal fa-envelope"></i>
-                                <a href="mailto:{{ $wish->wishDetails->group->users[0]->agents[0]->email }}">{{ $wish->wishDetails->group->users[0]->agents[0]->email }}</a>
+                                <a href="mailto:{{ $wish->wishDetails->lastAgent->email }}">{{ $wish->wishDetails->lastAgent->email }}</a>
                             </div>
                         </div>
                     </div>
