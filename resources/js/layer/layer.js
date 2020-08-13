@@ -1149,7 +1149,7 @@ jQuery(function($){
                 var children_count = parseInt($("#kids").val());
                 var children = children_count > 0 ? (children_count == 1 ? ", "+children_count+" "+dt.translation.kid : ", "+children_count+" "+dt.translation.kids)  : "" ;
 
-                var erwachsene = parseInt(pax) > 1 ? dt.translation.adult : dt.translation.adults;
+                var erwachsene = parseInt(pax) > 1 || parseInt(pax) == 0 ? dt.translation.adults : dt.translation.adult;
                 $(".travelers .txt").text(pax+" "+erwachsene+" "+children);
                 return false;
             });
@@ -1157,7 +1157,7 @@ jQuery(function($){
             var pax = $("#adults").val();
             var children_count = parseInt($("#kids").val());
             var children = children_count > 0 ? (children_count == 1 ? ", "+children_count+" "+dt.translation.kid : ", "+children_count+" "+dt.translation.kids)  : "" ;
-            var erwachsene = parseInt(pax) > 1 ? dt.translation.adult : dt.translation.adults;
+            var erwachsene = parseInt(pax) > 1 || parseInt(pax) == 0 ? dt.translation.adults : dt.translation.adult;
             $(".travelers .txt").text(pax+" "+erwachsene+" "+children);
         };
 
