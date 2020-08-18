@@ -138,4 +138,14 @@ class ApiService implements ApiServiceInterface
                 return $this->response->getBody();
         }
     }
+
+    public function getVariantId(string $host) {
+        $result = $this->get('/whitelabel/variant' . '/' . urlencode($host));
+
+        if ($result->formatResponse('object')->success) {
+            return $result->formatResponse('object')->data->id;
+        } else {
+            return null;
+        }
+    }
 }
