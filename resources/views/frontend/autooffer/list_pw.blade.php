@@ -233,7 +233,7 @@
 
                                     <div class="travel-info">
                                         <h4 data-toggle="tooltip" data-placement="bottom" title="{{ $offer['data']['offerFeatures'] }}">{{ $offer['data']['duration'] }} {{ trans('autooffers.offer.nights') }}, {{ \Illuminate\Support\Str::limit($offer['data']['offerFeatures'], 20, "...") }}</h4>
-                                        <h4>{{ trans('hotel.offer.boardtype.'.strtolower($offer['data']['boardType'])) }}</h4>
+                                        <h4>{{ trans('hotel.offer.boardtype.'.strtolower($offer['boardType'])) }}</h4>
                                     </div>
                                 </div>
 
@@ -241,8 +241,8 @@
                                     <div class="info-icons">
                                         @include('frontend.autooffer.parts.hotel-attributes')
                                     </div>
-                                    <h3>{{ number_format($offer['data']['price']['value'], 0, ',', '.') }} <span>CHF</span> p.P.</h3>
-                                    <a class="btn btn-primary" target="_blank" href="https://badeferien.lastminute.ch/offer?depap={{ $offer['data']['flight']['in']['departure']['airport'] }}&ibe=package&rid=&lang=de-CH&ddate={{ $offer['data']['flight']['in']['departure']['date'] }}&rdate={{ $offer['data']['flight']['out']['arrival']['date'] }}&adult={{ $wish->adults }}&dur={{ $offer['data']['duration'] }}&price=0,{{ $offer['personPrice'] }}&board={{ $wish->catering }}&aid={{ $offer['data']['hotel_id'] }}">
+                                    <h3>{{ number_format($offer['price']['value'], 0, ',', '.') }} <span>CHF</span> p.P.</h3>
+                                    <a class="btn btn-primary" target="_blank" href="https://badeferien.lastminute.ch/offer?depap={{ $offer['flight']['in']['departure']['airport'] }}&ibe=package&rid=&lang=de-CH&ddate={{ $offer['flight']['in']['departure']['date'] }}&rdate={{ $offer['flight']['out']['arrival']['date'] }}&adult={{ $wish->adults }}&dur={{ $offer['duration'] }}&price=0,{{ $offer['personPrice'] }}&board={{ $wish->catering }}&aid={{ $offer['hotel_id'] }}">
                                         <i class="fas fa-chevron-right"></i>
                                     </a>
                                 </div>
