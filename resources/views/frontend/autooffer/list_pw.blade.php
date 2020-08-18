@@ -223,12 +223,7 @@
                                 <div class="highlights">
                                     <h4 class="dark-grey-2">Highlights der Unterkunft:</h4>
                                     <ul>
-                                        @for ($i = 0; $i < 3; $i++)
-                                        <li>
-                                            <i class="fal fa-check"></i>
-                                            <h4 class="dark-grey">{{ trans('hotel.offer.attributes.'.$offer['data']['hotel_attributes'][$i]) }}</h4>
-                                        </li>
-                                        @endfor
+                                        
                                     </ul>
 
                                     <div class="travel-info">
