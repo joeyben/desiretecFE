@@ -124,7 +124,6 @@ class FrontendController extends Controller
         $this->initPurposeArr();
         $host = $this->getHost($request, request()->headers->get('referer'));
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost(str_replace('/','_', $host))), true);
-
         $layer = $request->query->has('version') ? 'layers.' . $request->input('version') : 'layer';
 
         $translation = [
@@ -226,6 +225,8 @@ class FrontendController extends Controller
         $data = $request->all();
         $data['whitelabel_id'] = $whitelabel['id'];
         $data['title'] = "&nbsp;";
+
+        $data['variant_id'] = $this->apiService->getVariantId($host);
 
         if(isset($data['events_interested'])) {
             $data['events_interested'] = $data['events_interested'] === 'on' ? 1 : 0;
