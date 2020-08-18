@@ -42,6 +42,30 @@ class AutooffersController extends Controller implements AutooffersControllerInt
         }
     }
 
+    public function listpw(string $subdomain, int $wishId)
+    {
+        try {
+
+            $offersResponse = $this->apiService->get('/offer/listpw/' . $wishId);
+
+            $offers = $offersResponse->formatResponse('array')['data'];
+
+            $wishResponse = $this->apiService->get('/wishes' . '/' . $wishId);
+
+            $wish = $wishResponse->formatResponse('object')->data;
+
+            return view('frontend.autooffer.list_pw')->with([
+                'body_class'    => $this::BODY_CLASS_PREFIX . '_list',
+                'wish'          => $wish,
+                'offers'        => $offers,
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error($e);
+            return redirect()->back()->withErrors(['message' => $e->getMessage()]);
+        }
+    }
+
     public function listTt(string $subdomain, int $wishId)
     {
 
