@@ -208,15 +208,15 @@
                                 </div>
 
                                 <div class="fulfill">
-                                    <progress value="{{ $offer['data']['hotel_reviews']['recommendation'] }}" max="100"></progress>
-                                    <h4> <span>{{ $offer['data']['hotel_reviews']['recommendation'] }}%</span> Weiterempfehlung</h4>
+                                    <progress value="{{ $offer['data']['hotel_ratings']['percentage'] }}" max="100"></progress>
+                                    <h4> <span>{{ $offer['data']['hotel_ratings']['percentage'] }}%</span> Weiterempfehlung</h4>
                                 </div>
 
                                 <div class="recommandations">
-                                    <div class="average">{{ $offer['data']['hotel_reviews']['overall'] }}</div>
+                                    <div class="average">{{ $offer['data']['hotel_ratings']['count'] }}</div>
                                     <div class="text">
                                         <h4 class="dark-grey-2">Empfehlenswert</h4>
-                                        <h4>{{ $offer['data']['hotel_reviews']['count'] }} Bewertungen</h4>
+                                        <h4>{{ $offer['data']['hotel_ratings']['count'] }} Bewertungen</h4>
                                     </div>
                                 </div>
 
