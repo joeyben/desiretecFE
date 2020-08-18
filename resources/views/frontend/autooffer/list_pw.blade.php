@@ -164,9 +164,9 @@
                                 $hotelData = [
                                     'title' => $offer['hotel_data']['data']['Hotelname'],
                                     'stars' => key_exists('Hotelkategorie', $offer['hotel_data']['data']) ? intval($offer['hotel_data']['data']['Hotelkategorie']) : 0 ,
-                                    'text' => $offer['data']['boardType'],
-                                    'longitude' => $offer['data']['hotel_geo']['longitude'],
-                                    'latitude' => $offer['data']['hotel_geo']['latitude']
+                                    'text' => $offer['boardType'],
+                                    'longitude' => $offer['hotel_geo']['longitude'],
+                                    'latitude' => $offer['hotel_geo']['latitude']
                                 ];
                                 $locations[] = $hotelData;
                             @endphp
