@@ -864,21 +864,28 @@ jQuery(function($){
         });
 
         dt.initLayerVersion = function() {
-            var matchDomains = false;
             var currentLocation = window.location.href;
+            var notMatchingIndexes = [];
 
-            $.each(layers, function(index, layer) {
-                if(layer.layer_url.replace(/\/$/, '') == currentLocation.replace(/\/$/, '')) {
-                    dt.PopupManager.version = layer.layer.path;
-                    matchDomains = true;
-                    return false;
+            $.each(layers, function(layerIndex, layer) {
+                var isHostsMatch = false;
+
+                $.each(layer.hosts, function(hostIndex, host) {
+                    if (host.replace(/\/$/, '') === currentLocation.replace(/\/$/, '')) {
+                        isHostsMatch = true;
+                    }
+                });
+
+                if (!isHostsMatch) {
+                    notMatchingIndexes.push(layerIndex);
                 }
             });
 
-            if(!matchDomains) {
-                dt.PopupManager.version = layers[0].layer.path;
+            while(notMatchingIndexes.length) {
+                layers.splice(notMatchingIndexes.pop(), 1);
             }
 
+            dt.PopupManager.version = layers[0].layer.path;
             dt.PopupManager.show();
         };
 
