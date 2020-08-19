@@ -864,7 +864,7 @@ jQuery(function($){
         });
 
         dt.initLayerVersion = function() {
-            var currentLocation = window.location.href;
+            var currentLocation = window.location.href.replace('https://', '').replace('http://', '');
             var notMatchingIndexes = [];
             console.log(layers);
             $.each(layers, function(layerIndex, layer) {
