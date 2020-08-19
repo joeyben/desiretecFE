@@ -866,14 +866,13 @@ jQuery(function($){
         dt.initLayerVersion = function() {
             var currentLocation = window.location.href.replace('https://', '').replace('http://', '');
             var notMatchingIndexes = [];
-            console.log(layers);
+
             $.each(layers, function(layerIndex, layer) {
                 var isHostsMatch = false;
-                console.log(layer.hosts);
+
                 $.each(layer.hosts, function(hostIndex, host) {
                     if (host.replace(/\/$/, '') === currentLocation.replace(/\/$/, '')) {
                         isHostsMatch = true;
-                        console.log(isHostsMatch);
                     }
                 });
 
@@ -881,12 +880,11 @@ jQuery(function($){
                     notMatchingIndexes.push(layerIndex);
                 }
             });
-            
-            console.log(notMatchingIndexes);
+
             while(notMatchingIndexes.length) {
                 layers.splice(notMatchingIndexes.pop(), 1);
             }
-            console.log(layers);
+
             dt.PopupManager.version = layers[0].layer.path;
             dt.PopupManager.show();
         };
