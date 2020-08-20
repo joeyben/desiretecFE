@@ -1,20 +1,6 @@
 @php
     $layerName = 'flight';
 
-    $kids_arr = [
-        '0' => '0 Kinder (0-11 Jahre)',
-        '1' => '1 Kind',
-        '2' => '2 Kinder',
-        '3' => '3 Kinder',
-        '4' => '4 Kinder',
-    ];
-
-    $class_arr = [
-        'Economy' => 'Economy',
-        'Premium Economy' => 'Premium Economy',
-        'Business' => 'Business',
-        'First' => 'First',
-    ];
 @endphp
 
 <div id="{{ $layerName }}" class="td-tab-content">

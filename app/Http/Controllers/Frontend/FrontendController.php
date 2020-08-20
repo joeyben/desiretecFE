@@ -78,6 +78,8 @@ class FrontendController extends Controller
 
     private $childrenArr;
 
+    private $classArr;
+
     private $petsArr;
 
     private $duration_arr;
@@ -96,6 +98,7 @@ class FrontendController extends Controller
         $this->initPurposeArr();
         $this->initChildrenArr();
         $this->initPetsArr();
+        $this->initClassArr();
     }
 
     /**
@@ -383,4 +386,12 @@ class FrontendController extends Controller
         ];
     }
 
+    public function initClassArr(){
+        $this->classArr = [
+            'Economy' => Lang::get('layer.general.flight.economy', [], session()->get('wl-locale')),
+            'Premium Economy' => Lang::get('layer.general.flight.premium', [], session()->get('wl-locale')),
+            'Business' => Lang::get('layer.general.flight.buiness', [], session()->get('wl-locale')),
+            'First' => Lang::get('layer.general.flight.first', [], session()->get('wl-locale')),
+        ];
+    }
 }
