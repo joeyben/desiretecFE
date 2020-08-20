@@ -1234,7 +1234,7 @@ jQuery(function($){
                         $("#budget").val("");
                     }else{
                         var currency = wl_name !== 'Lastminute' ? ' €' : ' CHF';
-                        $(".rangeslider-wrapper .text").text("bis "+value+currency);
+                        $(".rangeslider-wrapper .text").text(dt.translation.price_until+" "+value+currency);
                         $("#budget").val(""+value);
                     }
                     if(!$(".dt-modal .haserrors").length){
@@ -1280,7 +1280,7 @@ jQuery(function($){
                 } else {
                     var sonnen = cnt === 1 ? stern_txt : sterne_txt;
                 }
-                $('.kwp-star-input').parents('.kwp-form-group').find('.text').text("ab "+cnt+" "+sonnen);
+                $('.kwp-star-input').parents('.kwp-form-group').find('.text').text(dt.translation.stars_from+" "+cnt+" "+sonnen);
             }
 
             function highlight(cnt) {
@@ -1316,7 +1316,7 @@ jQuery(function($){
                 }).click(function () {
                     setValue(parseInt($(this).attr('data-val')));
                     var sonnen = parseInt($(this).attr('data-val')) === 1 ? sonne_txt : sonnen_txt;
-                    $('.kwp-star-input').parents('.kwp-form-group').find('.text').text("ab "+$(this).attr('data-val')+" "+sonnen);
+                    $('.kwp-star-input').parents('.kwp-form-group').find('.text').text(dt.translation.stars_from+" "+$(this).attr('data-val')+" "+sonnen);
                 });
             } else {
                 $('.kwp-star-input .fa-star').hover(function () {
@@ -1324,7 +1324,7 @@ jQuery(function($){
                 }).click(function () {
                     setValue(parseInt($(this).attr('data-val')));
                     var sonnen = parseInt($(this).attr('data-val')) === 1 ? stern_txt : sterne_txt;
-                    $('.kwp-star-input').parents('.kwp-form-group').find('.text').text("ab "+$(this).attr('data-val')+" "+sonnen);
+                    $('.kwp-star-input').parents('.kwp-form-group').find('.text').text(dt.translation.stars_from+" "+$(this).attr('data-val')+" "+sonnen);
                 });
             }
 

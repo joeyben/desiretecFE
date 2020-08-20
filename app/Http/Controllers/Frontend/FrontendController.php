@@ -75,16 +75,10 @@ class FrontendController extends Controller
         3 => "3",
         4 => "4",
     ];
-    const PURPOSE_ARR = [
-        'Familienurlaub',
-        'Wellness -oder Gesundheitsreise',
-        'Aktivurlaub',
-        'Fahrradurlaub',
-        'Naturkundliche Reise',
-        'Studienreise',
-        'Kulturreise',
-        'Geschäftsreise'
-    ];
+
+    private $childrenArr;
+
+    private $petsArr;
 
     private $duration_arr;
 
@@ -100,6 +94,8 @@ class FrontendController extends Controller
         $this->initDurationArr();
         $this->initCatering();
         $this->initPurposeArr();
+        $this->initChildrenArr();
+        $this->initPetsArr();
     }
 
     /**
@@ -124,6 +120,7 @@ class FrontendController extends Controller
         $this->initPurposeArr();
         $host = $this->getHost($request, request()->headers->get('referer'));
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost(str_replace('/','_', $host))), true);
+        $layerVersion = $request->query->has('version') ? $request->input('version') : "";
         $layer = $request->query->has('version') ? 'layers.' . $request->input('version') : 'layer';
 
         $translation = [
@@ -142,15 +139,15 @@ class FrontendController extends Controller
         $html = view('frontend.whitelabel.' . $layer)->with([
             'adults_arr'   => $this::ADULTS_ARR,
             'kids_arr'     => $this::KIDS_ARR,
-            'ages_arr'     => $this::AGES_ARR,
+            'ages_arr'     => $layerVersion === "flight" ? $this->childrenArr : $this::AGES_ARR,
             'catering_arr' => $this->catering,
             'duration_arr' => $this->duration_arr,
-            'pets_arr'     => $this::PETS_ARR,
+            'pets_arr'     => $this->petsArr,
             'rooms_arr'    => $this::ROOMS_ARR,
             'purpose_arr'  => $this->purpose_arr,
             'request'      => $request->all(),
             'whitelabel'   => $whitelabel,
-            'translation'  => $translation
+            'translation'  => $translation,
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);
@@ -186,6 +183,7 @@ class FrontendController extends Controller
         $this->initDurationArr();
         $this->initPurposeArr();
         $host = $this->getHost($request, request()->headers->get('referer'));
+        $layerVersion = $request->query->has('version') ? $request->input('version') : "";
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost(str_replace('/','_', $host))), true);
 
         if ($request->failed()) {
@@ -202,15 +200,17 @@ class FrontendController extends Controller
                 "adults"  => Lang::get('layer.general.adults_label', [], session()->get('wl-locale')),
                 "kid"  => Lang::get('layer.general.kid_label', [], session()->get('wl-locale')),
                 "kids"  => Lang::get('layer.general.kids_label', [], session()->get('wl-locale')),
+                "price_until"  => Lang::get('layer.general.price_until', [], session()->get('wl-locale')),
+                "stars_from"  => Lang::get('layer.general.stars_from', [], session()->get('wl-locale')),
             ];
 
             $html = view('frontend.whitelabel.' . $layer)->with([
                 'adults_arr'   => $this::ADULTS_ARR,
                 'kids_arr'     => $this::KIDS_ARR,
-                'ages_arr'     => $this::AGES_ARR,
+                'ages_arr'     => $layerVersion === "flight" ? $this->childrenArr : $this::AGES_ARR,
                 'catering_arr' => $this->catering,
                 'duration_arr' => $this->duration_arr,
-                'pets_arr'     => $this::PETS_ARR,
+                'pets_arr'     => $this->petsArr,
                 'rooms_arr'    => $this::ROOMS_ARR,
                 'purpose_arr'  => $this->purpose_arr,
                 'request'      => $request->all(),
@@ -365,4 +365,22 @@ class FrontendController extends Controller
             5 => Lang::get('labels.frontend.wishes.catering.ai', [], session()->get('wl-locale')),
         ];
     }
+
+    public function initChildrenArr(){
+        $this->childrenArr = [
+            "0" => Lang::get('layer.general.flight.kid_age_0', [], session()->get('wl-locale')),
+            "1" => Lang::get('layer.general.flight.kid_age_1', [], session()->get('wl-locale')),
+            "2" => Lang::get('layer.general.flight.kid_age_2', [], session()->get('wl-locale')),
+            "3" => Lang::get('layer.general.flight.kid_age_3', [], session()->get('wl-locale')),
+            "4" => Lang::get('layer.general.flight.kid_age_4', [], session()->get('wl-locale')),
+        ];
+    }
+
+    public function initPetsArr(){
+        $this->petsArr = [
+            Lang::get('layer.general.with_pets', [], session()->get('wl-locale')),
+            Lang::get('layer.general.without_pets', [], session()->get('wl-locale')),
+        ];
+    }
+
 }

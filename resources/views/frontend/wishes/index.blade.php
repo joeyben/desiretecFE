@@ -27,6 +27,7 @@
             "created_at" => trans('labels.frontend.wishes.created_at'),
             "search_placeholder" => trans('strings.wishlist.search'),
             "goto_btn" => trans('labels.frontend.wishes.goto'),
+            "wishes_date_until" => trans('labels.frontend.wishes.wishes_date_until'),
             "offer_ex" => trans('strings.wishlist.offer_ex'),
             "is_interested_events" => trans('labels.frontend.wishes.events_interested_checked'),
             "not_interested_events" => trans('labels.frontend.wishes.events_interested_unchecked'),

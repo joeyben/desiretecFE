@@ -28,7 +28,7 @@
                                 <i class="fa fa-plane"></i><span class="value">{{ wish.airport }}</span>
                             </li>
                             <li v-if="wish.earliest_start !== '0000-00-00' && wish.latest_return !== '0000-00-00'">
-                                <i class="icon_calendar"></i><span class="value">{{ wish.earliest_start | moment("DD.MM.YYYY") }}</span> bis <span class="value">{{ wish.latest_return | moment("DD.MM.YYYY") }}</span>
+                                <i class="icon_calendar"></i><span class="value">{{ wish.earliest_start | moment("DD.MM.YYYY") }}</span>{{ translateWord('wishes_date_until') }}<span class="value">{{ wish.latest_return | moment("DD.MM.YYYY") }}</span>
                             </li>
                             <li>
                                 <i class="icon_hourglass"></i><span class="value">{{ wish.duration }}</span>
