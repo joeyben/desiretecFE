@@ -61,7 +61,7 @@
             <div class="kwp-row">
                 <div class="kwp-col-4 duration-col main-col">
                     <div class="kwp-form-group duration-group duration-group">
-                        <label for="duration-time" class="required">{{ Lang::get('layer.general.duration') }}</label>
+                        <label for="duration-time" class="required">{{ Lang::get('layer.general.duration', [], session()->get('wl-locale')) }}</label>
                         <span class="duration-time duration-time dd-trigger">
                             <span class="txt">15.11.2018 - 17.06.2019, 1 Woche</span>
                             <i class="fal fa-calendar-alt not-triggered"></i>
@@ -132,7 +132,7 @@
                                 </div>
                                 <div class="kwp-col-ages">
                                     <div class="kwp-form-group">
-                                        <label class="main-label">{{ Lang::get('layer_package.kids.travel_age', [], session()->get('wl-locale')) }}</label>
+                                        <label class="main-label">{{ Lang::get('labels.frontend.kids.travel_age', [], session()->get('wl-locale')) }}</label>
                                         <input name="ages" type="hidden">
                                         <div id="age_1" class="kwp-col-3">
                                             <i class="master-icon--aircraft-down"></i>
