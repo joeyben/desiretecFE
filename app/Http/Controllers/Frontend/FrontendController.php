@@ -140,6 +140,9 @@ class FrontendController extends Controller
             "adults"  => Lang::get('layer.general.adults_label', [], session()->get('wl-locale')),
             "kid"  => Lang::get('layer.general.kid_label', [], session()->get('wl-locale')),
             "kids"  => Lang::get('layer.general.kids_label', [], session()->get('wl-locale')),
+            "price_until"  => Lang::get('layer.general.price_until', [], session()->get('wl-locale')),
+            "stars_from"  => Lang::get('layer.general.stars_from', [], session()->get('wl-locale')),
+
         ];
 
         $html = view('frontend.whitelabel.' . $layer)->with([
