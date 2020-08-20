@@ -192,16 +192,16 @@ class FrontendController extends Controller
             $layer = $request->query->has('version') ? 'layers.' . $request->input('version') : 'layer';
 
             $translation = [
-                "title" => trans('layer.general.layer_title'),
-                "sub_title" => trans('layer.general.sub_title'),
-                "sonnen" => trans('layer.general.suns'),
-                "sonne" => trans('layer.general.sun'),
-                "stern" => trans('layer.general.star'),
-                "sterne" => trans('layer.general.stars'),
-                "adult"  => trans('layer.general.adult_label'),
-                "adults"  => trans('layer.general.adults_label'),
-                "kid"  => trans('layer.general.kid_label'),
-                "kids"  => trans('layer.general.kids_label'),
+                "title" => Lang::get('layer.general.layer_title', [], session()->get('wl-locale')),
+                "sub_title" => Lang::get('layer.general.sub_title', [], session()->get('wl-locale')),
+                "sonnen" => Lang::get('layer.general.suns', [], session()->get('wl-locale')),
+                "sonne" => Lang::get('layer.general.sun', [], session()->get('wl-locale')),
+                "stern" => Lang::get('layer.general.star', [], session()->get('wl-locale')),
+                "sterne" => Lang::get('layer.general.stars', [], session()->get('wl-locale')),
+                "adult"  => Lang::get('layer.general.adult_label', [], session()->get('wl-locale')),
+                "adults"  => Lang::get('layer.general.adults_label', [], session()->get('wl-locale')),
+                "kid"  => Lang::get('layer.general.kid_label', [], session()->get('wl-locale')),
+                "kids"  => Lang::get('layer.general.kids_label', [], session()->get('wl-locale')),
             ];
 
             $html = view('frontend.whitelabel.' . $layer)->with([
@@ -305,7 +305,7 @@ class FrontendController extends Controller
             return view('frontend.tnb.tnb', compact(['tnb']));
         } catch (\Exception $e) {
             Log::error($e);
-            abort(503, trans('errors.tnb.notset'));
+            abort(503, Lang::get('errors.tnb.notset', [], session()->get('wl-locale')));
         }
     }
 
@@ -326,30 +326,30 @@ class FrontendController extends Controller
 
     public function initPurposeArr(){
         $this->purpose_arr = [
-            trans('layer.general.purpose.family'),
-            trans('layer.general.purpose.wellness'),
-            trans('layer.general.purpose.aktivurlaub'),
-            trans('layer.general.purpose.fahrradurlaub'),
-            trans('layer.general.purpose.natur'),
-            trans('layer.general.purpose.studienreise'),
-            trans('layer.general.purpose.kulturreise'),
-            trans('layer.general.purpose.bussiness')
+            Lang::get('layer.general.purpose.family', [], session()->get('wl-locale')),
+            Lang::get('layer.general.purpose.wellness', [], session()->get('wl-locale')),
+            Lang::get('layer.general.purpose.aktivurlaub', [], session()->get('wl-locale')),
+            Lang::get('layer.general.purpose.fahrradurlaub', [], session()->get('wl-locale')),
+            Lang::get('layer.general.purpose.natur', [], session()->get('wl-locale')),
+            Lang::get('layer.general.purpose.studienreise', [], session()->get('wl-locale')),
+            Lang::get('layer.general.purpose.kulturreise', [], session()->get('wl-locale')),
+            Lang::get('layer.general.purpose.bussiness', [], session()->get('wl-locale'))
         ];
     }
 
     public function initDurationArr(){
         $this->duration_arr = [
-            "exact" => trans('labels.frontend.wishes.exact'),
+            "exact" => Lang::get('labels.frontend.wishes.exact', [], session()->get('wl-locale')),
             "7-" => trans_choice('labels.frontend.wishes.week', 1, ['value' => 1]),
             "14-" => trans_choice('labels.frontend.wishes.week', 2, ['value' => 2]),
             "21-" => trans_choice('labels.frontend.wishes.week', 3, ['value' => 3]),
             "28-" => trans_choice('labels.frontend.wishes.week', 4, ['value' => 4]),
-            "1-4" => "1-4 ". Lang::get('labels.frontend.wishes.nights'),
-            "5-8" => "5-8 ". Lang::get('labels.frontend.wishes.nights'),
-            "9-12" => "9-12 ". Lang::get('labels.frontend.wishes.nights'),
-            "13-15" => "13-15 ". Lang::get('labels.frontend.wishes.nights'),
-            "16-22" => "16-22 ". Lang::get('labels.frontend.wishes.nights'),
-            "22-" => ">22 ". Lang::get('labels.frontend.wishes.nights'),
+            "1-4" => "1-4 ". Lang::get('labels.frontend.wishes.nights', [], session()->get('wl-locale')),
+            "5-8" => "5-8 ". Lang::get('labels.frontend.wishes.nights', [], session()->get('wl-locale')),
+            "9-12" => "9-12 ". Lang::get('labels.frontend.wishes.nights', [], session()->get('wl-locale')),
+            "13-15" => "13-15 ". Lang::get('labels.frontend.wishes.nights', [], session()->get('wl-locale')),
+            "16-22" => "16-22 ". Lang::get('labels.frontend.wishes.nights', [], session()->get('wl-locale')),
+            "22-" => ">22 ". Lang::get('labels.frontend.wishes.nights', [], session()->get('wl-locale')),
         ];
         for($i = 1; $i<29;$i++){
             $this->duration_arr[$i] = trans_choice('labels.frontend.wishes.night', $i, ['value' => $i]);
@@ -358,11 +358,11 @@ class FrontendController extends Controller
 
     public function initCatering(){
         $this->catering = [
-            1 => trans('labels.frontend.wishes.catering.ov'),
-            2 => trans('labels.frontend.wishes.catering.bf'),
-            3 => trans('labels.frontend.wishes.catering.hp'),
-            4 => trans('labels.frontend.wishes.catering.vp'),
-            5 => trans('labels.frontend.wishes.catering.ai'),
+            1 => Lang::get('labels.frontend.wishes.catering.ov', [], session()->get('wl-locale')),
+            2 => Lang::get('labels.frontend.wishes.catering.bf', [], session()->get('wl-locale')),
+            3 => Lang::get('labels.frontend.wishes.catering.hp', [], session()->get('wl-locale')),
+            4 => Lang::get('labels.frontend.wishes.catering.vp', [], session()->get('wl-locale')),
+            5 => Lang::get('labels.frontend.wishes.catering.ai', [], session()->get('wl-locale')),
         ];
     }
 }
