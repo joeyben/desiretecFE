@@ -127,16 +127,16 @@ class FrontendController extends Controller
         $layer = $request->query->has('version') ? 'layers.' . $request->input('version') : 'layer';
 
         $translation = [
-            "title" => trans('layer.general.layer_title'),
-            "sub_title" => trans('layer.general.sub_title'),
-            "sonnen" => trans('layer.general.suns'),
-            "sonne" => trans('layer.general.sun'),
-            "stern" => trans('layer.general.star'),
-            "sterne" => trans('layer.general.stars'),
-            "adult"  => trans('layer.general.adult_label'),
-            "adults"  => trans('layer.general.adults_label'),
-            "kid"  => trans('layer.general.kid_label'),
-            "kids"  => trans('layer.general.kids_label'),
+            "title" => Lang::get('layer.general.layer_title', [], session()->get('wl-locale')),
+            "sub_title" => Lang::get('layer.general.sub_title', [], session()->get('wl-locale')),
+            "sonnen" => Lang::get('layer.general.suns', [], session()->get('wl-locale')),
+            "sonne" => Lang::get('layer.general.sun', [], session()->get('wl-locale')),
+            "stern" => Lang::get('layer.general.star', [], session()->get('wl-locale')),
+            "sterne" => Lang::get('layer.general.stars', [], session()->get('wl-locale')),
+            "adult"  => Lang::get('layer.general.adult_label', [], session()->get('wl-locale')),
+            "adults"  => Lang::get('layer.general.adults_label', [], session()->get('wl-locale')),
+            "kid"  => Lang::get('layer.general.kid_label', [], session()->get('wl-locale')),
+            "kids"  => Lang::get('layer.general.kids_label', [], session()->get('wl-locale')),
         ];
 
         $html = view('frontend.whitelabel.' . $layer)->with([
