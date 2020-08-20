@@ -340,10 +340,10 @@ class FrontendController extends Controller
     public function initDurationArr(){
         $this->duration_arr = [
             "exact" => Lang::get('labels.frontend.wishes.exact', [], session()->get('wl-locale')),
-            "7-" => trans_choice('labels.frontend.wishes.week', 1, ['value' => 1]),
-            "14-" => trans_choice('labels.frontend.wishes.week', 2, ['value' => 2]),
-            "21-" => trans_choice('labels.frontend.wishes.week', 3, ['value' => 3]),
-            "28-" => trans_choice('labels.frontend.wishes.week', 4, ['value' => 4]),
+            "7-" => trans_choice('labels.frontend.wishes.week', 1, ['value' => 1], session()->get('wl-locale')),
+            "14-" => trans_choice('labels.frontend.wishes.week', 2, ['value' => 2], session()->get('wl-locale')),
+            "21-" => trans_choice('labels.frontend.wishes.week', 3, ['value' => 3], session()->get('wl-locale')),
+            "28-" => trans_choice('labels.frontend.wishes.week', 4, ['value' => 4], session()->get('wl-locale')),
             "1-4" => "1-4 ". Lang::get('labels.frontend.wishes.nights', [], session()->get('wl-locale')),
             "5-8" => "5-8 ". Lang::get('labels.frontend.wishes.nights', [], session()->get('wl-locale')),
             "9-12" => "9-12 ". Lang::get('labels.frontend.wishes.nights', [], session()->get('wl-locale')),
@@ -352,7 +352,7 @@ class FrontendController extends Controller
             "22-" => ">22 ". Lang::get('labels.frontend.wishes.nights', [], session()->get('wl-locale')),
         ];
         for($i = 1; $i<29;$i++){
-            $this->duration_arr[$i] = trans_choice('labels.frontend.wishes.night', $i, ['value' => $i]);
+            $this->duration_arr[$i] = trans_choice('labels.frontend.wishes.night', $i, ['value' => $i], session()->get('wl-locale'));
         }
     }
 
