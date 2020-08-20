@@ -118,9 +118,12 @@ class FrontendController extends Controller
      */
     public function show(Request $request)
     {
-        $this->initCatering();
         $this->initDurationArr();
+        $this->initCatering();
         $this->initPurposeArr();
+        $this->initChildrenArr();
+        $this->initPetsArr();
+        $this->initClassArr();
         $host = $this->getHost($request, request()->headers->get('referer'));
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost(str_replace('/','_', $host))), true);
         $layerVersion = $request->query->has('version') ? $request->input('version') : "";
@@ -151,6 +154,7 @@ class FrontendController extends Controller
             'request'      => $request->all(),
             'whitelabel'   => $whitelabel,
             'translation'  => $translation,
+            'class_arr'    => $this->classArr
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);
@@ -219,7 +223,8 @@ class FrontendController extends Controller
                 'request'      => $request->all(),
                 'errors'       => $request->errors(),
                 'whitelabel'   => $whitelabel,
-                'translation'  => $translation
+                'translation'  => $translation,
+                'class_arr'    => $this->classArr
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);
