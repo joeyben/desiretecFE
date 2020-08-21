@@ -211,8 +211,8 @@
 
                 <div class="kwp-col-4 budget">
                     <div class="kwp-form-group ">
-                        {{ Form::label('budget', 'Mietpreis', ['class' => 'control-label required']) }}
-                        {{ Form::number('budget', key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size', 'placeholder' => 'Ihr max. Gesamtbudget', 'required' => 'required', 'min' => '1', 'oninput' => 'validity.valid||(value="");']) }}
+                        {{ Form::label('budget', Lang::get('layer.general.rent', [], session()->get('wl-locale')), ['class' => 'control-label required']) }}
+                        {{ Form::number('budget', key_exists('budget', $request) ? $request['budget'] : null, ['class' => 'form-control box-size', 'placeholder' => Lang::get('layer.general.max_budget', [], session()->get('wl-locale')), 'required' => 'required', 'min' => '1', 'oninput' => 'validity.valid||(value="");']) }}
                         <i class="fal fa-euro-sign"></i>
                         @if ($errors->any() && $errors->get('budget'))
                             @foreach ($errors->get('budget') as $error)

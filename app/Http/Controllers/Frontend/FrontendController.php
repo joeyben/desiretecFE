@@ -398,7 +398,7 @@ class FrontendController extends Controller
         $this->classArr = [
             'Economy' => Lang::get('layer.general.flight.economy', [], session()->get('wl-locale')),
             'Premium Economy' => Lang::get('layer.general.flight.premium', [], session()->get('wl-locale')),
-            'Business' => Lang::get('layer.general.flight.buiness', [], session()->get('wl-locale')),
+            'Business' => Lang::get('layer.general.flight.business', [], session()->get('wl-locale')),
             'First' => Lang::get('layer.general.flight.first', [], session()->get('wl-locale')),
         ];
     }
