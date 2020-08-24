@@ -278,6 +278,8 @@ class FrontendController extends Controller
             $response = $this->apiService->get('/destinations');
         elseif ($whitelabel['tt'])
             $response = $this->apiService->get('/ttdestinations');
+        elseif ($whitelabel['peakwork'])
+            $response = $this->apiService->get('/pwdestinations');
         else
             $response = $this->apiService->get('/destinations');
 
@@ -294,6 +296,8 @@ class FrontendController extends Controller
             $response = $this->apiService->get('/airports');
         elseif ($whitelabel['tt'])
             $response = $this->apiService->get('/ttairports');
+        elseif ($whitelabel['peakwork'])
+            $response = $this->apiService->get('/airports');
         else
             $response = $this->apiService->get('/airports');
 
