@@ -33,6 +33,13 @@ class FrontendController extends Controller
         8 => "8",
         9 => "9",
     ];
+    const KIDS_ARR = [
+        0 => "0",
+        1 => "1",
+        2 => "2",
+        3 => "3",
+        4 => "4",
+    ];
     const KIDS_ARR_FLIGHT = [
         0 => "0",
         1 => "1",
@@ -154,7 +161,7 @@ class FrontendController extends Controller
 
         $html = view('frontend.whitelabel.' . $layer)->with([
             'adults_arr'   => $this::ADULTS_ARR,
-            'kids_arr'     => $this->childrenArr,
+            'kids_arr'     => $layerVersion === "flight" ? $this->childrenArr : $this::KIDS_ARR,
             'ages_arr'     => $layerVersion === "flight" ? $this::KIDS_ARR_FLIGHT : $this::AGES_ARR,
             'catering_arr' => $this->catering,
             'duration_arr' => $this->duration_arr,
@@ -223,7 +230,7 @@ class FrontendController extends Controller
 
             $html = view('frontend.whitelabel.' . $layer)->with([
                 'adults_arr'   => $this::ADULTS_ARR,
-                'kids_arr'     => $this->childrenArr,
+                'kids_arr'     => $layerVersion === "flight" ? $this->childrenArr : $this::KIDS_ARR,
                 'ages_arr'     => $layerVersion === "flight" ?  $this::KIDS_ARR_FLIGHT : $this::AGES_ARR,
                 'catering_arr' => $this->catering,
                 'duration_arr' => $this->duration_arr,
