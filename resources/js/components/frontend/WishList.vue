@@ -7,7 +7,7 @@
                 </div>
                 <div v-if="isSeller" class="filter-action">
                     <select class="selectpicker" v-model="status" ref="select" @change="fetchWishes()">
-                        <option v-for="(status, index) in translatedStatuses" :key="index" :value="status">{{ status }}</option>
+                        <option v-for="status in statuses" :key="status.value" :value="status">{{ status.translation }}</option>
                     </select>
                     <input type="search" class="id-filter" :placeholder="translateWord('search_placeholder')" v-model="filter" @input="fetchWishes()">
                 </div>
@@ -28,7 +28,7 @@
                                 <i class="fa fa-plane"></i><span class="value">{{ wish.airport }}</span>
                             </li>
                             <li v-if="wish.earliest_start !== '0000-00-00' && wish.latest_return !== '0000-00-00'">
-                                <i class="icon_calendar"></i><span class="value">{{ wish.earliest_start | moment("DD.MM.YYYY") }}</span> bis <span class="value">{{ wish.latest_return | moment("DD.MM.YYYY") }}</span>
+                                <i class="icon_calendar"></i><span class="value">{{ wish.earliest_start | moment("DD.MM.YYYY") }}</span> {{ translateWord('wishes_date_until') }} <span class="value">{{ wish.latest_return | moment("DD.MM.YYYY") }}</span>
                             </li>
                             <li>
                                 <i class="icon_hourglass"></i><span class="value">{{ wish.duration }}</span>
@@ -78,8 +78,8 @@
                         <div v-if="wish.budget !== 0" class="budget">{{ formatPrice(wish.budget) }}€</div>
                         <a class="primary-btn" :href="getWishLink(wish.id, wish.manuelFlag)">{{ translations.goto_btn }}</a>
                         <div v-if="isSeller" class="status-change-action">
-                            <select class="selectpicker" id="change-status" ref="select" v-model="status" :value="wish.status" @change="changeStatus(wish.id)">
-                                <option v-for="(status, index) in translatedStatuses" :key="index">{{ status }}</option>
+                            <select class="selectpicker" id="change-status" ref="select" v-model="wish.status" @change="changeStatus(wish.id, wish.status)">
+                                <option v-for="status in wishStatuses" :key="status.value" :value="status.value">{{ status.translation }}</option>
                             </select>
                         </div>
                     </div>
@@ -92,130 +92,150 @@
 
 <script>
 
-    import Pagination from './PaginationComponent.vue';
+import Pagination from './PaginationComponent.vue';
 
-    export default {
-        components: {
-            Pagination
+export default {
+    components: {
+        Pagination
+    },
+    props: ['wlName', 'userRole', 'statusesTrans', 'wordsTrans'],
+    data() {
+        return {
+            statuses: [],
+            status: {},
+            wishStatuses: [],
+            filter: '',
+            total: '',
+            wishes: {},
+            loading: true,
+            pagination: {
+                'current_page': 1
+            },
+        }
+    },
+    computed: {
+        isSeller() {
+            return JSON.parse(this.userRole) === "Seller";
         },
-        props: ['wlName', 'userRole', 'statusesTrans', 'wordsTrans'],
-        data() {
-            return {
-                status: '',
-                statusValue: '',
-                allStatusValues: ['new', 'offer_created', 'completed'],
-                filter: '',
-                total: '',
-                wishes: {},
-                loading: true,
-                pagination: {
-                    'current_page': 1
+        translatedStatuses() {
+            return JSON.parse(this.statusesTrans);
+        },
+        translations() {
+            return JSON.parse(this.wordsTrans);
+        },
+        isTuiWhitelabel() {
+            return JSON.parse(this.wlName).toLowerCase() === 'tui';
+        },
+        isDkFereinWhitelabel() {
+            return JSON.parse(this.wlName).toLowerCase() === 'dk ferien';
+        },
+    },
+    beforeMount() {
+        this.initStatuses();
+        this.initStatus();
+    },
+    mounted() {
+        this.fetchWishes();
+    },
+    methods: {
+        initStatuses() {
+            this.statuses = [
+                {
+                    value: 1,
+                    translation: this.translatedStatuses[0]
                 },
-            }
+                {
+                    value: 2,
+                    translation: this.translatedStatuses[1]
+                },
+                {
+                    value: 3,
+                    translation: this.translatedStatuses[2]
+                },
+                {
+                    value: 4,
+                    translation: this.translatedStatuses[3]
+                },
+            ];
+            this.wishStatuses = this.statuses.slice(0, -1);
         },
-        computed: {
-            isSeller() {
-                return JSON.parse(this.userRole) === "Seller";
-            },
-            translatedStatuses() {
-                return JSON.parse(this.statusesTrans);
-            },
-            translations() {
-                return JSON.parse(this.wordsTrans);
-            },
-            isTuiWhitelabel() {
-                return JSON.parse(this.wlName).toLowerCase() === 'tui';
-            },
-            isDkFereinWhitelabel() {
-                return JSON.parse(this.wlName).toLowerCase() === 'dk ferien';
-            },
-        },
-        beforeMount() {
-            if(localStorage.getItem('wishesSelectState') === null || localStorage.getItem('wishesSelectState') === '' || this.isDkFereinWhitelabel) {
-                this.status = this.translatedStatuses[0];
+        initStatus() {
+            if (!this.isSeller) {
+                this.status = this.statuses[0];
             } else {
-                this.status = localStorage.getItem('wishesSelectState');
+                let hasStoredStatus = localStorage.getItem('statusValue') === '1'
+                                    || localStorage.getItem('statusValue') === '2'
+                                    || localStorage.getItem('statusValue') === '3'
+                                    || localStorage.getItem('statusValue') === '4';
+                let statusValue = hasStoredStatus ? localStorage.getItem('statusValue') : 1;
+                this.status = this.statuses[statusValue - 1];
+            }
+
+            if (this.isDkFereinWhitelabel) {
+                this.status = this.statuses[0];
             }
         },
-        mounted() {
-            this.fetchWishes();
+        translateWord(word, count) {
+            let wordPlural = word + '_plural';
+            return count > 1 || count == 0 ? this.translations[wordPlural] : this.translations[word];
         },
-        methods: {
-            translateWord(word, count) {
-                let wordPlural = word + '_plural';
-                return count > 1 || count === 0 ? this.translations[wordPlural] : this.translations[word];
-            },
-            fetchWishes() {
-                if (this.status && this.isSeller) {
-                    this.statusValue = this.getStatusValue(this.status);
-                } else {
-                    this.statusValue = this.allStatusValues[0];
+        fetchWishes() {
+            axios.get('/wishes/getlist?page=' + this.pagination.current_page + '&status=' + this.status.value + '&filter=' + this.filter)
+                .then(response => {
+                    this.wishes = response.data.data.data;
+                    this.pagination = response.data.pagination;
+                    this.total = response.data.pagination.total;
+
+                    this.$nextTick(function () {
+                        this.loading = false;
+                        $('.selectpicker').selectpicker('refresh');
+                        localStorage.setItem('statusValue', this.status.value);
+                        this.applyColors();
+                    });
                 }
-
-                axios.get('/wishes/getlist?page=' + this.pagination.current_page + '&status=' + this.statusValue + '&filter=' + this.filter)
-                    .then(response => {
-                            this.wishes = response.data.data.data;
-                            this.pagination = response.data.pagination;
-                            this.total = response.data.pagination.total;
-
-                            this.$nextTick(function () {
-                                this.loading = false;
-                                $('.selectpicker').selectpicker('refresh');
-                                localStorage.setItem('wishesSelectState', this.status);
-                                this.applyColors();
-                            });
-                        }
-                    )
-                    .catch(error => {
-                        console.log(error);
-                    });
-            },
-            getStatusValue(value) {
-                let index = this.translatedStatuses.indexOf(value);
-                let statusValue = this.allStatusValues[index];
-                return statusValue;
-            },
-            changeStatus(id) {
-                this.statusValue = this.getStatusValue(this.status);
-
-                axios.post('/wishes/changeWishStatus', {
-                    status: this.statusValue,
-                    id: id,
-                }).then(response => {
-                    this.status = localStorage.getItem('wishesSelectState');
-                    this.fetchWishes();
-                })
-                    .catch(error => {
-                        console.log(error);
-                    });
-            },
-            formatPrice(value) {
-                return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-            },
-            getWishLink(id, isManuel) {
-                if(isManuel) {
-                    return '/wishes/'+id;
-                } else {
-                    return '/offer/list/'+id;
-                }
-            },
-            applyColors() {
-                $('.primary-btn').css({
-                    'background': brandColor, 'border': '1px solid ' + brandColor, 'color': '#fff',
-                });
-                $('.primary-btn').hover(function(){
-                    $(this).css({
-                        'background': '#fff', 'color': brandColor, 'border': '1px solid ' + brandColor, 'transition': 'all 0.3s',
-                    });
-                }, function() {
-                    $(this).css({
-                        'background': brandColor, 'border': '1px solid ' + brandColor, 'color': '#fff',
-                    });
-                });
-                $('.btn-secondary').css({
+            )
+            .catch(error => {
+                console.log(error);
+            });
+        },
+        changeStatus(wishId, wishStatus) {
+            axios.post('/wishes/changeWishStatus', {
+                status: wishStatus,
+                id: wishId,
+            }).then(response => {
+                this.fetchWishes();
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        },
+        formatPrice(value) {
+            return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        },
+        getWishLink(id, isManuel) {
+            if(isManuel) {
+                return '/wishes/'+id;
+            } else {
+                return '/offer/list/'+id;
+            }
+        },
+        applyColors() {
+            $('.primary-btn').css({
+                'background': brandColor, 'border': '1px solid ' + brandColor, 'color': '#fff',
+            });
+            $('.primary-btn').hover(function(){
+                $(this).css({
                     'background': '#fff', 'color': brandColor, 'border': '1px solid ' + brandColor, 'transition': 'all 0.3s',
                 });
-            }
+            }, function() {
+                $(this).css({
+                    'background': brandColor, 'border': '1px solid ' + brandColor, 'color': '#fff',
+                });
+            });
+            $('.btn-secondary').css({
+                'background': '#fff', 'color': brandColor, 'border': '1px solid ' + brandColor, 'transition': 'all 0.3s',
+            });
         }
     }
+}
 </script>

@@ -90,7 +90,7 @@
     @if($wish->wishDetails->purpose)
     <div class="col-md-3">
         <i class="fal fa-suitcase"></i>
-        <div id="purpose-mousehover-value" class="data-content ellipsised">{{ $wish->wishDetails->purpose }}</div>
+        <div id="purpose-mousehover-value" class="data-content ellipsised">{{ trans('layer.general.purpose.studienreise') }}</div>
         <span id="purpose-mousehover" class="mousehover"></span>
         <div class="purpose-tooltip tooltip">
             {{ $wish->wishDetails->purpose }}

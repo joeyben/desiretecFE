@@ -24,7 +24,7 @@
             <div class="kwp-row">
                 <div class="kwp-col-4 duration-col main-col">
                     <div class="kwp-form-group duration-group duration-group">
-                        <label for="duration-time" class="required">{{ trans('layer.general.duration') }}</label>
+                        <label for="duration-time" class="required">{{ Lang::get('layer.general.duration', [], session()->get('wl-locale')) }}</label>
                         <span class="duration-time duration-time dd-trigger">
                             <span class="txt">15.11.2018 - 17.06.2019, 1 Woche</span>
                             <i class="fal fa-calendar-alt not-triggered"></i>
@@ -32,8 +32,8 @@
                         </span>
                         <div class="duration-more duration-more">
                             <div class="kwp-col-4">
-                                {{ Form::label('earliest_start', trans('layer.general.earliest_start'), ['class' => 'control-label required']) }}
-                                {{ Form::text('earliest_start', key_exists('earliest_start', $request) ? $request['earliest_start'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.general.earliest_start'), 'required' => 'required', 'readonly']) }}
+                                {{ Form::label('earliest_start', Lang::get('layer.general.earliest_start', [], session()->get('wl-locale')), ['class' => 'control-label required']) }}
+                                {{ Form::text('earliest_start', key_exists('earliest_start', $request) ? $request['earliest_start'] : null, ['class' => 'form-control box-size', 'placeholder' => Lang::get('layer.general.earliest_start', [], session()->get('wl-locale')), 'required' => 'required', 'readonly']) }}
                                 @if ($errors->any() && $errors->get('earliest_start'))
                                     @foreach ($errors->get('earliest_start') as $error)
                                         <span class="error-input">{{ $error }}</span>
@@ -44,8 +44,8 @@
                                 @endif
                             </div>
                             <div class="kwp-col-4">
-                                {{ Form::label('latest_return', trans('layer.general.latest_return'), ['class' => 'control-label required']) }}
-                                {{ Form::text('latest_return', key_exists('latest_return', $request) ? $request['latest_return'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.general.latest_return'), 'required' => 'required', 'readonly']) }}
+                                {{ Form::label('latest_return', Lang::get('layer.general.latest_return', [], session()->get('wl-locale')), ['class' => 'control-label required']) }}
+                                {{ Form::text('latest_return', key_exists('latest_return', $request) ? $request['latest_return'] : null, ['class' => 'form-control box-size', 'placeholder' => Lang::get('layer.general.latest_return', [], session()->get('wl-locale')), 'required' => 'required', 'readonly']) }}
                                 @if ($errors->any() && $errors->get('latest_return'))
                                     @foreach ($errors->get('latest_return') as $error)
                                         <span class="error-input">{{ $error }}</span>
@@ -56,9 +56,9 @@
                                 @endif
                             </div>
                             <div class="kwp-col-12">
-                                {{ Form::label('duration', trans('layer.general.duration'), ['class' => 'control-label required']) }}
+                                {{ Form::label('duration', Lang::get('layer.general.duration', [], session()->get('wl-locale')), ['class' => 'control-label required']) }}
                                 <div class="kwp-custom-select">
-                                    {{ Form::select('duration', array_merge(['0' => trans('layer.general.duration_init')], $duration_arr), key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
+                                    {{ Form::select('duration', array_merge(['0' => Lang::get('layer.general.duration_init', [], session()->get('wl-locale'))], $duration_arr), key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
                                 </div>
                             </div>
                             <div class="clearfix"></div>
@@ -70,7 +70,7 @@
                 </div>
 
                 <div class="kwp-col-4 purpose">
-                    {{ Form::label('purpose', trans('layer.general.purpose'), ['class' => 'control-label required']) }}
+                    {{ Form::label('purpose', Lang::get('layer.general.purpose', [], session()->get('wl-locale')), ['class' => 'control-label required']) }}
                     <div class="kwp-custom-select">
                         {{ Form::select('purpose', $purpose_arr, key_exists('purpose', $request) ? $request['purpose'] : null, ['class' => 'form-control box-size']) }}
                     </div>
@@ -81,10 +81,10 @@
             <div class="kwp-row">
                 <div class="kwp-col-4 stars">
                     <div class="kwp-form-group">
-                        {{ Form::label('category', trans('layer.general.category'), ['class' => 'control-label required']) }}
-                        {{ Form::number('category', key_exists('category', $request) ? $request['category'] : 3, ['class' => 'form-control box-size hidden', 'placeholder' => trans('layer.placeholder.category')]) }}
+                        {{ Form::label('category', Lang::get('layer.general.category'), ['class' => 'control-label required']) }}
+                        {{ Form::number('category', key_exists('category', $request) ? $request['category'] : 3, ['class' => 'form-control box-size hidden', 'placeholder' => Lang::get('layer.placeholder.category', [], session()->get('wl-locale'))]) }}
 
-                        <span class="text">{{ trans('layer.sun.from') }}</span>
+                        <span class="text">{{ Lang::get('layer.sun.from', [], session()->get('wl-locale')) }}</span>
                         <div class="kwp-star-input">
                             <span class="kwp-star" data-val="1"></span>
                             <span class="kwp-star" data-val="2"></span>
@@ -98,23 +98,23 @@
                 <div class="kwp-col-4 grey events-interested">
                     <div class="checkbox-wrapper">
                         {{ Form::checkbox('events_interested', null, key_exists('events_interested', $request) ? 'true' : null, ['class' => 'form-control box-size']) }}
-                        <span class="checkbox-text">{{ trans('layer.general.events_interested') }}</span>
+                        <span class="checkbox-text">{{ Lang::get('layer.general.events_interested', [], session()->get('wl-locale')) }}</span>
                     </div>
                 </div>
             </div>
 
             <div class="kwp-row">
                 <div class="kwp-col-12 description">
-                    {{ Form::label('description', trans('layer.general.description'), ['class' => 'control-label required']) }}
-                    {{ Form::textarea('description', key_exists('description', $request) ? $request['description'] : null,['class' => 'form-control', 'placeholder' => trans('layer.placeholder.description')]) }}
+                    {{ Form::label('description', Lang::get('layer.general.description', [], session()->get('wl-locale')), ['class' => 'control-label required']) }}
+                    {{ Form::textarea('description', key_exists('description', $request) ? $request['description'] : null,['class' => 'form-control', 'placeholder' => Lang::get('layer.placeholder.description', [], session()->get('wl-locale'))]) }}
                     <i class="fal fa-pencil"></i>
                 </div>
             </div>
 
             <div class="kwp-row">
                 <div class="kwp-col-4 email-col">
-                    {{ Form::label('email', trans('layer.general.email'), ['class' => 'control-label']) }}
-                    {{ Form::text('email', key_exists('email', $request) ? $request['email'] : null, ['class' => 'form-control box-size', 'placeholder' => trans('layer.placeholder.email'), 'required' => 'required']) }}
+                    {{ Form::label('email', Lang::get('layer.general.email', [], session()->get('wl-locale')), ['class' => 'control-label']) }}
+                    {{ Form::text('email', key_exists('email', $request) ? $request['email'] : null, ['class' => 'form-control box-size', 'placeholder' => Lang::get('layer.placeholder.email', [], session()->get('wl-locale')), 'required' => 'required']) }}
                     <i class="fal fa-envelope"></i>
                     <div class="kwp-form-email-hint"></div>
                     @if ($errors->any() && $errors->get('email'))
@@ -128,7 +128,7 @@
                 </div>
 
                 <div class="kwp-col-4 white-col submit-col">
-                    <button id="submit-button" type="submit" class="submit-button primary-btn">{{ trans('layer.submit') }}</button>
+                    <button id="submit-button" type="submit" class="submit-button primary-btn">{{ Lang::get('layer.submit', [], session()->get('wl-locale')) }}</button>
                 </div>
             </div>
         </div>
@@ -153,7 +153,7 @@
                         @endif
 
                         {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
-                        <p>{!! trans('popup.terms_tnb') !!}</p>
+                        <p>{!! Lang::get('layer.terms_tnb', [], session()->get('wl-locale')) !!}</p>
                     </div>
                 </div>
             </div>

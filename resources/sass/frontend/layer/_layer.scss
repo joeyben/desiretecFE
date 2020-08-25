@@ -867,9 +867,7 @@ p.kwp-info {
 	  position: static;
 	  display: block;
 	  margin-top: 5px;
-      margin-left: 5px;
-      background: none;
-      border: none;
+	  margin-left: 5px;
 	  &:after{
 		content: "";
 		display: inline-block;
@@ -1415,7 +1413,7 @@ select option:disabled {
     }
   }
 }
-.td-tab-content {
+.dt-tab-content {
   display: none;
   animation: fadeEffect 1s;
   &.current {

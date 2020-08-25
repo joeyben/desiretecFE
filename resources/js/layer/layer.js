@@ -865,21 +865,28 @@ jQuery(function($){
         });
 
         dt.initLayerVersion = function() {
-            var matchDomains = false;
-            var currentLocation = window.location.href;
+            var currentLocation = window.location.href.replace('https://', '').replace('http://', '');
+            var notMatchingIndexes = [];
 
-            $.each(layers, function(index, layer) {
-                if(layer.layer_url.replace(/\/$/, '') == currentLocation.replace(/\/$/, '')) {
-                    dt.PopupManager.version = layer.layer.path;
-                    matchDomains = true;
-                    return false;
+            $.each(layers, function(layerIndex, layer) {
+                var isHostsMatch = false;
+
+                $.each(layer.hosts, function(hostIndex, host) {
+                    if (host.replace(/\/$/, '') === currentLocation.replace(/\/$/, '')) {
+                        isHostsMatch = true;
+                    }
+                });
+
+                if (!isHostsMatch) {
+                    notMatchingIndexes.push(layerIndex);
                 }
             });
 
-            if(!matchDomains) {
-                dt.PopupManager.version = layers[0].layer.path;
+            while(notMatchingIndexes.length) {
+                layers.splice(notMatchingIndexes.pop(), 1);
             }
 
+            dt.PopupManager.version = layers[0].layer.path;
             dt.PopupManager.show();
         };
 
@@ -1228,7 +1235,7 @@ jQuery(function($){
                         $("#budget").val("");
                     }else{
                         var currency = wl_name !== 'Lastminute' ? ' €' : ' CHF';
-                        $(".rangeslider-wrapper .text").text("bis "+value+currency);
+                        $(".rangeslider-wrapper .text").text(dt.translation.price_until+" "+value+currency);
                         $("#budget").val(""+value);
                     }
                     if(!$(".dt-modal .haserrors").length){
@@ -1274,7 +1281,7 @@ jQuery(function($){
                 } else {
                     var sonnen = cnt === 1 ? stern_txt : sterne_txt;
                 }
-                $('.kwp-star-input').parents('.kwp-form-group').find('.text').text("ab "+cnt+" "+sonnen);
+                $('.kwp-star-input').parents('.kwp-form-group').find('.text').text(dt.translation.stars_from+" "+cnt+" "+sonnen);
             }
 
             function highlight(cnt) {
@@ -1310,7 +1317,7 @@ jQuery(function($){
                 }).click(function () {
                     setValue(parseInt($(this).attr('data-val')));
                     var sonnen = parseInt($(this).attr('data-val')) === 1 ? sonne_txt : sonnen_txt;
-                    $('.kwp-star-input').parents('.kwp-form-group').find('.text').text("ab "+$(this).attr('data-val')+" "+sonnen);
+                    $('.kwp-star-input').parents('.kwp-form-group').find('.text').text(dt.translation.stars_from+" "+$(this).attr('data-val')+" "+sonnen);
                 });
             } else {
                 $('.kwp-star-input .fa-star').hover(function () {
@@ -1318,7 +1325,7 @@ jQuery(function($){
                 }).click(function () {
                     setValue(parseInt($(this).attr('data-val')));
                     var sonnen = parseInt($(this).attr('data-val')) === 1 ? stern_txt : sterne_txt;
-                    $('.kwp-star-input').parents('.kwp-form-group').find('.text').text("ab "+$(this).attr('data-val')+" "+sonnen);
+                    $('.kwp-star-input').parents('.kwp-form-group').find('.text').text(dt.translation.stars_from+" "+$(this).attr('data-val')+" "+sonnen);
                 });
             }
 
