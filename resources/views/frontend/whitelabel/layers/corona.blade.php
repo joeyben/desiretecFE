@@ -261,8 +261,7 @@
                         @endif
 
                         {{ Form::checkbox('terms', null, key_exists('terms', $request) && $request['terms']  ? 'true' : null,['class' => $terms_class, 'required' => 'required']) }}
-
-                        <p>{!! Lang::get('popup.terms_tnb', [], session()->get('wl-locale')) !!}</p>
+                        <p>{!! Lang::get('layer.terms_tnb', [], session()->get('wl-locale')) !!}</p>
                     </div>
                 </div>
             </div>
