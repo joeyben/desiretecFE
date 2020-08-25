@@ -226,7 +226,7 @@ class FrontendController extends Controller
         $data['whitelabel_id'] = $whitelabel['id'];
         $data['title'] = "&nbsp;";
 
-        $data['variant_id'] = $this->apiService->getVariantId($host);
+        $data['variant_id'] = $this->apiService->getVariantId(str_replace('/','_', $host));
 
         if(isset($data['events_interested'])) {
             $data['events_interested'] = $data['events_interested'] === 'on' ? 1 : 0;
