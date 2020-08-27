@@ -11,7 +11,7 @@
 
     jQuery(function($){
         $(document).ready(function () {
-            dt.initLayerVersion();
+            dt.initLayers();
         });
     });
 </script>
