@@ -80,7 +80,7 @@
         <div class="modal-footer">
             <input type="hidden" name="wish_id" value="{{ $wish->wish_id }}" />
             <input type="hidden" name="period" value="no data" />
-            <input type="submit" class="primary-btn" value="Nachricht absenden" />
+            <input type="submit" class="primary-btn" value="@lang('modals.callback.submit')" />
         </div>
         {{ Form::close() }}
     </div>
