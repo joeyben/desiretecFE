@@ -102,17 +102,13 @@ class FrontendController extends Controller
 
     private $purpose_arr;
 
+    private $cabinArr;
+
     protected $apiService;
 
     public function __construct(ApiService $apiService)
     {
         $this->apiService = $apiService;
-        $this->initDurationArr();
-        $this->initCatering();
-        $this->initPurposeArr();
-        $this->initChildrenArr();
-        $this->initPetsArr();
-        $this->initClassArr();
     }
 
     /**
@@ -138,6 +134,7 @@ class FrontendController extends Controller
         $this->initChildrenArr();
         $this->initPetsArr();
         $this->initClassArr();
+        $this->initCabinArr();
         $host = $this->getHost($request, request()->headers->get('referer'));
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost(str_replace('/','_', $host))), true);
         $layerVersion = $request->query->has('version') ? $request->input('version') : "";
@@ -171,7 +168,8 @@ class FrontendController extends Controller
             'request'      => $request->all(),
             'whitelabel'   => $whitelabel,
             'translation'  => $translation,
-            'class_arr'    => $this->classArr
+            'class_arr'    => $this->classArr,
+            'cabin_arr'    => $this->cabinArr
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);
@@ -203,9 +201,13 @@ class FrontendController extends Controller
 
     public function store(StoreWishesRequest $request)
     {
-        $this->initCatering();
         $this->initDurationArr();
+        $this->initCatering();
         $this->initPurposeArr();
+        $this->initChildrenArr();
+        $this->initPetsArr();
+        $this->initClassArr();
+        $this->initCabinArr();
         $host = $this->getHost($request, request()->headers->get('referer'));
         $layerVersion = $request->query->has('version') ? $request->input('version') : "";
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost(str_replace('/','_', $host))), true);
@@ -241,7 +243,8 @@ class FrontendController extends Controller
                 'errors'       => $request->errors(),
                 'whitelabel'   => $whitelabel,
                 'translation'  => $translation,
-                'class_arr'    => $this->classArr
+                'class_arr'    => $this->classArr,
+                'cabin_arr'    => $this->cabinArr
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);
@@ -418,6 +421,16 @@ class FrontendController extends Controller
             'Premium Economy' => Lang::get('layer.general.flight.premium', [], session()->get('wl-locale')),
             'Business' => Lang::get('layer.general.flight.business', [], session()->get('wl-locale')),
             'First' => Lang::get('layer.general.flight.first', [], session()->get('wl-locale')),
+        ];
+    }
+
+    public function initCabinArr(){
+        $this->cabinArr = [
+            'Innenkabine' => Lang::get('layer.general.cruise.in_cabin', [], session()->get('wl-locale')),
+            'Außenkabine' => Lang::get('layer.general.cruise.out_cabin', [], session()->get('wl-locale')),
+            'Balkonkabine' => Lang::get('layer.general.cruise.balcony_cabin', [], session()->get('wl-locale')),
+            'Suite' => Lang::get('layer.general.cruise.suite', [], session()->get('wl-locale')),
+            'beliebig' => Lang::get('layer.general.cruise.any', [], session()->get('wl-locale')),
         ];
     }
 }
