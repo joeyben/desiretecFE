@@ -135,7 +135,7 @@ class FrontendController extends Controller
         $this->initPetsArr();
         $this->initClassArr();
         $this->initCabinArr();
-        $host = $this->getHost($request, request()->headers->get('referer'));
+        $host = $this->getHost($request, request()->headers->get('origin'));
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost(str_replace('/','_', $host))), true);
         $layerVersion = $request->query->has('version') ? $request->input('version') : "";
         $layer = $request->query->has('version') ? 'layers.' . $request->input('version') : 'layer';
@@ -184,7 +184,7 @@ class FrontendController extends Controller
      */
     public function getWhitelabelData(Request $request)
     {
-        $host = $this->getHost($request, request()->headers->get('referer'));
+        $host = $this->getHost($request, request()->headers->get('origin'));
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost(str_replace('/','_', $host))), true);
         $data = [
             'color' => $whitelabel['color']
@@ -208,7 +208,7 @@ class FrontendController extends Controller
         $this->initPetsArr();
         $this->initClassArr();
         $this->initCabinArr();
-        $host = $this->getHost($request, request()->headers->get('referer'));
+        $host = $this->getHost($request, request()->headers->get('origin'));
         $layerVersion = $request->query->has('version') ? $request->input('version') : "";
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost(str_replace('/','_', $host))), true);
 
