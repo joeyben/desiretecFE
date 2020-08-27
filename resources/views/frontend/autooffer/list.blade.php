@@ -220,6 +220,9 @@
                                 <div class="highlights">
                                     <h4 class="dark-grey-2">{{ trans('autooffers.offers.highlights') }}:</h4>
                                     <ul>
+                                        @php
+                                            $keywordsCount = count($offer['data']['hotelOffer']['hotel']['keywordHighlights']) > 3 ? 3 : count($offer['data']['hotelOffer']['hotel']['keywordHighlights']);
+                                        @endphp
                                         @for ($i = 0; $i < 3; $i++)
                                         <li>
                                             <i class="fal fa-check"></i>
