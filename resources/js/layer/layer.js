@@ -863,26 +863,28 @@ jQuery(function($){
             $(this).trigger(jQuery.Event('keypress', {which: 13}));
         });
 
-        dt.initLayerVersion = function() {
+        dt.initLayers = function() {
             var currentLocation = window.location.href.replace('https://', '').replace('http://', '');
-            var notMatchingIndexes = [];
+            var notMatchedIndexes = [];
 
             $.each(layers, function(layerIndex, layer) {
-                var isHostsMatch = false;
+                var matchLayerHosts = false;
 
                 $.each(layer.hosts, function(hostIndex, host) {
                     if (host.replace(/\/$/, '') === currentLocation.replace(/\/$/, '')) {
-                        isHostsMatch = true;
+                        matchLayerHosts = true;
                     }
                 });
 
-                if (!isHostsMatch) {
-                    notMatchingIndexes.push(layerIndex);
+                if (!matchLayerHosts) {
+                    notMatchedIndexes.push(layerIndex);
                 }
             });
 
-            while(notMatchingIndexes.length) {
-                layers.splice(notMatchingIndexes.pop(), 1);
+            if(layers.length !== notMatchedIndexes.length) {
+                while(notMatchedIndexes.length) {
+                    layers.splice(notMatchedIndexes.pop(), 1);
+                }
             }
 
             dt.PopupManager.version = layers[0].layer.path;
