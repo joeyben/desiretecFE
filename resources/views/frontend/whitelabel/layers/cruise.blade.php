@@ -1,14 +1,7 @@
 @php
     $layerName = 'cruise';
 
-    $class_arr = [
-        'Innenkabine' => 'Innenkabine',
-        'Außenkabine' => 'Außenkabine',
-        'Balkonkabine' => 'Balkonkabine',
-        'Suite' => 'Junior-Suite',
-        'Suite' => 'Suite',
-        'beliebig' => 'beliebig',
-    ];
+
 @endphp
 <?php  ?>
 
@@ -154,7 +147,7 @@
                 <div class="kwp-col-4 class">
                     {{ Form::label('klasse', Lang::get('layer.cruise.class', [], session()->get('wl-locale')), ['class' => 'control-label required']) }}
                     <div class="kwp-custom-select">
-                        {{ Form::select('class', $class_arr, key_exists('class', $request) ? $request['class'] : null, ['class' => 'form-control box-size']) }}
+                        {{ Form::select('class', $cabin_arr, key_exists('class', $request) ? $request['class'] : null, ['class' => 'form-control box-size']) }}
                     </div>
                     <i class="far fa-chevron-down"></i>
                 </div>
