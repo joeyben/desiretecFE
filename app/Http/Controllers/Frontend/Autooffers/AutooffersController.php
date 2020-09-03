@@ -99,6 +99,8 @@ class AutooffersController extends Controller implements AutooffersControllerInt
                 return  redirect('offer/list/' . $id);
             }elseif($whitelabel["tt"]){
                 return  redirect('offer/ttlist/' . $id);
+            }elseif($whitelabel["peakwork"]){
+                return  redirect('offer/listpw/' . $id);
             }
             return redirect()->back()->withErrors(['message' => 'Something went wrong!']);
         } catch (Exception $e) {
