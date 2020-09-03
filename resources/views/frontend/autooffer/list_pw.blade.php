@@ -235,7 +235,7 @@
                                 <div class="price">
                                     <div class="info-icons">
                                     </div>
-                                    <h3>{{ number_format($offer['data']['price']['value'], 0, ',', '.') }} <span>CHF</span> p.P.</h3>
+                                    <h3>{{ number_format($offer['data']['price']['value'], 0, ',', '.') }} <span>{{ trans('autooffer.list.currency') }}</span> p.P.</h3>
                                     <a class="btn btn-primary" target="_blank" href="https://badeferien.lastminute.ch/offer?depap={{ $offer['data']['flight']['in']['departure']['airport'] }}&ibe=package&rid=&lang=de-CH&ddate={{ $offer['data']['flight']['in']['departure']['date'] }}&rdate={{ $offer['data']['flight']['out']['arrival']['date'] }}&adult={{ $wish->adults }}&dur={{ $offer['data']['duration'] }}&price=0,{{ $offer['personPrice'] }}&board={{ $wish->catering }}&aid={{ $offer['data']['hotel_id'] }}">
                                         <i class="fas fa-chevron-right"></i>
                                     </a>
