@@ -116,7 +116,7 @@
                                     <div class="icon-background">
                                         <i class="fas fa-credit-card" aria-hidden="true"></i>
                                     </div>
-                                    <h4>{{ $wish->budget }}CHF</h4>
+                                    <h4>{{ $wish->budget }}{{ trans('autooffer.list.currency') }}</h4>
                                 </li>
                                 <li>
                                     <div class="icon-background">
@@ -213,7 +213,7 @@
                                 </div>
 
                                 <div class="recommandations">
-                                    <div class="average">{{ $offer['data']['hotel_ratings']['count'] }}</div>
+                                    <div class="average">{{ $offer['data']['hotel_ratings']['percentage'] }}</div>
                                     <div class="text">
                                         <h4 class="dark-grey-2">Empfehlenswert</h4>
                                         <h4>{{ $offer['data']['hotel_ratings']['count'] }} Bewertungen</h4>
