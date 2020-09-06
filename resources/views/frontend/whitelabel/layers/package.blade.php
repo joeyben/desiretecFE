@@ -20,7 +20,7 @@
 
     <div class="kwp-middle"></div>
 
-    <div class="kwp-minimal {{ $whitelabel['is_pure_autooffers'] ? 'is_pure_autooffers' : 'no-autooffers' }} {{ $whitelabel['name'] !== 'Lastminute' ? '' : 'kwp-minimal-lastminute' }}">
+    <div class="kwp-minimal {{ $whitelabel['name'] !== 'Lastminute' ? '' : 'kwp-minimal-lastminute' }}">
         <div class="kwp-content kwp-with-expansion">
             <div class="kwp-row">
                 <div class="kwp-col-4 destination">
@@ -263,7 +263,7 @@
                     <i class="far fa-chevron-down"></i>
                 </div>
             </div>
-
+            @if (!$whitelabel['is_pure_autooffers'])
             <div class="kwp-row">
                 <div class="kwp-col-12 description">
                     {{ Form::label('description', Lang::get('layer.general.description', [], session()->get('wl-locale')), ['class' => 'control-label required']) }}
@@ -271,7 +271,7 @@
                     <i class="fal fa-pencil"></i>
                 </div>
             </div>
-
+            @endif
             <div class="kwp-row">
                 <div class="kwp-col-4 email-col">
                     {{ Form::label('email', Lang::get('layer.general.email', [], session()->get('wl-locale')), ['class' => 'control-label']) }}
@@ -337,7 +337,6 @@
 
             var is_pure_autooffers = @json($whitelabel['is_pure_autooffers']);
 
-            console.log(is_pure_autooffers);
             dt.translateWordings(translation);
 
             dt.showTabs(layers);
