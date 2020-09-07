@@ -161,9 +161,7 @@
                     <ul class="offers">
 
                         @foreach($offers as $key => $offer)
-                            <?php
-                            var_dump($offer['data']);
-                            ?>
+
                             @php
                                 $hotelData = [
                                     'title' => $offer['hotel_data']['data']['Hotelname'],
