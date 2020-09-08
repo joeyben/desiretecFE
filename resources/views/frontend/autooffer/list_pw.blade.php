@@ -129,7 +129,7 @@
                                     <div class="icon-background">
                                         <i class="fa fa-clock" aria-hidden="true"></i>
                                     </div>
-                                    <h4>{{ $wish->duration }}</h4>
+                                    <h4>{{ transformDuration($wish->duration) }}</h4>
                                 </li>
                                 <li>
                                     <div class="icon-background">
@@ -259,18 +259,7 @@
 @endsection
 
 @section('footer')
-    <div class="footer">
-        <div class="container">
-            <div class="col-md-12">
-                <ul class="list-inline" id="copyright-year">
-                    @foreach (footers_by_whitelabel() as $footer)
-                        <li class="list-inline-item">
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
-        </div>
-    </div>
+    @include('frontend.whitelabel.footer')
 @endsection
 
 @section('before-scripts')
