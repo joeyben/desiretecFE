@@ -6,6 +6,8 @@
         unset($catering_arr[4]);
         unset($catering_arr[5]);
     }
+
+    {{ Form::hidden('variant_id', $request['variant_id']) }}
 @endphp
 
 <div id="{{ $layerName }}" class="td-tab-content">

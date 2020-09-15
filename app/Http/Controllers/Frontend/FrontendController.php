@@ -175,7 +175,6 @@ class FrontendController extends Controller
         return response()->json(['success' => true, 'html'=>$html]);
     }
 
-
     /**
      * Return whitelabel info as json.
      *
@@ -253,8 +252,6 @@ class FrontendController extends Controller
         $data = $request->all();
         $data['whitelabel_id'] = $whitelabel['id'];
         $data['title'] = "&nbsp;";
-
-        $data['variant_id'] = $this->apiService->getVariantId(str_replace('/','_', $host));
 
         if(isset($data['events_interested'])) {
             $data['events_interested'] = $data['events_interested'] === 'on' ? 1 : 0;
