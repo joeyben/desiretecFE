@@ -66,6 +66,30 @@ class AutooffersController extends Controller implements AutooffersControllerInt
         }
     }
 
+    public function listbf(string $subdomain, int $wishId)
+    {
+        try {
+
+            $offersResponse = $this->apiService->get('/offer/listbf/' . $wishId);
+
+            $offers = $offersResponse->formatResponse('array')['data'];
+
+            $wishResponse = $this->apiService->get('/wishes' . '/' . $wishId);
+
+            $wish = $wishResponse->formatResponse('object')->data;
+
+            return view('frontend.autooffer.list_bf')->with([
+                'body_class'    => $this::BODY_CLASS_PREFIX . '_list',
+                'wish'          => $wish,
+                'offers'        => $offers,
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error($e);
+            return redirect()->back()->withErrors(['message' => $e->getMessage()]);
+        }
+    }
+
     public function listTt(string $subdomain, int $wishId)
     {
 
@@ -101,6 +125,8 @@ class AutooffersController extends Controller implements AutooffersControllerInt
                 return  redirect('offer/ttlist/' . $id);
             }elseif($whitelabel["peakwork"]){
                 return  redirect('offer/listpw/' . $id);
+            }elseif($whitelabel["bestfewo"]){
+                return  redirect('offer/listbf/' . $id);
             }
             return redirect()->back()->withErrors(['message' => 'Something went wrong!']);
         } catch (Exception $e) {
