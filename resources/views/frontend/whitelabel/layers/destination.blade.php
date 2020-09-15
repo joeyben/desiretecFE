@@ -12,6 +12,7 @@
 
     {{ Form::open() }}
 
+    {{ Form::hidden('variant_id', $request['variant_id']) }}
     {{ Form::hidden('airport', '-') }}
     {{ Form::hidden('destination', '-') }}
     {{ Form::hidden('budget', 0) }}
