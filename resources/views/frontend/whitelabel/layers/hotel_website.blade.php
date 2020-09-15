@@ -12,11 +12,11 @@
 
     {{ Form::open() }}
 
-    {{ Form::hidden('variant_id', $request['variant_id']) }}
     {{ Form::hidden('airport', '-') }}
     {{ Form::hidden('destination', '-') }}
     {{ Form::hidden('category', 0) }}
     {{ Form::hidden('budget', 0) }}
+    {{ Form::hidden('variant_id', 0) }}
 
     <div class="kwp-middle"></div>
 
@@ -273,6 +273,14 @@
             var layerName = @json($layerName);
 
             var layer = layers.find(l => l.layer.path === layerName);
+
+            console.log(layer.variant_id);
+            console.log(layer.variant_id === null);
+            console.log(layer.variant_id !== null);
+            console.log((layer.variant_id));
+            var layerVariantId = layer.variant_id !== null ? (layer.variant_id).toString() : '0';
+            console.log((layer.variant_id).toString());
+            $("[name='variant_id']").val(layerVariantId);
 
             var is_pure_autooffers = @json($whitelabel['is_pure_autooffers']);
 

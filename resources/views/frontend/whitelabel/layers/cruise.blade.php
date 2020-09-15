@@ -15,9 +15,9 @@
 
     {{ Form::open() }}
 
-    {{ Form::hidden('variant_id', $request['variant_id']) }}
     {{ Form::hidden('airport', '-') }}
     {{ Form::hidden('budget', 0) }}
+    {{ Form::hidden('variant_id', 0) }}
 
     <div class="kwp-middle"></div>
 
