@@ -295,7 +295,7 @@
 
             var layer = layers.find(l => l.layer.path === layerName);
 
-            var is_pure_autooffers = @json($whitelabel['is_pure_autooffers']);
+            var is_pure_autooffers = false;
 
             dt.translateWordings(translation);
 

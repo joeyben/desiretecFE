@@ -46,6 +46,7 @@ Route::group(['namespace' => 'Wishes', 'as' => 'wish.'], function ($subdomain) {
 Route::group(['namespace' => 'Autooffers', 'as' => 'autooffer.'], function ($subdomain) {
     Route::get('offer/list/{id}/{token}', 'AutooffersController@autooferToken')->name('list.token');
     Route::get('offer/listpw/{id}/{token}', 'AutooffersController@autooferToken')->name('list.token');
+    Route::get('offer/listbf/{id}/{token}', 'AutooffersController@autooferToken')->name('list.token');
 });
 
 /*
@@ -113,6 +114,7 @@ Route::group(['middleware' => 'auth'], function ($subdomain) {
     Route::group(['namespace' => 'Autooffers', 'as' => 'autooffer.'], function ($subdomain) {
         Route::get('offer/list/{wishId}', 'AutooffersController@list')->name('list');
         Route::get('offer/listpw/{wishId}', 'AutooffersController@listpw')->name('listpw');
+        Route::get('offer/listbf/{wishId}', 'AutooffersController@listbf')->name('listbf');
         Route::get('offer/ttlist/{wishId}', 'AutooffersController@listTt')->name('listTt');
     });
 });
