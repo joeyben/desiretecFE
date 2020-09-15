@@ -163,12 +163,15 @@
                         @foreach($offers as $key => $offer)
 
                             @php
+                                $data = $offer['data'];
+                                //dd($data);
+                                $category = isset($data['ratings']) ? intval($data['ratings']['@attributes']['max_score'][0]) : 0;
                                 $hotelData = [
-                                    'title' => $offer['hotel_data']['data']['Hotelname'],
-                                    'stars' => key_exists('Hotelkategorie', $offer['hotel_data']['data']) ? intval($offer['hotel_data']['data']['Hotelkategorie']) : 0 ,
-                                    'text' => $offer['data']['boardType'],
-                                    'longitude' => $offer['data']['hotel_geo']['longitude'],
-                                    'latitude' => $offer['data']['hotel_geo']['latitude']
+                                    'title' => html_entity_decode($data['title']['text']),
+                                    'stars' => $category,
+                                    'text' => '',
+                                    'longitude' => $data['location']['geo']['longitude'],
+                                    'latitude' => $data['location']['geo']['latitude']
                                 ];
                                 $locations[] = $hotelData;
                             @endphp
@@ -176,69 +179,77 @@
                                 <span class="wish_offer_id">Angebotsnummer: {{ $wish->id }}/{{ $count + 1 }}</span>
 
                                 <div class="left-side">
-                                @if ($count === 1)
-                                    <div class="label">Unser Tipp</div>
-                                @endif
-                                <div class="slick-slider">
-                                    @if (key_exists('Bildfile', $offer['hotel_data']['data']) and is_array($offer['hotel_data']['data']['Bildfile']))
-                                        @foreach($offer['hotel_data']['data']['Bildfile'] as $image)
+                                    @if ($count === 1)
+                                        <div class="label">Unser Tipp</div>
+                                    @endif
+                                    <div class="slick-slider">
+                                        @foreach($data['images']['image'] as $image)
                                             <div class="slider-item" style="background-image: url({!! str_replace('180', '600', $image) !!})"></div>
                                         @endforeach
-                                    @elseif (key_exists('Bildfile', $offer['hotel_data']['data']))
-                                        <div class="slider-item" style="background-image: url({!! str_replace('180', '600', $offer['hotel_data']['data']['Bildfile']) !!})"></div>
-                                    @endif
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="right-side">
+                                <div class="right-side">
                                 <div class="title">
-                                    <h3 class="ellipsised">{{ $offer['hotel_data']['data']['Hotelname'] }}</h3>
+                                    <h3 class="ellipsised">{{ htmlspecialchars(html_entity_decode($data['title']['text'])) }}</h3>
                                     <span class="mousehover"></span>
-                                    <div class="tooltip">{{ $offer['hotel_data']['data']['Hotelname'] }}</div>
+                                    <div class="tooltip">{{ htmlspecialchars(html_entity_decode($data['title']['text'])) }}</div>
 
                                     <div class="rating">
-                                        @if (key_exists('Hotelkategorie', $offer['hotel_data']['data']))
-                                            @for ($i = 0; $i < intval($offer['hotel_data']['data']['Hotelkategorie']); $i++)
-                                                <i class="fas fa-heart"></i>
-                                            @endfor
-                                        @endif
+                                        @for ($i = 0; $i < $category; $i++)
+                                            <i class="fas fa-heart"></i>
+                                        @endfor
                                     </div>
                                 </div>
 
                                 <div class="location">
                                     <i class="fas fa-map-marker-alt"></i>
-                                    <h5>{{ $offer['hotel_data']['data']['Stadtname'] }}, {{ $offer['hotel_data']['data']['Landname'] }}</h5>
+                                    <h5>{{ $data['location']['city'] }}, {{ $data['location']['country'] }}</h5>
                                 </div>
-
+                                @isset($data['ratings'])
                                 <div class="fulfill">
-                                    <progress value="{{ $offer['data']['hotel_ratings']['percentage'] }}" max="100"></progress>
-                                    <h4> <span>{{ $offer['data']['hotel_ratings']['percentage'] }}%</span> Weiterempfehlung</h4>
+                                    <progress value="{{ $data['ratings']['@attributes']['max_score'][0] }}" max="5"></progress>
+                                    <h4> <span>{{ $data['ratings']['@attributes']['max_score'] }}%</span> Weiterempfehlung</h4>
                                 </div>
 
                                 <div class="recommandations">
-                                    <div class="average">{{ $offer['data']['hotel_ratings']['percentage'] }}</div>
+                                    <div class="average">{{ $data['ratings']['@attributes']['max_score'] }}</div>
                                     <div class="text">
                                         <h4 class="dark-grey-2">Empfehlenswert</h4>
-                                        <h4>{{ $offer['data']['hotel_ratings']['count'] }} Bewertungen</h4>
+                                        <h4>{{ $data['ratings']['@attributes']['max_score'] }} Bewertungen</h4>
                                     </div>
                                 </div>
-
+                                @endisset
                                 <div class="highlights">
                                     <h4 class="dark-grey-2">Highlights der Unterkunft:</h4>
                                     <ul>
+                                        @php
+                                            $amenitiesCount =  count($data['amenities']['amenity']) >= 3 ? 3 : count($data['amenities']['amenity']);
+                                        @endphp
+
+                                        @for ($i = 0; $i < $amenitiesCount; $i++)
+                                            @isset($data['amenities']['amenity'][$i])
+                                            <li>
+                                                <i class="fal fa-check"></i>
+                                                <h4 class="dark-grey">{{ $data['amenities']['amenity'][$i] }}</h4>
+                                            </li>
+                                            @endisset
+                                        @endfor
 
                                     </ul>
 
                                     <div class="travel-info">
-                                        <h4 data-toggle="tooltip" data-placement="bottom" title="{{ $offer['data']['offerFeatures'] }}">{{ $offer['data']['duration'] }} {{ trans('autooffers.offer.nights') }}, {{ \Illuminate\Support\Str::limit($offer['data']['offerFeatures'], 20, "...") }}</h4>
-                                        <h4>{{ $offer['data']['boardType'] }}</h4>
+                                        <h4>{{ $data['@attributes']['type'] }}</h4>
                                     </div>
                                 </div>
 
                                 <div class="price">
                                     <div class="info-icons">
                                     </div>
-                                    <h3>{{ number_format($offer['data']['price']['value'], 0, ',', '.') }} <span>{{ trans('autooffer.list.currency') }}</span> p.P.</h3>
-                                    <a class="btn btn-primary" target="_blank" href="https://badeferien.lastminute.ch/offer?depap={{ $offer['data']['flight']['in']['departure']['airport'] }}&ibe=package&rid=&lang=de-CH&ddate={{ $offer['data']['flight']['in']['departure']['date'] }}&rdate={{ $offer['data']['flight']['out']['arrival']['date'] }}&adult={{ $wish->adults }}&dur={{ $offer['data']['duration'] }}&price=0,{{ $offer['personPrice'] }}&board={{ $wish->catering }}&aid={{ $offer['data']['hotel_id'] }}">
+                                    @php
+                                        $price =  isset($data['prices']['range'][0])  ? $data['prices']['range'][0]['price'] : $data['prices']['range']['price'];
+                                    @endphp
+                                    <h3>{{ number_format($price, 0, ',', '.') }} <span>{{ trans('autooffer.list.currency') }}</span> p.P.</h3>
+                                    <a class="btn btn-primary" target="_blank" href="#">
                                         <i class="fas fa-chevron-right"></i>
                                     </a>
                                 </div>
