@@ -274,12 +274,7 @@
 
             var layer = layers.find(l => l.layer.path === layerName);
 
-            console.log(layer.variant_id);
-            console.log(layer.variant_id === null);
-            console.log(layer.variant_id !== null);
-            console.log((layer.variant_id));
             var layerVariantId = layer.variant_id !== null ? (layer.variant_id).toString() : '0';
-            console.log((layer.variant_id).toString());
             $("[name='variant_id']").val(layerVariantId);
 
             var is_pure_autooffers = @json($whitelabel['is_pure_autooffers']);
