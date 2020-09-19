@@ -954,8 +954,6 @@ jQuery(function($){
             if(domain.includes('schlosshotel')) {
                 $('.kwp-close-btn').css({'background': '#fff'});
                 $('.kwp-close-btn span').css({'background': '#8b2939', 'height': '1.5px', 'top': '7px'});
-            } else {
-                $('.kwp-close-btn span').css({'background': '#fff', 'height': '1.5px'});
             }
 
             if (layer.visual !== undefined) {
