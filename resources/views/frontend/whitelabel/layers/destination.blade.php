@@ -80,20 +80,12 @@
             </div>
 
             <div class="kwp-row">
-                <div class="kwp-col-4 stars">
-                    <div class="kwp-form-group">
-                        {{ Form::label('category', Lang::get('layer.general.category'), ['class' => 'control-label required']) }}
-                        {{ Form::number('category', key_exists('category', $request) ? $request['category'] : 3, ['class' => 'form-control box-size hidden', 'placeholder' => Lang::get('layer.placeholder.category', [], session()->get('wl-locale'))]) }}
-
-                        <span class="text">{{ Lang::get('layer.sun.from', [], session()->get('wl-locale')) }}</span>
-                        <div class="kwp-star-input">
-                            <span class="kwp-star" data-val="1"></span>
-                            <span class="kwp-star" data-val="2"></span>
-                            <span class="kwp-star" data-val="3"></span>
-                            <span class="kwp-star" data-val="4"></span>
-                            <span class="kwp-star" data-val="5"></span>
-                        </div>
+                <div class="kwp-col-4 accommodation">
+                    {{ Form::label('accommodation', Lang::get('layer.general.accommodation', [], session()->get('wl-locale')), ['class' => 'control-label required']) }}
+                    <div class="kwp-custom-select">
+                        {{ Form::select('accommodation', $accommodation_arr, key_exists('accommodation', $request) ? $request['accommodation'] : null, ['class' => 'form-control box-size']) }}
                     </div>
+                    <i class="far fa-chevron-down"></i>
                 </div>
 
                 <div class="kwp-col-4 grey events-interested">

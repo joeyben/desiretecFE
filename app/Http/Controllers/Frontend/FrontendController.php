@@ -104,6 +104,8 @@ class FrontendController extends Controller
 
     private $cabinArr;
 
+    private $accommodationArr;
+
     protected $apiService;
 
     public function __construct(ApiService $apiService)
@@ -135,6 +137,7 @@ class FrontendController extends Controller
         $this->initPetsArr();
         $this->initClassArr();
         $this->initCabinArr();
+        $this->initAccommodationArr();
         $host = $this->getHost($request, request()->headers->get('referer'));
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost(str_replace('/','_', $host))), true);
         $layerVersion = $request->query->has('version') ? $request->input('version') : "";
@@ -169,7 +172,8 @@ class FrontendController extends Controller
             'whitelabel'   => $whitelabel,
             'translation'  => $translation,
             'class_arr'    => $this->classArr,
-            'cabin_arr'    => $this->cabinArr
+            'cabin_arr'    => $this->cabinArr,
+            'accommodation_arr'    => $this->accommodationArr,
         ])->render();
 
         return response()->json(['success' => true, 'html'=>$html]);
@@ -207,6 +211,7 @@ class FrontendController extends Controller
         $this->initPetsArr();
         $this->initClassArr();
         $this->initCabinArr();
+        $this->initAccommodationArr();
         $host = $this->getHost($request, request()->headers->get('referer'));
         $layerVersion = $request->query->has('version') ? $request->input('version') : "";
         $whitelabel = json_decode(json_encode($this->apiService->getWlFromHost(str_replace('/','_', $host))), true);
@@ -243,7 +248,8 @@ class FrontendController extends Controller
                 'whitelabel'   => $whitelabel,
                 'translation'  => $translation,
                 'class_arr'    => $this->classArr,
-                'cabin_arr'    => $this->cabinArr
+                'cabin_arr'    => $this->cabinArr,
+                'accommodation_arr'    => $this->accommodationArr,
             ])->render();
 
             return response()->json(['success' => true, 'html'=>$html]);
@@ -429,6 +435,17 @@ class FrontendController extends Controller
             'Balkonkabine' => Lang::get('layer.general.cruise.balcony_cabin', [], session()->get('wl-locale')),
             'Suite' => Lang::get('layer.general.cruise.suite', [], session()->get('wl-locale')),
             'beliebig' => Lang::get('layer.general.cruise.any', [], session()->get('wl-locale')),
+        ];
+    }
+
+    public function initAccommodationArr(){
+        $this->accommodationArr = [
+            Lang::get('layer.general.destination.holidayhome', [], session()->get('wl-locale')),
+            Lang::get('layer.general.destination.hotel', [], session()->get('wl-locale')),
+            Lang::get('layer.general.destination.bed_and_breakfast', [], session()->get('wl-locale')),
+            Lang::get('layer.general.destination.youth_hostel', [], session()->get('wl-locale')),
+            Lang::get('layer.general.destination.pension', [], session()->get('wl-locale')),
+            Lang::get('layer.general.destination.bed_bike', [], session()->get('wl-locale')),
         ];
     }
 }
