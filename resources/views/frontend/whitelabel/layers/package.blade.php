@@ -18,6 +18,8 @@
 
     {{ Form::open() }}
 
+    {{ Form::hidden('variant_id', 0) }}
+
     <div class="kwp-middle"></div>
 
     <div class="kwp-minimal {{ $whitelabel['name'] !== 'Lastminute' ? '' : 'kwp-minimal-lastminute' }}">

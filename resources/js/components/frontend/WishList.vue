@@ -48,6 +48,9 @@
                             <li v-if="wish.purpose">
                                 <i class="fal fa-suitcase"></i><span class="value">{{ wish.purpose }}</span>
                             </li>
+                            <li v-if="wish.accommodation">
+                                <i class="fal fa-map-marker-check"></i><span class="value">{{ wish.accommodation }}</span>
+                            </li>
                             <li v-if="wish.version === 'destination'">
                                 <i class="fal fa-theater-masks"></i><span class="value">{{  wish.events_interested === 0 ? translateWord('not_interested_events') : translateWord('is_interested_events') }}</span>
                             </li>

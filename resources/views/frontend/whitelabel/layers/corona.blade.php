@@ -17,6 +17,7 @@
 
     {{ Form::hidden('earliest_start', '-') }}
     {{ Form::hidden('latest_return', '-') }}
+    {{ Form::hidden('variant_id', 0) }}
 
     <div class="kwp-middle"></div>
 
