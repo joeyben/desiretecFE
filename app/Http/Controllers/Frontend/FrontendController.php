@@ -262,7 +262,6 @@ class FrontendController extends Controller
 
         try {
             $response = $this->apiService->get('/wish/store', $data);
-
             $external = (strpos($host, 'travelwishservice.com') === false &&
                 strpos($host, 'reise-wunsch.de') === false &&
                 strpos($host, 'wish-service.com') === false) ? '' : '_WL';
@@ -297,6 +296,8 @@ class FrontendController extends Controller
             $response = $this->apiService->get('/ttdestinations');
         elseif ($whitelabel['peakwork'])
             $response = $this->apiService->get('/pwdestinations');
+        elseif ($whitelabel['bestfewo'])
+            $response = $this->apiService->get('/bfdestinations');
         else
             $response = $this->apiService->get('/destinations');
 
