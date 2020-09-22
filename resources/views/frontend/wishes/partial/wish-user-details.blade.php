@@ -97,6 +97,12 @@
         </div>
     </div>
     @endif
+    @if($wish->wishDetails->accommodation)
+    <div class="col-md-3">
+        <i class="fal fa-map-marker-check"></i>
+        <input class="data-content" value="{{ $wish->wishDetails->accommodation }}">
+    </div>
+    @endif
     @if($wish->wishDetails->version === 'destination')
     <div class="col-md-3">
         <i class="fal fa-theater-masks"></i>
