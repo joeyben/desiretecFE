@@ -826,8 +826,7 @@ jQuery(function($){
                     minLength: 3,
                     highlight: true,
                     source: function(query) {
-                        $data = $.get(domain + '/destinations', {query: query});
-                        return '<span class="countries">{$data}</p>';
+                        return $.get(domain + '/destinations', {query: query});
                     }
                 }
             });
