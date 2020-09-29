@@ -221,7 +221,10 @@
                                 @endisset
                                 <div class="description">
                                     <p>
-                                        {{ \Illuminate\Support\Str::limit($data['description']['text'], 150, $end='...') }}
+                                        {{ \Illuminate\Support\Str::limit($data['description']['text'][0], 150, $end='...') }}
+                                    </p>
+                                    <p>
+                                        {{ \Illuminate\Support\Str::limit($data['description']['text'][1], 150, $end='...') }}
                                     </p>
                                 </div>
                                 <div class="highlights">

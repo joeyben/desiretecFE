@@ -645,6 +645,9 @@ ul {
       right: 0;
     }
   }
+  .description, .description p{
+    padding-bottom: 10px;
+  }
   .price {
     display: flex;
     justify-content: flex-end;
