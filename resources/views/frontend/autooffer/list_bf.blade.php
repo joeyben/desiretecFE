@@ -219,6 +219,11 @@
                                     </div>
                                 </div>
                                 @endisset
+                                <div class="description">
+                                    <p>
+                                        {{ \Illuminate\Support\Str::limit($data['description']['text'], 150, $end='...') }}
+                                    </p>
+                                </div>
                                 <div class="highlights">
                                     <h4 class="dark-grey-2">Highlights der Unterkunft:</h4>
                                     <ul>
