@@ -454,6 +454,8 @@ jQuery(function($) {
                 part += '&next=true'
             }
 
+            part +=  '&currentUrl=' + window.location.href.split('?')[0];
+
             return part;
         },
         onFormSubmit: function(event) {

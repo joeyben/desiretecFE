@@ -14,6 +14,7 @@
 
     {{ Form::hidden('airport', '-') }}
     {{ Form::hidden('category', 0) }}
+    {{ Form::hidden('variant_id', 0) }}
 
     <div class="kwp-middle"></div>
 
@@ -294,7 +295,7 @@
 
             var layer = layers.find(l => l.layer.path === layerName);
 
-            var is_pure_autooffers = @json($whitelabel['is_pure_autooffers']);
+            var is_pure_autooffers = false;
 
             dt.translateWordings(translation);
 

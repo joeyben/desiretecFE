@@ -17,6 +17,7 @@
 
     {{ Form::hidden('airport', '-') }}
     {{ Form::hidden('budget', 0) }}
+    {{ Form::hidden('variant_id', 0) }}
 
     <div class="kwp-middle"></div>
 
