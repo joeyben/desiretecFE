@@ -91,12 +91,6 @@
                             <ul>
                                 <li>
                                     <div class="icon-background">
-                                        <i class="fas fa-home-lg-alt" aria-hidden="true"></i>
-                                    </div>
-                                    <h4>{{ $wish->airport }}</h4>
-                                </li>
-                                <li>
-                                    <div class="icon-background">
                                         <i class="fas fa-users" aria-hidden="true"></i>
                                     </div>
                                     <h4>{{ $wish->adults }} Erwachsene<br>{{ $wish->kids }} Kind(er)</h4>
@@ -109,21 +103,9 @@
                                 </li>
                                 <li>
                                     <div class="icon-background">
-                                        <i class="fas fa-h-square" aria-hidden="true"></i>
-                                    </div>
-                                    <h4>{{ $wish->category }} Sterne</h4>
-                                </li>
-                                <li>
-                                    <div class="icon-background">
                                         <i class="fas fa-credit-card" aria-hidden="true"></i>
                                     </div>
                                     <h4>{{ $wish->budget }}{{ trans('autooffer.list.currency') }}</h4>
-                                </li>
-                                <li>
-                                    <div class="icon-background">
-                                        <i class="fas fa-bed" aria-hidden="true"></i>
-                                    </div>
-                                    <h4>{{ getCateringFromCode($wish->catering) }}</h4>
                                 </li>
                                 <li>
                                     <div class="icon-background">
