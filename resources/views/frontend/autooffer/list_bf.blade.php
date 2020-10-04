@@ -194,10 +194,10 @@
                                 </div>
 
                                 <div class="recommandations">
-                                    <div class="average">{{ $data['ratings']['@attributes']['max_score'] }}</div>
+                                    <div class="average">{{ $data['ratings']['average'] }}</div>
                                     <div class="text">
                                         <h4 class="dark-grey-2">Empfehlenswert</h4>
-                                        <h4>{{ $data['ratings']['@attributes']['max_score'] }} Bewertungen</h4>
+                                        <h4>{{ $data['ratings']['average'] }} Bewertungen</h4>
                                     </div>
                                 </div>
                                 @endisset
