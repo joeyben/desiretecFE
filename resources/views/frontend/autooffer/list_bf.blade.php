@@ -174,7 +174,7 @@
                                 <div class="title">
                                     <h3 class="ellipsised">{{ htmlspecialchars(html_entity_decode($data['title']['text'])) }}</h3>
                                     <span class="mousehover"></span>
-                                    <div class="tooltip">{{ htmlspecialchars(html_entity_decode($data['title']['text'])) }}</div>
+                                    <div class="tooltip">{{ htmlspecialchars_decode(html_entity_decode($data['title']['text'])) }}</div>
 
                                     <div class="rating">
                                         @for ($i = 0; $i < $category; $i++)
@@ -237,8 +237,9 @@
                                     </div>
                                     @php
                                         $price =  isset($data['prices']['range'][0])  ? $data['prices']['range'][0]['price'] : $data['prices']['range']['price'];
+                                        $finalPrice = $price * ($wish->adults + $wish->kids);
                                     @endphp
-                                    <h3>{{ number_format($price, 0, ',', '.') }} <span>{{ trans('autooffer.list.currency') }}</span> p.P.</h3>
+                                    <h3>{{ number_format($finalPrice, 0, ',', '.') }} <span>{{ trans('autooffer.list.currency') }}</span></h3>
                                     <a class="btn btn-primary" target="_blank" href="#">
                                         <i class="fas fa-chevron-right"></i>
                                     </a>
