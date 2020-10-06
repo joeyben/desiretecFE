@@ -80,8 +80,8 @@ class FrontendController extends Controller
         5 => "all inclusive",
     ];
     const PETS_ARR = [
-        'Ohne Haustier',
         'Mit Haustier',
+        'Ohne Haustier',
     ];
     const ROOMS_ARR = [
         1 => "1",
