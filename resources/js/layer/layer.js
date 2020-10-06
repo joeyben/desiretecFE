@@ -1011,7 +1011,7 @@ jQuery(function($){
                 var latest_return = new Date(latest_return_arr[2], latest_return_arr[1]-1, latest_return_arr[0]);
                 var diff_nights = Math.round((latest_return-earliest_start)/(1000*60*60*24));
                 var diff_days =  diff_nights + 1;
-                var options = document.getElementById("duration").getElementsByTagName("option");
+                var options = document.getElementById("duration") ? document.getElementById("duration").getElementsByTagName("option") : [];
                 for (var i = 0; i < options.length; i++) {
                     if(options[i].value.includes('-')){
                         var days = options[i].value.split('-');

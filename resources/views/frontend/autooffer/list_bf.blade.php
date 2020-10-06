@@ -172,7 +172,7 @@
                                 </div>
                                 <div class="right-side">
                                 <div class="title">
-                                    <h3 class="ellipsised">{{ htmlspecialchars(html_entity_decode($data['title']['text'])) }}</h3>
+                                    <h3 class="ellipsised">{{ htmlspecialchars_decode(html_entity_decode($data['title']['text'])) }}</h3>
                                     <span class="mousehover"></span>
                                     <div class="tooltip">{{ htmlspecialchars_decode(html_entity_decode($data['title']['text'])) }}</div>
 
