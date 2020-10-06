@@ -30,7 +30,7 @@
                             <li v-if="wish.earliest_start !== '0000-00-00' && wish.latest_return !== '0000-00-00'">
                                 <i class="icon_calendar"></i><span class="value">{{ wish.earliest_start | moment("DD.MM.YYYY") }}</span> {{ translateWord('wishes_date_until') }} <span class="value">{{ wish.latest_return | moment("DD.MM.YYYY") }}</span>
                             </li>
-                            <li>
+                            <li v-if="wish.whitelabel_id !== 276">
                                 <i class="icon_hourglass"></i><span class="value">{{ wish.duration }}</span>
                             </li>
                             <li v-if="wish.adults > 0">
@@ -48,7 +48,7 @@
                             <li v-if="wish.purpose">
                                 <i class="fal fa-suitcase"></i><span class="value">{{ wish.purpose }}</span>
                             </li>
-                            <li v-if="wish.accommodation">
+                            <li v-if="wish.accommodation && wish.whitelabel_id !== 276">
                                 <i class="fal fa-map-marker-check"></i><span class="value">{{ wish.accommodation }}</span>
                             </li>
                             <li v-if="wish.version === 'destination'">

@@ -415,8 +415,8 @@ class FrontendController extends Controller
 
     public function initPetsArr(){
         $this->petsArr = [
-            Lang::get('layer.general.with_pets', [], session()->get('wl-locale')),
             Lang::get('layer.general.without_pets', [], session()->get('wl-locale')),
+            Lang::get('layer.general.with_pets', [], session()->get('wl-locale')),
         ];
     }
 
