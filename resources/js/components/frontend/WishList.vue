@@ -219,9 +219,9 @@ export default {
             if(isManuel) {
                 return '/wishes/'+wish.id;
             } else if(wish.whitelabel_id === 276) {
-                return '/offer/listbf/'+id;
+                return '/offer/listbf/'+wish.id;
             } else {
-                return '/offer/list/'+id;
+                return '/offer/list/'+wish.id;
             }
         },
         applyColors() {

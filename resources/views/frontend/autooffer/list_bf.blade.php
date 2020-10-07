@@ -243,6 +243,7 @@
                                         $dayFrom = \Carbon\Carbon::parse($wish->earliest_start);
                                         $dayTo = \Carbon\Carbon::parse($wish->latest_return);
                                         $price =  isset($data['prices']['range'][0])  ? $data['prices']['range'][0]['price'] : $data['prices']['range']['price'];
+                                        $price = is_array($price) ? $price[0] : $price;
                                         $finalPrice = $price * ($wish->adults + $wish->kids) * $dayTo->diffInDays($dayFrom);
                                     @endphp
                                     <h3>{{ number_format($finalPrice, 0, ',', '.') }} <span>{{ trans('autooffer.list.currency') }}</span></h3>
