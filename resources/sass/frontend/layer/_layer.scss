@@ -1420,7 +1420,9 @@ select option:disabled {
     display: inherit;
   }
 }
-
+.hideit{
+  display: none;
+}
 // lastminute customization
 .kwp-minimal-lastminute{
  .kwp-row:first-child {
