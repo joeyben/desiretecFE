@@ -156,6 +156,9 @@
                                     'latitude' => $data['location']['geo']['latitude']
                                 ];
                                 $locations[] = $hotelData;
+                                $title = html_entity_decode($data['title']['text']);
+                                $title = str_replace("&sup2;", '²', $title );
+                                $title = str_replace("&euro;", '€', $title );
                             @endphp
                             <li class="offer box-shadow" id="hotel-{{ $key }}">
                                 <span class="wish_offer_id">Angebotsnummer: {{ $wish->id }}/{{ $count + 1 }}</span>
@@ -172,9 +175,9 @@
                                 </div>
                                 <div class="right-side">
                                 <div class="title">
-                                    <h3 class="ellipsised">{{ $data['title']['text'] }}</h3>
+                                    <h3 class="ellipsised">{{ $title }}</h3>
                                     <span class="mousehover"></span>
-                                    <div class="tooltip">{{ htmlspecialchars_decode(html_entity_decode($data['title']['text'])) }}</div>
+                                    <div class="tooltip">{{ $title }}</div>
 
                                     <div class="rating">
                                         @for ($i = 0; $i < $category; $i++)
@@ -188,10 +191,6 @@
                                     <h5>{{ $data['location']['city'] }}, {{ $data['location']['country'] }}</h5>
                                 </div>
                                 @isset($data['ratings'])
-                                <div class="fulfill">
-                                    <progress value="{{ $data['ratings']['@attributes']['max_score'][0] }}" max="5"></progress>
-                                    <h4> <span>{{ $data['ratings']['@attributes']['max_score'] }}%</span> Weiterempfehlung</h4>
-                                </div>
 
                                 <div class="recommandations">
                                     <div class="average">{{ $data['ratings']['average'] }}</div>
@@ -202,12 +201,17 @@
                                 </div>
                                 @endisset
                                 <div class="description">
+                                    @if (!is_array($data['description']['text'][0]))
                                     <p>
-                                        {{ \Illuminate\Support\Str::limit($data['description']['text'][0], 150, $end='...') }}
+                                        {{ \Illuminate\Support\Str::limit($data['description']['text'][0], 140, $end='...') }}
                                     </p>
+                                    @endif
+
+                                    @if (is_array($data['description']['text'][0]) && count($data['description']['text']) > 1)
                                     <p>
-                                        {{ \Illuminate\Support\Str::limit($data['description']['text'][1], 150, $end='...') }}
+                                        {{ \Illuminate\Support\Str::limit($data['description']['text'][1], 140, $end='...') }}
                                     </p>
+                                    @endif
                                 </div>
                                 <div class="highlights">
                                     <h4 class="dark-grey-2">Highlights der Unterkunft:</h4>
