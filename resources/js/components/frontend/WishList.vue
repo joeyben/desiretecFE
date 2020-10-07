@@ -79,7 +79,7 @@
                             </template>
                         </div>
                         <div v-if="wish.budget !== 0" class="budget">{{ formatPrice(wish.budget) }}€</div>
-                        <a class="primary-btn" :href="getWishLink(wish.id, wish.manuelFlag)">{{ translations.goto_btn }}</a>
+                        <a class="primary-btn" :href="getWishLink(wish, wish.manuelFlag)">{{ translations.goto_btn }}</a>
                         <div v-if="isSeller" class="status-change-action">
                             <select class="selectpicker" id="change-status" ref="select" v-model="wish.status" @change="changeStatus(wish.id, wish.status)">
                                 <option v-for="status in wishStatuses" :key="status.value" :value="status.value">{{ status.translation }}</option>
@@ -215,9 +215,11 @@ export default {
         formatPrice(value) {
             return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         },
-        getWishLink(id, isManuel) {
+        getWishLink(wish, isManuel) {
             if(isManuel) {
-                return '/wishes/'+id;
+                return '/wishes/'+wish.id;
+            } else if(wish.whitelabel_id === 276) {
+                return '/offer/listbf/'+id;
             } else {
                 return '/offer/list/'+id;
             }
