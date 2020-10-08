@@ -80,8 +80,8 @@ class FrontendController extends Controller
         5 => "all inclusive",
     ];
     const PETS_ARR = [
-        'Ohne Haustier',
         'Mit Haustier',
+        'Ohne Haustier',
     ];
     const ROOMS_ARR = [
         1 => "1",
@@ -415,8 +415,8 @@ class FrontendController extends Controller
 
     public function initPetsArr(){
         $this->petsArr = [
-            Lang::get('layer.general.with_pets', [], session()->get('wl-locale')),
             Lang::get('layer.general.without_pets', [], session()->get('wl-locale')),
+            Lang::get('layer.general.with_pets', [], session()->get('wl-locale')),
         ];
     }
 

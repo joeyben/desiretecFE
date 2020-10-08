@@ -250,6 +250,7 @@ $gutter: 30px;
   }
   form {
     margin: 0;
+    padding: 0;
   }
   a {
     text-decoration: none;
@@ -972,6 +973,8 @@ p.kwp-info {
     font-weight: normal;
     margin: 0;
     display: block;
+    position: static;
+    transform: none;
     &:hover {
       cursor: default;
       color: #a0a0a0;
@@ -1130,6 +1133,11 @@ p.kwp-info {
       .kwp-form-group {
         padding-left: 10px;
       }
+    }
+  }
+  .budget {
+    input {
+      padding: 0 12px;
     }
   }
   .catering {
@@ -1420,7 +1428,9 @@ select option:disabled {
     display: inherit;
   }
 }
-
+.hideit{
+  display: none;
+}
 // lastminute customization
 .kwp-minimal-lastminute{
  .kwp-row:first-child {

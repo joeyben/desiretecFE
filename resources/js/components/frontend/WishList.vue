@@ -30,7 +30,7 @@
                             <li v-if="wish.earliest_start !== '0000-00-00' && wish.latest_return !== '0000-00-00'">
                                 <i class="icon_calendar"></i><span class="value">{{ wish.earliest_start | moment("DD.MM.YYYY") }}</span> {{ translateWord('wishes_date_until') }} <span class="value">{{ wish.latest_return | moment("DD.MM.YYYY") }}</span>
                             </li>
-                            <li>
+                            <li v-if="wish.whitelabel_id !== 276">
                                 <i class="icon_hourglass"></i><span class="value">{{ wish.duration }}</span>
                             </li>
                             <li v-if="wish.adults > 0">
@@ -48,7 +48,7 @@
                             <li v-if="wish.purpose">
                                 <i class="fal fa-suitcase"></i><span class="value">{{ wish.purpose }}</span>
                             </li>
-                            <li v-if="wish.accommodation">
+                            <li v-if="wish.accommodation && wish.whitelabel_id !== 276">
                                 <i class="fal fa-map-marker-check"></i><span class="value">{{ wish.accommodation }}</span>
                             </li>
                             <li v-if="wish.version === 'destination'">
@@ -79,7 +79,7 @@
                             </template>
                         </div>
                         <div v-if="wish.budget !== 0" class="budget">{{ formatPrice(wish.budget) }}€</div>
-                        <a class="primary-btn" :href="getWishLink(wish.id, wish.manuelFlag)">{{ translations.goto_btn }}</a>
+                        <a class="primary-btn" :href="getWishLink(wish, wish.manuelFlag)">{{ translations.goto_btn }}</a>
                         <div v-if="isSeller" class="status-change-action">
                             <select class="selectpicker" id="change-status" ref="select" v-model="wish.status" @change="changeStatus(wish.id, wish.status)">
                                 <option v-for="status in wishStatuses" :key="status.value" :value="status.value">{{ status.translation }}</option>
@@ -215,11 +215,13 @@ export default {
         formatPrice(value) {
             return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         },
-        getWishLink(id, isManuel) {
+        getWishLink(wish, isManuel) {
             if(isManuel) {
-                return '/wishes/'+id;
+                return '/wishes/'+wish.id;
+            } else if(wish.whitelabel_id === 276) {
+                return '/offer/listbf/'+wish.id;
             } else {
-                return '/offer/list/'+id;
+                return '/offer/list/'+wish.id;
             }
         },
         applyColors() {

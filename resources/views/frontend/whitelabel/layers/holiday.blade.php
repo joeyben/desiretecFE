@@ -196,12 +196,16 @@
                                     @endforeach
                                 @endif
                             </div>
-                            <div class="kwp-col-12">
+                            @php
+                                $hide = $whitelabel['bestfewo'] ? "hideit" : "";
+                            @endphp
+                            <div class="kwp-col-12 {{ $hide }}">
                                 {{ Form::label('duration', Lang::get('layer.general.duration', [], session()->get('wl-locale')), ['class' => 'control-label required']) }}
                                 <div class="kwp-custom-select">
                                     {{ Form::select('duration', array_merge(['0' => Lang::get('layer.general.duration_init', [], session()->get('wl-locale'))], $duration_arr), key_exists('duration', $request) ? $request['duration'] : null, ['class' => 'form-control box-size']) }}
                                 </div>
                             </div>
+
                             <div class="clearfix"></div>
                             <div class="kwp-col-12 button">
                                 <a href="#">OK</a>
