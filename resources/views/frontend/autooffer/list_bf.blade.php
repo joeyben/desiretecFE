@@ -178,12 +178,6 @@
                                     <h3 class="ellipsised">{{ $title }}</h3>
                                     <span class="mousehover"></span>
                                     <div class="tooltip">{{ $title }}</div>
-
-                                    <div class="rating">
-                                        @for ($i = 0; $i < $category; $i++)
-                                            <i class="fas fa-heart"></i>
-                                        @endfor
-                                    </div>
                                 </div>
 
                                 <div class="location">
