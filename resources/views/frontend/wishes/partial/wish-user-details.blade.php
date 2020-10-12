@@ -81,7 +81,7 @@
         <input class="data-content" value="{{ trans_choice('labels.frontend.wishes.pets', $wish->wishDetails->pets) }}">
     </div>
     @endif
-    @if($wish->wishDetails->catering)
+    @if($wish->wishDetails->catering && $wish->wishDetails->whitelabel_id !== 276)
     <div class="col-md-3">
         <i class="fal fa-utensils"></i>
         <input class="data-content" value="{{ $wish->wishDetails->catering }}">
@@ -97,7 +97,7 @@
         </div>
     </div>
     @endif
-    @if($wish->wishDetails->accommodation)
+    @if($wish->wishDetails->accommodation && $wish->wishDetails->whitelabel_id !== 276)
     <div class="col-md-3">
         <i class="fal fa-map-marker-check"></i>
         <input class="data-content" value="{{ $wish->wishDetails->accommodation }}">

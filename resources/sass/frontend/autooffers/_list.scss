@@ -625,6 +625,9 @@ ul {
       margin-left: 25px;
     }
   }
+  .hideit{
+    display: none;
+  }
   .highlights {
     position: relative;
     padding-bottom: 15px;
@@ -644,6 +647,12 @@ ul {
       bottom: 10px;
       right: 0;
     }
+  }
+  .description{
+    height: 80px;
+  }
+  .description, .description p{
+    padding-bottom: 10px;
   }
   .price {
     display: flex;

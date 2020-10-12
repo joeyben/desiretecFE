@@ -91,12 +91,6 @@
                             <ul>
                                 <li>
                                     <div class="icon-background">
-                                        <i class="fas fa-home-lg-alt" aria-hidden="true"></i>
-                                    </div>
-                                    <h4>{{ $wish->airport }}</h4>
-                                </li>
-                                <li>
-                                    <div class="icon-background">
                                         <i class="fas fa-users" aria-hidden="true"></i>
                                     </div>
                                     <h4>{{ $wish->adults }} Erwachsene<br>{{ $wish->kids }} Kind(er)</h4>
@@ -109,21 +103,9 @@
                                 </li>
                                 <li>
                                     <div class="icon-background">
-                                        <i class="fas fa-h-square" aria-hidden="true"></i>
-                                    </div>
-                                    <h4>{{ $wish->category }} Sterne</h4>
-                                </li>
-                                <li>
-                                    <div class="icon-background">
                                         <i class="fas fa-credit-card" aria-hidden="true"></i>
                                     </div>
                                     <h4>{{ $wish->budget }}{{ trans('autooffer.list.currency') }}</h4>
-                                </li>
-                                <li>
-                                    <div class="icon-background">
-                                        <i class="fas fa-bed" aria-hidden="true"></i>
-                                    </div>
-                                    <h4>{{ getCateringFromCode($wish->catering) }}</h4>
                                 </li>
                                 <li>
                                     <div class="icon-background">
@@ -174,6 +156,9 @@
                                     'latitude' => $data['location']['geo']['latitude']
                                 ];
                                 $locations[] = $hotelData;
+                                $title = html_entity_decode($data['title']['text']);
+                                $title = str_replace("&sup2;", '²', $title );
+                                $title = str_replace("&euro;", '€', $title );
                             @endphp
                             <li class="offer box-shadow" id="hotel-{{ $key }}">
                                 <span class="wish_offer_id">Angebotsnummer: {{ $wish->id }}/{{ $count + 1 }}</span>
@@ -190,9 +175,9 @@
                                 </div>
                                 <div class="right-side">
                                 <div class="title">
-                                    <h3 class="ellipsised">{{ htmlspecialchars(html_entity_decode($data['title']['text'])) }}</h3>
+                                    <h3 class="ellipsised">{{ $title }}</h3>
                                     <span class="mousehover"></span>
-                                    <div class="tooltip">{{ htmlspecialchars(html_entity_decode($data['title']['text'])) }}</div>
+                                    <div class="tooltip">{{ $title }}</div>
 
                                     <div class="rating">
                                         @for ($i = 0; $i < $category; $i++)
@@ -206,19 +191,28 @@
                                     <h5>{{ $data['location']['city'] }}, {{ $data['location']['country'] }}</h5>
                                 </div>
                                 @isset($data['ratings'])
-                                <div class="fulfill">
-                                    <progress value="{{ $data['ratings']['@attributes']['max_score'][0] }}" max="5"></progress>
-                                    <h4> <span>{{ $data['ratings']['@attributes']['max_score'] }}%</span> Weiterempfehlung</h4>
-                                </div>
 
                                 <div class="recommandations">
-                                    <div class="average">{{ $data['ratings']['@attributes']['max_score'] }}</div>
+                                    <div class="average">{{ $data['ratings']['average'] }}</div>
                                     <div class="text">
                                         <h4 class="dark-grey-2">Empfehlenswert</h4>
-                                        <h4>{{ $data['ratings']['@attributes']['max_score'] }} Bewertungen</h4>
+                                        <h4>{{ $data['ratings']['average'] }} Bewertungen</h4>
                                     </div>
                                 </div>
                                 @endisset
+                                <div class="description">
+                                    @if (!is_array($data['description']['text'][0]))
+                                    <p>
+                                        {{ \Illuminate\Support\Str::limit($data['description']['text'][0], 140, $end='...') }}
+                                    </p>
+                                    @endif
+
+                                    @if (is_array($data['description']['text'][0]) && count($data['description']['text']) > 1)
+                                    <p>
+                                        {{ \Illuminate\Support\Str::limit($data['description']['text'][1], 140, $end='...') }}
+                                    </p>
+                                    @endif
+                                </div>
                                 <div class="highlights">
                                     <h4 class="dark-grey-2">Highlights der Unterkunft:</h4>
                                     <ul>
@@ -246,9 +240,13 @@
                                     <div class="info-icons">
                                     </div>
                                     @php
+                                        $dayFrom = \Carbon\Carbon::parse($wish->earliest_start);
+                                        $dayTo = \Carbon\Carbon::parse($wish->latest_return);
                                         $price =  isset($data['prices']['range'][0])  ? $data['prices']['range'][0]['price'] : $data['prices']['range']['price'];
+                                        $price = is_array($price) ? $price[0] : $price;
+                                        $finalPrice = $price * ($wish->adults + $wish->kids) * $dayTo->diffInDays($dayFrom);
                                     @endphp
-                                    <h3>{{ number_format($price, 0, ',', '.') }} <span>{{ trans('autooffer.list.currency') }}</span> p.P.</h3>
+                                    <h3>{{ number_format($finalPrice, 0, ',', '.') }} <span>{{ trans('autooffer.list.currency') }}</span></h3>
                                     <a class="btn btn-primary" target="_blank" href="#">
                                         <i class="fas fa-chevron-right"></i>
                                     </a>
