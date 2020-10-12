@@ -11,7 +11,7 @@
 
 @section('content')
 
-    <main class="main">
+    <main class="main bestfewo">
         <div class="shell">
 
             <div class="wave-image"></div>

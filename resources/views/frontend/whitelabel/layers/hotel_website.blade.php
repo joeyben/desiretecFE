@@ -274,8 +274,8 @@
 
             var layer = layers.find(l => l.layer.path === layerName);
 
-            var layerVariantId = layer.variant_id !== null ? (layer.variant_id).toString() : '0';
-            $("[name='variant_id']").val(layerVariantId);
+            //var layerVariantId = layer.variant_id !== null ? (layer.variant_id).toString() : '0';
+            //$("[name='variant_id']").val(layerVariantId);
 
             var is_pure_autooffers = @json($whitelabel['is_pure_autooffers']);
 
@@ -305,3 +305,14 @@
         });
     });
 </script>
+
+@if ($whitelabel['id'] === 101)
+    <script>
+        jQuery(function($) {
+            $(document).ready(function () {
+                $('.kwp-close-btn').css({'background': '#fff'});
+                $('.kwp-close-btn span').css({'background': '#8b2939', 'height': '1.5px', 'top': '7px'});
+            });
+        });
+    </script>
+@endif
